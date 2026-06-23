@@ -1008,11 +1008,13 @@ export interface components {
             user_id: string;
             store_id: string;
             branch_id: string;
+            asset_ids: string[];
+            equipment_ids: string[];
             status: components["schemas"]["BookingStatus"];
             start_at: components["schemas"]["IsoDateTime"];
             end_at: components["schemas"]["IsoDateTime"];
-            pickup_point_id?: string;
-            return_point_id?: string;
+            pickup_point_id: string;
+            return_point_id: string;
             /** @enum {string} */
             payment_method: "ONLINE" | "CASH";
             currency: string;
@@ -1021,16 +1023,26 @@ export interface components {
             deposit_amount: number;
             discount_amount: number;
             total_amount: number;
-            price_snapshot?: {
+            price_snapshot: {
                 [key: string]: unknown;
             };
-            policy_snapshot?: {
+            policy_snapshot: {
                 [key: string]: unknown;
             };
+            /** @description One-time or time-limited booking QR token reference; raw token secret is not returned. */
+            qr_booking_token_reference: string;
+            status_history: components["schemas"]["BookingStatusTransition"][];
             booking_items: components["schemas"]["BookingItem"][];
         };
         /** @enum {string} */
         BookingStatus: "PENDING_PAYMENT" | "PENDING_STORE_CONFIRMATION" | "CONFIRMED" | "PREPARING" | "AWAITING_PICKUP" | "IN_PROGRESS" | "RETURN_PENDING" | "INSPECTION_PENDING" | "COMPLETED" | "CANCELLED" | "NO_SHOW" | "DISPUTED";
+        BookingStatusTransition: {
+            from_status: components["schemas"]["BookingStatus"];
+            to_status: components["schemas"]["BookingStatus"];
+            changed_at: components["schemas"]["IsoDateTime"];
+            changed_by_user_id?: string;
+            reason?: string;
+        };
         BookingItem: components["schemas"]["EntityBase"] & {
             booking_id: string;
             /** @enum {string} */
@@ -1043,6 +1055,7 @@ export interface components {
             booking_id: string;
             user_id: string;
             store_id: string;
+            branch_id: string;
             provider?: string;
             provider_reference?: string;
             /** @enum {string} */
@@ -1054,6 +1067,14 @@ export interface components {
             idempotency_key: string;
             paid_at?: components["schemas"]["IsoDateTime"];
             confirmed_by?: string;
+            cash_received_at?: components["schemas"]["IsoDateTime"];
+            cash_notes?: string;
+            cash_evidence_image_ref?: string;
+        };
+        PaymentWebhookAccepted: {
+            accepted: boolean;
+            replayed: boolean;
+            payment_id?: string;
         };
         Deposit: components["schemas"]["EntityBase"] & {
             booking_id: string;
@@ -1464,6 +1485,8 @@ export interface components {
             branch_id: string;
             notes?: string;
             evidence_image_ref?: string;
+            correction_reason?: string;
+            cancel_reason?: string;
         };
         HandoverRequest: {
             staff_user_id: string;
@@ -2544,7 +2567,9 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["SuccessEnvelope"];
+                    "application/json": components["schemas"]["SuccessEnvelope"] & {
+                        data: components["schemas"]["PaymentWebhookAccepted"];
+                    };
                 };
             };
             401: components["responses"]["Unauthorized"];

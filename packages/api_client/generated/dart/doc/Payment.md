@@ -20,6 +20,7 @@ Name | Type | Description | Notes
 **bookingId** | **String** |  |
 **userId** | **String** |  |
 **storeId** | **String** |  |
+**branchId** | **String** |  |
 **provider** | **String** |  | [optional]
 **providerReference** | **String** |  | [optional]
 **method** | **String** |  |
@@ -29,5 +30,8 @@ Name | Type | Description | Notes
 **idempotencyKey** | **String** |  |
 **paidAt** | [**DateTime**](DateTime.md) |  | [optional]
 **confirmedBy** | **String** |  | [optional]
+**cashReceivedAt** | [**DateTime**](DateTime.md) |  | [optional]
+**cashNotes** | **String** |  | [optional]
+**cashEvidenceImageRef** | **String** |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

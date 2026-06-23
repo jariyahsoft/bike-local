@@ -5,6 +5,7 @@
 // ignore_for_file: unused_element
 import 'package:bike_local_generated_api_client/src/model/booking_status.dart';
 import 'package:bike_local_generated_api_client/src/model/entity_base.dart';
+import 'package:bike_local_generated_api_client/src/model/booking_status_transition.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:bike_local_generated_api_client/src/model/booking_item.dart';
 import 'package:built_value/json_object.dart';
@@ -29,6 +30,8 @@ part 'booking.g.dart';
 /// * [userId]
 /// * [storeId]
 /// * [branchId]
+/// * [assetIds]
+/// * [equipmentIds]
 /// * [status]
 /// * [startAt]
 /// * [endAt]
@@ -43,6 +46,8 @@ part 'booking.g.dart';
 /// * [totalAmount]
 /// * [priceSnapshot]
 /// * [policySnapshot]
+/// * [qrBookingTokenReference] - One-time or time-limited booking QR token reference; raw token secret is not returned.
+/// * [statusHistory]
 /// * [bookingItems]
 @BuiltValue()
 abstract class Booking implements EntityBase, Built<Booking, BookingBuilder> {
@@ -56,7 +61,10 @@ abstract class Booking implements EntityBase, Built<Booking, BookingBuilder> {
   BuiltList<BookingItem> get bookingItems;
 
   @BuiltValueField(wireName: r'return_point_id')
-  String? get returnPointId;
+  String get returnPointId;
+
+  @BuiltValueField(wireName: r'asset_ids')
+  BuiltList<String> get assetIds;
 
   @BuiltValueField(wireName: r'discount_amount')
   int get discountAmount;
@@ -79,24 +87,34 @@ abstract class Booking implements EntityBase, Built<Booking, BookingBuilder> {
   @BuiltValueField(wireName: r'total_amount')
   int get totalAmount;
 
+  @BuiltValueField(wireName: r'status_history')
+  BuiltList<BookingStatusTransition> get statusHistory;
+
+  @BuiltValueField(wireName: r'equipment_ids')
+  BuiltList<String> get equipmentIds;
+
   @BuiltValueField(wireName: r'payment_method')
   BookingPaymentMethodEnum get paymentMethod;
   // enum paymentMethodEnum {  ONLINE,  CASH,  };
 
   @BuiltValueField(wireName: r'pickup_point_id')
-  String? get pickupPointId;
+  String get pickupPointId;
 
   @BuiltValueField(wireName: r'currency')
   String get currency;
 
   @BuiltValueField(wireName: r'price_snapshot')
-  BuiltMap<String, JsonObject?>? get priceSnapshot;
+  BuiltMap<String, JsonObject?> get priceSnapshot;
 
   @BuiltValueField(wireName: r'policy_snapshot')
-  BuiltMap<String, JsonObject?>? get policySnapshot;
+  BuiltMap<String, JsonObject?> get policySnapshot;
 
   @BuiltValueField(wireName: r'start_at')
   DateTime get startAt;
+
+  /// One-time or time-limited booking QR token reference; raw token secret is not returned.
+  @BuiltValueField(wireName: r'qr_booking_token_reference')
+  String get qrBookingTokenReference;
 
   @BuiltValueField(wireName: r'booking_number')
   String get bookingNumber;
@@ -133,13 +151,11 @@ class _$BookingSerializer implements PrimitiveSerializer<Booking> {
       object.bookingItems,
       specifiedType: const FullType(BuiltList, [FullType(BookingItem)]),
     );
-    if (object.returnPointId != null) {
-      yield r'return_point_id';
-      yield serializers.serialize(
-        object.returnPointId,
-        specifiedType: const FullType(String),
-      );
-    }
+    yield r'return_point_id';
+    yield serializers.serialize(
+      object.returnPointId,
+      specifiedType: const FullType(String),
+    );
     yield r'discount_amount';
     yield serializers.serialize(
       object.discountAmount,
@@ -150,25 +166,26 @@ class _$BookingSerializer implements PrimitiveSerializer<Booking> {
       object.createdAt,
       specifiedType: const FullType(DateTime),
     );
-    if (object.pickupPointId != null) {
-      yield r'pickup_point_id';
-      yield serializers.serialize(
-        object.pickupPointId,
-        specifiedType: const FullType(String),
-      );
-    }
+    yield r'equipment_ids';
+    yield serializers.serialize(
+      object.equipmentIds,
+      specifiedType: const FullType(BuiltList, [FullType(String)]),
+    );
+    yield r'pickup_point_id';
+    yield serializers.serialize(
+      object.pickupPointId,
+      specifiedType: const FullType(String),
+    );
     yield r'currency';
     yield serializers.serialize(
       object.currency,
       specifiedType: const FullType(String),
     );
-    if (object.priceSnapshot != null) {
-      yield r'price_snapshot';
-      yield serializers.serialize(
-        object.priceSnapshot,
-        specifiedType: const FullType(BuiltMap, [FullType(String), FullType.nullable(JsonObject)]),
-      );
-    }
+    yield r'price_snapshot';
+    yield serializers.serialize(
+      object.priceSnapshot,
+      specifiedType: const FullType(BuiltMap, [FullType(String), FullType.nullable(JsonObject)]),
+    );
     yield r'id';
     yield serializers.serialize(
       object.id,
@@ -178,6 +195,11 @@ class _$BookingSerializer implements PrimitiveSerializer<Booking> {
     yield serializers.serialize(
       object.startAt,
       specifiedType: const FullType(DateTime),
+    );
+    yield r'qr_booking_token_reference';
+    yield serializers.serialize(
+      object.qrBookingTokenReference,
+      specifiedType: const FullType(String),
     );
     yield r'updated_at';
     yield serializers.serialize(
@@ -206,6 +228,11 @@ class _$BookingSerializer implements PrimitiveSerializer<Booking> {
         specifiedType: const FullType(String),
       );
     }
+    yield r'asset_ids';
+    yield serializers.serialize(
+      object.assetIds,
+      specifiedType: const FullType(BuiltList, [FullType(String)]),
+    );
     yield r'store_id';
     yield serializers.serialize(
       object.storeId,
@@ -241,6 +268,11 @@ class _$BookingSerializer implements PrimitiveSerializer<Booking> {
       object.totalAmount,
       specifiedType: const FullType(int),
     );
+    yield r'status_history';
+    yield serializers.serialize(
+      object.statusHistory,
+      specifiedType: const FullType(BuiltList, [FullType(BookingStatusTransition)]),
+    );
     if (object.deletedAt != null) {
       yield r'deleted_at';
       yield serializers.serialize(
@@ -267,13 +299,11 @@ class _$BookingSerializer implements PrimitiveSerializer<Booking> {
       object.paymentMethod,
       specifiedType: const FullType(BookingPaymentMethodEnum),
     );
-    if (object.policySnapshot != null) {
-      yield r'policy_snapshot';
-      yield serializers.serialize(
-        object.policySnapshot,
-        specifiedType: const FullType(BuiltMap, [FullType(String), FullType.nullable(JsonObject)]),
-      );
-    }
+    yield r'policy_snapshot';
+    yield serializers.serialize(
+      object.policySnapshot,
+      specifiedType: const FullType(BuiltMap, [FullType(String), FullType.nullable(JsonObject)]),
+    );
     yield r'booking_number';
     yield serializers.serialize(
       object.bookingNumber,
@@ -335,6 +365,13 @@ class _$BookingSerializer implements PrimitiveSerializer<Booking> {
           ) as DateTime;
           result.createdAt = valueDes;
           break;
+        case r'equipment_ids':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(BuiltList, [FullType(String)]),
+          ) as BuiltList<String>;
+          result.equipmentIds.replace(valueDes);
+          break;
         case r'pickup_point_id':
           final valueDes = serializers.deserialize(
             value,
@@ -370,6 +407,13 @@ class _$BookingSerializer implements PrimitiveSerializer<Booking> {
           ) as DateTime;
           result.startAt = valueDes;
           break;
+        case r'qr_booking_token_reference':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.qrBookingTokenReference = valueDes;
+          break;
         case r'updated_at':
           final valueDes = serializers.deserialize(
             value,
@@ -404,6 +448,13 @@ class _$BookingSerializer implements PrimitiveSerializer<Booking> {
             specifiedType: const FullType(String),
           ) as String;
           result.updatedBy = valueDes;
+          break;
+        case r'asset_ids':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(BuiltList, [FullType(String)]),
+          ) as BuiltList<String>;
+          result.assetIds.replace(valueDes);
           break;
         case r'store_id':
           final valueDes = serializers.deserialize(
@@ -453,6 +504,13 @@ class _$BookingSerializer implements PrimitiveSerializer<Booking> {
             specifiedType: const FullType(int),
           ) as int;
           result.totalAmount = valueDes;
+          break;
+        case r'status_history':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(BuiltList, [FullType(BookingStatusTransition)]),
+          ) as BuiltList<BookingStatusTransition>;
+          result.statusHistory.replace(valueDes);
           break;
         case r'deleted_at':
           final valueDes = serializers.deserialize(

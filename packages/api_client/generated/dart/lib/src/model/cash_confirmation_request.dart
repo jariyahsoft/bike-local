@@ -17,6 +17,8 @@ part 'cash_confirmation_request.g.dart';
 /// * [branchId]
 /// * [notes]
 /// * [evidenceImageRef]
+/// * [correctionReason]
+/// * [cancelReason]
 @BuiltValue()
 abstract class CashConfirmationRequest implements Built<CashConfirmationRequest, CashConfirmationRequestBuilder> {
   @BuiltValueField(wireName: r'amount')
@@ -36,6 +38,12 @@ abstract class CashConfirmationRequest implements Built<CashConfirmationRequest,
 
   @BuiltValueField(wireName: r'evidence_image_ref')
   String? get evidenceImageRef;
+
+  @BuiltValueField(wireName: r'correction_reason')
+  String? get correctionReason;
+
+  @BuiltValueField(wireName: r'cancel_reason')
+  String? get cancelReason;
 
   CashConfirmationRequest._();
 
@@ -91,6 +99,20 @@ class _$CashConfirmationRequestSerializer implements PrimitiveSerializer<CashCon
       yield r'evidence_image_ref';
       yield serializers.serialize(
         object.evidenceImageRef,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.correctionReason != null) {
+      yield r'correction_reason';
+      yield serializers.serialize(
+        object.correctionReason,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.cancelReason != null) {
+      yield r'cancel_reason';
+      yield serializers.serialize(
+        object.cancelReason,
         specifiedType: const FullType(String),
       );
     }
@@ -158,6 +180,20 @@ class _$CashConfirmationRequestSerializer implements PrimitiveSerializer<CashCon
             specifiedType: const FullType(String),
           ) as String;
           result.evidenceImageRef = valueDes;
+          break;
+        case r'correction_reason':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.correctionReason = valueDes;
+          break;
+        case r'cancel_reason':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.cancelReason = valueDes;
           break;
         default:
           unhandled.add(key);

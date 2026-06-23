@@ -27,6 +27,7 @@ import 'package:bike_local_generated_api_client/src/model/availability_result.da
 import 'package:bike_local_generated_api_client/src/model/booking.dart';
 import 'package:bike_local_generated_api_client/src/model/booking_item.dart';
 import 'package:bike_local_generated_api_client/src/model/booking_status.dart';
+import 'package:bike_local_generated_api_client/src/model/booking_status_transition.dart';
 import 'package:bike_local_generated_api_client/src/model/branch.dart';
 import 'package:bike_local_generated_api_client/src/model/cancel_booking_request.dart';
 import 'package:bike_local_generated_api_client/src/model/cash_confirmation_request.dart';
@@ -92,11 +93,13 @@ import 'package:bike_local_generated_api_client/src/model/notification.dart';
 import 'package:bike_local_generated_api_client/src/model/onboarding_selectable_role.dart';
 import 'package:bike_local_generated_api_client/src/model/pagination_meta.dart';
 import 'package:bike_local_generated_api_client/src/model/payment.dart';
+import 'package:bike_local_generated_api_client/src/model/payment_webhook_accepted.dart';
 import 'package:bike_local_generated_api_client/src/model/place.dart';
 import 'package:bike_local_generated_api_client/src/model/platform_report.dart';
 import 'package:bike_local_generated_api_client/src/model/pricing_quote.dart';
 import 'package:bike_local_generated_api_client/src/model/pricing_quote_request.dart';
 import 'package:bike_local_generated_api_client/src/model/pricing_rule.dart';
+import 'package:bike_local_generated_api_client/src/model/process_payment_webhook202_response.dart';
 import 'package:bike_local_generated_api_client/src/model/rental_point.dart';
 import 'package:bike_local_generated_api_client/src/model/required_consent_input.dart';
 import 'package:bike_local_generated_api_client/src/model/response_meta.dart';
@@ -145,6 +148,7 @@ part 'serializers.g.dart';
   Booking,
   BookingItem,
   BookingStatus,
+  BookingStatusTransition,
   Branch,
   CancelBookingRequest,
   CashConfirmationRequest,
@@ -210,11 +214,13 @@ part 'serializers.g.dart';
   OnboardingSelectableRole,
   PaginationMeta,
   Payment,
+  PaymentWebhookAccepted,
   Place,
   PlatformReport,
   PricingQuote,
   PricingQuoteRequest,
   PricingRule,
+  ProcessPaymentWebhook202Response,
   RentalPoint,
   RequiredConsentInput,
   ResponseMeta,

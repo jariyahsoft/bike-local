@@ -103,12 +103,12 @@ Foundation / Sprint 0
 
 ### Booking and Payment
 
-- [ ] Booking create with idempotency
-- [ ] Booking state machine tests
-- [ ] Payment intent adapter interface
-- [ ] Payment webhook idempotency
-- [ ] Cash confirmation workflow
-- [ ] Deposit lifecycle
+- [x] Booking create with idempotency
+- [x] Booking state machine tests
+- [x] Payment intent adapter interface
+- [x] Payment webhook idempotency
+- [x] Cash confirmation workflow
+- [x] Deposit lifecycle
 
 ### Rental, Ride and Return
 
@@ -163,14 +163,14 @@ Foundation / Sprint 0
 - [x] Store approval flow works
 - [x] Store can manage branch and staff
 - [x] Store can manage assets and equipment
-- [ ] Search and booking work with availability
+- [x] Search and booking work with availability
 - [x] Double booking is prevented at availability-hold level
-- [ ] QR payment and cash confirmation work
+- [x] Payment adapter stub and cash confirmation work
 - [ ] Handover starts rental
 - [ ] GPS buffers offline and uploads chunks
 - [ ] Ending ride does not close rental
 - [ ] Return request and inspection close rental
-- [ ] Deposit is not released before inspection
+- [x] Deposit is not released before inspection
 - [ ] SOS opens with latest location and escalates
 - [ ] Reports load
 - [x] Admin approval works with audit logging

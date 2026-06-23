@@ -1,13 +1,23 @@
 import { DomainError } from "../../shared/domain/index.js";
 import type {
+  BookingId,
+  DepositId,
   IdempotencyKey,
+  OutboxEventId,
   Page,
   PageRequest,
+  PaymentEventId,
   PaymentId,
   SaveOptions,
 } from "../../shared/domain/index.js";
 import type {
+  Deposit,
+  DepositRepository,
+  OutboxEvent,
+  OutboxEventRepository,
   Payment,
+  PaymentEvent,
+  PaymentEventRepository,
   PaymentRepository,
   PaymentSearchFilter,
 } from "../domain/payment-repository.js";
@@ -63,5 +73,107 @@ export class InMemoryPaymentRepository implements PaymentRepository {
     }
     this.payments.set(payment.id, payment);
     return payment;
+  }
+}
+
+export class InMemoryPaymentEventRepository implements PaymentEventRepository {
+  private readonly events = new Map<PaymentEventId, PaymentEvent>();
+
+  async findById(id: PaymentEventId): Promise<PaymentEvent | null> {
+    return this.events.get(id) ?? null;
+  }
+
+  async findByProviderEvent(
+    provider: string,
+    providerEventId: string,
+  ): Promise<PaymentEvent | null> {
+    return (
+      [...this.events.values()].find(
+        (event) =>
+          event.provider === provider &&
+          event.providerEventId === providerEventId,
+      ) ?? null
+    );
+  }
+
+  async save(
+    event: PaymentEvent,
+    options?: SaveOptions,
+  ): Promise<PaymentEvent> {
+    const current = this.events.get(event.id);
+    if (
+      options?.expectedVersion !== undefined &&
+      current?.version !== options.expectedVersion
+    ) {
+      throw new DomainError(
+        "VERSION_CONFLICT",
+        "Payment event version conflict",
+        {
+          paymentEventId: event.id,
+        },
+      );
+    }
+    this.events.set(event.id, event);
+    return event;
+  }
+}
+
+export class InMemoryDepositRepository implements DepositRepository {
+  private readonly deposits = new Map<DepositId, Deposit>();
+
+  async findById(id: DepositId): Promise<Deposit | null> {
+    return this.deposits.get(id) ?? null;
+  }
+
+  async findByBookingId(bookingId: BookingId): Promise<Deposit | null> {
+    return (
+      [...this.deposits.values()].find(
+        (deposit) => deposit.bookingId === bookingId,
+      ) ?? null
+    );
+  }
+
+  async save(deposit: Deposit, options?: SaveOptions): Promise<Deposit> {
+    const current = this.deposits.get(deposit.id);
+    if (
+      options?.expectedVersion !== undefined &&
+      current?.version !== options.expectedVersion
+    ) {
+      throw new DomainError("VERSION_CONFLICT", "Deposit version conflict", {
+        depositId: deposit.id,
+      });
+    }
+    this.deposits.set(deposit.id, deposit);
+    return deposit;
+  }
+}
+
+export class InMemoryOutboxEventRepository implements OutboxEventRepository {
+  private readonly events = new Map<OutboxEventId, OutboxEvent>();
+
+  async findById(id: OutboxEventId): Promise<OutboxEvent | null> {
+    return this.events.get(id) ?? null;
+  }
+
+  async list(): Promise<readonly OutboxEvent[]> {
+    return [...this.events.values()];
+  }
+
+  async save(event: OutboxEvent, options?: SaveOptions): Promise<OutboxEvent> {
+    const current = this.events.get(event.id);
+    if (
+      options?.expectedVersion !== undefined &&
+      current?.version !== options.expectedVersion
+    ) {
+      throw new DomainError(
+        "VERSION_CONFLICT",
+        "Outbox event version conflict",
+        {
+          outboxEventId: event.id,
+        },
+      );
+    }
+    this.events.set(event.id, event);
+    return event;
   }
 }

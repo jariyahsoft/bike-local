@@ -30,6 +30,8 @@ Source: `docs/Bike-Local-SRS.md` sections 4.2, 6, 7.29, 10, 11, 12.4, 12.5, 14.6
 - GPS consent must capture version, purpose, and explicit foreground/background scope before location data is processed beyond basic app operation.
 - Asset categories, assets, equipment items, inventory units, rental points, pricing rules, and availability blocks are tenant/store scoped backend writes.
 - Availability reservations must be created through backend transaction/version-safe logic so overlapping holds for the same asset/time range fail atomically.
+- Booking create, payment intent creation, webhook processing, cash confirmation, and deposit updates are backend-owned; frontend callbacks are never final payment proof.
+- Cash confirmation requires `payment.cash.confirm`, branch scope, financial audit logging, and cash receipt context.
 
 ## Permission Catalog
 
@@ -234,6 +236,7 @@ Current coverage from runnable tests:
 - Onboarding role validation, consent capture, duplicate auth identity rejection, and self-service account deletion request audit logging
 - Store owner registration, platform approval decisions, branch temporary closure audit, staff permission audit, and cross-tenant rejection
 - Inventory asset/category/equipment creation, duplicate store asset-code rejection, cross-tenant inventory denial, integer minor-unit pricing quote snapshots, availability hold conflicts, closed branch availability exclusion, and unsupported search-filter rejection
+- Booking create idempotency, availability reservation conflict rejection, booking state-machine invalid transition rejection, payment webhook proof/replay handling, cash confirmation permission/audit logging, and deposit release-before-inspection rejection
 - Firestore rules default-deny with public config exception
 - Firestore user-owned notification read exception
 - Storage public-read and owner-upload exceptions

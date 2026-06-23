@@ -13,7 +13,7 @@ import 'package:bike_local_generated_api_client/src/model/cash_confirmation_requ
 import 'package:bike_local_generated_api_client/src/model/create_payment_request.dart';
 import 'package:bike_local_generated_api_client/src/model/error_envelope.dart';
 import 'package:bike_local_generated_api_client/src/model/inline_object5.dart';
-import 'package:bike_local_generated_api_client/src/model/success_envelope.dart';
+import 'package:bike_local_generated_api_client/src/model/process_payment_webhook202_response.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/json_object.dart';
 
@@ -266,9 +266,9 @@ class PaymentApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [SuccessEnvelope] as data
+  /// Returns a [Future] containing a [Response] with a [ProcessPaymentWebhook202Response] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<SuccessEnvelope>> processPaymentWebhook({
+  Future<Response<ProcessPaymentWebhook202Response>> processPaymentWebhook({
     required String provider,
     required String idempotencyKey,
     required BuiltMap<String, JsonObject> requestBody,
@@ -323,14 +323,14 @@ class PaymentApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    SuccessEnvelope? _responseData;
+    ProcessPaymentWebhook202Response? _responseData;
 
     try {
       final rawResponse = _response.data;
       _responseData = rawResponse == null ? null : _serializers.deserialize(
         rawResponse,
-        specifiedType: const FullType(SuccessEnvelope),
-      ) as SuccessEnvelope;
+        specifiedType: const FullType(ProcessPaymentWebhook202Response),
+      ) as ProcessPaymentWebhook202Response;
 
     } catch (error, stackTrace) {
       throw DioException(
@@ -342,7 +342,7 @@ class PaymentApi {
       );
     }
 
-    return Response<SuccessEnvelope>(
+    return Response<ProcessPaymentWebhook202Response>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,

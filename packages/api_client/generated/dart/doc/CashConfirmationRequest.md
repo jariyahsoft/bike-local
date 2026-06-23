@@ -14,5 +14,7 @@ Name | Type | Description | Notes
 **branchId** | **String** |  |
 **notes** | **String** |  | [optional]
 **evidenceImageRef** | **String** |  | [optional]
+**correctionReason** | **String** |  | [optional]
+**cancelReason** | **String** |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

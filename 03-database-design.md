@@ -255,6 +255,7 @@ Money fields remain integer minor units. Current open pricing-policy questions, 
 | id | string | UUID/domain ID |
 | booking_number | string | human/reference number |
 | user_id, store_id, branch_id | string | refs |
+| asset_ids, equipment_ids | array | booked inventory snapshot |
 | status | enum | see Booking State |
 | start_at, end_at | timestamp | UTC |
 | pickup_point_id, return_point_id | string | refs |
@@ -262,8 +263,13 @@ Money fields remain integer minor units. Current open pricing-policy questions, 
 | currency | string | required |
 | subtotal_amount, fee_amount, deposit_amount, discount_amount, total_amount | integer | minor unit |
 | price_snapshot, policy_snapshot | object | immutable snapshot |
+| qr_booking_token_reference | string | one-time/time-limited token reference only |
+| idempotency_key | string | duplicate create protection |
+| status_history | array | state transitions with time, actor, reason |
 | created_at, updated_at | timestamp | UTC |
 | version | integer | optimistic concurrency |
+
+Booking creation reserves availability blocks in the same command flow and returns the existing booking for duplicate idempotency keys. Raw QR booking tokens are never stored; only token references are persisted.
 
 ## Firestore Index Draft
 
@@ -286,7 +292,7 @@ Expected composite indexes for Task 09 marketplace queries:
 | Field | Type | Notes |
 |---|---|---|
 | id | string | UUID/domain ID |
-| booking_id, user_id, store_id | string | refs |
+| booking_id, user_id, store_id, branch_id | string | refs |
 | provider | string | TBD |
 | provider_reference | string | external ref |
 | method | enum | gateway/cash/etc TBD |
@@ -296,8 +302,26 @@ Expected composite indexes for Task 09 marketplace queries:
 | idempotency_key | string | required for important commands |
 | paid_at | timestamp | optional |
 | confirmed_by | string | staff/admin/system |
+| cash_received_at, cash_notes, cash_evidence_image_ref | mixed | cash receipt audit context |
 | created_at, updated_at | timestamp | UTC |
 | version | integer | optimistic concurrency |
+
+Payment provider specifics remain behind adapter interfaces until ADR-006 is accepted. Webhooks require provider proof verification, write `payment_events`, deduplicate by `(provider, provider_event_id)`, and publish `outbox_events` after successful payment state transitions.
+
+### Deposit
+
+| Field | Type | Notes |
+|---|---|---|
+| id | string | UUID/domain ID |
+| booking_id, user_id, store_id, branch_id | string | refs |
+| status | enum | NOT_REQUIRED, PENDING, HELD, PARTIALLY_DEDUCTED, RELEASED, FORFEITED |
+| amount, deducted_amount | integer | minor unit |
+| currency | string | required |
+| held_at, released_at | timestamp | optional |
+| created_at, updated_at | timestamp | UTC |
+| version | integer | optimistic concurrency |
+
+Deposits cannot transition to `RELEASED` before return inspection reaches `INSPECTION_PENDING`, `COMPLETED`, or `DISPUTED`. Final refund, damage deduction, and forfeiture rules remain policy open questions.
 
 ### Ride Session and Track Chunk
 
@@ -356,6 +380,9 @@ Ride Session เก็บ summary และ reference ส่วน Track Chunk �
 - Availability checks must prevent overlapping confirmed bookings for same asset/time range
 - `ride_track_chunks`: unique `(ride_session_id, sequence)`
 - `payments`: unique idempotency key per command context
+- `payment_events`: unique `(provider, provider_event_id)` for webhook replay protection
+- `deposits`: query by `booking_id`, `store_id`, `status`
+- `outbox_events`: query by `type`, `aggregate_type`, `aggregate_id`, `occurred_at`
 - `audit_logs`: append-only by `resource`, `resource_id`, `actor`, `timestamp`
 - Geospatial search requires geohash or provider-specific index
 

@@ -25,6 +25,7 @@ part 'payment.g.dart';
 /// * [bookingId]
 /// * [userId]
 /// * [storeId]
+/// * [branchId]
 /// * [provider]
 /// * [providerReference]
 /// * [method]
@@ -34,20 +35,44 @@ part 'payment.g.dart';
 /// * [idempotencyKey]
 /// * [paidAt]
 /// * [confirmedBy]
+/// * [cashReceivedAt]
+/// * [cashNotes]
+/// * [cashEvidenceImageRef]
 @BuiltValue()
 abstract class Payment implements EntityBase, Built<Payment, PaymentBuilder> {
+  @BuiltValueField(wireName: r'branch_id')
+  String get branchId;
+
   @BuiltValueField(wireName: r'amount')
   int get amount;
+
+  @BuiltValueField(wireName: r'cash_notes')
+  String? get cashNotes;
 
   @BuiltValueField(wireName: r'method')
   PaymentMethodEnum get method;
   // enum methodEnum {  GATEWAY,  CASH,  };
 
-  @BuiltValueField(wireName: r'provider')
-  String? get provider;
-
   @BuiltValueField(wireName: r'idempotency_key')
   String get idempotencyKey;
+
+  @BuiltValueField(wireName: r'cash_evidence_image_ref')
+  String? get cashEvidenceImageRef;
+
+  @BuiltValueField(wireName: r'store_id')
+  String get storeId;
+
+  @BuiltValueField(wireName: r'cash_received_at')
+  DateTime? get cashReceivedAt;
+
+  @BuiltValueField(wireName: r'user_id')
+  String get userId;
+
+  @BuiltValueField(wireName: r'booking_id')
+  String get bookingId;
+
+  @BuiltValueField(wireName: r'provider')
+  String? get provider;
 
   @BuiltValueField(wireName: r'provider_reference')
   String? get providerReference;
@@ -60,15 +85,6 @@ abstract class Payment implements EntityBase, Built<Payment, PaymentBuilder> {
 
   @BuiltValueField(wireName: r'currency')
   String get currency;
-
-  @BuiltValueField(wireName: r'store_id')
-  String get storeId;
-
-  @BuiltValueField(wireName: r'user_id')
-  String get userId;
-
-  @BuiltValueField(wireName: r'booking_id')
-  String get bookingId;
 
   @BuiltValueField(wireName: r'status')
   PaymentStatusEnum get status;
@@ -97,11 +113,64 @@ class _$PaymentSerializer implements PrimitiveSerializer<Payment> {
     Payment object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
+    yield r'created_at';
+    yield serializers.serialize(
+      object.createdAt,
+      specifiedType: const FullType(DateTime),
+    );
+    if (object.provider != null) {
+      yield r'provider';
+      yield serializers.serialize(
+        object.provider,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.providerReference != null) {
+      yield r'provider_reference';
+      yield serializers.serialize(
+        object.providerReference,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.confirmedBy != null) {
+      yield r'confirmed_by';
+      yield serializers.serialize(
+        object.confirmedBy,
+        specifiedType: const FullType(String),
+      );
+    }
+    yield r'currency';
+    yield serializers.serialize(
+      object.currency,
+      specifiedType: const FullType(String),
+    );
+    yield r'id';
+    yield serializers.serialize(
+      object.id,
+      specifiedType: const FullType(String),
+    );
+    yield r'updated_at';
+    yield serializers.serialize(
+      object.updatedAt,
+      specifiedType: const FullType(DateTime),
+    );
+    yield r'branch_id';
+    yield serializers.serialize(
+      object.branchId,
+      specifiedType: const FullType(String),
+    );
     yield r'amount';
     yield serializers.serialize(
       object.amount,
       specifiedType: const FullType(int),
     );
+    if (object.cashNotes != null) {
+      yield r'cash_notes';
+      yield serializers.serialize(
+        object.cashNotes,
+        specifiedType: const FullType(String),
+      );
+    }
     yield r'schema_version';
     yield serializers.serialize(
       object.schemaVersion,
@@ -124,11 +193,25 @@ class _$PaymentSerializer implements PrimitiveSerializer<Payment> {
       object.idempotencyKey,
       specifiedType: const FullType(String),
     );
+    if (object.cashEvidenceImageRef != null) {
+      yield r'cash_evidence_image_ref';
+      yield serializers.serialize(
+        object.cashEvidenceImageRef,
+        specifiedType: const FullType(String),
+      );
+    }
     yield r'store_id';
     yield serializers.serialize(
       object.storeId,
       specifiedType: const FullType(String),
     );
+    if (object.cashReceivedAt != null) {
+      yield r'cash_received_at';
+      yield serializers.serialize(
+        object.cashReceivedAt,
+        specifiedType: const FullType(DateTime),
+      );
+    }
     yield r'user_id';
     yield serializers.serialize(
       object.userId,
@@ -144,11 +227,6 @@ class _$PaymentSerializer implements PrimitiveSerializer<Payment> {
       object.bookingId,
       specifiedType: const FullType(String),
     );
-    yield r'created_at';
-    yield serializers.serialize(
-      object.createdAt,
-      specifiedType: const FullType(DateTime),
-    );
     if (object.deletedAt != null) {
       yield r'deleted_at';
       yield serializers.serialize(
@@ -156,31 +234,10 @@ class _$PaymentSerializer implements PrimitiveSerializer<Payment> {
         specifiedType: const FullType(DateTime),
       );
     }
-    if (object.provider != null) {
-      yield r'provider';
-      yield serializers.serialize(
-        object.provider,
-        specifiedType: const FullType(String),
-      );
-    }
     if (object.createdBy != null) {
       yield r'created_by';
       yield serializers.serialize(
         object.createdBy,
-        specifiedType: const FullType(String),
-      );
-    }
-    if (object.providerReference != null) {
-      yield r'provider_reference';
-      yield serializers.serialize(
-        object.providerReference,
-        specifiedType: const FullType(String),
-      );
-    }
-    if (object.confirmedBy != null) {
-      yield r'confirmed_by';
-      yield serializers.serialize(
-        object.confirmedBy,
         specifiedType: const FullType(String),
       );
     }
@@ -198,25 +255,10 @@ class _$PaymentSerializer implements PrimitiveSerializer<Payment> {
         specifiedType: const FullType(DateTime),
       );
     }
-    yield r'currency';
-    yield serializers.serialize(
-      object.currency,
-      specifiedType: const FullType(String),
-    );
-    yield r'id';
-    yield serializers.serialize(
-      object.id,
-      specifiedType: const FullType(String),
-    );
     yield r'status';
     yield serializers.serialize(
       object.status,
       specifiedType: const FullType(PaymentStatusEnum),
-    );
-    yield r'updated_at';
-    yield serializers.serialize(
-      object.updatedAt,
-      specifiedType: const FullType(DateTime),
     );
   }
 
@@ -241,12 +283,75 @@ class _$PaymentSerializer implements PrimitiveSerializer<Payment> {
       final key = serializedList[i] as String;
       final value = serializedList[i + 1];
       switch (key) {
+        case r'created_at':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(DateTime),
+          ) as DateTime;
+          result.createdAt = valueDes;
+          break;
+        case r'provider':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.provider = valueDes;
+          break;
+        case r'provider_reference':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.providerReference = valueDes;
+          break;
+        case r'confirmed_by':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.confirmedBy = valueDes;
+          break;
+        case r'currency':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.currency = valueDes;
+          break;
+        case r'id':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.id = valueDes;
+          break;
+        case r'updated_at':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(DateTime),
+          ) as DateTime;
+          result.updatedAt = valueDes;
+          break;
+        case r'branch_id':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.branchId = valueDes;
+          break;
         case r'amount':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(int),
           ) as int;
           result.amount = valueDes;
+          break;
+        case r'cash_notes':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.cashNotes = valueDes;
           break;
         case r'schema_version':
           final valueDes = serializers.deserialize(
@@ -276,12 +381,26 @@ class _$PaymentSerializer implements PrimitiveSerializer<Payment> {
           ) as String;
           result.idempotencyKey = valueDes;
           break;
+        case r'cash_evidence_image_ref':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.cashEvidenceImageRef = valueDes;
+          break;
         case r'store_id':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(String),
           ) as String;
           result.storeId = valueDes;
+          break;
+        case r'cash_received_at':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(DateTime),
+          ) as DateTime;
+          result.cashReceivedAt = valueDes;
           break;
         case r'user_id':
           final valueDes = serializers.deserialize(
@@ -304,13 +423,6 @@ class _$PaymentSerializer implements PrimitiveSerializer<Payment> {
           ) as String;
           result.bookingId = valueDes;
           break;
-        case r'created_at':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(DateTime),
-          ) as DateTime;
-          result.createdAt = valueDes;
-          break;
         case r'deleted_at':
           final valueDes = serializers.deserialize(
             value,
@@ -318,33 +430,12 @@ class _$PaymentSerializer implements PrimitiveSerializer<Payment> {
           ) as DateTime;
           result.deletedAt = valueDes;
           break;
-        case r'provider':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.provider = valueDes;
-          break;
         case r'created_by':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(String),
           ) as String;
           result.createdBy = valueDes;
-          break;
-        case r'provider_reference':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.providerReference = valueDes;
-          break;
-        case r'confirmed_by':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.confirmedBy = valueDes;
           break;
         case r'tenant_id':
           final valueDes = serializers.deserialize(
@@ -360,33 +451,12 @@ class _$PaymentSerializer implements PrimitiveSerializer<Payment> {
           ) as DateTime;
           result.paidAt = valueDes;
           break;
-        case r'currency':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.currency = valueDes;
-          break;
-        case r'id':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.id = valueDes;
-          break;
         case r'status':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(PaymentStatusEnum),
           ) as PaymentStatusEnum;
           result.status = valueDes;
-          break;
-        case r'updated_at':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(DateTime),
-          ) as DateTime;
-          result.updatedAt = valueDes;
           break;
         default:
           unhandled.add(key);

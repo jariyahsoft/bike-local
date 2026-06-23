@@ -865,7 +865,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SuccessEnvelope"
+                allOf:
+                  - $ref: "#/components/schemas/SuccessEnvelope"
+                  - type: object
+                    required: [data]
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/PaymentWebhookAccepted"
         "401":
           $ref: "#/components/responses/Unauthorized"
         "409":
@@ -1614,7 +1620,7 @@ components:
       properties:
         code:
           type: string
-          pattern: "^(AUTH|PERMISSION|VALIDATION|USER|STORE|BRANCH|STAFF|ASSET|INVENTORY|PRICING|SEARCH|AVAILABILITY|BOOKING|PAYMENT|RIDE|RETURN|SOS|CONTENT|RATE_LIMIT|INTERNAL)_[A-Z0-9_]+$"
+          pattern: "^(AUTH|PERMISSION|VALIDATION|USER|STORE|BRANCH|STAFF|ASSET|INVENTORY|PRICING|SEARCH|AVAILABILITY|BOOKING|PAYMENT|DEPOSIT|RIDE|RETURN|SOS|CONTENT|RATE_LIMIT|INTERNAL)_[A-Z0-9_]+$"
         message:
           type: string
         details:
@@ -2145,7 +2151,7 @@ components:
       allOf:
         - $ref: "#/components/schemas/EntityBase"
         - type: object
-          required: [booking_number, user_id, store_id, branch_id, status, start_at, end_at, payment_method, currency, subtotal_amount, fee_amount, deposit_amount, discount_amount, total_amount, booking_items]
+          required: [booking_number, user_id, store_id, branch_id, asset_ids, equipment_ids, status, start_at, end_at, pickup_point_id, return_point_id, payment_method, currency, subtotal_amount, fee_amount, deposit_amount, discount_amount, total_amount, price_snapshot, policy_snapshot, qr_booking_token_reference, status_history, booking_items]
           properties:
             booking_number:
               type: string
@@ -2155,6 +2161,14 @@ components:
               type: string
             branch_id:
               type: string
+            asset_ids:
+              type: array
+              items:
+                type: string
+            equipment_ids:
+              type: array
+              items:
+                type: string
             status:
               $ref: "#/components/schemas/BookingStatus"
             start_at:
@@ -2186,6 +2200,13 @@ components:
             policy_snapshot:
               type: object
               additionalProperties: true
+            qr_booking_token_reference:
+              type: string
+              description: One-time or time-limited booking QR token reference; raw token secret is not returned.
+            status_history:
+              type: array
+              items:
+                $ref: "#/components/schemas/BookingStatusTransition"
             booking_items:
               type: array
               items:
@@ -2193,6 +2214,20 @@ components:
     BookingStatus:
       type: string
       enum: [PENDING_PAYMENT, PENDING_STORE_CONFIRMATION, CONFIRMED, PREPARING, AWAITING_PICKUP, IN_PROGRESS, RETURN_PENDING, INSPECTION_PENDING, COMPLETED, CANCELLED, NO_SHOW, DISPUTED]
+    BookingStatusTransition:
+      type: object
+      required: [from_status, to_status, changed_at]
+      properties:
+        from_status:
+          $ref: "#/components/schemas/BookingStatus"
+        to_status:
+          $ref: "#/components/schemas/BookingStatus"
+        changed_at:
+          $ref: "#/components/schemas/IsoDateTime"
+        changed_by_user_id:
+          type: string
+        reason:
+          type: string
     BookingItem:
       allOf:
         - $ref: "#/components/schemas/EntityBase"
@@ -2215,13 +2250,15 @@ components:
       allOf:
         - $ref: "#/components/schemas/EntityBase"
         - type: object
-          required: [booking_id, user_id, store_id, method, status, amount, currency, idempotency_key]
+          required: [booking_id, user_id, store_id, branch_id, method, status, amount, currency, idempotency_key]
           properties:
             booking_id:
               type: string
             user_id:
               type: string
             store_id:
+              type: string
+            branch_id:
               type: string
             provider:
               type: string
@@ -2243,6 +2280,22 @@ components:
               $ref: "#/components/schemas/IsoDateTime"
             confirmed_by:
               type: string
+            cash_received_at:
+              $ref: "#/components/schemas/IsoDateTime"
+            cash_notes:
+              type: string
+            cash_evidence_image_ref:
+              type: string
+    PaymentWebhookAccepted:
+      type: object
+      required: [accepted, replayed]
+      properties:
+        accepted:
+          type: boolean
+        replayed:
+          type: boolean
+        payment_id:
+          type: string
     Deposit:
       allOf:
         - $ref: "#/components/schemas/EntityBase"
@@ -3074,6 +3127,10 @@ components:
           type: string
         evidence_image_ref:
           type: string
+        correction_reason:
+          type: string
+        cancel_reason:
+          type: string
     HandoverRequest:
       type: object
       required: [staff_user_id, checklist_image_refs, condition_notes, version]
@@ -3245,6 +3302,8 @@ components:
           user_id: usr_123
           store_id: store_123
           branch_id: brn_123
+          asset_ids: [ast_123]
+          equipment_ids: []
           status: PENDING_PAYMENT
           start_at: "2026-07-01T02:00:00Z"
           end_at: "2026-07-01T06:00:00Z"
@@ -3257,6 +3316,14 @@ components:
           deposit_amount: 100000
           discount_amount: 0
           total_amount: 130000
+          price_snapshot:
+            asset_ids: [ast_123]
+            duration_hours: 4
+          policy_snapshot:
+            payment_method: ONLINE
+            deposit_required: true
+          qr_booking_token_reference: qr_booking_ref_123
+          status_history: []
           booking_items: []
         meta:
           request_id: req_123
@@ -3272,6 +3339,7 @@ components:
           booking_id: bkg_123
           user_id: usr_123
           store_id: store_123
+          branch_id: brn_123
           method: GATEWAY
           status: PROCESSING
           amount: 130000

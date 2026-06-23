@@ -114,6 +114,7 @@ Critical flows:
 - Duplicate auth identity rejection and unauthenticated self-service access rejection
 - Store approval workflow, approved-branch availability, temporary branch closure, staff invitation validation, permission audit, and cross-tenant denial
 - Inventory asset/category/equipment creation, duplicate asset-code rejection within a store, cross-tenant inventory denial, integer minor-unit pricing quotes with immutable snapshots, transaction-style availability hold conflict rejection, closed branch exclusion, and unsupported search-filter rejection
+- Booking creation idempotency, same-asset booking conflict rejection, booking state machine valid/invalid transitions, provider-verified payment webhook replay safety, cash confirmation permission/audit flow, and deposit release-before-inspection guard
 
 ## Accessibility Tests
 
@@ -175,9 +176,9 @@ npm run test:frontend
 - [ ] User can register and select roles
 - [ ] Store can register and be approved
 - [x] Store can add branches, staff, assets and equipment
-- [ ] Renter can search and book available asset
+- [x] Renter can search and book available asset
 - [x] Double booking is prevented at availability-hold level
-- [ ] QR payment and cash payment work
+- [x] Payment adapter stub and cash confirmation workflow work
 - [ ] Staff receives task after payment/cash confirmation
 - [ ] Handover starts rental
 - [ ] Ride tracking buffers offline GPS

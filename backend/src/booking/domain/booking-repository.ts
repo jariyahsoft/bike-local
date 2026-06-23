@@ -3,10 +3,12 @@ import type {
   BookingId,
   BranchId,
   EntityTimestamps,
-  EntityVersion,
+  EquipmentItemId,
+  IdempotencyKey,
   Money,
   Page,
   PageRequest,
+  RentalPointId,
   StoreId,
   TenantId,
   TenantScopedEntity,
@@ -29,20 +31,42 @@ export type BookingStatus =
   | "CANCELLED"
   | "NO_SHOW"
   | "DISPUTED";
+export type BookingPaymentMethod = "ONLINE" | "CASH";
+
+export interface BookingStatusTransition {
+  readonly fromStatus: BookingStatus;
+  readonly toStatus: BookingStatus;
+  readonly changedAt: IsoUtcDateTime;
+  readonly changedByUserId?: UserId | undefined;
+  readonly reason?: string | undefined;
+}
 
 export interface Booking
   extends TenantScopedEntity, VersionedEntity, EntityTimestamps {
   readonly id: BookingId;
+  readonly bookingNumber: string;
   readonly userId: UserId;
   readonly storeId: StoreId;
   readonly branchId: BranchId;
   readonly assetIds: readonly AssetId[];
+  readonly equipmentIds: readonly EquipmentItemId[];
   readonly status: BookingStatus;
   readonly startAt: IsoUtcDateTime;
   readonly endAt: IsoUtcDateTime;
-  readonly total: Money;
-  readonly deposit: Money;
+  readonly pickupPointId: RentalPointId;
+  readonly returnPointId: RentalPointId;
+  readonly paymentMethod: BookingPaymentMethod;
+  readonly currency: string;
+  readonly subtotalAmount: Money["amount"];
+  readonly feeAmount: Money["amount"];
+  readonly depositAmount: Money["amount"];
+  readonly discountAmount: Money["amount"];
+  readonly totalAmount: Money["amount"];
+  readonly priceSnapshot: Readonly<Record<string, unknown>>;
   readonly policySnapshot: Readonly<Record<string, unknown>>;
+  readonly qrBookingTokenReference: string;
+  readonly idempotencyKey: IdempotencyKey;
+  readonly statusHistory: readonly BookingStatusTransition[];
 }
 
 export interface BookingSearchFilter {
@@ -54,6 +78,7 @@ export interface BookingSearchFilter {
 }
 
 export interface BookingRepository extends Repository<Booking, BookingId> {
+  findByIdempotencyKey(key: IdempotencyKey): Promise<Booking | null>;
   findOverlappingConfirmedBooking(
     assetId: AssetId,
     startAt: IsoUtcDateTime,

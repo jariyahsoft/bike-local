@@ -7,6 +7,7 @@ import type {
 import type {
   AssetId,
   BookingId,
+  IdempotencyKey,
   IsoUtcDateTime,
   Page,
   PageRequest,
@@ -18,6 +19,14 @@ export class InMemoryBookingRepository implements BookingRepository {
 
   async findById(id: BookingId): Promise<Booking | null> {
     return this.bookings.get(id) ?? null;
+  }
+
+  async findByIdempotencyKey(key: IdempotencyKey): Promise<Booking | null> {
+    return (
+      [...this.bookings.values()].find(
+        (booking) => booking.idempotencyKey === key,
+      ) ?? null
+    );
   }
 
   async findOverlappingConfirmedBooking(

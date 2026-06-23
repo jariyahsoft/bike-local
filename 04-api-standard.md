@@ -150,6 +150,7 @@ Payment webhook:
 - ห้ามเชื่อ frontend callback เป็นหลักฐานการชำระเงิน
 - บันทึก `payment_events`
 - Publish outbox event หลัง state transition สำเร็จ
+- Provider-specific payment intent and webhook logic stays behind adapter interfaces until ADR-006 is accepted.
 
 Outbox event ควรมี:
 

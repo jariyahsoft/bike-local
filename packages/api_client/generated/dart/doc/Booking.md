@@ -21,11 +21,13 @@ Name | Type | Description | Notes
 **userId** | **String** |  |
 **storeId** | **String** |  |
 **branchId** | **String** |  |
+**assetIds** | **BuiltList&lt;String&gt;** |  |
+**equipmentIds** | **BuiltList&lt;String&gt;** |  |
 **status** | [**BookingStatus**](BookingStatus.md) |  |
 **startAt** | [**DateTime**](DateTime.md) |  |
 **endAt** | [**DateTime**](DateTime.md) |  |
-**pickupPointId** | **String** |  | [optional]
-**returnPointId** | **String** |  | [optional]
+**pickupPointId** | **String** |  |
+**returnPointId** | **String** |  |
 **paymentMethod** | **String** |  |
 **currency** | **String** |  |
 **subtotalAmount** | **int** |  |
@@ -33,8 +35,10 @@ Name | Type | Description | Notes
 **depositAmount** | **int** |  |
 **discountAmount** | **int** |  |
 **totalAmount** | **int** |  |
-**priceSnapshot** | [**BuiltMap&lt;String, JsonObject&gt;**](JsonObject.md) |  | [optional]
-**policySnapshot** | [**BuiltMap&lt;String, JsonObject&gt;**](JsonObject.md) |  | [optional]
+**priceSnapshot** | [**BuiltMap&lt;String, JsonObject&gt;**](JsonObject.md) |  |
+**policySnapshot** | [**BuiltMap&lt;String, JsonObject&gt;**](JsonObject.md) |  |
+**qrBookingTokenReference** | **String** | One-time or time-limited booking QR token reference; raw token secret is not returned. |
+**statusHistory** | [**BuiltList&lt;BookingStatusTransition&gt;**](BookingStatusTransition.md) |  |
 **bookingItems** | [**BuiltList&lt;BookingItem&gt;**](BookingItem.md) |  |
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
