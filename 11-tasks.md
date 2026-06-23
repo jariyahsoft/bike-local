@@ -59,11 +59,11 @@ Foundation / Sprint 0
 ### Design
 
 - [ ] Confirm brand/design direction
-- [ ] Create design tokens
-- [ ] Create page inventory for renter, merchant and admin
-- [ ] Create UI states for loading, empty, error, success, permission denied and offline
-- [ ] Define SOS component behavior
-- [ ] Define i18n content workflow
+- [x] Create design tokens
+- [x] Create page inventory for renter, merchant and admin
+- [x] Create UI states for loading, empty, error, success, permission denied and offline
+- [x] Define SOS component behavior
+- [x] Define i18n content workflow
 
 ### Testing and CI/CD
 
