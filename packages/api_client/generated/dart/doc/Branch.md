@@ -28,7 +28,10 @@ Name | Type | Description | Notes
 **geohash** | **String** |  | [optional] 
 **phone** | **String** |  | [optional] 
 **openingHours** | [**BuiltMap&lt;String, JsonObject&gt;**](JsonObject.md) |  | [optional] 
+**timezone** | **String** |  | 
 **status** | **String** |  | 
+**temporaryClosure** | [**TemporaryClosure**](TemporaryClosure.md) |  | [optional] 
+**availableForBooking** | **bool** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

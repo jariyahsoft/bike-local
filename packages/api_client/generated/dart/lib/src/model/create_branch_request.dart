@@ -15,11 +15,15 @@ part 'create_branch_request.g.dart';
 /// Properties:
 /// * [name] 
 /// * [address] 
+/// * [province] 
+/// * [district] 
 /// * [country] 
 /// * [latitude] 
 /// * [longitude] 
+/// * [geohash] 
 /// * [phone] 
 /// * [openingHours] 
+/// * [timezone] 
 @BuiltValue()
 abstract class CreateBranchRequest implements Built<CreateBranchRequest, CreateBranchRequestBuilder> {
   @BuiltValueField(wireName: r'name')
@@ -27,6 +31,12 @@ abstract class CreateBranchRequest implements Built<CreateBranchRequest, CreateB
 
   @BuiltValueField(wireName: r'address')
   String get address;
+
+  @BuiltValueField(wireName: r'province')
+  String? get province;
+
+  @BuiltValueField(wireName: r'district')
+  String? get district;
 
   @BuiltValueField(wireName: r'country')
   String get country;
@@ -37,11 +47,17 @@ abstract class CreateBranchRequest implements Built<CreateBranchRequest, CreateB
   @BuiltValueField(wireName: r'longitude')
   num get longitude;
 
+  @BuiltValueField(wireName: r'geohash')
+  String? get geohash;
+
   @BuiltValueField(wireName: r'phone')
   String? get phone;
 
   @BuiltValueField(wireName: r'opening_hours')
   BuiltMap<String, JsonObject?>? get openingHours;
+
+  @BuiltValueField(wireName: r'timezone')
+  String? get timezone;
 
   CreateBranchRequest._();
 
@@ -76,6 +92,20 @@ class _$CreateBranchRequestSerializer implements PrimitiveSerializer<CreateBranc
       object.address,
       specifiedType: const FullType(String),
     );
+    if (object.province != null) {
+      yield r'province';
+      yield serializers.serialize(
+        object.province,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.district != null) {
+      yield r'district';
+      yield serializers.serialize(
+        object.district,
+        specifiedType: const FullType(String),
+      );
+    }
     yield r'country';
     yield serializers.serialize(
       object.country,
@@ -91,6 +121,13 @@ class _$CreateBranchRequestSerializer implements PrimitiveSerializer<CreateBranc
       object.longitude,
       specifiedType: const FullType(num),
     );
+    if (object.geohash != null) {
+      yield r'geohash';
+      yield serializers.serialize(
+        object.geohash,
+        specifiedType: const FullType(String),
+      );
+    }
     if (object.phone != null) {
       yield r'phone';
       yield serializers.serialize(
@@ -103,6 +140,13 @@ class _$CreateBranchRequestSerializer implements PrimitiveSerializer<CreateBranc
       yield serializers.serialize(
         object.openingHours,
         specifiedType: const FullType(BuiltMap, [FullType(String), FullType.nullable(JsonObject)]),
+      );
+    }
+    if (object.timezone != null) {
+      yield r'timezone';
+      yield serializers.serialize(
+        object.timezone,
+        specifiedType: const FullType(String),
       );
     }
   }
@@ -142,6 +186,20 @@ class _$CreateBranchRequestSerializer implements PrimitiveSerializer<CreateBranc
           ) as String;
           result.address = valueDes;
           break;
+        case r'province':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.province = valueDes;
+          break;
+        case r'district':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.district = valueDes;
+          break;
         case r'country':
           final valueDes = serializers.deserialize(
             value,
@@ -163,6 +221,13 @@ class _$CreateBranchRequestSerializer implements PrimitiveSerializer<CreateBranc
           ) as num;
           result.longitude = valueDes;
           break;
+        case r'geohash':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.geohash = valueDes;
+          break;
         case r'phone':
           final valueDes = serializers.deserialize(
             value,
@@ -176,6 +241,13 @@ class _$CreateBranchRequestSerializer implements PrimitiveSerializer<CreateBranc
             specifiedType: const FullType(BuiltMap, [FullType(String), FullType.nullable(JsonObject)]),
           ) as BuiltMap<String, JsonObject?>;
           result.openingHours.replace(valueDes);
+          break;
+        case r'timezone':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.timezone = valueDes;
           break;
         default:
           unhandled.add(key);

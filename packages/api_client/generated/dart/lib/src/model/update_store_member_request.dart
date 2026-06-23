@@ -15,6 +15,8 @@ part 'update_store_member_request.g.dart';
 /// Properties:
 /// * [role] 
 /// * [branchIds] 
+/// * [grantedPermissions] 
+/// * [deniedPermissions] 
 /// * [status] 
 /// * [version] 
 @BuiltValue()
@@ -25,6 +27,12 @@ abstract class UpdateStoreMemberRequest implements Built<UpdateStoreMemberReques
 
   @BuiltValueField(wireName: r'branch_ids')
   BuiltList<String>? get branchIds;
+
+  @BuiltValueField(wireName: r'granted_permissions')
+  BuiltList<String>? get grantedPermissions;
+
+  @BuiltValueField(wireName: r'denied_permissions')
+  BuiltList<String>? get deniedPermissions;
 
   @BuiltValueField(wireName: r'status')
   UpdateStoreMemberRequestStatusEnum? get status;
@@ -67,6 +75,20 @@ class _$UpdateStoreMemberRequestSerializer implements PrimitiveSerializer<Update
       yield r'branch_ids';
       yield serializers.serialize(
         object.branchIds,
+        specifiedType: const FullType(BuiltList, [FullType(String)]),
+      );
+    }
+    if (object.grantedPermissions != null) {
+      yield r'granted_permissions';
+      yield serializers.serialize(
+        object.grantedPermissions,
+        specifiedType: const FullType(BuiltList, [FullType(String)]),
+      );
+    }
+    if (object.deniedPermissions != null) {
+      yield r'denied_permissions';
+      yield serializers.serialize(
+        object.deniedPermissions,
         specifiedType: const FullType(BuiltList, [FullType(String)]),
       );
     }
@@ -118,6 +140,20 @@ class _$UpdateStoreMemberRequestSerializer implements PrimitiveSerializer<Update
             specifiedType: const FullType(BuiltList, [FullType(String)]),
           ) as BuiltList<String>;
           result.branchIds.replace(valueDes);
+          break;
+        case r'granted_permissions':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(BuiltList, [FullType(String)]),
+          ) as BuiltList<String>;
+          result.grantedPermissions.replace(valueDes);
+          break;
+        case r'denied_permissions':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(BuiltList, [FullType(String)]),
+          ) as BuiltList<String>;
+          result.deniedPermissions.replace(valueDes);
           break;
         case r'status':
           final valueDes = serializers.deserialize(

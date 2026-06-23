@@ -82,6 +82,9 @@ Active ride -> SOS -> Select issue -> Send latest location -> Staff acknowledge 
 - Return request: return type, evidence photos, GPS confirmation, notes, submit
 - Merchant dashboard: today bookings, pending handovers, pending returns, cash confirmations, SOS alerts
 - Admin approval: queue, document preview, decision reason, audit trail
+- Merchant store setup: draft details, document metadata status, submit-for-review state, revision-required state
+- Merchant branch management: branch list, temporary closure reason/reopen date, booking-availability indicator
+- Merchant staff management: invite channel, role selection, branch scope, permission override review, suspension state
 
 ## UI States
 
@@ -103,6 +106,8 @@ Online-required operations:
 - Confirm return
 - Change permission
 - Approve store
+- Submit store for approval
+- Update staff permissions
 - Refund
 
 ## Design Tokens

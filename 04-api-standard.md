@@ -178,8 +178,8 @@ Event types ขั้นต่ำ:
 | Module | Example endpoints |
 |---|---|
 | Identity/Users | `POST /api/v1/users`, `GET /api/v1/me`, `PATCH /api/v1/me`, `POST /api/v1/me/deletion-request` |
-| Stores | `POST /api/v1/stores`, `GET /api/v1/stores`, `PATCH /api/v1/stores/{id}` |
-| Branches | `POST /api/v1/stores/{storeId}/branches`, `GET /api/v1/branches/{id}` |
+| Stores | `POST /api/v1/stores`, `GET /api/v1/stores`, `PATCH /api/v1/stores/{id}`, `POST /api/v1/stores/{id}/submit`, `POST /api/v1/stores/{id}/approval-decisions` |
+| Branches | `POST /api/v1/stores/{storeId}/branches`, `GET /api/v1/branches/{id}`, `PATCH /api/v1/branches/{id}` |
 | Staff | `POST /api/v1/stores/{storeId}/staff-invitations`, `PATCH /api/v1/store-members/{id}` |
 | Assets | `POST /api/v1/assets`, `GET /api/v1/assets`, `PATCH /api/v1/assets/{id}` |
 | Search | `GET /api/v1/search/stores`, `GET /api/v1/search/assets` |

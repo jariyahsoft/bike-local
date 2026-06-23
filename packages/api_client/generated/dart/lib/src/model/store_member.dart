@@ -28,9 +28,14 @@ part 'store_member.g.dart';
 /// * [role] 
 /// * [branchIds] 
 /// * [permissions] 
+/// * [grantedPermissions] 
+/// * [deniedPermissions] 
 /// * [status] 
 @BuiltValue()
 abstract class StoreMember implements EntityBase, Built<StoreMember, StoreMemberBuilder> {
+  @BuiltValueField(wireName: r'denied_permissions')
+  BuiltList<String>? get deniedPermissions;
+
   @BuiltValueField(wireName: r'role')
   Role get role;
   // enum roleEnum {  RENTER,  STORE_OWNER,  STORE_MANAGER,  STORE_STAFF,  STORE_ACCOUNTING,  PLATFORM_ADMIN,  PLATFORM_MODERATOR,  PLATFORM_SUPPORT,  };
@@ -43,6 +48,9 @@ abstract class StoreMember implements EntityBase, Built<StoreMember, StoreMember
 
   @BuiltValueField(wireName: r'store_id')
   String get storeId;
+
+  @BuiltValueField(wireName: r'granted_permissions')
+  BuiltList<String>? get grantedPermissions;
 
   @BuiltValueField(wireName: r'user_id')
   String get userId;
@@ -106,6 +114,13 @@ class _$StoreMemberSerializer implements PrimitiveSerializer<StoreMember> {
       object.version,
       specifiedType: const FullType(int),
     );
+    if (object.deniedPermissions != null) {
+      yield r'denied_permissions';
+      yield serializers.serialize(
+        object.deniedPermissions,
+        specifiedType: const FullType(BuiltList, [FullType(String)]),
+      );
+    }
     yield r'created_at';
     yield serializers.serialize(
       object.createdAt,
@@ -149,6 +164,13 @@ class _$StoreMemberSerializer implements PrimitiveSerializer<StoreMember> {
       object.id,
       specifiedType: const FullType(String),
     );
+    if (object.grantedPermissions != null) {
+      yield r'granted_permissions';
+      yield serializers.serialize(
+        object.grantedPermissions,
+        specifiedType: const FullType(BuiltList, [FullType(String)]),
+      );
+    }
     yield r'status';
     yield serializers.serialize(
       object.status,
@@ -224,6 +246,13 @@ class _$StoreMemberSerializer implements PrimitiveSerializer<StoreMember> {
           ) as int;
           result.version = valueDes;
           break;
+        case r'denied_permissions':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(BuiltList, [FullType(String)]),
+          ) as BuiltList<String>;
+          result.deniedPermissions.replace(valueDes);
+          break;
         case r'created_at':
           final valueDes = serializers.deserialize(
             value,
@@ -272,6 +301,13 @@ class _$StoreMemberSerializer implements PrimitiveSerializer<StoreMember> {
             specifiedType: const FullType(String),
           ) as String;
           result.id = valueDes;
+          break;
+        case r'granted_permissions':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(BuiltList, [FullType(String)]),
+          ) as BuiltList<String>;
+          result.grantedPermissions.replace(valueDes);
           break;
         case r'status':
           final valueDes = serializers.deserialize(

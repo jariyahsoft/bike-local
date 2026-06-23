@@ -22,6 +22,8 @@ Name | Type | Description | Notes
 **role** | [**Role**](Role.md) |  | 
 **branchIds** | **BuiltList&lt;String&gt;** |  | 
 **permissions** | **BuiltList&lt;String&gt;** |  | [optional] 
+**grantedPermissions** | **BuiltList&lt;String&gt;** |  | [optional] 
+**deniedPermissions** | **BuiltList&lt;String&gt;** |  | [optional] 
 **status** | **String** |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

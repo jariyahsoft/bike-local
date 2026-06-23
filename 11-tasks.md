@@ -87,11 +87,11 @@ Foundation / Sprint 0
 
 ### Store and Branch
 
-- [ ] Store registration API
-- [ ] Document upload metadata
-- [ ] Store approval workflow
-- [ ] Branch CRUD
-- [ ] Temporary closure support
+- [x] Store registration API
+- [x] Document upload metadata
+- [x] Store approval workflow
+- [x] Branch CRUD
+- [x] Temporary closure support
 
 ### Inventory and Pricing
 
@@ -160,8 +160,9 @@ Foundation / Sprint 0
 ## Verification Checklist
 
 - [x] User signup and role selection works
-- [ ] Store approval flow works
-- [ ] Store can manage branch, staff, assets and equipment
+- [x] Store approval flow works
+- [x] Store can manage branch and staff
+- [ ] Store can manage assets and equipment
 - [ ] Search and booking work with availability
 - [ ] Double booking is prevented
 - [ ] QR payment and cash confirmation work
@@ -172,7 +173,8 @@ Foundation / Sprint 0
 - [ ] Deposit is not released before inspection
 - [ ] SOS opens with latest location and escalates
 - [ ] Reports load
-- [ ] Admin approval and audit search work
+- [x] Admin approval works with audit logging
+- [ ] Audit search works
 - [x] Contract tests pass
 
 ## Deployment Checklist

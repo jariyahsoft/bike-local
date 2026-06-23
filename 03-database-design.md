@@ -152,9 +152,16 @@ Notes:
 | default_currency | string | e.g. THB |
 | timezone | string | required |
 | approval_status | enum | see Store Status |
+| operational_status | enum | DRAFT, ACTIVE, INACTIVE, SUSPENDED, CLOSED |
 | commission_plan_id | string | TBD |
+| document_metadata | array | metadata only; actual files live in restricted storage paths |
+| submitted_at, reviewed_at | timestamp | optional UTC workflow timestamps |
+| reviewed_by | string | platform admin user id |
+| decision_reason | string | required for platform decisions |
 | created_at, updated_at | timestamp | UTC |
 | version | integer | optimistic concurrency |
+
+Document metadata must contain only storage object references, type, file name, MIME type, size, status, and upload timestamp. Raw document bytes and unrestricted document URLs are not part of the domain model.
 
 ### Branch
 
@@ -169,8 +176,32 @@ Notes:
 | phone | string | contact |
 | opening_hours | object | structured hours |
 | status | enum | ACTIVE, TEMPORARILY_CLOSED, INACTIVE |
+| timezone | string | branch local timezone, defaults from store when omitted |
+| temporary_closure | object | reason and optional reopen_at when status is TEMPORARILY_CLOSED |
 | created_at, updated_at | timestamp | UTC |
 | version | integer | optimistic concurrency |
+
+Branches are available for booking/search only when the parent store is `APPROVED` and `ACTIVE`, and the branch status is `ACTIVE`.
+
+### Store Member and Staff Invitation
+
+| Field | Type | Notes |
+|---|---|---|
+| id | string | Domain store member or invitation ID |
+| tenant_id | string | store tenant id |
+| store_id | string | ref stores |
+| user_id | string | optional until invitation is accepted |
+| role | enum | `STORE_OWNER`, `STORE_MANAGER`, `STORE_STAFF`, `STORE_ACCOUNTING` for members; invitations exclude owner |
+| channel | enum | invitation channel: `EMAIL`, `PHONE`, `LINK`, `QR` |
+| email, phone | string | channel-specific contact when used |
+| branch_ids | array | scoped branch access |
+| granted_permissions, denied_permissions | array | explicit permission overrides |
+| status | enum | member: ACTIVE/SUSPENDED; invitation: PENDING/ACCEPTED/EXPIRED/CANCELLED |
+| expires_at | timestamp | optional invitation expiry |
+| created_at, updated_at | timestamp | UTC |
+| version | integer | optimistic concurrency |
+
+Suspended store members must be removed from effective role assignment lookup immediately.
 
 ### Asset
 
@@ -277,6 +308,10 @@ Ride Session เก็บ summary และ reference ส่วน Track Chunk �
 - `auth_identities`: unique `(provider, provider_subject)`
 - `bookings`: query by `store_id`, `branch_id`, `user_id`, `status`, `start_at`, `end_at`
 - `consent_records`: query by `user_id`, `type`, `granted_at`
+- `stores`: query by `owner_user_id`, `approval_status`, `operational_status`
+- `branches`: query by `store_id`, `status`
+- `store_members`: unique `(store_id, user_id)` and query by `user_id`, `store_id`, `status`
+- `staff_invitations`: query by `store_id`, `status`, `expires_at`
 - Availability checks must prevent overlapping confirmed bookings for same asset/time range
 - `ride_track_chunks`: unique `(ride_session_id, sequence)`
 - `payments`: unique idempotency key per command context

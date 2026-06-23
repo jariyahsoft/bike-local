@@ -91,6 +91,40 @@ export interface paths {
         patch: operations["updateStore"];
         trace?: never;
     };
+    "/stores/{id}/submit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Submit a draft or revision-required store for platform approval. */
+        post: operations["submitStore"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/stores/{id}/approval-decisions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Record a platform approval, rejection, revision, suspension, or closure decision. */
+        post: operations["decideStoreApproval"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/stores/{store_id}/branches": {
         parameters: {
             query?: never;
@@ -122,7 +156,8 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        patch?: never;
+        /** Update branch details or temporary closure state. */
+        patch: operations["updateBranch"];
         trace?: never;
     };
     "/stores/{store_id}/staff-invitations": {
@@ -693,10 +728,31 @@ export interface components {
             default_currency: string;
             timezone: string;
             approval_status: components["schemas"]["StoreApprovalStatus"];
+            operational_status: components["schemas"]["StoreOperationalStatus"];
             commission_plan_id?: string;
+            document_metadata: components["schemas"]["StoreDocumentMetadata"][];
+            submitted_at?: components["schemas"]["IsoDateTime"];
+            reviewed_at?: components["schemas"]["IsoDateTime"];
+            reviewed_by?: string;
+            decision_reason?: string;
         };
         /** @enum {string} */
         StoreApprovalStatus: "DRAFT" | "SUBMITTED" | "UNDER_REVIEW" | "REVISION_REQUIRED" | "APPROVED" | "REJECTED" | "SUSPENDED" | "CLOSED";
+        /** @enum {string} */
+        StoreOperationalStatus: "DRAFT" | "ACTIVE" | "INACTIVE" | "SUSPENDED" | "CLOSED";
+        StoreDocumentMetadata: {
+            id: string;
+            /** @enum {string} */
+            type: "BUSINESS_REGISTRATION" | "TAX_DOCUMENT" | "OWNER_IDENTITY" | "STORE_PHOTO" | "OTHER";
+            /** @description Storage object reference only; clients must not send raw document bytes through this API. */
+            storage_object_ref: string;
+            file_name: string;
+            content_type: string;
+            size_bytes: number;
+            /** @enum {string} */
+            status: "PENDING_REVIEW" | "APPROVED" | "REJECTED";
+            uploaded_at: components["schemas"]["IsoDateTime"];
+        };
         Branch: components["schemas"]["EntityBase"] & {
             store_id: string;
             name: string;
@@ -711,8 +767,15 @@ export interface components {
             opening_hours?: {
                 [key: string]: unknown;
             };
+            timezone: string;
             /** @enum {string} */
             status: "ACTIVE" | "TEMPORARILY_CLOSED" | "INACTIVE";
+            temporary_closure?: components["schemas"]["TemporaryClosure"];
+            available_for_booking?: boolean;
+        };
+        TemporaryClosure: {
+            reason: string;
+            reopen_at?: components["schemas"]["IsoDateTime"];
         };
         StoreMember: components["schemas"]["EntityBase"] & {
             store_id: string;
@@ -720,6 +783,8 @@ export interface components {
             role: components["schemas"]["Role"];
             branch_ids: string[];
             permissions?: string[];
+            granted_permissions?: string[];
+            denied_permissions?: string[];
             /** @enum {string} */
             status: "ACTIVE" | "SUSPENDED";
         };
@@ -727,9 +792,15 @@ export interface components {
             id: string;
             store_id: string;
             role: components["schemas"]["Role"];
+            /** @enum {string} */
+            channel: "EMAIL" | "PHONE" | "LINK" | "QR";
             phone?: string;
             /** Format: email */
             email?: string;
+            /** @description Masked invitation link/QR reference; raw invitation secrets are never returned. */
+            invite_link_hint?: string;
+            branch_ids: string[];
+            permission_overrides: string[];
             /** @enum {string} */
             status: "PENDING" | "ACCEPTED" | "EXPIRED" | "CANCELLED";
         };
@@ -1021,6 +1092,27 @@ export interface components {
             display_name: string;
             default_currency: string;
             timezone: string;
+            phone?: string;
+            /** Format: email */
+            email?: string;
+            description?: string;
+            documents?: components["schemas"]["StoreDocumentMetadataInput"][];
+        };
+        StoreDocumentMetadataInput: {
+            /** @enum {string} */
+            type: "BUSINESS_REGISTRATION" | "TAX_DOCUMENT" | "OWNER_IDENTITY" | "STORE_PHOTO" | "OTHER";
+            storage_object_ref: string;
+            file_name: string;
+            content_type: string;
+            size_bytes: number;
+        };
+        SubmitStoreRequest: {
+            version: number;
+        };
+        StoreApprovalDecisionRequest: {
+            version: number;
+            decision: components["schemas"]["StoreApprovalStatus"];
+            reason: string;
         };
         UpdateStoreRequest: {
             display_name?: string;
@@ -1030,24 +1122,45 @@ export interface components {
         CreateBranchRequest: {
             name: string;
             address: string;
+            province?: string;
+            district?: string;
             country: string;
             latitude: number;
             longitude: number;
+            geohash?: string;
             phone?: string;
             opening_hours?: {
                 [key: string]: unknown;
             };
+            timezone?: string;
+        };
+        UpdateBranchRequest: {
+            name?: string;
+            phone?: string;
+            opening_hours?: {
+                [key: string]: unknown;
+            };
+            /** @enum {string} */
+            status?: "ACTIVE" | "TEMPORARILY_CLOSED" | "INACTIVE";
+            temporary_closure?: components["schemas"]["TemporaryClosure"];
+            version: number;
         };
         CreateStaffInvitationRequest: {
             role: components["schemas"]["Role"];
+            /** @enum {string} */
+            channel: "EMAIL" | "PHONE" | "LINK" | "QR";
             /** Format: email */
             email?: string;
             phone?: string;
             branch_ids?: string[];
+            permission_overrides?: string[];
+            expires_at?: components["schemas"]["IsoDateTime"];
         };
         UpdateStoreMemberRequest: {
             role?: components["schemas"]["Role"];
             branch_ids?: string[];
+            granted_permissions?: string[];
+            denied_permissions?: string[];
             /** @enum {string} */
             status?: "ACTIVE" | "SUSPENDED";
             version: number;
@@ -1514,6 +1627,56 @@ export interface operations {
             409: components["responses"]["VersionConflict"];
         };
     };
+    submitStore: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @example req_01HV9X8D9N9HQ */
+                "X-Correlation-Id"?: components["parameters"]["CorrelationId"];
+            };
+            path: {
+                id: components["parameters"]["StoreIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SubmitStoreRequest"];
+            };
+        };
+        responses: {
+            200: components["responses"]["StoreSuccess"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["VersionConflict"];
+            422: components["responses"]["ValidationError"];
+        };
+    };
+    decideStoreApproval: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @example req_01HV9X8D9N9HQ */
+                "X-Correlation-Id"?: components["parameters"]["CorrelationId"];
+            };
+            path: {
+                id: components["parameters"]["StoreIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StoreApprovalDecisionRequest"];
+            };
+        };
+        responses: {
+            200: components["responses"]["StoreSuccess"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["VersionConflict"];
+            422: components["responses"]["ValidationError"];
+        };
+    };
     createBranch: {
         parameters: {
             query?: never;
@@ -1551,6 +1714,31 @@ export interface operations {
         responses: {
             200: components["responses"]["BranchSuccess"];
             404: components["responses"]["NotFound"];
+        };
+    };
+    updateBranch: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @example req_01HV9X8D9N9HQ */
+                "X-Correlation-Id"?: components["parameters"]["CorrelationId"];
+            };
+            path: {
+                id: components["parameters"]["BranchIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateBranchRequest"];
+            };
+        };
+        responses: {
+            200: components["responses"]["BranchSuccess"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["VersionConflict"];
+            422: components["responses"]["ValidationError"];
         };
     };
     createStaffInvitation: {

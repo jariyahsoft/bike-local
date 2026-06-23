@@ -77,6 +77,7 @@ Class | Method | HTTP request | Description
 [*BookingApi*](doc/BookingApi.md) | [**getBooking**](doc/BookingApi.md#getbooking) | **GET** /bookings/{id} | Get booking by ID.
 [*BranchesApi*](doc/BranchesApi.md) | [**createBranch**](doc/BranchesApi.md#createbranch) | **POST** /stores/{store_id}/branches | Create branch under a store.
 [*BranchesApi*](doc/BranchesApi.md) | [**getBranch**](doc/BranchesApi.md#getbranch) | **GET** /branches/{id} | Get branch by ID.
+[*BranchesApi*](doc/BranchesApi.md) | [**updateBranch**](doc/BranchesApi.md#updatebranch) | **PATCH** /branches/{id} | Update branch details or temporary closure state.
 [*ContentApi*](doc/ContentApi.md) | [**approveContentSubmission**](doc/ContentApi.md#approvecontentsubmission) | **POST** /content-submissions/{id}/approve | Approve route/place/review content.
 [*ContentApi*](doc/ContentApi.md) | [**createPlace**](doc/ContentApi.md#createplace) | **POST** /places | Submit place content for approval.
 [*ContentApi*](doc/ContentApi.md) | [**createRoute**](doc/ContentApi.md#createroute) | **POST** /routes | Submit route content for approval.
@@ -103,7 +104,9 @@ Class | Method | HTTP request | Description
 [*StaffApi*](doc/StaffApi.md) | [**createStaffInvitation**](doc/StaffApi.md#createstaffinvitation) | **POST** /stores/{store_id}/staff-invitations | Invite staff to a store.
 [*StaffApi*](doc/StaffApi.md) | [**updateStoreMember**](doc/StaffApi.md#updatestoremember) | **PATCH** /store-members/{id} | Update store member role, branch access, or status.
 [*StoresApi*](doc/StoresApi.md) | [**createStore**](doc/StoresApi.md#createstore) | **POST** /stores | Create store draft for approval.
+[*StoresApi*](doc/StoresApi.md) | [**decideStoreApproval**](doc/StoresApi.md#decidestoreapproval) | **POST** /stores/{id}/approval-decisions | Record a platform approval, rejection, revision, suspension, or closure decision.
 [*StoresApi*](doc/StoresApi.md) | [**listStores**](doc/StoresApi.md#liststores) | **GET** /stores | List stores visible to the current user.
+[*StoresApi*](doc/StoresApi.md) | [**submitStore**](doc/StoresApi.md#submitstore) | **POST** /stores/{id}/submit | Submit a draft or revision-required store for platform approval.
 [*StoresApi*](doc/StoresApi.md) | [**updateStore**](doc/StoresApi.md#updatestore) | **PATCH** /stores/{id} | Update store details with optimistic concurrency.
 
 
@@ -186,11 +189,18 @@ Class | Method | HTTP request | Description
  - [SosCase](doc/SosCase.md)
  - [StaffInvitation](doc/StaffInvitation.md)
  - [Store](doc/Store.md)
+ - [StoreApprovalDecisionRequest](doc/StoreApprovalDecisionRequest.md)
  - [StoreApprovalStatus](doc/StoreApprovalStatus.md)
+ - [StoreDocumentMetadata](doc/StoreDocumentMetadata.md)
+ - [StoreDocumentMetadataInput](doc/StoreDocumentMetadataInput.md)
  - [StoreMember](doc/StoreMember.md)
+ - [StoreOperationalStatus](doc/StoreOperationalStatus.md)
  - [StoreReport](doc/StoreReport.md)
+ - [SubmitStoreRequest](doc/SubmitStoreRequest.md)
  - [SuccessEnvelope](doc/SuccessEnvelope.md)
+ - [TemporaryClosure](doc/TemporaryClosure.md)
  - [UpdateAssetRequest](doc/UpdateAssetRequest.md)
+ - [UpdateBranchRequest](doc/UpdateBranchRequest.md)
  - [UpdateStoreMember200Response](doc/UpdateStoreMember200Response.md)
  - [UpdateStoreMemberRequest](doc/UpdateStoreMemberRequest.md)
  - [UpdateStoreRequest](doc/UpdateStoreRequest.md)

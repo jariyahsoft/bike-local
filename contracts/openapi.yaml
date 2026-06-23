@@ -205,6 +205,56 @@ paths:
           $ref: "#/components/responses/NotFound"
         "409":
           $ref: "#/components/responses/VersionConflict"
+  /stores/{id}/submit:
+    post:
+      tags: [Stores]
+      operationId: submitStore
+      summary: Submit a draft or revision-required store for platform approval.
+      parameters:
+        - $ref: "#/components/parameters/StoreIdPath"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubmitStoreRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/StoreSuccess"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "409":
+          $ref: "#/components/responses/VersionConflict"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /stores/{id}/approval-decisions:
+    post:
+      tags: [Stores]
+      operationId: decideStoreApproval
+      summary: Record a platform approval, rejection, revision, suspension, or closure decision.
+      parameters:
+        - $ref: "#/components/parameters/StoreIdPath"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StoreApprovalDecisionRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/StoreSuccess"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "409":
+          $ref: "#/components/responses/VersionConflict"
+        "422":
+          $ref: "#/components/responses/ValidationError"
   /stores/{store_id}/branches:
     post:
       tags: [Branches]
@@ -236,6 +286,30 @@ paths:
           $ref: "#/components/responses/BranchSuccess"
         "404":
           $ref: "#/components/responses/NotFound"
+    patch:
+      tags: [Branches]
+      operationId: updateBranch
+      summary: Update branch details or temporary closure state.
+      parameters:
+        - $ref: "#/components/parameters/BranchIdPath"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateBranchRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/BranchSuccess"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "409":
+          $ref: "#/components/responses/VersionConflict"
+        "422":
+          $ref: "#/components/responses/ValidationError"
   /stores/{store_id}/staff-invitations:
     post:
       tags: [Staff]
@@ -1155,6 +1229,9 @@ components:
                 properties:
                   data:
                     $ref: "#/components/schemas/Branch"
+          examples:
+            success:
+              $ref: "#/components/examples/BranchSuccess"
     AssetSuccess:
       description: Asset response.
       content:
@@ -1334,7 +1411,7 @@ components:
       properties:
         code:
           type: string
-          pattern: "^(AUTH|PERMISSION|VALIDATION|USER|STORE|ASSET|BOOKING|PAYMENT|RIDE|RETURN|SOS|CONTENT|RATE_LIMIT|INTERNAL)_[A-Z0-9_]+$"
+          pattern: "^(AUTH|PERMISSION|VALIDATION|USER|STORE|BRANCH|STAFF|ASSET|BOOKING|PAYMENT|RIDE|RETURN|SOS|CONTENT|RATE_LIMIT|INTERNAL)_[A-Z0-9_]+$"
         message:
           type: string
         details:
@@ -1484,7 +1561,7 @@ components:
       allOf:
         - $ref: "#/components/schemas/EntityBase"
         - type: object
-          required: [owner_user_id, legal_name, display_name, default_currency, timezone, approval_status]
+          required: [owner_user_id, legal_name, display_name, default_currency, timezone, approval_status, operational_status, document_metadata]
           properties:
             owner_user_id:
               type: string
@@ -1505,16 +1582,57 @@ components:
               type: string
             approval_status:
               $ref: "#/components/schemas/StoreApprovalStatus"
+            operational_status:
+              $ref: "#/components/schemas/StoreOperationalStatus"
             commission_plan_id:
+              type: string
+            document_metadata:
+              type: array
+              items:
+                $ref: "#/components/schemas/StoreDocumentMetadata"
+            submitted_at:
+              $ref: "#/components/schemas/IsoDateTime"
+            reviewed_at:
+              $ref: "#/components/schemas/IsoDateTime"
+            reviewed_by:
+              type: string
+            decision_reason:
               type: string
     StoreApprovalStatus:
       type: string
       enum: [DRAFT, SUBMITTED, UNDER_REVIEW, REVISION_REQUIRED, APPROVED, REJECTED, SUSPENDED, CLOSED]
+    StoreOperationalStatus:
+      type: string
+      enum: [DRAFT, ACTIVE, INACTIVE, SUSPENDED, CLOSED]
+    StoreDocumentMetadata:
+      type: object
+      required: [id, type, storage_object_ref, file_name, content_type, size_bytes, status, uploaded_at]
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum: [BUSINESS_REGISTRATION, TAX_DOCUMENT, OWNER_IDENTITY, STORE_PHOTO, OTHER]
+        storage_object_ref:
+          type: string
+          description: Storage object reference only; clients must not send raw document bytes through this API.
+        file_name:
+          type: string
+        content_type:
+          type: string
+        size_bytes:
+          type: integer
+          minimum: 1
+        status:
+          type: string
+          enum: [PENDING_REVIEW, APPROVED, REJECTED]
+        uploaded_at:
+          $ref: "#/components/schemas/IsoDateTime"
     Branch:
       allOf:
         - $ref: "#/components/schemas/EntityBase"
         - type: object
-          required: [store_id, name, address, country, latitude, longitude, status]
+          required: [store_id, name, address, country, latitude, longitude, timezone, status]
           properties:
             store_id:
               type: string
@@ -1539,9 +1657,23 @@ components:
             opening_hours:
               type: object
               additionalProperties: true
+            timezone:
+              type: string
             status:
               type: string
               enum: [ACTIVE, TEMPORARILY_CLOSED, INACTIVE]
+            temporary_closure:
+              $ref: "#/components/schemas/TemporaryClosure"
+            available_for_booking:
+              type: boolean
+    TemporaryClosure:
+      type: object
+      required: [reason]
+      properties:
+        reason:
+          type: string
+        reopen_at:
+          $ref: "#/components/schemas/IsoDateTime"
     StoreMember:
       allOf:
         - $ref: "#/components/schemas/EntityBase"
@@ -1562,12 +1694,20 @@ components:
               type: array
               items:
                 type: string
+            granted_permissions:
+              type: array
+              items:
+                type: string
+            denied_permissions:
+              type: array
+              items:
+                type: string
             status:
               type: string
               enum: [ACTIVE, SUSPENDED]
     StaffInvitation:
       type: object
-      required: [id, store_id, role, status]
+      required: [id, store_id, role, channel, branch_ids, permission_overrides, status]
       properties:
         id:
           type: string
@@ -1575,11 +1715,25 @@ components:
           type: string
         role:
           $ref: "#/components/schemas/Role"
+        channel:
+          type: string
+          enum: [EMAIL, PHONE, LINK, QR]
         phone:
           type: string
         email:
           type: string
           format: email
+        invite_link_hint:
+          type: string
+          description: Masked invitation link/QR reference; raw invitation secrets are never returned.
+        branch_ids:
+          type: array
+          items:
+            type: string
+        permission_overrides:
+          type: array
+          items:
+            type: string
         status:
           type: string
           enum: [PENDING, ACCEPTED, EXPIRED, CANCELLED]
@@ -2177,6 +2331,51 @@ components:
           type: string
         timezone:
           type: string
+        phone:
+          type: string
+        email:
+          type: string
+          format: email
+        description:
+          type: string
+        documents:
+          type: array
+          items:
+            $ref: "#/components/schemas/StoreDocumentMetadataInput"
+    StoreDocumentMetadataInput:
+      type: object
+      required: [type, storage_object_ref, file_name, content_type, size_bytes]
+      properties:
+        type:
+          type: string
+          enum: [BUSINESS_REGISTRATION, TAX_DOCUMENT, OWNER_IDENTITY, STORE_PHOTO, OTHER]
+        storage_object_ref:
+          type: string
+        file_name:
+          type: string
+        content_type:
+          type: string
+        size_bytes:
+          type: integer
+          minimum: 1
+    SubmitStoreRequest:
+      type: object
+      required: [version]
+      properties:
+        version:
+          type: integer
+          minimum: 1
+    StoreApprovalDecisionRequest:
+      type: object
+      required: [version, decision, reason]
+      properties:
+        version:
+          type: integer
+          minimum: 1
+        decision:
+          $ref: "#/components/schemas/StoreApprovalStatus"
+        reason:
+          type: string
     UpdateStoreRequest:
       type: object
       required: [version]
@@ -2195,23 +2394,53 @@ components:
           type: string
         address:
           type: string
+        province:
+          type: string
+        district:
+          type: string
         country:
           type: string
         latitude:
           type: number
         longitude:
           type: number
+        geohash:
+          type: string
         phone:
           type: string
         opening_hours:
           type: object
           additionalProperties: true
+        timezone:
+          type: string
+    UpdateBranchRequest:
+      type: object
+      required: [version]
+      properties:
+        name:
+          type: string
+        phone:
+          type: string
+        opening_hours:
+          type: object
+          additionalProperties: true
+        status:
+          type: string
+          enum: [ACTIVE, TEMPORARILY_CLOSED, INACTIVE]
+        temporary_closure:
+          $ref: "#/components/schemas/TemporaryClosure"
+        version:
+          type: integer
+          minimum: 1
     CreateStaffInvitationRequest:
       type: object
-      required: [role]
+      required: [role, channel]
       properties:
         role:
           $ref: "#/components/schemas/Role"
+        channel:
+          type: string
+          enum: [EMAIL, PHONE, LINK, QR]
         email:
           type: string
           format: email
@@ -2221,6 +2450,12 @@ components:
           type: array
           items:
             type: string
+        permission_overrides:
+          type: array
+          items:
+            type: string
+        expires_at:
+          $ref: "#/components/schemas/IsoDateTime"
     UpdateStoreMemberRequest:
       type: object
       required: [version]
@@ -2231,11 +2466,20 @@ components:
           type: array
           items:
             type: string
+        granted_permissions:
+          type: array
+          items:
+            type: string
+        denied_permissions:
+          type: array
+          items:
+            type: string
         status:
           type: string
           enum: [ACTIVE, SUSPENDED]
         version:
           type: integer
+          minimum: 1
     CreateAssetRequest:
       type: object
       required: [store_id, branch_id, category_id, code, base_price, deposit_amount, currency]
@@ -2499,6 +2743,38 @@ components:
           default_currency: THB
           timezone: Asia/Bangkok
           approval_status: DRAFT
+          operational_status: DRAFT
+          document_metadata:
+            - id: doc_123
+              type: BUSINESS_REGISTRATION
+              storage_object_ref: merchant-documents/store_123/doc_123.pdf
+              file_name: registration.pdf
+              content_type: application/pdf
+              size_bytes: 1024
+              status: PENDING_REVIEW
+              uploaded_at: "2026-06-23T08:00:00Z"
+        meta:
+          request_id: req_123
+    BranchSuccess:
+      value:
+        data:
+          id: brn_123
+          schema_version: 1
+          tenant_id: store_123
+          created_at: "2026-06-23T08:00:00Z"
+          updated_at: "2026-06-23T08:00:00Z"
+          version: 1
+          store_id: store_123
+          name: Old Town
+          address: 1 Demo Road
+          province: Bangkok
+          district: Phra Nakhon
+          country: TH
+          latitude: 13.7563
+          longitude: 100.5018
+          timezone: Asia/Bangkok
+          status: ACTIVE
+          available_for_booking: true
         meta:
           request_id: req_123
     BookingSuccess:

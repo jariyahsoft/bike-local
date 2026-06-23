@@ -91,11 +91,18 @@ import 'package:bike_local_generated_api_client/src/model/route.dart';
 import 'package:bike_local_generated_api_client/src/model/sos_case.dart';
 import 'package:bike_local_generated_api_client/src/model/staff_invitation.dart';
 import 'package:bike_local_generated_api_client/src/model/store.dart';
+import 'package:bike_local_generated_api_client/src/model/store_approval_decision_request.dart';
 import 'package:bike_local_generated_api_client/src/model/store_approval_status.dart';
+import 'package:bike_local_generated_api_client/src/model/store_document_metadata.dart';
+import 'package:bike_local_generated_api_client/src/model/store_document_metadata_input.dart';
 import 'package:bike_local_generated_api_client/src/model/store_member.dart';
+import 'package:bike_local_generated_api_client/src/model/store_operational_status.dart';
 import 'package:bike_local_generated_api_client/src/model/store_report.dart';
+import 'package:bike_local_generated_api_client/src/model/submit_store_request.dart';
 import 'package:bike_local_generated_api_client/src/model/success_envelope.dart';
+import 'package:bike_local_generated_api_client/src/model/temporary_closure.dart';
 import 'package:bike_local_generated_api_client/src/model/update_asset_request.dart';
+import 'package:bike_local_generated_api_client/src/model/update_branch_request.dart';
 import 'package:bike_local_generated_api_client/src/model/update_store_member200_response.dart';
 import 'package:bike_local_generated_api_client/src/model/update_store_member_request.dart';
 import 'package:bike_local_generated_api_client/src/model/update_store_request.dart';
@@ -184,11 +191,18 @@ part 'serializers.g.dart';
   SosCase,
   StaffInvitation,
   Store,
+  StoreApprovalDecisionRequest,
   StoreApprovalStatus,
+  StoreDocumentMetadata,
+  StoreDocumentMetadataInput,
   StoreMember,
+  StoreOperationalStatus,
   StoreReport,
+  SubmitStoreRequest,
   SuccessEnvelope,$SuccessEnvelope,
+  TemporaryClosure,
   UpdateAssetRequest,
+  UpdateBranchRequest,
   UpdateStoreMember200Response,
   UpdateStoreMemberRequest,
   UpdateStoreRequest,

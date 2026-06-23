@@ -16,8 +16,12 @@ part 'staff_invitation.g.dart';
 /// * [id] 
 /// * [storeId] 
 /// * [role] 
+/// * [channel] 
 /// * [phone] 
 /// * [email] 
+/// * [inviteLinkHint] - Masked invitation link/QR reference; raw invitation secrets are never returned.
+/// * [branchIds] 
+/// * [permissionOverrides] 
 /// * [status] 
 @BuiltValue()
 abstract class StaffInvitation implements Built<StaffInvitation, StaffInvitationBuilder> {
@@ -31,11 +35,25 @@ abstract class StaffInvitation implements Built<StaffInvitation, StaffInvitation
   Role get role;
   // enum roleEnum {  RENTER,  STORE_OWNER,  STORE_MANAGER,  STORE_STAFF,  STORE_ACCOUNTING,  PLATFORM_ADMIN,  PLATFORM_MODERATOR,  PLATFORM_SUPPORT,  };
 
+  @BuiltValueField(wireName: r'channel')
+  StaffInvitationChannelEnum get channel;
+  // enum channelEnum {  EMAIL,  PHONE,  LINK,  QR,  };
+
   @BuiltValueField(wireName: r'phone')
   String? get phone;
 
   @BuiltValueField(wireName: r'email')
   String? get email;
+
+  /// Masked invitation link/QR reference; raw invitation secrets are never returned.
+  @BuiltValueField(wireName: r'invite_link_hint')
+  String? get inviteLinkHint;
+
+  @BuiltValueField(wireName: r'branch_ids')
+  BuiltList<String> get branchIds;
+
+  @BuiltValueField(wireName: r'permission_overrides')
+  BuiltList<String> get permissionOverrides;
 
   @BuiltValueField(wireName: r'status')
   StaffInvitationStatusEnum get status;
@@ -79,6 +97,11 @@ class _$StaffInvitationSerializer implements PrimitiveSerializer<StaffInvitation
       object.role,
       specifiedType: const FullType(Role),
     );
+    yield r'channel';
+    yield serializers.serialize(
+      object.channel,
+      specifiedType: const FullType(StaffInvitationChannelEnum),
+    );
     if (object.phone != null) {
       yield r'phone';
       yield serializers.serialize(
@@ -93,6 +116,23 @@ class _$StaffInvitationSerializer implements PrimitiveSerializer<StaffInvitation
         specifiedType: const FullType(String),
       );
     }
+    if (object.inviteLinkHint != null) {
+      yield r'invite_link_hint';
+      yield serializers.serialize(
+        object.inviteLinkHint,
+        specifiedType: const FullType(String),
+      );
+    }
+    yield r'branch_ids';
+    yield serializers.serialize(
+      object.branchIds,
+      specifiedType: const FullType(BuiltList, [FullType(String)]),
+    );
+    yield r'permission_overrides';
+    yield serializers.serialize(
+      object.permissionOverrides,
+      specifiedType: const FullType(BuiltList, [FullType(String)]),
+    );
     yield r'status';
     yield serializers.serialize(
       object.status,
@@ -142,6 +182,13 @@ class _$StaffInvitationSerializer implements PrimitiveSerializer<StaffInvitation
           ) as Role;
           result.role = valueDes;
           break;
+        case r'channel':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(StaffInvitationChannelEnum),
+          ) as StaffInvitationChannelEnum;
+          result.channel = valueDes;
+          break;
         case r'phone':
           final valueDes = serializers.deserialize(
             value,
@@ -155,6 +202,27 @@ class _$StaffInvitationSerializer implements PrimitiveSerializer<StaffInvitation
             specifiedType: const FullType(String),
           ) as String;
           result.email = valueDes;
+          break;
+        case r'invite_link_hint':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.inviteLinkHint = valueDes;
+          break;
+        case r'branch_ids':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(BuiltList, [FullType(String)]),
+          ) as BuiltList<String>;
+          result.branchIds.replace(valueDes);
+          break;
+        case r'permission_overrides':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(BuiltList, [FullType(String)]),
+          ) as BuiltList<String>;
+          result.permissionOverrides.replace(valueDes);
           break;
         case r'status':
           final valueDes = serializers.deserialize(
@@ -190,6 +258,25 @@ class _$StaffInvitationSerializer implements PrimitiveSerializer<StaffInvitation
     );
     return result.build();
   }
+}
+
+class StaffInvitationChannelEnum extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: r'EMAIL')
+  static const StaffInvitationChannelEnum EMAIL = _$staffInvitationChannelEnum_EMAIL;
+  @BuiltValueEnumConst(wireName: r'PHONE')
+  static const StaffInvitationChannelEnum PHONE = _$staffInvitationChannelEnum_PHONE;
+  @BuiltValueEnumConst(wireName: r'LINK')
+  static const StaffInvitationChannelEnum LINK = _$staffInvitationChannelEnum_LINK;
+  @BuiltValueEnumConst(wireName: r'QR')
+  static const StaffInvitationChannelEnum QR = _$staffInvitationChannelEnum_QR;
+
+  static Serializer<StaffInvitationChannelEnum> get serializer => _$staffInvitationChannelEnumSerializer;
+
+  const StaffInvitationChannelEnum._(String name): super(name);
+
+  static BuiltSet<StaffInvitationChannelEnum> get values => _$staffInvitationChannelEnumValues;
+  static StaffInvitationChannelEnum valueOf(String name) => _$staffInvitationChannelEnumValueOf(name);
 }
 
 class StaffInvitationStatusEnum extends EnumClass {

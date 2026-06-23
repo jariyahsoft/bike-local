@@ -26,7 +26,13 @@ Name | Type | Description | Notes
 **defaultCurrency** | **String** |  | 
 **timezone** | **String** |  | 
 **approvalStatus** | [**StoreApprovalStatus**](StoreApprovalStatus.md) |  | 
+**operationalStatus** | [**StoreOperationalStatus**](StoreOperationalStatus.md) |  | 
 **commissionPlanId** | **String** |  | [optional] 
+**documentMetadata** | [**BuiltList&lt;StoreDocumentMetadata&gt;**](StoreDocumentMetadata.md) |  | 
+**submittedAt** | [**DateTime**](DateTime.md) |  | [optional] 
+**reviewedAt** | [**DateTime**](DateTime.md) |  | [optional] 
+**reviewedBy** | **String** |  | [optional] 
+**decisionReason** | **String** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

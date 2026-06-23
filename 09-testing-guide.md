@@ -53,6 +53,7 @@ Current scaffold:
 - Repository contracts
 - API validation
 - Identity onboarding, profile update, and account deletion request flows
+- Store registration, approval, branch management, and staff permission workflows
 - Authorization and tenant isolation
 - Idempotency
 - Transactions/concurrency
@@ -97,6 +98,7 @@ Critical flows:
 - Missing App Check
 - Duplicate auth identity linking
 - Consent validation and self-service access boundaries
+- Store/branch tenant isolation and staff permission revocation
 - File upload abuse
 - Rate limit
 - Injection
@@ -110,6 +112,7 @@ Critical flows:
 - Required terms/privacy consent capture plus explicit GPS background scope validation
 - Onboarding happy path with masked auth identity output and account deletion request audit
 - Duplicate auth identity rejection and unauthenticated self-service access rejection
+- Store approval workflow, approved-branch availability, temporary branch closure, staff invitation validation, permission audit, and cross-tenant denial
 
 ## Accessibility Tests
 

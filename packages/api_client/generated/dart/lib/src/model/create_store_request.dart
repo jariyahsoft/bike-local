@@ -3,6 +3,8 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:built_collection/built_collection.dart';
+import 'package:bike_local_generated_api_client/src/model/store_document_metadata_input.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -15,6 +17,10 @@ part 'create_store_request.g.dart';
 /// * [displayName] 
 /// * [defaultCurrency] 
 /// * [timezone] 
+/// * [phone] 
+/// * [email] 
+/// * [description] 
+/// * [documents] 
 @BuiltValue()
 abstract class CreateStoreRequest implements Built<CreateStoreRequest, CreateStoreRequestBuilder> {
   @BuiltValueField(wireName: r'legal_name')
@@ -28,6 +34,18 @@ abstract class CreateStoreRequest implements Built<CreateStoreRequest, CreateSto
 
   @BuiltValueField(wireName: r'timezone')
   String get timezone;
+
+  @BuiltValueField(wireName: r'phone')
+  String? get phone;
+
+  @BuiltValueField(wireName: r'email')
+  String? get email;
+
+  @BuiltValueField(wireName: r'description')
+  String? get description;
+
+  @BuiltValueField(wireName: r'documents')
+  BuiltList<StoreDocumentMetadataInput>? get documents;
 
   CreateStoreRequest._();
 
@@ -72,6 +90,34 @@ class _$CreateStoreRequestSerializer implements PrimitiveSerializer<CreateStoreR
       object.timezone,
       specifiedType: const FullType(String),
     );
+    if (object.phone != null) {
+      yield r'phone';
+      yield serializers.serialize(
+        object.phone,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.email != null) {
+      yield r'email';
+      yield serializers.serialize(
+        object.email,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.description != null) {
+      yield r'description';
+      yield serializers.serialize(
+        object.description,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.documents != null) {
+      yield r'documents';
+      yield serializers.serialize(
+        object.documents,
+        specifiedType: const FullType(BuiltList, [FullType(StoreDocumentMetadataInput)]),
+      );
+    }
   }
 
   @override
@@ -122,6 +168,34 @@ class _$CreateStoreRequestSerializer implements PrimitiveSerializer<CreateStoreR
             specifiedType: const FullType(String),
           ) as String;
           result.timezone = valueDes;
+          break;
+        case r'phone':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.phone = valueDes;
+          break;
+        case r'email':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.email = valueDes;
+          break;
+        case r'description':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.description = valueDes;
+          break;
+        case r'documents':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(BuiltList, [FullType(StoreDocumentMetadataInput)]),
+          ) as BuiltList<StoreDocumentMetadataInput>;
+          result.documents.replace(valueDes);
           break;
         default:
           unhandled.add(key);

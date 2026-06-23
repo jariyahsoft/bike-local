@@ -24,6 +24,7 @@ Source: `docs/Bike-Local-SRS.md` sections 4.2, 6, 7.29, 10, 11, 12.4, 12.5, 14.6
 - `auth_identities` maps provider identities to domain users.
 - Onboarding role selection is limited to `RENTER` and `STORE_OWNER`; broader role grants remain backend-managed.
 - Backend resolves the active domain user and role assignments on every protected request.
+- Active store memberships extend effective role assignments with store/branch scope; suspended memberships are excluded immediately.
 - Firebase custom claims may help cache platform roles, but store and branch authorization must come from backend data.
 - Business-critical Firestore and Storage writes are server-owned by default; client rules allow only explicitly safe cases.
 - GPS consent must capture version, purpose, and explicit foreground/background scope before location data is processed beyond basic app operation.
@@ -156,6 +157,8 @@ Audit types and sanitization helpers are scaffolded in `backend/src/audit/domain
 - Refunds
 - Account suspension
 - Account deletion requests
+- Store submission and approval decisions
+- Branch temporary closure changes
 - Content approval
 - Admin and support override actions
 
@@ -226,6 +229,7 @@ Current coverage from runnable tests:
 - API error response mapping
 - Audit payload redaction for secrets and coordinates
 - Onboarding role validation, consent capture, duplicate auth identity rejection, and self-service account deletion request audit logging
+- Store owner registration, platform approval decisions, branch temporary closure audit, staff permission audit, and cross-tenant rejection
 - Firestore rules default-deny with public config exception
 - Firestore user-owned notification read exception
 - Storage public-read and owner-upload exceptions

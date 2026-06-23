@@ -6,6 +6,7 @@
 import 'package:bike_local_generated_api_client/src/model/entity_base.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/json_object.dart';
+import 'package:bike_local_generated_api_client/src/model/temporary_closure.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -34,7 +35,10 @@ part 'branch.g.dart';
 /// * [geohash] 
 /// * [phone] 
 /// * [openingHours] 
+/// * [timezone] 
 /// * [status] 
+/// * [temporaryClosure] 
+/// * [availableForBooking] 
 @BuiltValue()
 abstract class Branch implements EntityBase, Built<Branch, BranchBuilder> {
   @BuiltValueField(wireName: r'country')
@@ -42,6 +46,21 @@ abstract class Branch implements EntityBase, Built<Branch, BranchBuilder> {
 
   @BuiltValueField(wireName: r'address')
   String get address;
+
+  @BuiltValueField(wireName: r'timezone')
+  String get timezone;
+
+  @BuiltValueField(wireName: r'latitude')
+  num get latitude;
+
+  @BuiltValueField(wireName: r'store_id')
+  String get storeId;
+
+  @BuiltValueField(wireName: r'temporary_closure')
+  TemporaryClosure? get temporaryClosure;
+
+  @BuiltValueField(wireName: r'available_for_booking')
+  bool? get availableForBooking;
 
   @BuiltValueField(wireName: r'province')
   String? get province;
@@ -52,9 +71,6 @@ abstract class Branch implements EntityBase, Built<Branch, BranchBuilder> {
   @BuiltValueField(wireName: r'district')
   String? get district;
 
-  @BuiltValueField(wireName: r'latitude')
-  num get latitude;
-
   @BuiltValueField(wireName: r'geohash')
   String? get geohash;
 
@@ -63,9 +79,6 @@ abstract class Branch implements EntityBase, Built<Branch, BranchBuilder> {
 
   @BuiltValueField(wireName: r'opening_hours')
   BuiltMap<String, JsonObject?>? get openingHours;
-
-  @BuiltValueField(wireName: r'store_id')
-  String get storeId;
 
   @BuiltValueField(wireName: r'longitude')
   num get longitude;
@@ -119,6 +132,11 @@ class _$BranchSerializer implements PrimitiveSerializer<Branch> {
         specifiedType: const FullType(String),
       );
     }
+    yield r'timezone';
+    yield serializers.serialize(
+      object.timezone,
+      specifiedType: const FullType(String),
+    );
     yield r'latitude';
     yield serializers.serialize(
       object.latitude,
@@ -134,6 +152,20 @@ class _$BranchSerializer implements PrimitiveSerializer<Branch> {
       object.version,
       specifiedType: const FullType(int),
     );
+    if (object.temporaryClosure != null) {
+      yield r'temporary_closure';
+      yield serializers.serialize(
+        object.temporaryClosure,
+        specifiedType: const FullType(TemporaryClosure),
+      );
+    }
+    if (object.availableForBooking != null) {
+      yield r'available_for_booking';
+      yield serializers.serialize(
+        object.availableForBooking,
+        specifiedType: const FullType(bool),
+      );
+    }
     yield r'created_at';
     yield serializers.serialize(
       object.createdAt,
@@ -271,6 +303,13 @@ class _$BranchSerializer implements PrimitiveSerializer<Branch> {
           ) as String;
           result.updatedBy = valueDes;
           break;
+        case r'timezone':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.timezone = valueDes;
+          break;
         case r'latitude':
           final valueDes = serializers.deserialize(
             value,
@@ -291,6 +330,20 @@ class _$BranchSerializer implements PrimitiveSerializer<Branch> {
             specifiedType: const FullType(int),
           ) as int;
           result.version = valueDes;
+          break;
+        case r'temporary_closure':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(TemporaryClosure),
+          ) as TemporaryClosure;
+          result.temporaryClosure.replace(valueDes);
+          break;
+        case r'available_for_booking':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool;
+          result.availableForBooking = valueDes;
           break;
         case r'created_at':
           final valueDes = serializers.deserialize(

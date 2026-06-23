@@ -10,6 +10,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **role** | [**Role**](Role.md) |  | [optional] 
 **branchIds** | **BuiltList&lt;String&gt;** |  | [optional] 
+**grantedPermissions** | **BuiltList&lt;String&gt;** |  | [optional] 
+**deniedPermissions** | **BuiltList&lt;String&gt;** |  | [optional] 
 **status** | **String** |  | [optional] 
 **version** | **int** |  | 
 

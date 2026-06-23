@@ -33,6 +33,9 @@ export interface AuditLogEntry {
     | "payment.refunded"
     | "account.suspended"
     | "account.deletion.requested"
+    | "store.submitted"
+    | "store.approval.decided"
+    | "branch.temporarily_closed"
     | "content.approved"
     | "admin.action";
   readonly resourceType: string;
