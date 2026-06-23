@@ -48,13 +48,13 @@ Foundation / Sprint 0
 
 ### Security
 
-- [ ] Define permission matrix by role/resource/action
-- [ ] Implement auth token verification plan
-- [ ] Implement App Check verification plan
-- [ ] Draft Firestore security rules default-deny posture
-- [ ] Draft storage upload rules
-- [ ] Define audit log schema
-- [ ] Define data classification and retention policy
+- [x] Define permission matrix by role/resource/action
+- [x] Implement auth token verification plan
+- [x] Implement App Check verification plan
+- [x] Draft Firestore security rules default-deny posture
+- [x] Draft storage upload rules
+- [x] Define audit log schema
+- [x] Define data classification and retention policy
 
 ### Design
 

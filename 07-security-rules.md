@@ -4,111 +4,147 @@ Source: `docs/Bike-Local-SRS.md` sections 4.2, 6, 7.29, 10, 11, 12.4, 12.5, 14.6
 
 ## Threat Model Summary
 
-| Threat | Control |
+| Threat | Primary control |
 |---|---|
-| Unauthorized API access | Firebase token verification, App Check, backend auth middleware |
-| Cross-tenant access | Tenant/store/branch checks on every protected resource |
-| Privilege escalation | Server-side RBAC and audit log for permission changes |
-| Booking double-spend/double-booking | Transaction, version and availability check |
-| Payment spoofing | Webhook/server-to-server verification only |
-| Webhook replay | Idempotency and event deduplication |
-| File upload abuse | Type, size, extension and MIME validation |
-| Sensitive log leakage | Structured logging allowlist and redaction |
-| Location privacy abuse | Consent, purpose limitation and retention policy |
+| Unauthenticated API access | Firebase ID token verification in backend middleware |
+| App-origin spoofing | App Check verification on protected mobile/web endpoints |
+| Cross-tenant or cross-branch access | Default-deny RBAC plus tenant/store/branch scope checks |
+| Privilege escalation | Backend-only permission evaluation and immutable audit log |
+| Booking double-booking or duplicate commands | Idempotency keys, version checks, and transactions |
+| Payment spoofing | Webhook or server-to-server verification only |
+| Webhook replay | Event deduplication and idempotent processing |
+| File upload abuse | Extension, size, MIME, ownership, and confidential-path deny rules |
+| Sensitive log leakage | Structured audit sanitization and redaction |
+| Location privacy abuse | Consent, purpose limitation, scoped visibility, and retention policy |
 
-## Auth Model
+## Auth and Isolation Principles
 
-- Firebase Authentication handles login, OTP, Google Sign-In and future Apple Sign-In
-- Domain User ID is separate from Firebase UID
-- `auth_identities` maps provider identities to users
-- Backend verifies Firebase token and resolves user context
-- Custom Claims may help platform-level roles, but store/branch permissions must be checked from backend data
+- Firebase Authentication handles sign-in, OTP, Google Sign-In, and future Apple Sign-In.
+- Domain User ID remains separate from Firebase UID.
+- `auth_identities` maps provider identities to domain users.
+- Backend resolves the active domain user and role assignments on every protected request.
+- Firebase custom claims may help cache platform roles, but store and branch authorization must come from backend data.
+- Business-critical Firestore and Storage writes are server-owned by default; client rules allow only explicitly safe cases.
 
-## Role Matrix
+## Permission Catalog
 
-| Role | Scope | Primary capabilities |
+| Permission | Resource | Action | Allowed scope | Notes |
+|---|---|---|---|---|
+| `store.read` | store | read | store, branch, platform | Read operational store data within assigned scope |
+| `store.update` | store | update | store, platform | Sensitive edits may trigger approval review |
+| `branch.create` | branch | create | store, platform | Branch creation remains store-scoped |
+| `asset.create` | asset | create | store, branch, platform | Used for bikes and equipment |
+| `asset.update` | asset | update | store, branch, platform | Includes status, metadata, and pricing edits |
+| `booking.read` | booking | read | user, store, branch, platform | Renter scope is own bookings only |
+| `booking.confirm` | booking | confirm | store, branch, platform | Store-side confirmation flow |
+| `booking.cancel` | booking | cancel | store, branch, platform | Admin/support may override via platform workflows |
+| `payment.cash.confirm` | payment | confirm | store, branch, platform | Sensitive, always audited |
+| `rental.handover` | rental | handover | store, branch, platform | Starts rental session |
+| `return.accept` | return_request | accept | store, branch, platform | Covers return acceptance and inspection close |
+| `report.financial.read` | report | read | store, platform | Store accounting and admin reporting |
+| `staff.manage` | staff | manage | store, platform | Invite, role edit, branch assignment, suspension |
+| `sos.location.read` | sos_case | read | store, branch, platform | Allowed only for active incident handling |
+| `content.approve` | content_submission | approve | platform | Moderator/admin review queue |
+| `platform.store.suspend` | platform | suspend | platform | Store suspension or closure |
+| `audit.read` | audit_log | read | store, platform | Store scope only for store-owned records if enabled |
+| `payment.refund` | payment | refund | store, platform | Refund or deposit correction flow |
+| `user.suspend` | user | suspend | platform | Admin-only account action |
+| `dispute.manage` | dispute | manage | platform | Support escalation and dispute resolution |
+
+## Role and Scope Matrix
+
+Legend: `own` = actor-owned only, `branch` = assigned branches only, `store` = assigned store only, `platform` = marketplace-wide, `-` = not granted by default
+
+| Permission | RENTER | STORE_OWNER | STORE_MANAGER | STORE_STAFF | STORE_ACCOUNTING | PLATFORM_ADMIN | PLATFORM_MODERATOR | PLATFORM_SUPPORT |
+|---|---|---|---|---|---|---|---|---|
+| `store.read` | - | store | store | branch | store | platform | - | platform |
+| `store.update` | - | store | - | - | - | platform | - | - |
+| `branch.create` | - | store | - | - | - | platform | - | - |
+| `asset.create` | - | store | branch | - | - | platform | - | - |
+| `asset.update` | - | store | branch | branch | - | platform | - | - |
+| `booking.read` | own | store | branch | branch | store | platform | - | platform |
+| `booking.confirm` | - | store | branch | - | - | platform | - | - |
+| `booking.cancel` | - | store | branch | - | - | platform | - | - |
+| `payment.cash.confirm` | - | store | branch | branch | - | platform | - | - |
+| `rental.handover` | - | store | branch | branch | - | platform | - | - |
+| `return.accept` | - | store | branch | branch | - | platform | - | - |
+| `report.financial.read` | - | store | - | - | store | platform | - | - |
+| `staff.manage` | - | store | store | - | - | platform | - | - |
+| `sos.location.read` | - | store | branch | branch | - | platform | - | platform |
+| `content.approve` | - | - | - | - | - | platform | platform | - |
+| `platform.store.suspend` | - | - | - | - | - | platform | - | - |
+| `audit.read` | - | store | store | - | store | platform | platform | platform |
+| `payment.refund` | - | store | - | - | store | platform | - | - |
+| `user.suspend` | - | - | - | - | - | platform | - | - |
+| `dispute.manage` | - | - | - | - | - | platform | - | platform |
+
+## Backend Verification Plan
+
+Security flow is scaffolded in `backend/src/identity/application/security-pipeline.ts`, `backend/src/identity/domain/rbac.ts`, and `backend/src/identity/api/security-error.ts`.
+
+| Component | Responsibility | Boundary |
 |---|---|---|
-| RENTER | user | book, pay, ride, return, review, SOS |
-| STORE_OWNER | store | manage store, branches, staff, assets, reports |
-| STORE_MANAGER | store/branch | daily operations, bookings, staff tasks |
-| STORE_STAFF | branch | handover, return, cash confirmation if permitted, SOS response |
-| STORE_ACCOUNTING | store | financial reports, settlement review |
-| PLATFORM_ADMIN | platform | approve stores/content, manage users, transactions, audit |
-| PLATFORM_MODERATOR | platform | content moderation |
-| PLATFORM_SUPPORT | platform | complaints and disputes |
+| `FirebaseIdTokenVerifier` | Verify bearer token and return verified UID/claims metadata | Infrastructure adapter only |
+| `AppCheckTokenVerifier` | Verify App Check token for protected endpoints | Infrastructure adapter only |
+| `DomainUserResolver` | Map Firebase UID to active domain user | Application/infrastructure boundary |
+| `RoleAssignmentLookup` | Load role assignments with tenant, store, and branch scope | Application/infrastructure boundary |
+| `PermissionChecker` | Enforce role/resource/action permission matrix | Domain/application |
+| `TenantAccessGuard` | Reject cross-tenant and cross-branch access | Domain/application |
+| `AuditLogWriter` | Append immutable audit records for sensitive actions | Application/infrastructure boundary |
 
-## Resource Access Matrix
+### Request Pipeline
 
-| Resource | Renter | Store staff/manager/owner | Platform admin/support |
+1. Parse `Authorization: Bearer <firebase_id_token>`.
+2. Verify Firebase ID token.
+3. If endpoint requires App Check, verify App Check header before business logic.
+4. Resolve active domain user from `auth_identities`.
+5. Load role assignments and scoped grants.
+6. Evaluate permission plus tenant/store/branch target scope.
+7. Validate input, idempotency key, and entity version as required.
+8. Write audit log for sensitive actions after state transition and before response completes where feasible.
+
+### Error Mapping
+
+| Failure case | HTTP | API code | Response detail |
 |---|---|---|---|
-| Own profile | read/write | read own | read as needed |
-| Store profile | read public | write by permission | approve/suspend |
-| Booking | own bookings | store/branch bookings by permission | read/manage by support role |
-| Payment | own summary | store payments by permission | full transaction monitoring |
-| Cash confirmation | none | `payment.cash.confirm` | audit/review |
-| Ride location | own | only active rental/return/SOS necessity | support/admin with purpose |
-| SOS case | own | assigned/branch/store by permission | monitor/escalate |
-| Audit log | none | limited own store read if allowed | platform audit search |
+| Missing bearer token | `401` | `AUTH_UNAUTHENTICATED` | Request requires authentication |
+| Invalid or expired token | `401` | `AUTH_INVALID_TOKEN` | Token cannot be trusted |
+| Missing App Check on required endpoint | `403` | `AUTH_APP_CHECK_REQUIRED` | Client must send App Check |
+| Invalid App Check token | `403` | `AUTH_APP_CHECK_INVALID` | App origin proof failed |
+| Authenticated but outside permission or scope | `403` | `PERMISSION_DENIED` | Include permission and decision reason only |
 
-## Data Classification
+## Firestore Rules Draft
 
-| Class | Examples | Handling |
-|---|---|---|
-| Public | approved store, public route/place | read-only public API/cache allowed |
-| Internal | operational reports, staff tasks | role scoped |
-| Confidential | phone, email, documents, payment refs | encrypted storage/limited access |
-| Sensitive location | ride tracks, SOS location, return location | consent, limited purpose, retention |
-| Financial | payments, deposits, settlements | audit, immutable events |
+Draft rules live in `firebase/firestore.rules`.
 
-## Privacy Considerations
+Policy:
 
-- Background location requires explicit consent
-- Store sees renter location only for active rental, return request, or SOS
-- GPS track retention must be defined
-- Users can request account deletion while legally/transactionally required data is retained with restricted access
-- Statistical reports should separate personal data where possible
+- Default deny for all collections.
+- Allow public read only for approved public config documents in `system_configs`.
+- Allow notification read only for the owning authenticated user.
+- Deny direct client reads and writes for `users`, `auth_identities`, `bookings`, `payments`, `stores`, `branches`, `assets`, `ride_track_chunks`, `return_requests`, `sos_cases`, `settlements`, and `audit_logs`.
+- All business-critical writes must go through backend services.
 
-## Compliance Requirements
+This satisfies the Sprint 0 requirement that business-critical collections cannot be directly written by clients.
 
-SRS does not name a regulation. Because product handles Thai users and personal/location data, PDPA applicability should be reviewed as an open decision.
+## Storage Rules Draft
 
-## Firebase Policy Pseudocode
+Draft rules live in `firebase/storage.rules`.
 
-Business-critical data should not be directly writable by clients. Firestore rules should default deny except explicitly allowed read-only/public/config or user-owned notification cases.
+Policy:
 
-```text
-match /databases/{database}/documents {
-  match /system_configs/{id} {
-    allow read: if isPublicConfig(id);
-    allow write: if false;
-  }
+- Default deny for all paths.
+- Public read allowed only under `/public/**`.
+- Client upload allowed only to `/uploads/{userId}/{category}/{fileName}` for tightly limited categories such as avatar and return evidence.
+- Upload rules validate extension, MIME type, size, and path ownership by Firebase UID.
+- Confidential paths such as `/merchant-documents/**`, `/ride-tracks/**`, and `/audit-evidence/**` are backend-only.
+- Backend must still re-validate MIME, file signature, malware policy, and document classification before promoting any staged upload.
 
-  match /notifications/{id} {
-    allow read: if request.auth != null && resource.data.user_id == domainUserId(request.auth.uid);
-    allow write: if false;
-  }
+## Audit Log Foundation
 
-  match /bookings/{id} {
-    allow read, write: if false;
-  }
+Audit types and sanitization helpers are scaffolded in `backend/src/audit/domain/audit-log.ts`.
 
-  match /payments/{id} {
-    allow read, write: if false;
-  }
-}
-```
-
-## Secret Management
-
-- ห้ามเก็บ secret ใน source code
-- ใช้ Secret Manager หรือระบบจัดการ secret ที่เหมาะสม
-- แยก secret ต่อ environment
-- Service account keys ห้าม commit
-- Rotate provider/API keys ตาม policy
-
-## Audit Log Requirements
-
-บันทึก:
+### Required audited actions
 
 - Permission changes
 - Cash confirmation
@@ -118,33 +154,76 @@ match /databases/{database}/documents {
 - Refunds
 - Account suspension
 - Content approval
-- Admin action
+- Admin and support override actions
 
-Fields:
+### Audit schema
 
-`actor`, `action`, `resource`, `resource_id`, `before`, `after`, `timestamp`, `ip`, `device_information`, `correlation_id`, `reason`
+| Field | Description |
+|---|---|
+| `tenant_id` | Optional for platform/system actions |
+| `action` | Domain event-style audit action |
+| `resource_type` / `resource_id` | Target resource identifier |
+| `actor` | Actor type, domain user id, firebase uid reference, role snapshot, hashed IP, user agent |
+| `reason` | Required for overrides, corrections, suspensions, refunds, and moderation |
+| `before` / `after` | Sanitized snapshots only |
+| `classification` | `INTERNAL`, `CONFIDENTIAL`, `SENSITIVE_LOCATION`, `FINANCIAL` |
+| `correlation_id` | Request trace linkage |
+| `occurred_at` | UTC timestamp |
+| `immutable` | Always `true`; append-only record |
 
-Audit Log ต้อง immutable สำหรับผู้ใช้ทั่วไปและร้านค้า
+### Sanitization rules
+
+- Never log password, OTP, bearer token, App Check token, refresh token, full personal document reference, or raw ride-track coordinates.
+- Remove unnecessary latitude, longitude, coordinates, polyline, and raw GPS arrays from audit snapshots.
+- Keep only the minimum incident location detail needed for SOS, return disputes, or fraud investigation.
+
+## Data Classification and Retention Baseline
+
+| Class | Examples | Access expectation | Proposed retention baseline |
+|---|---|---|---|
+| Public | Approved store profile, public route/place | Public read | Product-driven |
+| Internal | Staff tasks, operational status | Role scoped | 1 year proposed |
+| Confidential | Phone, email, merchant documents, moderation notes | Restricted role and purpose | 3 years after case closure proposed unless legal hold applies |
+| Sensitive location | Ride tracks, SOS location, return evidence location | Purpose-limited, incident-only | 30 days proposed for raw coordinates before delete or aggregate |
+| Financial | Payments, refunds, deposits, settlements, cash confirmations | Restricted and audited | 7 years or statutory minimum |
+
+### Open retention questions
+
+- Exact raw GPS retention window needs legal/compliance approval under ADR-012.
+- Account deletion must define which payment, audit, dispute, and tax records remain after profile pseudonymization.
+- Merchant identity document retention needs a statutory tail period decision.
 
 ## Abuse and Rate Limit Controls
 
-- Auth/OTP rate limits
-- Search/API throttling by IP/user/device
-- Booking/payment idempotency and duplicate detection
-- File upload limits
-- SOS abuse monitoring without blocking legitimate emergency use
-- Admin action reason and audit
+- Rate limit auth and OTP attempts by phone, IP, and device.
+- Require idempotency keys for booking creation, payment creation, cash confirmation, return acceptance, refund, and webhook processing.
+- Reject duplicate webhook event ids and duplicate idempotency keys in the same command context.
+- Apply stricter rate limits to file upload, SOS, and admin endpoints.
+- Require a reason and audit record for all sensitive manual overrides.
 
-## Security Test Checklist
+## Security Tests
 
-- [ ] Unauthorized access
-- [ ] Cross-tenant access
-- [ ] Privilege escalation
-- [ ] Invalid token
-- [ ] Missing App Check
-- [ ] File upload abuse
-- [ ] Rate limit behavior
-- [ ] Injection attempts
-- [ ] Broken object-level authorization
-- [ ] Payment webhook replay
-- [ ] Idempotency duplicate request
+Current runnable commands:
+
+```text
+npm run typecheck
+npm test
+npm run test:security
+```
+
+Current coverage from runnable tests:
+
+- Invalid token
+- Missing App Check
+- Permission denied
+- Cross-tenant / cross-branch access
+- Object-level own-booking authorization
+- API error response mapping
+- Audit payload redaction for secrets and coordinates
+
+Queued for Task 06 emulator setup:
+
+- Firestore rules integration tests
+- Storage rules integration tests
+- Webhook replay integration test
+- Idempotency duplicate request integration test

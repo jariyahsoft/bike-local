@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "test": "node --test --import tsx src/**/*.test.ts"
+    "test": "node --test --import tsx src/**/*.test.ts",
+    "test:security": "node --test --import tsx src/identity/tests/*.test.ts src/audit/tests/*.test.ts"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",

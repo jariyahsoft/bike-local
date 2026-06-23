@@ -1,0 +1,42 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function uid() {
+      return request.auth.uid;
+    }
+
+    function isPublicConfig(configId) {
+      return configId in ['marketplace_public', 'mobile_public', 'legal_public'];
+    }
+
+    function isNotificationOwner() {
+      return isSignedIn() && resource.data.user_firebase_uid == uid();
+    }
+
+    match /system_configs/{configId} {
+      allow read: if isPublicConfig(configId);
+      allow write: if false;
+    }
+
+    match /notifications/{notificationId} {
+      allow read: if isNotificationOwner();
+      allow write: if false;
+    }
+
+    match /users/{userId} {
+      allow read, write: if false;
+    }
+
+    match /auth_identities/{identityId} {
+      allow read, write: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

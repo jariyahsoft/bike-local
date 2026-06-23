@@ -1,0 +1,55 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAllowedExtension(fileName) {
+      return fileName.matches('.*\\.(jpg|jpeg|png|webp|pdf)$');
+    }
+
+    function isAllowedMimeType() {
+      return request.resource.contentType.matches('image/(jpeg|png|webp)') ||
+        request.resource.contentType == 'application/pdf';
+    }
+
+    function isAllowedSize(maxBytes) {
+      return request.resource.size <= maxBytes;
+    }
+
+    function isOwnUpload(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    match /public/{allPaths=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /uploads/{userId}/{category}/{fileName} {
+      allow read: if false;
+      allow write: if isOwnUpload(userId) &&
+        category in ['avatar', 'return-evidence', 'ride-issue'] &&
+        isAllowedExtension(fileName) &&
+        isAllowedMimeType() &&
+        isAllowedSize(10 * 1024 * 1024);
+    }
+
+    match /merchant-documents/{allPaths=**} {
+      allow read, write: if false;
+    }
+
+    match /ride-tracks/{allPaths=**} {
+      allow read, write: if false;
+    }
+
+    match /audit-evidence/{allPaths=**} {
+      allow read, write: if false;
+    }
+
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

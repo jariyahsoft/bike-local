@@ -123,14 +123,18 @@ Seed data should include:
 
 ## CI Test Commands
 
-Commands are TBD until codebase exists. Expected command categories:
+Available now:
 
 ```text
-format
-lint
-test
-test:unit
-test:contract
+npm run typecheck
+npm test
+npm run test:contract
+npm run test:security
+```
+
+Pending for Task 06:
+
+```text
 test:emulator
 test:security-rules
 build

@@ -192,6 +192,23 @@ erDiagram
 
 Ride Session เก็บ summary และ reference ส่วน Track Chunk เก็บ GPS chunks พร้อม checksum เพื่อรองรับ offline/batch upload และการย้าย payload ขนาดใหญ่ไป Cloud Storage
 
+### Audit Log
+
+| Field | Type | Notes |
+|---|---|---|
+| id | string | UUID/domain ID |
+| tenant_id | string | optional for platform/system actions |
+| actor | object | actor type, domain user id, firebase uid reference, role snapshot, hashed IP, user agent |
+| action | string | e.g. `payment.cash.confirmed`, `permission.changed` |
+| resource_type | string | aggregate or bounded-context resource name |
+| resource_id | string | target entity id |
+| before, after | object | sanitized snapshots only; no raw token, OTP, full document, or unnecessary coordinates |
+| reason | string | required for staff/admin corrections, suspension, refund, and overrides |
+| classification | enum | `INTERNAL`, `CONFIDENTIAL`, `SENSITIVE_LOCATION`, `FINANCIAL` |
+| correlation_id | string | request trace id |
+| occurred_at | timestamp | UTC |
+| immutable | boolean | always `true`; append-only storage |
+
 ## Status and Enums
 
 ### Store Approval
