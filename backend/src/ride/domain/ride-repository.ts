@@ -15,7 +15,8 @@ import type { Repository, SaveOptions } from "../../shared/domain/index.js";
 
 export type RideSessionStatus = "ACTIVE" | "PAUSED" | "ENDED" | "SYNC_PENDING";
 
-export interface RideSession extends TenantScopedEntity, VersionedEntity, EntityTimestamps {
+export interface RideSession
+  extends TenantScopedEntity, VersionedEntity, EntityTimestamps {
   readonly id: RideSessionId;
   readonly bookingId: BookingId;
   readonly userId: UserId;
@@ -43,7 +44,13 @@ export interface RideSessionSearchFilter {
 
 export interface RideRepository extends Repository<RideSession, RideSessionId> {
   appendTrackChunk(chunk: RideTrackChunk): Promise<RideTrackChunk>;
-  findTrackChunks(rideSessionId: RideSessionId, page: PageRequest): Promise<Page<RideTrackChunk>>;
-  search(filter: RideSessionSearchFilter, page: PageRequest): Promise<Page<RideSession>>;
+  findTrackChunks(
+    rideSessionId: RideSessionId,
+    page: PageRequest,
+  ): Promise<Page<RideTrackChunk>>;
+  search(
+    filter: RideSessionSearchFilter,
+    page: PageRequest,
+  ): Promise<Page<RideSession>>;
   save(session: RideSession, options?: SaveOptions): Promise<RideSession>;
 }

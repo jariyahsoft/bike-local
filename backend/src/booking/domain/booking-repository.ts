@@ -30,7 +30,8 @@ export type BookingStatus =
   | "NO_SHOW"
   | "DISPUTED";
 
-export interface Booking extends TenantScopedEntity, VersionedEntity, EntityTimestamps {
+export interface Booking
+  extends TenantScopedEntity, VersionedEntity, EntityTimestamps {
   readonly id: BookingId;
   readonly userId: UserId;
   readonly storeId: StoreId;
@@ -53,7 +54,14 @@ export interface BookingSearchFilter {
 }
 
 export interface BookingRepository extends Repository<Booking, BookingId> {
-  findOverlappingConfirmedBooking(assetId: AssetId, startAt: IsoUtcDateTime, endAt: IsoUtcDateTime): Promise<Booking | null>;
-  search(filter: BookingSearchFilter, page: PageRequest): Promise<Page<Booking>>;
+  findOverlappingConfirmedBooking(
+    assetId: AssetId,
+    startAt: IsoUtcDateTime,
+    endAt: IsoUtcDateTime,
+  ): Promise<Booking | null>;
+  search(
+    filter: BookingSearchFilter,
+    page: PageRequest,
+  ): Promise<Page<Booking>>;
   save(booking: Booking, options?: SaveOptions): Promise<Booking>;
 }

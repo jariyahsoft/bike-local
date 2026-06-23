@@ -67,13 +67,13 @@ Foundation / Sprint 0
 
 ### Testing and CI/CD
 
-- [ ] Define test commands
-- [ ] Set up formatting/static analysis
-- [ ] Set up unit test project
-- [ ] Set up Firebase Emulator Suite
-- [ ] Set up security rules tests
-- [ ] Set up CI pipeline for lint, type check, tests and build
-- [ ] Define seed/fixture data
+- [x] Define test commands
+- [x] Set up formatting/static analysis
+- [x] Set up unit test project
+- [x] Set up Firebase Emulator Suite
+- [x] Set up security rules tests
+- [x] Set up CI pipeline for lint, type check, tests and build
+- [x] Define seed/fixture data
 
 ## Module Task Plan
 

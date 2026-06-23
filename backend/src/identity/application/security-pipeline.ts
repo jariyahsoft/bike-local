@@ -1,6 +1,16 @@
 import type { AuditLogEntry } from "../../audit/domain/audit-log.js";
-import type { CorrelationId, IsoUtcDateTime, TenantId, UserId } from "../../shared/domain/index.js";
-import { evaluatePermission, type AuthorizationTarget, type PermissionName, type RoleAssignment } from "../domain/rbac.js";
+import type {
+  CorrelationId,
+  IsoUtcDateTime,
+  TenantId,
+  UserId,
+} from "../../shared/domain/index.js";
+import {
+  evaluatePermission,
+  type AuthorizationTarget,
+  type PermissionName,
+  type RoleAssignment,
+} from "../domain/rbac.js";
 import { SecurityError } from "../api/security-error.js";
 
 export interface VerifiedFirebaseIdToken {
@@ -53,8 +63,14 @@ export interface PermissionChecker {
 }
 
 export interface TenantAccessGuard {
-  assertTenantAccess(assignments: readonly RoleAssignment[], tenantId: TenantId): void;
-  assertBranchAccess(assignments: readonly RoleAssignment[], branchId: string): void;
+  assertTenantAccess(
+    assignments: readonly RoleAssignment[],
+    tenantId: TenantId,
+  ): void;
+  assertBranchAccess(
+    assignments: readonly RoleAssignment[],
+    branchId: string,
+  ): void;
 }
 
 export interface AuditLogWriter {
@@ -111,21 +127,35 @@ export const defaultPermissionChecker: PermissionChecker = {
 
 export const defaultTenantAccessGuard: TenantAccessGuard = {
   assertTenantAccess: (assignments, tenantId) => {
-    const allowed = assignments.some((assignment) => assignment.tenantId === tenantId || assignment.role.startsWith("PLATFORM_"));
+    const allowed = assignments.some(
+      (assignment) =>
+        assignment.tenantId === tenantId ||
+        assignment.role.startsWith("PLATFORM_"),
+    );
     if (!allowed) {
-      throw new SecurityError("permission_denied", "Tenant access is outside the caller scope.", {
-        tenantId,
-      });
+      throw new SecurityError(
+        "permission_denied",
+        "Tenant access is outside the caller scope.",
+        {
+          tenantId,
+        },
+      );
     }
   },
   assertBranchAccess: (assignments, branchId) => {
     const allowed = assignments.some(
-      (assignment) => assignment.role.startsWith("PLATFORM_") || assignment.branchIds?.includes(branchId as never) === true,
+      (assignment) =>
+        assignment.role.startsWith("PLATFORM_") ||
+        assignment.branchIds?.includes(branchId as never) === true,
     );
     if (!allowed) {
-      throw new SecurityError("permission_denied", "Branch access is outside the caller scope.", {
-        branchId,
-      });
+      throw new SecurityError(
+        "permission_denied",
+        "Branch access is outside the caller scope.",
+        {
+          branchId,
+        },
+      );
     }
   },
 };
@@ -163,13 +193,17 @@ export const authorizeRequest = async ({
   }
 
   let appCheckToken: VerifiedAppCheckToken | undefined;
-  if (requirement.appCheck === "required" && (appCheckHeader === undefined || appCheckHeader.trim() === "")) {
+  if (
+    requirement.appCheck === "required" &&
+    (appCheckHeader === undefined || appCheckHeader.trim() === "")
+  ) {
     throw new SecurityError("app_check_required");
   }
 
   if (appCheckHeader !== undefined && appCheckHeader.trim() !== "") {
     try {
-      appCheckToken = await dependencies.appCheckVerifier.verifyToken(appCheckHeader);
+      appCheckToken =
+        await dependencies.appCheckVerifier.verifyToken(appCheckHeader);
     } catch (error) {
       throw new SecurityError("app_check_invalid", undefined, {
         cause: error instanceof Error ? error.message : "unknown",
@@ -177,12 +211,19 @@ export const authorizeRequest = async ({
     }
   }
 
-  const user = await dependencies.userResolver.resolveByFirebaseUid(firebaseToken.uid);
+  const user = await dependencies.userResolver.resolveByFirebaseUid(
+    firebaseToken.uid,
+  );
   if (user === null || user.status !== "ACTIVE") {
-    throw new SecurityError("unauthenticated", "Authenticated identity is not linked to an active domain user.");
+    throw new SecurityError(
+      "unauthenticated",
+      "Authenticated identity is not linked to an active domain user.",
+    );
   }
 
-  const assignments = await dependencies.roleLookup.listRoleAssignments(user.userId);
+  const assignments = await dependencies.roleLookup.listRoleAssignments(
+    user.userId,
+  );
   for (const permission of requirement.permissions) {
     defaultPermissionChecker.assertAllowed({
       actorUserId: user.userId,

@@ -1,11 +1,15 @@
-export interface ApiError<Details extends Record<string, unknown> = Record<string, unknown>> {
+export interface ApiError<
+  Details extends Record<string, unknown> = Record<string, unknown>,
+> {
   readonly code: string;
   readonly message: string;
   readonly details: Details;
   readonly requestId: string;
 }
 
-export interface ApiErrorResponse<Details extends Record<string, unknown> = Record<string, unknown>> {
+export interface ApiErrorResponse<
+  Details extends Record<string, unknown> = Record<string, unknown>,
+> {
   readonly error: ApiError<Details>;
 }
 

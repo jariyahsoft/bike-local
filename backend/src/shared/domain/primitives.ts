@@ -1,6 +1,9 @@
 export type Brand<T, Name extends string> = T & { readonly __brand: Name };
 
-export type DomainId<Entity extends string = string> = Brand<string, `${Entity}Id`>;
+export type DomainId<Entity extends string = string> = Brand<
+  string,
+  `${Entity}Id`
+>;
 export type TenantId = DomainId<"Tenant">;
 export type UserId = DomainId<"User">;
 export type StoreId = DomainId<"Store">;
@@ -61,7 +64,9 @@ export interface AuditMetadata {
   readonly occurredAt: IsoUtcDateTime;
 }
 
-export const asDomainId = <Entity extends string>(value: string): DomainId<Entity> => value as DomainId<Entity>;
+export const asDomainId = <Entity extends string>(
+  value: string,
+): DomainId<Entity> => value as DomainId<Entity>;
 export const asMinorUnitAmount = (value: number): MinorUnitAmount => {
   if (!Number.isInteger(value)) {
     throw new Error("Money must use integer minor units");
@@ -74,4 +79,5 @@ export const asEntityVersion = (value: number): EntityVersion => {
   }
   return value as EntityVersion;
 };
-export const asIsoUtcDateTime = (value: string): IsoUtcDateTime => value as IsoUtcDateTime;
+export const asIsoUtcDateTime = (value: string): IsoUtcDateTime =>
+  value as IsoUtcDateTime;

@@ -19,15 +19,15 @@ Source: `docs/Bike-Local-SRS.md` sections 1.2, 1.3, 2, 3, 4, 25
 
 Source ระบุ stack แนะนำดังนี้:
 
-| Layer | Stack |
-|---|---|
-| Frontend | Flutter, Dart, Material Design, Generated API Client |
-| Backend | TypeScript, Node.js, Firebase Cloud Functions หรือ Google Cloud Run, REST API, OpenAPI 3.1 |
-| Database เริ่มต้น | Cloud Firestore |
-| Storage/Notification | Cloud Storage, Firebase Cloud Messaging |
-| Auth | Firebase Authentication พร้อม Domain User ID แยกจาก Firebase UID |
-| Observability | Firebase Analytics, Crashlytics, Structured Logging, Correlation ID |
-| Future DB | PostgreSQL, MongoDB |
+| Layer                | Stack                                                                                      |
+| -------------------- | ------------------------------------------------------------------------------------------ |
+| Frontend             | Flutter, Dart, Material Design, Generated API Client                                       |
+| Backend              | TypeScript, Node.js, Firebase Cloud Functions หรือ Google Cloud Run, REST API, OpenAPI 3.1 |
+| Database เริ่มต้น    | Cloud Firestore                                                                            |
+| Storage/Notification | Cloud Storage, Firebase Cloud Messaging                                                    |
+| Auth                 | Firebase Authentication พร้อม Domain User ID แยกจาก Firebase UID                           |
+| Observability        | Firebase Analytics, Crashlytics, Structured Logging, Correlation ID                        |
+| Future DB            | PostgreSQL, MongoDB                                                                        |
 
 ## Getting Started
 
@@ -58,19 +58,28 @@ APP_CHECK_SECRET=
 
 ## Scripts
 
-ยังไม่มีคำสั่งจริงจนกว่าจะ scaffold โปรเจกต์
-
-คำสั่งที่ควรมีหลังสร้าง codebase:
+คำสั่ง foundation ปัจจุบัน:
 
 ```text
-format
-lint
-test
-test:contract
-test:emulator
-build
-dev
-deploy:staging
+npm run format
+npm run format:check
+npm run lint
+npm run typecheck
+npm test
+npm run test:unit
+npm run test:contract
+npm run test:security
+npm run test:security-rules
+npm run test:emulator
+npm run build
+```
+
+คำสั่ง Flutter/Dart ที่ต้องมี SDK ติดตั้งก่อน:
+
+```text
+npm run format:flutter
+npm run analyze:flutter
+npm run test:frontend
 ```
 
 ## Project Structure
@@ -156,4 +165,5 @@ Pipeline ควรมี format, static analysis, tests, build, security scan, s
 ## License
 
 TBD
+
 # bike-local

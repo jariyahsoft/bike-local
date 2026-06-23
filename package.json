@@ -5,18 +5,41 @@
     "backend"
   ],
   "scripts": {
+    "analyze:flutter": "node tools/run-flutter-workspace.mjs analyze",
+    "build": "npm run build:backend",
+    "build:backend": "npm --workspace backend run build",
     "contract:lint": "redocly lint contracts/openapi.yaml",
+    "format": "prettier --write README.md 05-decisions.md 07-security-rules.md 09-testing-guide.md 11-tasks.md tasks/tasks-update.md package.json package-lock.json backend/package.json backend/tsconfig.json backend/src/**/*.ts firebase/**/*.json firebase/**/*.md firebase/**/*.ts .github/workflows/*.yml eslint.config.mjs analysis_options.yaml tools/*.mjs",
+    "format:check": "prettier --check README.md 05-decisions.md 07-security-rules.md 09-testing-guide.md 11-tasks.md tasks/tasks-update.md package.json package-lock.json backend/package.json backend/tsconfig.json backend/src/**/*.ts firebase/**/*.json firebase/**/*.md firebase/**/*.ts .github/workflows/*.yml eslint.config.mjs analysis_options.yaml tools/*.mjs",
+    "format:flutter": "node tools/run-flutter-workspace.mjs format",
     "generate:dart": "openapi-generator-cli generate -i contracts/openapi.yaml -g dart-dio -o packages/api_client/generated/dart --additional-properties=pubName=bike_local_generated_api_client,pubVersion=0.1.0",
     "generate:types": "openapi-typescript contracts/openapi.yaml -o packages/api_client/generated/typescript/schema.d.ts",
+    "lint": "npm run lint:ts && npm run format:check",
+    "lint:ts": "eslint backend/src firebase tools --ext .ts,.mjs",
     "mock:api": "npx --yes @stoplight/prism-cli@5.14.2 mock contracts/openapi.yaml --host 127.0.0.1 --port 4010",
     "test:contract": "npm run contract:lint",
+    "test:emulator": "firebase emulators:exec --only auth,firestore,storage --config firebase/firebase.json --project demo-bike-local \"node --import tsx firebase/scripts/seed-emulators.ts && node --test --import tsx firebase/tests/emulator-seed.test.ts\"",
+    "test:frontend": "node tools/run-flutter-workspace.mjs test",
     "test:security": "npm --workspace backend run test:security",
+    "test:security-rules": "firebase emulators:exec --only auth,firestore,storage --config firebase/firebase.json --project demo-bike-local \"node --test --import tsx firebase/tests/firestore.rules.test.ts firebase/tests/storage.rules.test.ts\"",
+    "test:unit": "npm --workspace backend test",
     "typecheck": "npm --workspace backend run typecheck",
     "test": "npm --workspace backend test"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@firebase/rules-unit-testing": "^5.0.1",
     "@openapitools/openapi-generator-cli": "^2.39.0",
     "@redocly/cli": "^2.34.0",
-    "openapi-typescript": "^7.13.0"
+    "eslint": "^10.5.0",
+    "firebase": "^12.15.0",
+    "firebase-admin": "^14.0.0",
+    "firebase-tools": "^15.22.1",
+    "globals": "^17.7.0",
+    "openapi-typescript": "^7.13.0",
+    "prettier": "^3.8.4",
+    "tsx": "^4.22.4",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.62.0"
   }
 }

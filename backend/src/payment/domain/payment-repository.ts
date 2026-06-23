@@ -15,10 +15,19 @@ import type {
 } from "../../shared/domain/index.js";
 import type { Repository, SaveOptions } from "../../shared/domain/index.js";
 
-export type PaymentStatus = "PENDING" | "PROCESSING" | "PAID" | "FAILED" | "EXPIRED" | "PARTIALLY_REFUNDED" | "REFUNDED" | "DISPUTED";
+export type PaymentStatus =
+  | "PENDING"
+  | "PROCESSING"
+  | "PAID"
+  | "FAILED"
+  | "EXPIRED"
+  | "PARTIALLY_REFUNDED"
+  | "REFUNDED"
+  | "DISPUTED";
 export type PaymentMethod = "GATEWAY" | "CASH";
 
-export interface Payment extends TenantScopedEntity, VersionedEntity, EntityTimestamps {
+export interface Payment
+  extends TenantScopedEntity, VersionedEntity, EntityTimestamps {
   readonly id: PaymentId;
   readonly bookingId: BookingId;
   readonly userId: UserId;
@@ -41,6 +50,9 @@ export interface PaymentSearchFilter {
 
 export interface PaymentRepository extends Repository<Payment, PaymentId> {
   findByIdempotencyKey(key: IdempotencyKey): Promise<Payment | null>;
-  search(filter: PaymentSearchFilter, page: PageRequest): Promise<Page<Payment>>;
+  search(
+    filter: PaymentSearchFilter,
+    page: PageRequest,
+  ): Promise<Page<Payment>>;
   save(payment: Payment, options?: SaveOptions): Promise<Payment>;
 }

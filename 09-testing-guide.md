@@ -37,6 +37,15 @@ Must cover:
 - GPS permission and unavailable states
 - Loading/empty/error/success states
 
+Current scaffold:
+
+- `apps/mobile_app/test/renter_shell_foundation_test.dart`
+- `apps/merchant_portal/test/merchant_portal_foundation_test.dart`
+- `apps/admin_portal/test/admin_portal_foundation_test.dart`
+- `packages/design_system/test/design_theme_test.dart`
+- `packages/localization/test/localization_keys_test.dart`
+- `packages/common_widgets/test/state_panel_test.dart`
+
 ## Backend Tests
 
 - Application services
@@ -126,18 +135,24 @@ Seed data should include:
 Available now:
 
 ```text
+npm run format
+npm run format:check
+npm run lint
 npm run typecheck
 npm test
 npm run test:contract
 npm run test:security
+npm run test:security-rules
+npm run test:emulator
+npm run build
 ```
 
-Pending for Task 06:
+Requires Flutter/Dart SDK installation:
 
 ```text
-test:emulator
-test:security-rules
-build
+npm run format:flutter
+npm run analyze:flutter
+npm run test:frontend
 ```
 
 ## Manual QA Checklist

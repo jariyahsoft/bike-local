@@ -1,0 +1,5 @@
+node_modules/
+backend/dist/
+packages/api_client/generated/
+coverage/
+firebase/emulator-data/

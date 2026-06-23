@@ -6,3 +6,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  bike_local_common_widgets:
+    path: ../../packages/common_widgets
+  bike_local_design_system:
+    path: ../../packages/design_system
+  bike_local_localization:
+    path: ../../packages/localization
+dev_dependencies:
+  flutter_test:
+    sdk: flutter

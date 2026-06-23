@@ -1,9 +1,16 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import type { CorrelationId } from "../../shared/domain/index.js";
-import type { AuthorizeRequestInput, VerifiedAppCheckToken, VerifiedFirebaseIdToken } from "../application/security-pipeline.js";
+import type {
+  AuthorizeRequestInput,
+  VerifiedAppCheckToken,
+  VerifiedFirebaseIdToken,
+} from "../application/security-pipeline.js";
 import { authorizeRequest } from "../application/security-pipeline.js";
-import { mapSecurityErrorToApiResponse, SecurityError } from "../api/security-error.js";
+import {
+  mapSecurityErrorToApiResponse,
+  SecurityError,
+} from "../api/security-error.js";
 import { evaluatePermission, type RoleAssignment } from "../domain/rbac.js";
 import { asDomainId, asIsoUtcDateTime } from "../../shared/domain/index.js";
 

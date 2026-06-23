@@ -1,4 +1,7 @@
-import { buildApiErrorResponse, type ApiErrorResponse } from "../../shared/api/api-error.js";
+import {
+  buildApiErrorResponse,
+  type ApiErrorResponse,
+} from "../../shared/api/api-error.js";
 
 export type SecurityErrorKind =
   | "unauthenticated"
@@ -72,5 +75,10 @@ export const mapSecurityErrorToApiResponse = (
   readonly body: ApiErrorResponse;
 } => ({
   status: error.status,
-  body: buildApiErrorResponse(error.code, error.message, { ...error.details }, requestId),
+  body: buildApiErrorResponse(
+    error.code,
+    error.message,
+    { ...error.details },
+    requestId,
+  ),
 });

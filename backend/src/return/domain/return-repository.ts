@@ -26,7 +26,8 @@ export type ReturnRequestStatus =
   | "DISPUTED"
   | "CANCELLED";
 
-export interface ReturnRequest extends TenantScopedEntity, VersionedEntity, EntityTimestamps {
+export interface ReturnRequest
+  extends TenantScopedEntity, VersionedEntity, EntityTimestamps {
   readonly id: ReturnRequestId;
   readonly bookingId: BookingId;
   readonly userId: UserId;
@@ -44,8 +45,14 @@ export interface ReturnRequestSearchFilter {
   readonly status?: ReturnRequestStatus;
 }
 
-export interface ReturnRepository extends Repository<ReturnRequest, ReturnRequestId> {
+export interface ReturnRepository extends Repository<
+  ReturnRequest,
+  ReturnRequestId
+> {
   findByBookingId(bookingId: BookingId): Promise<ReturnRequest | null>;
-  search(filter: ReturnRequestSearchFilter, page: PageRequest): Promise<Page<ReturnRequest>>;
+  search(
+    filter: ReturnRequestSearchFilter,
+    page: PageRequest,
+  ): Promise<Page<ReturnRequest>>;
   save(request: ReturnRequest, options?: SaveOptions): Promise<ReturnRequest>;
 }

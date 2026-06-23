@@ -4,18 +4,18 @@ Source: `docs/Bike-Local-SRS.md` sections 4.2, 6, 7.29, 10, 11, 12.4, 12.5, 14.6
 
 ## Threat Model Summary
 
-| Threat | Primary control |
-|---|---|
-| Unauthenticated API access | Firebase ID token verification in backend middleware |
-| App-origin spoofing | App Check verification on protected mobile/web endpoints |
-| Cross-tenant or cross-branch access | Default-deny RBAC plus tenant/store/branch scope checks |
-| Privilege escalation | Backend-only permission evaluation and immutable audit log |
-| Booking double-booking or duplicate commands | Idempotency keys, version checks, and transactions |
-| Payment spoofing | Webhook or server-to-server verification only |
-| Webhook replay | Event deduplication and idempotent processing |
-| File upload abuse | Extension, size, MIME, ownership, and confidential-path deny rules |
-| Sensitive log leakage | Structured audit sanitization and redaction |
-| Location privacy abuse | Consent, purpose limitation, scoped visibility, and retention policy |
+| Threat                                       | Primary control                                                      |
+| -------------------------------------------- | -------------------------------------------------------------------- |
+| Unauthenticated API access                   | Firebase ID token verification in backend middleware                 |
+| App-origin spoofing                          | App Check verification on protected mobile/web endpoints             |
+| Cross-tenant or cross-branch access          | Default-deny RBAC plus tenant/store/branch scope checks              |
+| Privilege escalation                         | Backend-only permission evaluation and immutable audit log           |
+| Booking double-booking or duplicate commands | Idempotency keys, version checks, and transactions                   |
+| Payment spoofing                             | Webhook or server-to-server verification only                        |
+| Webhook replay                               | Event deduplication and idempotent processing                        |
+| File upload abuse                            | Extension, size, MIME, ownership, and confidential-path deny rules   |
+| Sensitive log leakage                        | Structured audit sanitization and redaction                          |
+| Location privacy abuse                       | Consent, purpose limitation, scoped visibility, and retention policy |
 
 ## Auth and Isolation Principles
 
@@ -28,69 +28,69 @@ Source: `docs/Bike-Local-SRS.md` sections 4.2, 6, 7.29, 10, 11, 12.4, 12.5, 14.6
 
 ## Permission Catalog
 
-| Permission | Resource | Action | Allowed scope | Notes |
-|---|---|---|---|---|
-| `store.read` | store | read | store, branch, platform | Read operational store data within assigned scope |
-| `store.update` | store | update | store, platform | Sensitive edits may trigger approval review |
-| `branch.create` | branch | create | store, platform | Branch creation remains store-scoped |
-| `asset.create` | asset | create | store, branch, platform | Used for bikes and equipment |
-| `asset.update` | asset | update | store, branch, platform | Includes status, metadata, and pricing edits |
-| `booking.read` | booking | read | user, store, branch, platform | Renter scope is own bookings only |
-| `booking.confirm` | booking | confirm | store, branch, platform | Store-side confirmation flow |
-| `booking.cancel` | booking | cancel | store, branch, platform | Admin/support may override via platform workflows |
-| `payment.cash.confirm` | payment | confirm | store, branch, platform | Sensitive, always audited |
-| `rental.handover` | rental | handover | store, branch, platform | Starts rental session |
-| `return.accept` | return_request | accept | store, branch, platform | Covers return acceptance and inspection close |
-| `report.financial.read` | report | read | store, platform | Store accounting and admin reporting |
-| `staff.manage` | staff | manage | store, platform | Invite, role edit, branch assignment, suspension |
-| `sos.location.read` | sos_case | read | store, branch, platform | Allowed only for active incident handling |
-| `content.approve` | content_submission | approve | platform | Moderator/admin review queue |
-| `platform.store.suspend` | platform | suspend | platform | Store suspension or closure |
-| `audit.read` | audit_log | read | store, platform | Store scope only for store-owned records if enabled |
-| `payment.refund` | payment | refund | store, platform | Refund or deposit correction flow |
-| `user.suspend` | user | suspend | platform | Admin-only account action |
-| `dispute.manage` | dispute | manage | platform | Support escalation and dispute resolution |
+| Permission               | Resource           | Action   | Allowed scope                 | Notes                                               |
+| ------------------------ | ------------------ | -------- | ----------------------------- | --------------------------------------------------- |
+| `store.read`             | store              | read     | store, branch, platform       | Read operational store data within assigned scope   |
+| `store.update`           | store              | update   | store, platform               | Sensitive edits may trigger approval review         |
+| `branch.create`          | branch             | create   | store, platform               | Branch creation remains store-scoped                |
+| `asset.create`           | asset              | create   | store, branch, platform       | Used for bikes and equipment                        |
+| `asset.update`           | asset              | update   | store, branch, platform       | Includes status, metadata, and pricing edits        |
+| `booking.read`           | booking            | read     | user, store, branch, platform | Renter scope is own bookings only                   |
+| `booking.confirm`        | booking            | confirm  | store, branch, platform       | Store-side confirmation flow                        |
+| `booking.cancel`         | booking            | cancel   | store, branch, platform       | Admin/support may override via platform workflows   |
+| `payment.cash.confirm`   | payment            | confirm  | store, branch, platform       | Sensitive, always audited                           |
+| `rental.handover`        | rental             | handover | store, branch, platform       | Starts rental session                               |
+| `return.accept`          | return_request     | accept   | store, branch, platform       | Covers return acceptance and inspection close       |
+| `report.financial.read`  | report             | read     | store, platform               | Store accounting and admin reporting                |
+| `staff.manage`           | staff              | manage   | store, platform               | Invite, role edit, branch assignment, suspension    |
+| `sos.location.read`      | sos_case           | read     | store, branch, platform       | Allowed only for active incident handling           |
+| `content.approve`        | content_submission | approve  | platform                      | Moderator/admin review queue                        |
+| `platform.store.suspend` | platform           | suspend  | platform                      | Store suspension or closure                         |
+| `audit.read`             | audit_log          | read     | store, platform               | Store scope only for store-owned records if enabled |
+| `payment.refund`         | payment            | refund   | store, platform               | Refund or deposit correction flow                   |
+| `user.suspend`           | user               | suspend  | platform                      | Admin-only account action                           |
+| `dispute.manage`         | dispute            | manage   | platform                      | Support escalation and dispute resolution           |
 
 ## Role and Scope Matrix
 
 Legend: `own` = actor-owned only, `branch` = assigned branches only, `store` = assigned store only, `platform` = marketplace-wide, `-` = not granted by default
 
-| Permission | RENTER | STORE_OWNER | STORE_MANAGER | STORE_STAFF | STORE_ACCOUNTING | PLATFORM_ADMIN | PLATFORM_MODERATOR | PLATFORM_SUPPORT |
-|---|---|---|---|---|---|---|---|---|
-| `store.read` | - | store | store | branch | store | platform | - | platform |
-| `store.update` | - | store | - | - | - | platform | - | - |
-| `branch.create` | - | store | - | - | - | platform | - | - |
-| `asset.create` | - | store | branch | - | - | platform | - | - |
-| `asset.update` | - | store | branch | branch | - | platform | - | - |
-| `booking.read` | own | store | branch | branch | store | platform | - | platform |
-| `booking.confirm` | - | store | branch | - | - | platform | - | - |
-| `booking.cancel` | - | store | branch | - | - | platform | - | - |
-| `payment.cash.confirm` | - | store | branch | branch | - | platform | - | - |
-| `rental.handover` | - | store | branch | branch | - | platform | - | - |
-| `return.accept` | - | store | branch | branch | - | platform | - | - |
-| `report.financial.read` | - | store | - | - | store | platform | - | - |
-| `staff.manage` | - | store | store | - | - | platform | - | - |
-| `sos.location.read` | - | store | branch | branch | - | platform | - | platform |
-| `content.approve` | - | - | - | - | - | platform | platform | - |
-| `platform.store.suspend` | - | - | - | - | - | platform | - | - |
-| `audit.read` | - | store | store | - | store | platform | platform | platform |
-| `payment.refund` | - | store | - | - | store | platform | - | - |
-| `user.suspend` | - | - | - | - | - | platform | - | - |
-| `dispute.manage` | - | - | - | - | - | platform | - | platform |
+| Permission               | RENTER | STORE_OWNER | STORE_MANAGER | STORE_STAFF | STORE_ACCOUNTING | PLATFORM_ADMIN | PLATFORM_MODERATOR | PLATFORM_SUPPORT |
+| ------------------------ | ------ | ----------- | ------------- | ----------- | ---------------- | -------------- | ------------------ | ---------------- |
+| `store.read`             | -      | store       | store         | branch      | store            | platform       | -                  | platform         |
+| `store.update`           | -      | store       | -             | -           | -                | platform       | -                  | -                |
+| `branch.create`          | -      | store       | -             | -           | -                | platform       | -                  | -                |
+| `asset.create`           | -      | store       | branch        | -           | -                | platform       | -                  | -                |
+| `asset.update`           | -      | store       | branch        | branch      | -                | platform       | -                  | -                |
+| `booking.read`           | own    | store       | branch        | branch      | store            | platform       | -                  | platform         |
+| `booking.confirm`        | -      | store       | branch        | -           | -                | platform       | -                  | -                |
+| `booking.cancel`         | -      | store       | branch        | -           | -                | platform       | -                  | -                |
+| `payment.cash.confirm`   | -      | store       | branch        | branch      | -                | platform       | -                  | -                |
+| `rental.handover`        | -      | store       | branch        | branch      | -                | platform       | -                  | -                |
+| `return.accept`          | -      | store       | branch        | branch      | -                | platform       | -                  | -                |
+| `report.financial.read`  | -      | store       | -             | -           | store            | platform       | -                  | -                |
+| `staff.manage`           | -      | store       | store         | -           | -                | platform       | -                  | -                |
+| `sos.location.read`      | -      | store       | branch        | branch      | -                | platform       | -                  | platform         |
+| `content.approve`        | -      | -           | -             | -           | -                | platform       | platform           | -                |
+| `platform.store.suspend` | -      | -           | -             | -           | -                | platform       | -                  | -                |
+| `audit.read`             | -      | store       | store         | -           | store            | platform       | platform           | platform         |
+| `payment.refund`         | -      | store       | -             | -           | store            | platform       | -                  | -                |
+| `user.suspend`           | -      | -           | -             | -           | -                | platform       | -                  | -                |
+| `dispute.manage`         | -      | -           | -             | -           | -                | platform       | -                  | platform         |
 
 ## Backend Verification Plan
 
 Security flow is scaffolded in `backend/src/identity/application/security-pipeline.ts`, `backend/src/identity/domain/rbac.ts`, and `backend/src/identity/api/security-error.ts`.
 
-| Component | Responsibility | Boundary |
-|---|---|---|
-| `FirebaseIdTokenVerifier` | Verify bearer token and return verified UID/claims metadata | Infrastructure adapter only |
-| `AppCheckTokenVerifier` | Verify App Check token for protected endpoints | Infrastructure adapter only |
-| `DomainUserResolver` | Map Firebase UID to active domain user | Application/infrastructure boundary |
-| `RoleAssignmentLookup` | Load role assignments with tenant, store, and branch scope | Application/infrastructure boundary |
-| `PermissionChecker` | Enforce role/resource/action permission matrix | Domain/application |
-| `TenantAccessGuard` | Reject cross-tenant and cross-branch access | Domain/application |
-| `AuditLogWriter` | Append immutable audit records for sensitive actions | Application/infrastructure boundary |
+| Component                 | Responsibility                                              | Boundary                            |
+| ------------------------- | ----------------------------------------------------------- | ----------------------------------- |
+| `FirebaseIdTokenVerifier` | Verify bearer token and return verified UID/claims metadata | Infrastructure adapter only         |
+| `AppCheckTokenVerifier`   | Verify App Check token for protected endpoints              | Infrastructure adapter only         |
+| `DomainUserResolver`      | Map Firebase UID to active domain user                      | Application/infrastructure boundary |
+| `RoleAssignmentLookup`    | Load role assignments with tenant, store, and branch scope  | Application/infrastructure boundary |
+| `PermissionChecker`       | Enforce role/resource/action permission matrix              | Domain/application                  |
+| `TenantAccessGuard`       | Reject cross-tenant and cross-branch access                 | Domain/application                  |
+| `AuditLogWriter`          | Append immutable audit records for sensitive actions        | Application/infrastructure boundary |
 
 ### Request Pipeline
 
@@ -105,13 +105,13 @@ Security flow is scaffolded in `backend/src/identity/application/security-pipeli
 
 ### Error Mapping
 
-| Failure case | HTTP | API code | Response detail |
-|---|---|---|---|
-| Missing bearer token | `401` | `AUTH_UNAUTHENTICATED` | Request requires authentication |
-| Invalid or expired token | `401` | `AUTH_INVALID_TOKEN` | Token cannot be trusted |
-| Missing App Check on required endpoint | `403` | `AUTH_APP_CHECK_REQUIRED` | Client must send App Check |
-| Invalid App Check token | `403` | `AUTH_APP_CHECK_INVALID` | App origin proof failed |
-| Authenticated but outside permission or scope | `403` | `PERMISSION_DENIED` | Include permission and decision reason only |
+| Failure case                                  | HTTP  | API code                  | Response detail                             |
+| --------------------------------------------- | ----- | ------------------------- | ------------------------------------------- |
+| Missing bearer token                          | `401` | `AUTH_UNAUTHENTICATED`    | Request requires authentication             |
+| Invalid or expired token                      | `401` | `AUTH_INVALID_TOKEN`      | Token cannot be trusted                     |
+| Missing App Check on required endpoint        | `403` | `AUTH_APP_CHECK_REQUIRED` | Client must send App Check                  |
+| Invalid App Check token                       | `403` | `AUTH_APP_CHECK_INVALID`  | App origin proof failed                     |
+| Authenticated but outside permission or scope | `403` | `PERMISSION_DENIED`       | Include permission and decision reason only |
 
 ## Firestore Rules Draft
 
@@ -158,18 +158,18 @@ Audit types and sanitization helpers are scaffolded in `backend/src/audit/domain
 
 ### Audit schema
 
-| Field | Description |
-|---|---|
-| `tenant_id` | Optional for platform/system actions |
-| `action` | Domain event-style audit action |
-| `resource_type` / `resource_id` | Target resource identifier |
-| `actor` | Actor type, domain user id, firebase uid reference, role snapshot, hashed IP, user agent |
-| `reason` | Required for overrides, corrections, suspensions, refunds, and moderation |
-| `before` / `after` | Sanitized snapshots only |
-| `classification` | `INTERNAL`, `CONFIDENTIAL`, `SENSITIVE_LOCATION`, `FINANCIAL` |
-| `correlation_id` | Request trace linkage |
-| `occurred_at` | UTC timestamp |
-| `immutable` | Always `true`; append-only record |
+| Field                           | Description                                                                              |
+| ------------------------------- | ---------------------------------------------------------------------------------------- |
+| `tenant_id`                     | Optional for platform/system actions                                                     |
+| `action`                        | Domain event-style audit action                                                          |
+| `resource_type` / `resource_id` | Target resource identifier                                                               |
+| `actor`                         | Actor type, domain user id, firebase uid reference, role snapshot, hashed IP, user agent |
+| `reason`                        | Required for overrides, corrections, suspensions, refunds, and moderation                |
+| `before` / `after`              | Sanitized snapshots only                                                                 |
+| `classification`                | `INTERNAL`, `CONFIDENTIAL`, `SENSITIVE_LOCATION`, `FINANCIAL`                            |
+| `correlation_id`                | Request trace linkage                                                                    |
+| `occurred_at`                   | UTC timestamp                                                                            |
+| `immutable`                     | Always `true`; append-only record                                                        |
 
 ### Sanitization rules
 
@@ -179,13 +179,13 @@ Audit types and sanitization helpers are scaffolded in `backend/src/audit/domain
 
 ## Data Classification and Retention Baseline
 
-| Class | Examples | Access expectation | Proposed retention baseline |
-|---|---|---|---|
-| Public | Approved store profile, public route/place | Public read | Product-driven |
-| Internal | Staff tasks, operational status | Role scoped | 1 year proposed |
-| Confidential | Phone, email, merchant documents, moderation notes | Restricted role and purpose | 3 years after case closure proposed unless legal hold applies |
-| Sensitive location | Ride tracks, SOS location, return evidence location | Purpose-limited, incident-only | 30 days proposed for raw coordinates before delete or aggregate |
-| Financial | Payments, refunds, deposits, settlements, cash confirmations | Restricted and audited | 7 years or statutory minimum |
+| Class              | Examples                                                     | Access expectation             | Proposed retention baseline                                     |
+| ------------------ | ------------------------------------------------------------ | ------------------------------ | --------------------------------------------------------------- |
+| Public             | Approved store profile, public route/place                   | Public read                    | Product-driven                                                  |
+| Internal           | Staff tasks, operational status                              | Role scoped                    | 1 year proposed                                                 |
+| Confidential       | Phone, email, merchant documents, moderation notes           | Restricted role and purpose    | 3 years after case closure proposed unless legal hold applies   |
+| Sensitive location | Ride tracks, SOS location, return evidence location          | Purpose-limited, incident-only | 30 days proposed for raw coordinates before delete or aggregate |
+| Financial          | Payments, refunds, deposits, settlements, cash confirmations | Restricted and audited         | 7 years or statutory minimum                                    |
 
 ### Open retention questions
 
@@ -209,6 +209,8 @@ Current runnable commands:
 npm run typecheck
 npm test
 npm run test:security
+npm run test:security-rules
+npm run test:emulator
 ```
 
 Current coverage from runnable tests:
@@ -220,10 +222,12 @@ Current coverage from runnable tests:
 - Object-level own-booking authorization
 - API error response mapping
 - Audit payload redaction for secrets and coordinates
+- Firestore rules default-deny with public config exception
+- Firestore user-owned notification read exception
+- Storage public-read and owner-upload exceptions
+- Emulator seed loading for auth, Firestore, and storage placeholders
 
-Queued for Task 06 emulator setup:
+Still pending beyond Task 06:
 
-- Firestore rules integration tests
-- Storage rules integration tests
 - Webhook replay integration test
 - Idempotency duplicate request integration test

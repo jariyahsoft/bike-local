@@ -6,3 +6,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  bike_local_design_system:
+    path: ../design_system
+dev_dependencies:
+  flutter_test:
+    sdk: flutter

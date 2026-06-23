@@ -1,6 +1,16 @@
-import type { CorrelationId, IsoUtcDateTime, TenantId, UserId } from "../../shared/domain/index.js";
+import type {
+  CorrelationId,
+  IsoUtcDateTime,
+  TenantId,
+  UserId,
+} from "../../shared/domain/index.js";
 
-export type AuditClassification = "PUBLIC" | "INTERNAL" | "CONFIDENTIAL" | "SENSITIVE_LOCATION" | "FINANCIAL";
+export type AuditClassification =
+  | "PUBLIC"
+  | "INTERNAL"
+  | "CONFIDENTIAL"
+  | "SENSITIVE_LOCATION"
+  | "FINANCIAL";
 export type AuditActorType = "USER" | "SERVICE" | "SYSTEM";
 
 export interface AuditActor {
@@ -59,12 +69,15 @@ export const AUDIT_RETENTION_RULES: readonly AuditRetentionRule[] = [
   {
     className: "CONFIDENTIAL",
     minimumRetention: "3 years after case closure unless legal hold applies",
-    purpose: "Permission changes, suspensions, content moderation, and support actions.",
+    purpose:
+      "Permission changes, suspensions, content moderation, and support actions.",
   },
   {
     className: "SENSITIVE_LOCATION",
-    minimumRetention: "30 days proposed for raw coordinates in incident workflows",
-    purpose: "SOS and active incident investigation with strict access controls.",
+    minimumRetention:
+      "30 days proposed for raw coordinates in incident workflows",
+    purpose:
+      "SOS and active incident investigation with strict access controls.",
   },
   {
     className: "INTERNAL",
@@ -82,17 +95,20 @@ export const RETENTION_OPEN_QUESTIONS: readonly RetentionOpenQuestion[] = [
   {
     id: "RET-001",
     topic: "Raw GPS ride-track retention",
-    currentProposal: "Keep chunk-level coordinates for 30 days, then delete or aggregate unless a dispute, SOS, or fraud/legal hold remains open.",
+    currentProposal:
+      "Keep chunk-level coordinates for 30 days, then delete or aggregate unless a dispute, SOS, or fraud/legal hold remains open.",
   },
   {
     id: "RET-002",
     topic: "PII deletion after account deletion request",
-    currentProposal: "Pseudonymize user-facing profile data quickly, but retain legally required payment, refund, audit, and dispute records behind restricted access.",
+    currentProposal:
+      "Pseudonymize user-facing profile data quickly, but retain legally required payment, refund, audit, and dispute records behind restricted access.",
   },
   {
     id: "RET-003",
     topic: "Merchant identity and evidence document retention",
-    currentProposal: "Retain approval and compliance evidence through the merchant relationship plus statutory tail period, with no direct client reads.",
+    currentProposal:
+      "Retain approval and compliance evidence through the merchant relationship plus statutory tail period, with no direct client reads.",
   },
 ];
 
@@ -128,7 +144,9 @@ export const sanitizeAuditPayload = (value: unknown): unknown => {
   }
 
   const sanitized: Record<string, unknown> = {};
-  for (const [key, nestedValue] of Object.entries(value as Record<string, unknown>)) {
+  for (const [key, nestedValue] of Object.entries(
+    value as Record<string, unknown>,
+  )) {
     const normalizedKey = key.toLowerCase();
     if (REMOVED_KEYS.has(normalizedKey)) {
       continue;
