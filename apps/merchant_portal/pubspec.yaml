@@ -1,0 +1,8 @@
+name: bike_local_merchant_portal
+publish_to: none
+description: Merchant portal shell for store, branch, staff, booking, return, and report workflows.
+environment:
+  sdk: ">=3.7.0 <4.0.0"
+dependencies:
+  flutter:
+    sdk: flutter

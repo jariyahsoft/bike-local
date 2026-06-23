@@ -1,0 +1,5 @@
+name: bike_local_api_client
+publish_to: none
+description: Generated API client package from the OpenAPI contract.
+environment:
+  sdk: ">=3.7.0 <4.0.0"

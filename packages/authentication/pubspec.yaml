@@ -1,0 +1,8 @@
+name: bike_local_authentication
+publish_to: none
+description: Authentication integration package for Firebase Auth and domain user session mapping.
+environment:
+  sdk: ">=3.7.0 <4.0.0"
+dependencies:
+  flutter:
+    sdk: flutter

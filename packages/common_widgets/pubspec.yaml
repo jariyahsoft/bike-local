@@ -1,0 +1,8 @@
+name: bike_local_common_widgets
+publish_to: none
+description: Shared Flutter widgets that are not part of the design-system core.
+environment:
+  sdk: ">=3.7.0 <4.0.0"
+dependencies:
+  flutter:
+    sdk: flutter

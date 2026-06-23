@@ -1,0 +1,8 @@
+name: bike_local_ride_tracking
+publish_to: none
+description: Ride tracking local buffer and upload coordination package.
+environment:
+  sdk: ">=3.7.0 <4.0.0"
+dependencies:
+  flutter:
+    sdk: flutter

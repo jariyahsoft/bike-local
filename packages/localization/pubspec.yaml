@@ -1,0 +1,8 @@
+name: bike_local_localization
+publish_to: none
+description: Thai and English localization assets and helpers.
+environment:
+  sdk: ">=3.7.0 <4.0.0"
+dependencies:
+  flutter:
+    sdk: flutter

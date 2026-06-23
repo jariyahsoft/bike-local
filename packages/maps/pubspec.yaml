@@ -1,0 +1,8 @@
+name: bike_local_maps
+publish_to: none
+description: Map and geocoding abstraction package.
+environment:
+  sdk: ">=3.7.0 <4.0.0"
+dependencies:
+  flutter:
+    sdk: flutter

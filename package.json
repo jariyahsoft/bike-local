@@ -1,0 +1,11 @@
+{
+  "name": "bike-local",
+  "private": true,
+  "workspaces": [
+    "backend"
+  ],
+  "scripts": {
+    "typecheck": "npm --workspace backend run typecheck",
+    "test": "npm --workspace backend test"
+  }
+}

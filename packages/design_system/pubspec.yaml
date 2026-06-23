@@ -1,0 +1,8 @@
+name: bike_local_design_system
+publish_to: none
+description: Shared design tokens and Flutter UI primitives.
+environment:
+  sdk: ">=3.7.0 <4.0.0"
+dependencies:
+  flutter:
+    sdk: flutter

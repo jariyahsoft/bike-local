@@ -19,19 +19,19 @@ Foundation / Sprint 0
 
 ### Product and Domain
 
-- [ ] Confirm open questions in `00-project-overview.md`
+- [x] Confirm open questions in `00-project-overview.md`
 - [ ] Review glossary with product, engineering, QA and support
-- [ ] Define user flow diagrams for renter, merchant and admin
-- [ ] Define MVP route/place/review moderation policy
-- [ ] Define cancellation, refund and deposit policy boundaries
+- [x] Define user flow diagrams for renter, merchant and admin
+- [x] Define MVP route/place/review moderation policy
+- [x] Define cancellation, refund and deposit policy boundaries
 
 ### Architecture
 
 - [ ] Confirm Cloud Functions vs Cloud Run decision
-- [ ] Create monorepo structure
-- [ ] Create backend module skeleton
-- [ ] Create frontend apps/packages skeleton
-- [ ] Create repository interface examples for booking, payment, ride and return
+- [x] Create monorepo structure
+- [x] Create backend module skeleton
+- [x] Create frontend apps/packages skeleton
+- [x] Create repository interface examples for booking, payment, ride and return
 - [ ] Define outbox/dead-letter strategy
 - [ ] Define Firestore indexes draft
 

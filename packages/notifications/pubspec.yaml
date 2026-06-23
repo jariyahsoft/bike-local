@@ -1,0 +1,8 @@
+name: bike_local_notifications
+publish_to: none
+description: Notification registration and presentation helpers.
+environment:
+  sdk: ">=3.7.0 <4.0.0"
+dependencies:
+  flutter:
+    sdk: flutter

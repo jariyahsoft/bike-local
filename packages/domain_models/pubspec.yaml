@@ -1,0 +1,5 @@
+name: bike_local_domain_models
+publish_to: none
+description: Shared frontend domain model helpers that mirror API contract concepts without provider SDK coupling.
+environment:
+  sdk: ">=3.7.0 <4.0.0"

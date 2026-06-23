@@ -1,0 +1,8 @@
+name: bike_local_mobile_app
+publish_to: none
+description: Renter and shared mobile/web app shell for Bike Local.
+environment:
+  sdk: ">=3.7.0 <4.0.0"
+dependencies:
+  flutter:
+    sdk: flutter

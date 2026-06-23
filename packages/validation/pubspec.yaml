@@ -1,0 +1,5 @@
+name: bike_local_validation
+publish_to: none
+description: Shared frontend validation helpers.
+environment:
+  sdk: ">=3.7.0 <4.0.0"
