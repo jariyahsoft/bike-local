@@ -14,10 +14,10 @@ part 'create_user_request.g.dart';
 /// CreateUserRequest
 ///
 /// Properties:
-/// * [displayName] 
-/// * [locale] 
-/// * [selectedRoles] 
-/// * [consents] 
+/// * [displayName]
+/// * [locale]
+/// * [selectedRoles]
+/// * [consents]
 @BuiltValue()
 abstract class CreateUserRequest implements Built<CreateUserRequest, CreateUserRequestBuilder> {
   @BuiltValueField(wireName: r'display_name')
@@ -170,4 +170,3 @@ class CreateUserRequestLocaleEnum extends EnumClass {
   static BuiltSet<CreateUserRequestLocaleEnum> get values => _$createUserRequestLocaleEnumValues;
   static CreateUserRequestLocaleEnum valueOf(String name) => _$createUserRequestLocaleEnumValueOf(name);
 }
-

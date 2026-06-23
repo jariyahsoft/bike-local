@@ -15,25 +15,25 @@ part 'route.g.dart';
 /// Route
 ///
 /// Properties:
-/// * [id] 
-/// * [schemaVersion] 
-/// * [tenantId] 
-/// * [createdAt] 
-/// * [createdBy] 
-/// * [updatedAt] 
-/// * [updatedBy] 
-/// * [deletedAt] 
-/// * [version] 
-/// * [name] 
-/// * [description] 
-/// * [startLocation] 
-/// * [endLocation] 
-/// * [distanceMeters] 
-/// * [difficulty] 
-/// * [surface] 
-/// * [warning] 
-/// * [suitableBikeTypes] 
-/// * [status] 
+/// * [id]
+/// * [schemaVersion]
+/// * [tenantId]
+/// * [createdAt]
+/// * [createdBy]
+/// * [updatedAt]
+/// * [updatedBy]
+/// * [deletedAt]
+/// * [version]
+/// * [name]
+/// * [description]
+/// * [startLocation]
+/// * [endLocation]
+/// * [distanceMeters]
+/// * [difficulty]
+/// * [surface]
+/// * [warning]
+/// * [suitableBikeTypes]
+/// * [status]
 @BuiltValue()
 abstract class Route implements EntityBase, Built<Route, RouteBuilder> {
   @BuiltValueField(wireName: r'difficulty')
@@ -383,4 +383,3 @@ class _$RouteSerializer implements PrimitiveSerializer<Route> {
     return result.build();
   }
 }
-

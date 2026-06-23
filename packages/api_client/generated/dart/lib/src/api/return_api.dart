@@ -23,13 +23,13 @@ class ReturnApi {
   const ReturnApi(this._dio, this._serializers);
 
   /// Accept return and record inspection.
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [idempotencyKey] 
-  /// * [returnInspection] 
-  /// * [xCorrelationId] 
+  /// * [id]
+  /// * [idempotencyKey]
+  /// * [returnInspection]
+  /// * [xCorrelationId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -39,7 +39,7 @@ class ReturnApi {
   ///
   /// Returns a [Future] containing a [Response] with a [InlineObject7] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<InlineObject7>> acceptReturnRequest({ 
+  Future<Response<InlineObject7>> acceptReturnRequest({
     required String id,
     required String idempotencyKey,
     required ReturnInspection returnInspection,
@@ -137,12 +137,12 @@ class ReturnApi {
   }
 
   /// Request bike return with evidence.
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [idempotencyKey] 
-  /// * [createReturnRequest] 
-  /// * [xCorrelationId] 
+  /// * [idempotencyKey]
+  /// * [createReturnRequest]
+  /// * [xCorrelationId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -152,7 +152,7 @@ class ReturnApi {
   ///
   /// Returns a [Future] containing a [Response] with a [InlineObject7] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<InlineObject7>> createReturnRequest({ 
+  Future<Response<InlineObject7>> createReturnRequest({
     required String idempotencyKey,
     required CreateReturnRequest createReturnRequest,
     String? xCorrelationId,

@@ -13,13 +13,13 @@ part 'create_staff_invitation_request.g.dart';
 /// CreateStaffInvitationRequest
 ///
 /// Properties:
-/// * [role] 
-/// * [channel] 
-/// * [email] 
-/// * [phone] 
-/// * [branchIds] 
-/// * [permissionOverrides] 
-/// * [expiresAt] 
+/// * [role]
+/// * [channel]
+/// * [email]
+/// * [phone]
+/// * [branchIds]
+/// * [permissionOverrides]
+/// * [expiresAt]
 @BuiltValue()
 abstract class CreateStaffInvitationRequest implements Built<CreateStaffInvitationRequest, CreateStaffInvitationRequestBuilder> {
   @BuiltValueField(wireName: r'role')
@@ -232,4 +232,3 @@ class CreateStaffInvitationRequestChannelEnum extends EnumClass {
   static BuiltSet<CreateStaffInvitationRequestChannelEnum> get values => _$createStaffInvitationRequestChannelEnumValues;
   static CreateStaffInvitationRequestChannelEnum valueOf(String name) => _$createStaffInvitationRequestChannelEnumValueOf(name);
 }
-

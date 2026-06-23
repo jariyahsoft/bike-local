@@ -27,14 +27,14 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getSearchApi();
-final String q = q_example; // String | 
-final String storeId = storeId_example; // String | 
-final String branchId = branchId_example; // String | 
-final DateTime startAt = 2013-10-20T19:20:30+01:00; // DateTime | 
-final DateTime endAt = 2013-10-20T19:20:30+01:00; // DateTime | 
-final int limit = 56; // int | 
-final String cursor = cursor_example; // String | 
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
+final String q = q_example; // String |
+final String storeId = storeId_example; // String |
+final String branchId = branchId_example; // String |
+final DateTime startAt = 2013-10-20T19:20:30+01:00; // DateTime |
+final DateTime endAt = 2013-10-20T19:20:30+01:00; // DateTime |
+final int limit = 56; // int |
+final String cursor = cursor_example; // String |
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
 
 try {
     final response = api.searchAssets(q, storeId, branchId, startAt, endAt, limit, cursor, xCorrelationId);
@@ -48,14 +48,14 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **q** | **String**|  | [optional] 
- **storeId** | **String**|  | [optional] 
- **branchId** | **String**|  | [optional] 
- **startAt** | **DateTime**|  | [optional] 
- **endAt** | **DateTime**|  | [optional] 
+ **q** | **String**|  | [optional]
+ **storeId** | **String**|  | [optional]
+ **branchId** | **String**|  | [optional]
+ **startAt** | **DateTime**|  | [optional]
+ **endAt** | **DateTime**|  | [optional]
  **limit** | **int**|  | [optional] [default to 20]
- **cursor** | **String**|  | [optional] 
- **xCorrelationId** | **String**|  | [optional] 
+ **cursor** | **String**|  | [optional]
+ **xCorrelationId** | **String**|  | [optional]
 
 ### Return type
 
@@ -86,12 +86,12 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getSearchApi();
-final String q = q_example; // String | 
-final num latitude = 8.14; // num | 
-final num longitude = 8.14; // num | 
-final int limit = 56; // int | 
-final String cursor = cursor_example; // String | 
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
+final String q = q_example; // String |
+final num latitude = 8.14; // num |
+final num longitude = 8.14; // num |
+final int limit = 56; // int |
+final String cursor = cursor_example; // String |
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
 
 try {
     final response = api.searchStores(q, latitude, longitude, limit, cursor, xCorrelationId);
@@ -105,12 +105,12 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **q** | **String**|  | [optional] 
- **latitude** | **num**|  | [optional] 
- **longitude** | **num**|  | [optional] 
+ **q** | **String**|  | [optional]
+ **latitude** | **num**|  | [optional]
+ **longitude** | **num**|  | [optional]
  **limit** | **int**|  | [optional] [default to 20]
- **cursor** | **String**|  | [optional] 
- **xCorrelationId** | **String**|  | [optional] 
+ **cursor** | **String**|  | [optional]
+ **xCorrelationId** | **String**|  | [optional]
 
 ### Return type
 
@@ -126,4 +126,3 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-

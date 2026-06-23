@@ -13,22 +13,22 @@ part 'ride_session.g.dart';
 /// RideSession
 ///
 /// Properties:
-/// * [id] 
-/// * [schemaVersion] 
-/// * [tenantId] 
-/// * [createdAt] 
-/// * [createdBy] 
-/// * [updatedAt] 
-/// * [updatedBy] 
-/// * [deletedAt] 
-/// * [version] 
-/// * [bookingId] 
-/// * [userId] 
-/// * [status] 
-/// * [startedAt] 
-/// * [endedAt] 
-/// * [distanceMeters] 
-/// * [gpsGapCount] 
+/// * [id]
+/// * [schemaVersion]
+/// * [tenantId]
+/// * [createdAt]
+/// * [createdBy]
+/// * [updatedAt]
+/// * [updatedBy]
+/// * [deletedAt]
+/// * [version]
+/// * [bookingId]
+/// * [userId]
+/// * [status]
+/// * [startedAt]
+/// * [endedAt]
+/// * [distanceMeters]
+/// * [gpsGapCount]
 @BuiltValue()
 abstract class RideSession implements EntityBase, Built<RideSession, RideSessionBuilder> {
   @BuiltValueField(wireName: r'distance_meters')
@@ -352,4 +352,3 @@ class RideSessionStatusEnum extends EnumClass {
   static BuiltSet<RideSessionStatusEnum> get values => _$rideSessionStatusEnumValues;
   static RideSessionStatusEnum valueOf(String name) => _$rideSessionStatusEnumValueOf(name);
 }
-

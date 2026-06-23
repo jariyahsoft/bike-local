@@ -13,17 +13,17 @@ part 'create_branch_request.g.dart';
 /// CreateBranchRequest
 ///
 /// Properties:
-/// * [name] 
-/// * [address] 
-/// * [province] 
-/// * [district] 
-/// * [country] 
-/// * [latitude] 
-/// * [longitude] 
-/// * [geohash] 
-/// * [phone] 
-/// * [openingHours] 
-/// * [timezone] 
+/// * [name]
+/// * [address]
+/// * [province]
+/// * [district]
+/// * [country]
+/// * [latitude]
+/// * [longitude]
+/// * [geohash]
+/// * [phone]
+/// * [openingHours]
+/// * [timezone]
 @BuiltValue()
 abstract class CreateBranchRequest implements Built<CreateBranchRequest, CreateBranchRequestBuilder> {
   @BuiltValueField(wireName: r'name')
@@ -277,4 +277,3 @@ class _$CreateBranchRequestSerializer implements PrimitiveSerializer<CreateBranc
     return result.build();
   }
 }
-

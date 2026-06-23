@@ -12,11 +12,11 @@ part 'handover_request.g.dart';
 /// HandoverRequest
 ///
 /// Properties:
-/// * [staffUserId] 
-/// * [checklistImageRefs] 
-/// * [conditionNotes] 
-/// * [existingDamageNotes] 
-/// * [version] 
+/// * [staffUserId]
+/// * [checklistImageRefs]
+/// * [conditionNotes]
+/// * [existingDamageNotes]
+/// * [version]
 @BuiltValue()
 abstract class HandoverRequest implements Built<HandoverRequest, HandoverRequestBuilder> {
   @BuiltValueField(wireName: r'staff_user_id')
@@ -170,4 +170,3 @@ class _$HandoverRequestSerializer implements PrimitiveSerializer<HandoverRequest
     return result.build();
   }
 }
-

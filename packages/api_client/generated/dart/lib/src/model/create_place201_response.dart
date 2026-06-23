@@ -14,8 +14,8 @@ part 'create_place201_response.g.dart';
 /// CreatePlace201Response
 ///
 /// Properties:
-/// * [data] 
-/// * [meta] 
+/// * [data]
+/// * [meta]
 @BuiltValue()
 abstract class CreatePlace201Response implements SuccessEnvelope, Built<CreatePlace201Response, CreatePlace201ResponseBuilder> {
   CreatePlace201Response._();
@@ -117,4 +117,3 @@ class _$CreatePlace201ResponseSerializer implements PrimitiveSerializer<CreatePl
     return result.build();
   }
 }
-

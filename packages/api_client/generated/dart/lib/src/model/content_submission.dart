@@ -14,18 +14,18 @@ part 'content_submission.g.dart';
 /// ContentSubmission
 ///
 /// Properties:
-/// * [id] 
-/// * [schemaVersion] 
-/// * [tenantId] 
-/// * [createdAt] 
-/// * [createdBy] 
-/// * [updatedAt] 
-/// * [updatedBy] 
-/// * [deletedAt] 
-/// * [version] 
-/// * [contentType] 
-/// * [contentId] 
-/// * [status] 
+/// * [id]
+/// * [schemaVersion]
+/// * [tenantId]
+/// * [createdAt]
+/// * [createdBy]
+/// * [updatedAt]
+/// * [updatedBy]
+/// * [deletedAt]
+/// * [version]
+/// * [contentType]
+/// * [contentId]
+/// * [status]
 @BuiltValue()
 abstract class ContentSubmission implements EntityBase, Built<ContentSubmission, ContentSubmissionBuilder> {
   @BuiltValueField(wireName: r'content_id')
@@ -282,4 +282,3 @@ class ContentSubmissionContentTypeEnum extends EnumClass {
   static BuiltSet<ContentSubmissionContentTypeEnum> get values => _$contentSubmissionContentTypeEnumValues;
   static ContentSubmissionContentTypeEnum valueOf(String name) => _$contentSubmissionContentTypeEnumValueOf(name);
 }
-

@@ -13,20 +13,20 @@ part 'booking_item.g.dart';
 /// BookingItem
 ///
 /// Properties:
-/// * [id] 
-/// * [schemaVersion] 
-/// * [tenantId] 
-/// * [createdAt] 
-/// * [createdBy] 
-/// * [updatedAt] 
-/// * [updatedBy] 
-/// * [deletedAt] 
-/// * [version] 
-/// * [bookingId] 
-/// * [itemType] 
-/// * [itemId] 
-/// * [quantity] 
-/// * [amount] 
+/// * [id]
+/// * [schemaVersion]
+/// * [tenantId]
+/// * [createdAt]
+/// * [createdBy]
+/// * [updatedAt]
+/// * [updatedBy]
+/// * [deletedAt]
+/// * [version]
+/// * [bookingId]
+/// * [itemType]
+/// * [itemId]
+/// * [quantity]
+/// * [amount]
 @BuiltValue()
 abstract class BookingItem implements EntityBase, Built<BookingItem, BookingItemBuilder> {
   @BuiltValueField(wireName: r'item_id')
@@ -310,4 +310,3 @@ class BookingItemItemTypeEnum extends EnumClass {
   static BuiltSet<BookingItemItemTypeEnum> get values => _$bookingItemItemTypeEnumValues;
   static BookingItemItemTypeEnum valueOf(String name) => _$bookingItemItemTypeEnumValueOf(name);
 }
-

@@ -18,6 +18,12 @@ export type PaymentId = DomainId<"Payment">;
 export type RideSessionId = DomainId<"RideSession">;
 export type ReturnRequestId = DomainId<"ReturnRequest">;
 export type AssetId = DomainId<"Asset">;
+export type AssetCategoryId = DomainId<"AssetCategory">;
+export type EquipmentItemId = DomainId<"EquipmentItem">;
+export type InventoryUnitId = DomainId<"InventoryUnit">;
+export type RentalPointId = DomainId<"RentalPoint">;
+export type PricingRuleId = DomainId<"PricingRule">;
+export type AvailabilityBlockId = DomainId<"AvailabilityBlock">;
 export type CorrelationId = Brand<string, "CorrelationId">;
 export type IdempotencyKey = Brand<string, "IdempotencyKey">;
 

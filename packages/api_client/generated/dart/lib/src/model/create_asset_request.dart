@@ -3,6 +3,7 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -11,15 +12,24 @@ part 'create_asset_request.g.dart';
 /// CreateAssetRequest
 ///
 /// Properties:
-/// * [storeId] 
-/// * [branchId] 
-/// * [categoryId] 
-/// * [code] 
-/// * [brand] 
-/// * [model] 
-/// * [basePrice] 
-/// * [depositAmount] 
-/// * [currency] 
+/// * [storeId]
+/// * [branchId]
+/// * [categoryId]
+/// * [code]
+/// * [qrTokenReference] - Opaque token reference only; raw long-lived QR token values must not be stored.
+/// * [brand]
+/// * [model]
+/// * [color]
+/// * [size]
+/// * [description]
+/// * [basePrice] - Integer minor units only.
+/// * [depositAmount] - Integer minor units only.
+/// * [currency]
+/// * [currentPointId]
+/// * [images]
+/// * [cashAccepted]
+/// * [differentReturnAllowed]
+/// * [equipmentIds]
 @BuiltValue()
 abstract class CreateAssetRequest implements Built<CreateAssetRequest, CreateAssetRequestBuilder> {
   @BuiltValueField(wireName: r'store_id')
@@ -34,20 +44,50 @@ abstract class CreateAssetRequest implements Built<CreateAssetRequest, CreateAss
   @BuiltValueField(wireName: r'code')
   String get code;
 
+  /// Opaque token reference only; raw long-lived QR token values must not be stored.
+  @BuiltValueField(wireName: r'qr_token_reference')
+  String? get qrTokenReference;
+
   @BuiltValueField(wireName: r'brand')
   String? get brand;
 
   @BuiltValueField(wireName: r'model')
   String? get model;
 
+  @BuiltValueField(wireName: r'color')
+  String? get color;
+
+  @BuiltValueField(wireName: r'size')
+  String? get size;
+
+  @BuiltValueField(wireName: r'description')
+  String? get description;
+
+  /// Integer minor units only.
   @BuiltValueField(wireName: r'base_price')
   int get basePrice;
 
+  /// Integer minor units only.
   @BuiltValueField(wireName: r'deposit_amount')
   int get depositAmount;
 
   @BuiltValueField(wireName: r'currency')
   String get currency;
+
+  @BuiltValueField(wireName: r'current_point_id')
+  String? get currentPointId;
+
+  @BuiltValueField(wireName: r'images')
+  BuiltList<String>? get images;
+
+  @BuiltValueField(wireName: r'cash_accepted')
+  bool? get cashAccepted;
+
+  @BuiltValueField(wireName: r'different_return_allowed')
+  bool? get differentReturnAllowed;
+
+  @BuiltValueField(wireName: r'equipment_ids')
+  BuiltList<String>? get equipmentIds;
 
   CreateAssetRequest._();
 
@@ -92,6 +132,13 @@ class _$CreateAssetRequestSerializer implements PrimitiveSerializer<CreateAssetR
       object.code,
       specifiedType: const FullType(String),
     );
+    if (object.qrTokenReference != null) {
+      yield r'qr_token_reference';
+      yield serializers.serialize(
+        object.qrTokenReference,
+        specifiedType: const FullType(String),
+      );
+    }
     if (object.brand != null) {
       yield r'brand';
       yield serializers.serialize(
@@ -103,6 +150,27 @@ class _$CreateAssetRequestSerializer implements PrimitiveSerializer<CreateAssetR
       yield r'model';
       yield serializers.serialize(
         object.model,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.color != null) {
+      yield r'color';
+      yield serializers.serialize(
+        object.color,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.size != null) {
+      yield r'size';
+      yield serializers.serialize(
+        object.size,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.description != null) {
+      yield r'description';
+      yield serializers.serialize(
+        object.description,
         specifiedType: const FullType(String),
       );
     }
@@ -121,6 +189,41 @@ class _$CreateAssetRequestSerializer implements PrimitiveSerializer<CreateAssetR
       object.currency,
       specifiedType: const FullType(String),
     );
+    if (object.currentPointId != null) {
+      yield r'current_point_id';
+      yield serializers.serialize(
+        object.currentPointId,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.images != null) {
+      yield r'images';
+      yield serializers.serialize(
+        object.images,
+        specifiedType: const FullType(BuiltList, [FullType(String)]),
+      );
+    }
+    if (object.cashAccepted != null) {
+      yield r'cash_accepted';
+      yield serializers.serialize(
+        object.cashAccepted,
+        specifiedType: const FullType(bool),
+      );
+    }
+    if (object.differentReturnAllowed != null) {
+      yield r'different_return_allowed';
+      yield serializers.serialize(
+        object.differentReturnAllowed,
+        specifiedType: const FullType(bool),
+      );
+    }
+    if (object.equipmentIds != null) {
+      yield r'equipment_ids';
+      yield serializers.serialize(
+        object.equipmentIds,
+        specifiedType: const FullType(BuiltList, [FullType(String)]),
+      );
+    }
   }
 
   @override
@@ -172,6 +275,13 @@ class _$CreateAssetRequestSerializer implements PrimitiveSerializer<CreateAssetR
           ) as String;
           result.code = valueDes;
           break;
+        case r'qr_token_reference':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.qrTokenReference = valueDes;
+          break;
         case r'brand':
           final valueDes = serializers.deserialize(
             value,
@@ -185,6 +295,27 @@ class _$CreateAssetRequestSerializer implements PrimitiveSerializer<CreateAssetR
             specifiedType: const FullType(String),
           ) as String;
           result.model = valueDes;
+          break;
+        case r'color':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.color = valueDes;
+          break;
+        case r'size':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.size = valueDes;
+          break;
+        case r'description':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.description = valueDes;
           break;
         case r'base_price':
           final valueDes = serializers.deserialize(
@@ -206,6 +337,41 @@ class _$CreateAssetRequestSerializer implements PrimitiveSerializer<CreateAssetR
             specifiedType: const FullType(String),
           ) as String;
           result.currency = valueDes;
+          break;
+        case r'current_point_id':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.currentPointId = valueDes;
+          break;
+        case r'images':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(BuiltList, [FullType(String)]),
+          ) as BuiltList<String>;
+          result.images.replace(valueDes);
+          break;
+        case r'cash_accepted':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool;
+          result.cashAccepted = valueDes;
+          break;
+        case r'different_return_allowed':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool;
+          result.differentReturnAllowed = valueDes;
+          break;
+        case r'equipment_ids':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(BuiltList, [FullType(String)]),
+          ) as BuiltList<String>;
+          result.equipmentIds.replace(valueDes);
           break;
         default:
           unhandled.add(key);
@@ -235,4 +401,3 @@ class _$CreateAssetRequestSerializer implements PrimitiveSerializer<CreateAssetR
     return result.build();
   }
 }
-

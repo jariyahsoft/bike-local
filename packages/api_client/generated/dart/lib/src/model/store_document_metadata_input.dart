@@ -12,11 +12,11 @@ part 'store_document_metadata_input.g.dart';
 /// StoreDocumentMetadataInput
 ///
 /// Properties:
-/// * [type] 
-/// * [storageObjectRef] 
-/// * [fileName] 
-/// * [contentType] 
-/// * [sizeBytes] 
+/// * [type]
+/// * [storageObjectRef]
+/// * [fileName]
+/// * [contentType]
+/// * [sizeBytes]
 @BuiltValue()
 abstract class StoreDocumentMetadataInput implements Built<StoreDocumentMetadataInput, StoreDocumentMetadataInputBuilder> {
   @BuiltValueField(wireName: r'type')
@@ -190,4 +190,3 @@ class StoreDocumentMetadataInputTypeEnum extends EnumClass {
   static BuiltSet<StoreDocumentMetadataInputTypeEnum> get values => _$storeDocumentMetadataInputTypeEnumValues;
   static StoreDocumentMetadataInputTypeEnum valueOf(String name) => _$storeDocumentMetadataInputTypeEnumValueOf(name);
 }
-

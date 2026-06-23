@@ -14,23 +14,23 @@ part 'store_member.g.dart';
 /// StoreMember
 ///
 /// Properties:
-/// * [id] 
-/// * [schemaVersion] 
-/// * [tenantId] 
-/// * [createdAt] 
-/// * [createdBy] 
-/// * [updatedAt] 
-/// * [updatedBy] 
-/// * [deletedAt] 
-/// * [version] 
-/// * [storeId] 
-/// * [userId] 
-/// * [role] 
-/// * [branchIds] 
-/// * [permissions] 
-/// * [grantedPermissions] 
-/// * [deniedPermissions] 
-/// * [status] 
+/// * [id]
+/// * [schemaVersion]
+/// * [tenantId]
+/// * [createdAt]
+/// * [createdBy]
+/// * [updatedAt]
+/// * [updatedBy]
+/// * [deletedAt]
+/// * [version]
+/// * [storeId]
+/// * [userId]
+/// * [role]
+/// * [branchIds]
+/// * [permissions]
+/// * [grantedPermissions]
+/// * [deniedPermissions]
+/// * [status]
 @BuiltValue()
 abstract class StoreMember implements EntityBase, Built<StoreMember, StoreMemberBuilder> {
   @BuiltValueField(wireName: r'denied_permissions')
@@ -366,4 +366,3 @@ class StoreMemberStatusEnum extends EnumClass {
   static BuiltSet<StoreMemberStatusEnum> get values => _$storeMemberStatusEnumValues;
   static StoreMemberStatusEnum valueOf(String name) => _$storeMemberStatusEnumValueOf(name);
 }
-

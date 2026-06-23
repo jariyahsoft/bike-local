@@ -15,8 +15,8 @@ part 'list_assets200_response.g.dart';
 /// ListAssets200Response
 ///
 /// Properties:
-/// * [data] 
-/// * [meta] 
+/// * [data]
+/// * [meta]
 @BuiltValue()
 abstract class ListAssets200Response implements SuccessEnvelope, Built<ListAssets200Response, ListAssets200ResponseBuilder> {
   ListAssets200Response._();
@@ -118,4 +118,3 @@ class _$ListAssets200ResponseSerializer implements PrimitiveSerializer<ListAsset
     return result.build();
   }
 }
-

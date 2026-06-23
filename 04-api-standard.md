@@ -68,6 +68,10 @@ PERMISSION_*
 VALIDATION_*
 STORE_*
 ASSET_*
+INVENTORY_*
+PRICING_*
+SEARCH_*
+AVAILABILITY_*
 BOOKING_*
 PAYMENT_*
 RIDE_*
@@ -103,6 +107,12 @@ filter
 
 Endpoint ต่อไปนี้ต้องรองรับ idempotency:
 
+- Create Asset Category
+- Create Asset
+- Create Equipment Item
+- Create Inventory Unit
+- Create Rental Point
+- Create Pricing Rule
 - Create Booking
 - Create Payment
 - Confirm Cash
@@ -181,9 +191,9 @@ Event types ขั้นต่ำ:
 | Stores | `POST /api/v1/stores`, `GET /api/v1/stores`, `PATCH /api/v1/stores/{id}`, `POST /api/v1/stores/{id}/submit`, `POST /api/v1/stores/{id}/approval-decisions` |
 | Branches | `POST /api/v1/stores/{storeId}/branches`, `GET /api/v1/branches/{id}`, `PATCH /api/v1/branches/{id}` |
 | Staff | `POST /api/v1/stores/{storeId}/staff-invitations`, `PATCH /api/v1/store-members/{id}` |
-| Assets | `POST /api/v1/assets`, `GET /api/v1/assets`, `PATCH /api/v1/assets/{id}` |
+| Assets/Inventory | `POST /api/v1/asset-categories`, `POST /api/v1/assets`, `GET /api/v1/assets`, `PATCH /api/v1/assets/{id}`, `POST /api/v1/equipment-items`, `POST /api/v1/inventory-units`, `POST /api/v1/rental-points`, `POST /api/v1/availability/check` |
 | Search | `GET /api/v1/search/stores`, `GET /api/v1/search/assets` |
-| Pricing | `POST /api/v1/pricing/quote` |
+| Pricing | `POST /api/v1/pricing/rules`, `POST /api/v1/pricing/quote` |
 | Booking | `POST /api/v1/bookings`, `GET /api/v1/bookings/{id}`, `POST /api/v1/bookings/{id}/cancel` |
 | Payment | `POST /api/v1/payments`, `POST /api/v1/payment-webhooks/{provider}` |
 | Cash | `POST /api/v1/bookings/{id}/cash-confirmations` |

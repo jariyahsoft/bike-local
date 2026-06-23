@@ -12,15 +12,15 @@ part 'create_booking_request.g.dart';
 /// CreateBookingRequest
 ///
 /// Properties:
-/// * [storeId] 
-/// * [branchId] 
-/// * [assetIds] 
-/// * [equipmentIds] 
-/// * [startAt] 
-/// * [endAt] 
-/// * [pickupPointId] 
-/// * [returnPointId] 
-/// * [paymentMethod] 
+/// * [storeId]
+/// * [branchId]
+/// * [assetIds]
+/// * [equipmentIds]
+/// * [startAt]
+/// * [endAt]
+/// * [pickupPointId]
+/// * [returnPointId]
+/// * [paymentMethod]
 @BuiltValue()
 abstract class CreateBookingRequest implements Built<CreateBookingRequest, CreateBookingRequestBuilder> {
   @BuiltValueField(wireName: r'store_id')
@@ -250,4 +250,3 @@ class CreateBookingRequestPaymentMethodEnum extends EnumClass {
   static BuiltSet<CreateBookingRequestPaymentMethodEnum> get values => _$createBookingRequestPaymentMethodEnumValues;
   static CreateBookingRequestPaymentMethodEnum valueOf(String name) => _$createBookingRequestPaymentMethodEnumValueOf(name);
 }
-

@@ -14,8 +14,8 @@ part 'create_pricing_quote200_response.g.dart';
 /// CreatePricingQuote200Response
 ///
 /// Properties:
-/// * [data] 
-/// * [meta] 
+/// * [data]
+/// * [meta]
 @BuiltValue()
 abstract class CreatePricingQuote200Response implements SuccessEnvelope, Built<CreatePricingQuote200Response, CreatePricingQuote200ResponseBuilder> {
   CreatePricingQuote200Response._();
@@ -117,4 +117,3 @@ class _$CreatePricingQuote200ResponseSerializer implements PrimitiveSerializer<C
     return result.build();
   }
 }
-

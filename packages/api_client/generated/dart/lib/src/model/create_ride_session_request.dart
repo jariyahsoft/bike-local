@@ -11,7 +11,7 @@ part 'create_ride_session_request.g.dart';
 /// CreateRideSessionRequest
 ///
 /// Properties:
-/// * [bookingId] 
+/// * [bookingId]
 @BuiltValue()
 abstract class CreateRideSessionRequest implements Built<CreateRideSessionRequest, CreateRideSessionRequestBuilder> {
   @BuiltValueField(wireName: r'booking_id')
@@ -103,4 +103,3 @@ class _$CreateRideSessionRequestSerializer implements PrimitiveSerializer<Create
     return result.build();
   }
 }
-

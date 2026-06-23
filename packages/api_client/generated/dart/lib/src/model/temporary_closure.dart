@@ -11,8 +11,8 @@ part 'temporary_closure.g.dart';
 /// TemporaryClosure
 ///
 /// Properties:
-/// * [reason] 
-/// * [reopenAt] 
+/// * [reason]
+/// * [reopenAt]
 @BuiltValue()
 abstract class TemporaryClosure implements Built<TemporaryClosure, TemporaryClosureBuilder> {
   @BuiltValueField(wireName: r'reason')
@@ -121,4 +121,3 @@ class _$TemporaryClosureSerializer implements PrimitiveSerializer<TemporaryClosu
     return result.build();
   }
 }
-

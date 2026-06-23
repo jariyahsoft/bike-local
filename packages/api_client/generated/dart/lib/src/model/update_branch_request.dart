@@ -14,12 +14,12 @@ part 'update_branch_request.g.dart';
 /// UpdateBranchRequest
 ///
 /// Properties:
-/// * [name] 
-/// * [phone] 
-/// * [openingHours] 
-/// * [status] 
-/// * [temporaryClosure] 
-/// * [version] 
+/// * [name]
+/// * [phone]
+/// * [openingHours]
+/// * [status]
+/// * [temporaryClosure]
+/// * [version]
 @BuiltValue()
 abstract class UpdateBranchRequest implements Built<UpdateBranchRequest, UpdateBranchRequestBuilder> {
   @BuiltValueField(wireName: r'name')
@@ -214,4 +214,3 @@ class UpdateBranchRequestStatusEnum extends EnumClass {
   static BuiltSet<UpdateBranchRequestStatusEnum> get values => _$updateBranchRequestStatusEnumValues;
   static UpdateBranchRequestStatusEnum valueOf(String name) => _$updateBranchRequestStatusEnumValueOf(name);
 }
-

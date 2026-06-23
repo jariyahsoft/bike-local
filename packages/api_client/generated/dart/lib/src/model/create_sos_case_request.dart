@@ -13,12 +13,12 @@ part 'create_sos_case_request.g.dart';
 /// CreateSosCaseRequest
 ///
 /// Properties:
-/// * [bookingId] 
-/// * [rentalId] 
-/// * [assetId] 
-/// * [phone] 
-/// * [location] 
-/// * [issueType] 
+/// * [bookingId]
+/// * [rentalId]
+/// * [assetId]
+/// * [phone]
+/// * [location]
+/// * [issueType]
 @BuiltValue()
 abstract class CreateSosCaseRequest implements Built<CreateSosCaseRequest, CreateSosCaseRequestBuilder> {
   @BuiltValueField(wireName: r'booking_id')
@@ -211,4 +211,3 @@ class CreateSosCaseRequestIssueTypeEnum extends EnumClass {
   static BuiltSet<CreateSosCaseRequestIssueTypeEnum> get values => _$createSosCaseRequestIssueTypeEnumValues;
   static CreateSosCaseRequestIssueTypeEnum valueOf(String name) => _$createSosCaseRequestIssueTypeEnumValueOf(name);
 }
-

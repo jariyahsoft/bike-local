@@ -23,12 +23,12 @@ class IdentityApi {
   const IdentityApi(this._dio, this._serializers);
 
   /// Create a domain user profile, link the authenticated identity, and record onboarding consent.
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [idempotencyKey] 
-  /// * [createUserRequest] 
-  /// * [xCorrelationId] 
+  /// * [idempotencyKey]
+  /// * [createUserRequest]
+  /// * [xCorrelationId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -38,7 +38,7 @@ class IdentityApi {
   ///
   /// Returns a [Future] containing a [Response] with a [InlineObject] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<InlineObject>> createUser({ 
+  Future<Response<InlineObject>> createUser({
     required String idempotencyKey,
     required CreateUserRequest createUserRequest,
     String? xCorrelationId,
@@ -135,10 +135,10 @@ class IdentityApi {
   }
 
   /// Get current user profile and auth identities.
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [xCorrelationId] 
+  /// * [xCorrelationId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -148,7 +148,7 @@ class IdentityApi {
   ///
   /// Returns a [Future] containing a [Response] with a [InlineObject] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<InlineObject>> getMe({ 
+  Future<Response<InlineObject>> getMe({
     String? xCorrelationId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -222,11 +222,11 @@ class IdentityApi {
   }
 
   /// Request account deletion while retaining legally required transactional and audit records.
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [accountDeletionRequest] 
-  /// * [xCorrelationId] 
+  /// * [accountDeletionRequest]
+  /// * [xCorrelationId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -236,7 +236,7 @@ class IdentityApi {
   ///
   /// Returns a [Future] containing a [Response] with a [InlineObject] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<InlineObject>> requestAccountDeletion({ 
+  Future<Response<InlineObject>> requestAccountDeletion({
     required AccountDeletionRequest accountDeletionRequest,
     String? xCorrelationId,
     CancelToken? cancelToken,
@@ -331,11 +331,11 @@ class IdentityApi {
   }
 
   /// Update the current user profile, add onboarding roles, and append consent records.
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [updateUserRequest] 
-  /// * [xCorrelationId] 
+  /// * [updateUserRequest]
+  /// * [xCorrelationId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -345,7 +345,7 @@ class IdentityApi {
   ///
   /// Returns a [Future] containing a [Response] with a [InlineObject] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<InlineObject>> updateMe({ 
+  Future<Response<InlineObject>> updateMe({
     required UpdateUserRequest updateUserRequest,
     String? xCorrelationId,
     CancelToken? cancelToken,

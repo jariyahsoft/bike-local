@@ -10,6 +10,8 @@ import 'package:dio/dio.dart';
 
 import 'package:bike_local_generated_api_client/src/api_util.dart';
 import 'package:bike_local_generated_api_client/src/model/create_branch_request.dart';
+import 'package:bike_local_generated_api_client/src/model/create_rental_point201_response.dart';
+import 'package:bike_local_generated_api_client/src/model/create_rental_point_request.dart';
 import 'package:bike_local_generated_api_client/src/model/error_envelope.dart';
 import 'package:bike_local_generated_api_client/src/model/inline_object2.dart';
 import 'package:bike_local_generated_api_client/src/model/update_branch_request.dart';
@@ -23,13 +25,13 @@ class BranchesApi {
   const BranchesApi(this._dio, this._serializers);
 
   /// Create branch under a store.
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [storeId] 
-  /// * [idempotencyKey] 
-  /// * [createBranchRequest] 
-  /// * [xCorrelationId] 
+  /// * [storeId]
+  /// * [idempotencyKey]
+  /// * [createBranchRequest]
+  /// * [xCorrelationId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -39,7 +41,7 @@ class BranchesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [InlineObject2] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<InlineObject2>> createBranch({ 
+  Future<Response<InlineObject2>> createBranch({
     required String storeId,
     required String idempotencyKey,
     required CreateBranchRequest createBranchRequest,
@@ -136,12 +138,124 @@ class BranchesApi {
     );
   }
 
-  /// Get branch by ID.
-  /// 
+  /// Create a pickup or return point for an active branch.
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [xCorrelationId] 
+  /// * [idempotencyKey]
+  /// * [createRentalPointRequest]
+  /// * [xCorrelationId]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [CreateRentalPoint201Response] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<CreateRentalPoint201Response>> createRentalPoint({
+    required String idempotencyKey,
+    required CreateRentalPointRequest createRentalPointRequest,
+    String? xCorrelationId,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/rental-points';
+    final _options = Options(
+      method: r'POST',
+      headers: <String, dynamic>{
+        r'Idempotency-Key': idempotencyKey,
+        if (xCorrelationId != null) r'X-Correlation-Id': xCorrelationId,
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'apiKey',
+            'name': 'appCheck',
+            'keyName': 'X-Firebase-AppCheck',
+            'where': 'header',
+          },{
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'bearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      const _type = FullType(CreateRentalPointRequest);
+      _bodyData = _serializers.serialize(createRentalPointRequest, specifiedType: _type);
+
+    } catch(error, stackTrace) {
+      throw DioException(
+         requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    CreateRentalPoint201Response? _responseData;
+
+    try {
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(CreateRentalPoint201Response),
+      ) as CreateRentalPoint201Response;
+
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<CreateRentalPoint201Response>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// Get branch by ID.
+  ///
+  ///
+  /// Parameters:
+  /// * [id]
+  /// * [xCorrelationId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -151,7 +265,7 @@ class BranchesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [InlineObject2] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<InlineObject2>> getBranch({ 
+  Future<Response<InlineObject2>> getBranch({
     required String id,
     String? xCorrelationId,
     CancelToken? cancelToken,
@@ -226,12 +340,12 @@ class BranchesApi {
   }
 
   /// Update branch details or temporary closure state.
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [updateBranchRequest] 
-  /// * [xCorrelationId] 
+  /// * [id]
+  /// * [updateBranchRequest]
+  /// * [xCorrelationId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -241,7 +355,7 @@ class BranchesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [InlineObject2] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<InlineObject2>> updateBranch({ 
+  Future<Response<InlineObject2>> updateBranch({
     required String id,
     required UpdateBranchRequest updateBranchRequest,
     String? xCorrelationId,

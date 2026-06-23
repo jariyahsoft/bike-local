@@ -28,9 +28,9 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getContentApi();
-final String id = id_example; // String | 
-final String idempotencyKey = idem_01HV9X8D9N9HQ; // String | 
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
+final String id = id_example; // String |
+final String idempotencyKey = idem_01HV9X8D9N9HQ; // String |
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
 
 try {
     final response = api.approveContentSubmission(id, idempotencyKey, xCorrelationId);
@@ -44,9 +44,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **String**|  | 
- **idempotencyKey** | **String**|  | 
- **xCorrelationId** | **String**|  | [optional] 
+ **id** | **String**|  |
+ **idempotencyKey** | **String**|  |
+ **xCorrelationId** | **String**|  | [optional]
 
 ### Return type
 
@@ -77,9 +77,9 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getContentApi();
-final String idempotencyKey = idem_01HV9X8D9N9HQ; // String | 
-final Place place = ; // Place | 
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
+final String idempotencyKey = idem_01HV9X8D9N9HQ; // String |
+final Place place = ; // Place |
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
 
 try {
     final response = api.createPlace(idempotencyKey, place, xCorrelationId);
@@ -93,9 +93,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **idempotencyKey** | **String**|  | 
- **place** | [**Place**](Place.md)|  | 
- **xCorrelationId** | **String**|  | [optional] 
+ **idempotencyKey** | **String**|  |
+ **place** | [**Place**](Place.md)|  |
+ **xCorrelationId** | **String**|  | [optional]
 
 ### Return type
 
@@ -126,9 +126,9 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getContentApi();
-final String idempotencyKey = idem_01HV9X8D9N9HQ; // String | 
-final Route route = ; // Route | 
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
+final String idempotencyKey = idem_01HV9X8D9N9HQ; // String |
+final Route route = ; // Route |
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
 
 try {
     final response = api.createRoute(idempotencyKey, route, xCorrelationId);
@@ -142,9 +142,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **idempotencyKey** | **String**|  | 
- **route** | [**Route**](Route.md)|  | 
- **xCorrelationId** | **String**|  | [optional] 
+ **idempotencyKey** | **String**|  |
+ **route** | [**Route**](Route.md)|  |
+ **xCorrelationId** | **String**|  | [optional]
 
 ### Return type
 
@@ -160,4 +160,3 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-

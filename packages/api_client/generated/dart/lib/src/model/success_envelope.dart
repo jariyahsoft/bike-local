@@ -13,8 +13,8 @@ part 'success_envelope.g.dart';
 /// SuccessEnvelope
 ///
 /// Properties:
-/// * [data] 
-/// * [meta] 
+/// * [data]
+/// * [meta]
 @BuiltValue(instantiable: false)
 abstract class SuccessEnvelope  {
   @BuiltValueField(wireName: r'data')
@@ -155,4 +155,3 @@ class _$$SuccessEnvelopeSerializer implements PrimitiveSerializer<$SuccessEnvelo
     return result.build();
   }
 }
-

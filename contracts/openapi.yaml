@@ -371,6 +371,39 @@ paths:
           $ref: "#/components/responses/Forbidden"
         "409":
           $ref: "#/components/responses/VersionConflict"
+  /asset-categories:
+    post:
+      tags: [Assets]
+      operationId: createAssetCategory
+      summary: Create an asset category with default pricing and deposit.
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateAssetCategoryRequest"
+      responses:
+        "201":
+          description: Asset category created.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/SuccessEnvelope"
+                  - type: object
+                    required: [data]
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/AssetCategory"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "409":
+          $ref: "#/components/responses/VersionConflict"
+        "422":
+          $ref: "#/components/responses/ValidationError"
   /assets:
     post:
       tags: [Assets]
@@ -442,6 +475,99 @@ paths:
           $ref: "#/components/responses/Forbidden"
         "409":
           $ref: "#/components/responses/VersionConflict"
+  /equipment-items:
+    post:
+      tags: [Assets]
+      operationId: createEquipmentItem
+      summary: Create rentable or bundled equipment.
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateEquipmentItemRequest"
+      responses:
+        "201":
+          description: Equipment item created.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/SuccessEnvelope"
+                  - type: object
+                    required: [data]
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/Equipment"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /inventory-units:
+    post:
+      tags: [Assets]
+      operationId: createInventoryUnit
+      summary: Create an inventory unit for asset or equipment stock tracking.
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateInventoryUnitRequest"
+      responses:
+        "201":
+          description: Inventory unit created.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/SuccessEnvelope"
+                  - type: object
+                    required: [data]
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/InventoryUnit"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /rental-points:
+    post:
+      tags: [Branches]
+      operationId: createRentalPoint
+      summary: Create a pickup or return point for an active branch.
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateRentalPointRequest"
+      responses:
+        "201":
+          description: Rental point created.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/SuccessEnvelope"
+                  - type: object
+                    required: [data]
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/RentalPoint"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "422":
+          $ref: "#/components/responses/ValidationError"
   /search/stores:
     get:
       tags: [Search]
@@ -508,6 +634,37 @@ paths:
                           $ref: "#/components/schemas/Asset"
         "422":
           $ref: "#/components/responses/ValidationError"
+  /pricing/rules:
+    post:
+      tags: [Pricing]
+      operationId: createPricingRule
+      summary: Create a store, branch, or category pricing rule.
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePricingRuleRequest"
+      responses:
+        "201":
+          description: Pricing rule created.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/SuccessEnvelope"
+                  - type: object
+                    required: [data]
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/PricingRule"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "422":
+          $ref: "#/components/responses/ValidationError"
   /pricing/quote:
     post:
       tags: [Pricing]
@@ -534,6 +691,52 @@ paths:
                     properties:
                       data:
                         $ref: "#/components/schemas/PricingQuote"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /availability/check:
+    post:
+      tags: [Assets]
+      operationId: checkAvailability
+      summary: Check or reserve asset availability for a time range.
+      parameters:
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AvailabilityCheckRequest"
+      responses:
+        "200":
+          description: Availability check result.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/SuccessEnvelope"
+                  - type: object
+                    required: [data]
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/AvailabilityResult"
+        "409":
+          description: Availability reservation conflict.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorEnvelope"
+              examples:
+                availability_conflict:
+                  value:
+                    error:
+                      code: AVAILABILITY_CONFLICT
+                      message: Availability conflicts with an existing booking or hold.
+                      details:
+                        conflicts:
+                          - asset_id: ast_123
+                            reason: AVAILABILITY_BLOCK
+                            reference_id: booking_hold_1
+                      request_id: req_123
         "422":
           $ref: "#/components/responses/ValidationError"
   /bookings:
@@ -1411,7 +1614,7 @@ components:
       properties:
         code:
           type: string
-          pattern: "^(AUTH|PERMISSION|VALIDATION|USER|STORE|BRANCH|STAFF|ASSET|BOOKING|PAYMENT|RIDE|RETURN|SOS|CONTENT|RATE_LIMIT|INTERNAL)_[A-Z0-9_]+$"
+          pattern: "^(AUTH|PERMISSION|VALIDATION|USER|STORE|BRANCH|STAFF|ASSET|INVENTORY|PRICING|SEARCH|AVAILABILITY|BOOKING|PAYMENT|RIDE|RETURN|SOS|CONTENT|RATE_LIMIT|INTERNAL)_[A-Z0-9_]+$"
         message:
           type: string
         details:
@@ -1737,11 +1940,52 @@ components:
         status:
           type: string
           enum: [PENDING, ACCEPTED, EXPIRED, CANCELLED]
+    AssetCategory:
+      allOf:
+        - $ref: "#/components/schemas/EntityBase"
+        - type: object
+          required: [store_id, name, type, default_base_price, default_deposit_amount, currency, active]
+          properties:
+            store_id:
+              type: string
+            name:
+              type: string
+            type:
+              type: string
+              enum: [BIKE, E_BIKE, SCOOTER, OTHER]
+            description:
+              type: string
+            default_base_price:
+              type: integer
+              description: Integer minor units only.
+            default_deposit_amount:
+              type: integer
+              description: Integer minor units only.
+            currency:
+              type: string
+            active:
+              type: boolean
+    AssetStatusTransition:
+      type: object
+      required: [from_status, to_status, changed_at]
+      properties:
+        from_status:
+          type: string
+          enum: [AVAILABLE, RESERVED, PREPARING, AWAITING_HANDOVER, RENTED, RETURN_PENDING, INSPECTION_PENDING, MAINTENANCE, INACTIVE, LOST]
+        to_status:
+          type: string
+          enum: [AVAILABLE, RESERVED, PREPARING, AWAITING_HANDOVER, RENTED, RETURN_PENDING, INSPECTION_PENDING, MAINTENANCE, INACTIVE, LOST]
+        changed_at:
+          $ref: "#/components/schemas/IsoDateTime"
+        changed_by_user_id:
+          type: string
+        reason:
+          type: string
     Asset:
       allOf:
         - $ref: "#/components/schemas/EntityBase"
         - type: object
-          required: [store_id, branch_id, category_id, code, status, base_price, deposit_amount, currency]
+          required: [store_id, branch_id, category_id, code, status, base_price, deposit_amount, currency, images, cash_accepted, different_return_allowed, equipment_ids, status_history]
           properties:
             store_id:
               type: string
@@ -1778,6 +2022,18 @@ components:
               type: array
               items:
                 type: string
+            cash_accepted:
+              type: boolean
+            different_return_allowed:
+              type: boolean
+            equipment_ids:
+              type: array
+              items:
+                type: string
+            status_history:
+              type: array
+              items:
+                $ref: "#/components/schemas/AssetStatusTransition"
     Equipment:
       allOf:
         - $ref: "#/components/schemas/EntityBase"
@@ -1785,6 +2041,8 @@ components:
           required: [store_id, name, rental_mode, status]
           properties:
             store_id:
+              type: string
+            branch_id:
               type: string
             name:
               type: string
@@ -1800,6 +2058,23 @@ components:
               type: integer
             currency:
               type: string
+    InventoryUnit:
+      allOf:
+        - $ref: "#/components/schemas/EntityBase"
+        - type: object
+          required: [store_id, branch_id, status]
+          properties:
+            store_id:
+              type: string
+            branch_id:
+              type: string
+            asset_id:
+              type: string
+            equipment_item_id:
+              type: string
+            status:
+              type: string
+              enum: [AVAILABLE, RESERVED, RENTED, MAINTENANCE, INACTIVE]
     RentalPoint:
       allOf:
         - $ref: "#/components/schemas/EntityBase"
@@ -1816,9 +2091,56 @@ components:
               type: number
             longitude:
               type: number
+            geohash:
+              type: string
             status:
               type: string
               enum: [ACTIVE, INACTIVE]
+    PricingRule:
+      allOf:
+        - $ref: "#/components/schemas/EntityBase"
+        - type: object
+          required: [store_id, type, amount, currency, priority, active]
+          properties:
+            store_id:
+              type: string
+            branch_id:
+              type: string
+            category_id:
+              type: string
+            type:
+              type: string
+              enum: [HOURLY_BASE, FIXED_FEE, PERCENT_DISCOUNT, CASH_SURCHARGE]
+            amount:
+              type: integer
+              description: Integer minor units only; percent discounts use whole percentage points.
+            currency:
+              type: string
+            priority:
+              type: integer
+            active:
+              type: boolean
+    AvailabilityConflict:
+      type: object
+      required: [asset_id, reason, reference_id]
+      properties:
+        asset_id:
+          type: string
+        reason:
+          type: string
+          enum: [BOOKING_OVERLAP, AVAILABILITY_BLOCK]
+        reference_id:
+          type: string
+    AvailabilityResult:
+      type: object
+      required: [available, conflicts]
+      properties:
+        available:
+          type: boolean
+        conflicts:
+          type: array
+          items:
+            $ref: "#/components/schemas/AvailabilityConflict"
     Booking:
       allOf:
         - $ref: "#/components/schemas/EntityBase"
@@ -2480,6 +2802,27 @@ components:
         version:
           type: integer
           minimum: 1
+    CreateAssetCategoryRequest:
+      type: object
+      required: [store_id, name, type, default_base_price, default_deposit_amount, currency]
+      properties:
+        store_id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          enum: [BIKE, E_BIKE, SCOOTER, OTHER]
+        description:
+          type: string
+        default_base_price:
+          type: integer
+          description: Integer minor units only.
+        default_deposit_amount:
+          type: integer
+          description: Integer minor units only.
+        currency:
+          type: string
     CreateAssetRequest:
       type: object
       required: [store_id, branch_id, category_id, code, base_price, deposit_amount, currency]
@@ -2492,15 +2835,89 @@ components:
           type: string
         code:
           type: string
+        qr_token_reference:
+          type: string
+          description: Opaque token reference only; raw long-lived QR token values must not be stored.
         brand:
           type: string
         model:
           type: string
+        color:
+          type: string
+        size:
+          type: string
+        description:
+          type: string
         base_price:
           type: integer
+          description: Integer minor units only.
         deposit_amount:
           type: integer
+          description: Integer minor units only.
         currency:
+          type: string
+        current_point_id:
+          type: string
+        images:
+          type: array
+          items:
+            type: string
+        cash_accepted:
+          type: boolean
+        different_return_allowed:
+          type: boolean
+        equipment_ids:
+          type: array
+          items:
+            type: string
+    CreateEquipmentItemRequest:
+      type: object
+      required: [store_id, name, rental_mode]
+      properties:
+        store_id:
+          type: string
+        branch_id:
+          type: string
+        name:
+          type: string
+        rental_mode:
+          type: string
+          enum: [SEPARATE, BUNDLED, PACKAGE_INCLUDED, DEPOSIT_REQUIRED]
+        price_amount:
+          type: integer
+          description: Integer minor units only.
+        deposit_amount:
+          type: integer
+          description: Integer minor units only.
+        currency:
+          type: string
+    CreateInventoryUnitRequest:
+      type: object
+      required: [store_id, branch_id]
+      properties:
+        store_id:
+          type: string
+        branch_id:
+          type: string
+        asset_id:
+          type: string
+        equipment_item_id:
+          type: string
+    CreateRentalPointRequest:
+      type: object
+      required: [store_id, branch_id, name, latitude, longitude]
+      properties:
+        store_id:
+          type: string
+        branch_id:
+          type: string
+        name:
+          type: string
+        latitude:
+          type: number
+        longitude:
+          type: number
+        geohash:
           type: string
     UpdateAssetRequest:
       type: object
@@ -2513,6 +2930,26 @@ components:
         deposit_amount:
           type: integer
         version:
+          type: integer
+    CreatePricingRuleRequest:
+      type: object
+      required: [store_id, type, amount, currency]
+      properties:
+        store_id:
+          type: string
+        branch_id:
+          type: string
+        category_id:
+          type: string
+        type:
+          type: string
+          enum: [HOURLY_BASE, FIXED_FEE, PERCENT_DISCOUNT, CASH_SURCHARGE]
+        amount:
+          type: integer
+          description: Integer minor units only; percent discounts use whole percentage points.
+        currency:
+          type: string
+        priority:
           type: integer
     PricingQuoteRequest:
       type: object
@@ -2555,6 +2992,24 @@ components:
         policy_snapshot:
           type: object
           additionalProperties: true
+    AvailabilityCheckRequest:
+      type: object
+      required: [asset_ids, start_at, end_at]
+      properties:
+        asset_ids:
+          type: array
+          items:
+            type: string
+        start_at:
+          $ref: "#/components/schemas/IsoDateTime"
+        end_at:
+          $ref: "#/components/schemas/IsoDateTime"
+        reserve:
+          type: boolean
+          description: When true, create transaction-safe booking hold blocks if available.
+        reference_id:
+          type: string
+          description: Booking or hold reference used on availability blocks.
     CreateBookingRequest:
       type: object
       required: [store_id, branch_id, asset_ids, start_at, end_at, pickup_point_id, return_point_id, payment_method]

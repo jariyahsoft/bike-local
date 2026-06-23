@@ -12,10 +12,10 @@ part 'auth_identity.g.dart';
 /// AuthIdentity
 ///
 /// Properties:
-/// * [provider] 
+/// * [provider]
 /// * [providerSubjectHint] - Masked provider subject for UI display. Raw provider subjects and tokens must never be exposed.
-/// * [verified] 
-/// * [lastAuthenticatedAt] 
+/// * [verified]
+/// * [lastAuthenticatedAt]
 @BuiltValue()
 abstract class AuthIdentity implements Built<AuthIdentity, AuthIdentityBuilder> {
   @BuiltValueField(wireName: r'provider')
@@ -173,4 +173,3 @@ class AuthIdentityProviderEnum extends EnumClass {
   static BuiltSet<AuthIdentityProviderEnum> get values => _$authIdentityProviderEnumValues;
   static AuthIdentityProviderEnum valueOf(String name) => _$authIdentityProviderEnumValueOf(name);
 }
-

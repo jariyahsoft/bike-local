@@ -11,20 +11,20 @@ part 'store_report.g.dart';
 /// StoreReport
 ///
 /// Properties:
-/// * [storeId] 
-/// * [bookingsCount] 
-/// * [completedCount] 
-/// * [cancelledCount] 
-/// * [noShowCount] 
-/// * [grossRevenueAmount] 
-/// * [netRevenueAmount] 
-/// * [cashAmount] 
-/// * [onlineAmount] 
-/// * [depositAmount] 
-/// * [refundAmount] 
-/// * [penaltyAmount] 
-/// * [platformFeeAmount] 
-/// * [currency] 
+/// * [storeId]
+/// * [bookingsCount]
+/// * [completedCount]
+/// * [cancelledCount]
+/// * [noShowCount]
+/// * [grossRevenueAmount]
+/// * [netRevenueAmount]
+/// * [cashAmount]
+/// * [onlineAmount]
+/// * [depositAmount]
+/// * [refundAmount]
+/// * [penaltyAmount]
+/// * [platformFeeAmount]
+/// * [currency]
 @BuiltValue()
 abstract class StoreReport implements Built<StoreReport, StoreReportBuilder> {
   @BuiltValueField(wireName: r'store_id')
@@ -331,4 +331,3 @@ class _$StoreReportSerializer implements PrimitiveSerializer<StoreReport> {
     return result.build();
   }
 }
-

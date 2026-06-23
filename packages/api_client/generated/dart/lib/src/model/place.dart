@@ -15,19 +15,19 @@ part 'place.g.dart';
 /// Place
 ///
 /// Properties:
-/// * [id] 
-/// * [schemaVersion] 
-/// * [tenantId] 
-/// * [createdAt] 
-/// * [createdBy] 
-/// * [updatedAt] 
-/// * [updatedBy] 
-/// * [deletedAt] 
-/// * [version] 
-/// * [name] 
-/// * [placeType] 
-/// * [location] 
-/// * [status] 
+/// * [id]
+/// * [schemaVersion]
+/// * [tenantId]
+/// * [createdAt]
+/// * [createdBy]
+/// * [updatedAt]
+/// * [updatedBy]
+/// * [deletedAt]
+/// * [version]
+/// * [name]
+/// * [placeType]
+/// * [location]
+/// * [status]
 @BuiltValue()
 abstract class Place implements EntityBase, Built<Place, PlaceBuilder> {
   @BuiltValueField(wireName: r'place_type')
@@ -311,4 +311,3 @@ class PlacePlaceTypeEnum extends EnumClass {
   static BuiltSet<PlacePlaceTypeEnum> get values => _$placePlaceTypeEnumValues;
   static PlacePlaceTypeEnum valueOf(String name) => _$placePlaceTypeEnumValueOf(name);
 }
-

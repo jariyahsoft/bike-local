@@ -194,6 +194,23 @@ export interface paths {
         patch: operations["updateStoreMember"];
         trace?: never;
     };
+    "/asset-categories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create an asset category with default pricing and deposit. */
+        post: operations["createAssetCategory"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/assets": {
         parameters: {
             query?: never;
@@ -227,6 +244,57 @@ export interface paths {
         head?: never;
         /** Update asset data or status. */
         patch: operations["updateAsset"];
+        trace?: never;
+    };
+    "/equipment-items": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create rentable or bundled equipment. */
+        post: operations["createEquipmentItem"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/inventory-units": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create an inventory unit for asset or equipment stock tracking. */
+        post: operations["createInventoryUnit"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/rental-points": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create a pickup or return point for an active branch. */
+        post: operations["createRentalPoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/search/stores": {
@@ -263,6 +331,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/pricing/rules": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create a store, branch, or category pricing rule. */
+        post: operations["createPricingRule"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/pricing/quote": {
         parameters: {
             query?: never;
@@ -274,6 +359,23 @@ export interface paths {
         put?: never;
         /** Calculate price and deposit quote before booking. */
         post: operations["createPricingQuote"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/availability/check": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Check or reserve asset availability for a time range. */
+        post: operations["checkAvailability"];
         delete?: never;
         options?: never;
         head?: never;
@@ -804,6 +906,28 @@ export interface components {
             /** @enum {string} */
             status: "PENDING" | "ACCEPTED" | "EXPIRED" | "CANCELLED";
         };
+        AssetCategory: components["schemas"]["EntityBase"] & {
+            store_id: string;
+            name: string;
+            /** @enum {string} */
+            type: "BIKE" | "E_BIKE" | "SCOOTER" | "OTHER";
+            description?: string;
+            /** @description Integer minor units only. */
+            default_base_price: number;
+            /** @description Integer minor units only. */
+            default_deposit_amount: number;
+            currency: string;
+            active: boolean;
+        };
+        AssetStatusTransition: {
+            /** @enum {string} */
+            from_status: "AVAILABLE" | "RESERVED" | "PREPARING" | "AWAITING_HANDOVER" | "RENTED" | "RETURN_PENDING" | "INSPECTION_PENDING" | "MAINTENANCE" | "INACTIVE" | "LOST";
+            /** @enum {string} */
+            to_status: "AVAILABLE" | "RESERVED" | "PREPARING" | "AWAITING_HANDOVER" | "RENTED" | "RETURN_PENDING" | "INSPECTION_PENDING" | "MAINTENANCE" | "INACTIVE" | "LOST";
+            changed_at: components["schemas"]["IsoDateTime"];
+            changed_by_user_id?: string;
+            reason?: string;
+        };
         Asset: components["schemas"]["EntityBase"] & {
             store_id: string;
             branch_id: string;
@@ -821,10 +945,15 @@ export interface components {
             deposit_amount: number;
             currency: string;
             current_point_id?: string;
-            images?: string[];
+            images: string[];
+            cash_accepted: boolean;
+            different_return_allowed: boolean;
+            equipment_ids: string[];
+            status_history: components["schemas"]["AssetStatusTransition"][];
         };
         Equipment: components["schemas"]["EntityBase"] & {
             store_id: string;
+            branch_id?: string;
             name: string;
             /** @enum {string} */
             rental_mode: "SEPARATE" | "BUNDLED" | "PACKAGE_INCLUDED" | "DEPOSIT_REQUIRED";
@@ -834,14 +963,45 @@ export interface components {
             deposit_amount?: number;
             currency?: string;
         };
+        InventoryUnit: components["schemas"]["EntityBase"] & {
+            store_id: string;
+            branch_id: string;
+            asset_id?: string;
+            equipment_item_id?: string;
+            /** @enum {string} */
+            status: "AVAILABLE" | "RESERVED" | "RENTED" | "MAINTENANCE" | "INACTIVE";
+        };
         RentalPoint: components["schemas"]["EntityBase"] & {
             store_id: string;
             branch_id: string;
             name: string;
             latitude: number;
             longitude: number;
+            geohash?: string;
             /** @enum {string} */
             status: "ACTIVE" | "INACTIVE";
+        };
+        PricingRule: components["schemas"]["EntityBase"] & {
+            store_id: string;
+            branch_id?: string;
+            category_id?: string;
+            /** @enum {string} */
+            type: "HOURLY_BASE" | "FIXED_FEE" | "PERCENT_DISCOUNT" | "CASH_SURCHARGE";
+            /** @description Integer minor units only; percent discounts use whole percentage points. */
+            amount: number;
+            currency: string;
+            priority: number;
+            active: boolean;
+        };
+        AvailabilityConflict: {
+            asset_id: string;
+            /** @enum {string} */
+            reason: "BOOKING_OVERLAP" | "AVAILABILITY_BLOCK";
+            reference_id: string;
+        };
+        AvailabilityResult: {
+            available: boolean;
+            conflicts: components["schemas"]["AvailabilityConflict"][];
         };
         Booking: components["schemas"]["EntityBase"] & {
             booking_number: string;
@@ -1165,22 +1325,83 @@ export interface components {
             status?: "ACTIVE" | "SUSPENDED";
             version: number;
         };
+        CreateAssetCategoryRequest: {
+            store_id: string;
+            name: string;
+            /** @enum {string} */
+            type: "BIKE" | "E_BIKE" | "SCOOTER" | "OTHER";
+            description?: string;
+            /** @description Integer minor units only. */
+            default_base_price: number;
+            /** @description Integer minor units only. */
+            default_deposit_amount: number;
+            currency: string;
+        };
         CreateAssetRequest: {
             store_id: string;
             branch_id: string;
             category_id: string;
             code: string;
+            /** @description Opaque token reference only; raw long-lived QR token values must not be stored. */
+            qr_token_reference?: string;
             brand?: string;
             model?: string;
+            color?: string;
+            size?: string;
+            description?: string;
+            /** @description Integer minor units only. */
             base_price: number;
+            /** @description Integer minor units only. */
             deposit_amount: number;
             currency: string;
+            current_point_id?: string;
+            images?: string[];
+            cash_accepted?: boolean;
+            different_return_allowed?: boolean;
+            equipment_ids?: string[];
+        };
+        CreateEquipmentItemRequest: {
+            store_id: string;
+            branch_id?: string;
+            name: string;
+            /** @enum {string} */
+            rental_mode: "SEPARATE" | "BUNDLED" | "PACKAGE_INCLUDED" | "DEPOSIT_REQUIRED";
+            /** @description Integer minor units only. */
+            price_amount?: number;
+            /** @description Integer minor units only. */
+            deposit_amount?: number;
+            currency?: string;
+        };
+        CreateInventoryUnitRequest: {
+            store_id: string;
+            branch_id: string;
+            asset_id?: string;
+            equipment_item_id?: string;
+        };
+        CreateRentalPointRequest: {
+            store_id: string;
+            branch_id: string;
+            name: string;
+            latitude: number;
+            longitude: number;
+            geohash?: string;
         };
         UpdateAssetRequest: {
             status?: string;
             base_price?: number;
             deposit_amount?: number;
             version: number;
+        };
+        CreatePricingRuleRequest: {
+            store_id: string;
+            branch_id?: string;
+            category_id?: string;
+            /** @enum {string} */
+            type: "HOURLY_BASE" | "FIXED_FEE" | "PERCENT_DISCOUNT" | "CASH_SURCHARGE";
+            /** @description Integer minor units only; percent discounts use whole percentage points. */
+            amount: number;
+            currency: string;
+            priority?: number;
         };
         PricingQuoteRequest: {
             asset_ids: string[];
@@ -1203,6 +1424,15 @@ export interface components {
             policy_snapshot?: {
                 [key: string]: unknown;
             };
+        };
+        AvailabilityCheckRequest: {
+            asset_ids: string[];
+            start_at: components["schemas"]["IsoDateTime"];
+            end_at: components["schemas"]["IsoDateTime"];
+            /** @description When true, create transaction-safe booking hold blocks if available. */
+            reserve?: boolean;
+            /** @description Booking or hold reference used on availability blocks. */
+            reference_id?: string;
         };
         CreateBookingRequest: {
             store_id: string;
@@ -1808,6 +2038,40 @@ export interface operations {
             409: components["responses"]["VersionConflict"];
         };
     };
+    createAssetCategory: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @example idem_01HV9X8D9N9HQ */
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+                /** @example req_01HV9X8D9N9HQ */
+                "X-Correlation-Id"?: components["parameters"]["CorrelationId"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateAssetCategoryRequest"];
+            };
+        };
+        responses: {
+            /** @description Asset category created. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SuccessEnvelope"] & {
+                        data: components["schemas"]["AssetCategory"];
+                    };
+                };
+            };
+            403: components["responses"]["Forbidden"];
+            409: components["responses"]["VersionConflict"];
+            422: components["responses"]["ValidationError"];
+        };
+    };
     listAssets: {
         parameters: {
             query?: {
@@ -1886,6 +2150,105 @@ export interface operations {
             409: components["responses"]["VersionConflict"];
         };
     };
+    createEquipmentItem: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @example idem_01HV9X8D9N9HQ */
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+                /** @example req_01HV9X8D9N9HQ */
+                "X-Correlation-Id"?: components["parameters"]["CorrelationId"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateEquipmentItemRequest"];
+            };
+        };
+        responses: {
+            /** @description Equipment item created. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SuccessEnvelope"] & {
+                        data: components["schemas"]["Equipment"];
+                    };
+                };
+            };
+            403: components["responses"]["Forbidden"];
+            422: components["responses"]["ValidationError"];
+        };
+    };
+    createInventoryUnit: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @example idem_01HV9X8D9N9HQ */
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+                /** @example req_01HV9X8D9N9HQ */
+                "X-Correlation-Id"?: components["parameters"]["CorrelationId"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateInventoryUnitRequest"];
+            };
+        };
+        responses: {
+            /** @description Inventory unit created. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SuccessEnvelope"] & {
+                        data: components["schemas"]["InventoryUnit"];
+                    };
+                };
+            };
+            403: components["responses"]["Forbidden"];
+            422: components["responses"]["ValidationError"];
+        };
+    };
+    createRentalPoint: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @example idem_01HV9X8D9N9HQ */
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+                /** @example req_01HV9X8D9N9HQ */
+                "X-Correlation-Id"?: components["parameters"]["CorrelationId"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateRentalPointRequest"];
+            };
+        };
+        responses: {
+            /** @description Rental point created. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SuccessEnvelope"] & {
+                        data: components["schemas"]["RentalPoint"];
+                    };
+                };
+            };
+            403: components["responses"]["Forbidden"];
+            422: components["responses"]["ValidationError"];
+        };
+    };
     searchStores: {
         parameters: {
             query?: {
@@ -1952,6 +2315,39 @@ export interface operations {
             422: components["responses"]["ValidationError"];
         };
     };
+    createPricingRule: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @example idem_01HV9X8D9N9HQ */
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+                /** @example req_01HV9X8D9N9HQ */
+                "X-Correlation-Id"?: components["parameters"]["CorrelationId"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreatePricingRuleRequest"];
+            };
+        };
+        responses: {
+            /** @description Pricing rule created. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SuccessEnvelope"] & {
+                        data: components["schemas"]["PricingRule"];
+                    };
+                };
+            };
+            403: components["responses"]["Forbidden"];
+            422: components["responses"]["ValidationError"];
+        };
+    };
     createPricingQuote: {
         parameters: {
             query?: never;
@@ -1977,6 +2373,45 @@ export interface operations {
                     "application/json": components["schemas"]["SuccessEnvelope"] & {
                         data: components["schemas"]["PricingQuote"];
                     };
+                };
+            };
+            422: components["responses"]["ValidationError"];
+        };
+    };
+    checkAvailability: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @example req_01HV9X8D9N9HQ */
+                "X-Correlation-Id"?: components["parameters"]["CorrelationId"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AvailabilityCheckRequest"];
+            };
+        };
+        responses: {
+            /** @description Availability check result. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SuccessEnvelope"] & {
+                        data: components["schemas"]["AvailabilityResult"];
+                    };
+                };
+            };
+            /** @description Availability reservation conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
                 };
             };
             422: components["responses"]["ValidationError"];

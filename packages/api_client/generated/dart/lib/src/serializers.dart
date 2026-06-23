@@ -17,25 +17,41 @@ import 'package:bike_local_generated_api_client/src/model/date.dart';
 import 'package:bike_local_generated_api_client/src/model/account_deletion_request.dart';
 import 'package:bike_local_generated_api_client/src/model/approve_content_submission200_response.dart';
 import 'package:bike_local_generated_api_client/src/model/asset.dart';
+import 'package:bike_local_generated_api_client/src/model/asset_category.dart';
+import 'package:bike_local_generated_api_client/src/model/asset_status_transition.dart';
 import 'package:bike_local_generated_api_client/src/model/audit_log.dart';
 import 'package:bike_local_generated_api_client/src/model/auth_identity.dart';
+import 'package:bike_local_generated_api_client/src/model/availability_check_request.dart';
+import 'package:bike_local_generated_api_client/src/model/availability_conflict.dart';
+import 'package:bike_local_generated_api_client/src/model/availability_result.dart';
 import 'package:bike_local_generated_api_client/src/model/booking.dart';
 import 'package:bike_local_generated_api_client/src/model/booking_item.dart';
 import 'package:bike_local_generated_api_client/src/model/booking_status.dart';
 import 'package:bike_local_generated_api_client/src/model/branch.dart';
 import 'package:bike_local_generated_api_client/src/model/cancel_booking_request.dart';
 import 'package:bike_local_generated_api_client/src/model/cash_confirmation_request.dart';
+import 'package:bike_local_generated_api_client/src/model/check_availability200_response.dart';
 import 'package:bike_local_generated_api_client/src/model/consent_status.dart';
 import 'package:bike_local_generated_api_client/src/model/consent_summary.dart';
 import 'package:bike_local_generated_api_client/src/model/consent_type.dart';
 import 'package:bike_local_generated_api_client/src/model/content_approval_status.dart';
 import 'package:bike_local_generated_api_client/src/model/content_submission.dart';
+import 'package:bike_local_generated_api_client/src/model/create_asset_category201_response.dart';
+import 'package:bike_local_generated_api_client/src/model/create_asset_category_request.dart';
 import 'package:bike_local_generated_api_client/src/model/create_asset_request.dart';
 import 'package:bike_local_generated_api_client/src/model/create_booking_request.dart';
 import 'package:bike_local_generated_api_client/src/model/create_branch_request.dart';
+import 'package:bike_local_generated_api_client/src/model/create_equipment_item201_response.dart';
+import 'package:bike_local_generated_api_client/src/model/create_equipment_item_request.dart';
+import 'package:bike_local_generated_api_client/src/model/create_inventory_unit201_response.dart';
+import 'package:bike_local_generated_api_client/src/model/create_inventory_unit_request.dart';
 import 'package:bike_local_generated_api_client/src/model/create_payment_request.dart';
 import 'package:bike_local_generated_api_client/src/model/create_place201_response.dart';
 import 'package:bike_local_generated_api_client/src/model/create_pricing_quote200_response.dart';
+import 'package:bike_local_generated_api_client/src/model/create_pricing_rule201_response.dart';
+import 'package:bike_local_generated_api_client/src/model/create_pricing_rule_request.dart';
+import 'package:bike_local_generated_api_client/src/model/create_rental_point201_response.dart';
+import 'package:bike_local_generated_api_client/src/model/create_rental_point_request.dart';
 import 'package:bike_local_generated_api_client/src/model/create_return_request.dart';
 import 'package:bike_local_generated_api_client/src/model/create_ride_session_request.dart';
 import 'package:bike_local_generated_api_client/src/model/create_route201_response.dart';
@@ -65,6 +81,7 @@ import 'package:bike_local_generated_api_client/src/model/inline_object5.dart';
 import 'package:bike_local_generated_api_client/src/model/inline_object6.dart';
 import 'package:bike_local_generated_api_client/src/model/inline_object7.dart';
 import 'package:bike_local_generated_api_client/src/model/inline_object8.dart';
+import 'package:bike_local_generated_api_client/src/model/inventory_unit.dart';
 import 'package:bike_local_generated_api_client/src/model/list_assets200_response.dart';
 import 'package:bike_local_generated_api_client/src/model/list_audit_logs200_response.dart';
 import 'package:bike_local_generated_api_client/src/model/list_stores200_response.dart';
@@ -79,6 +96,7 @@ import 'package:bike_local_generated_api_client/src/model/place.dart';
 import 'package:bike_local_generated_api_client/src/model/platform_report.dart';
 import 'package:bike_local_generated_api_client/src/model/pricing_quote.dart';
 import 'package:bike_local_generated_api_client/src/model/pricing_quote_request.dart';
+import 'package:bike_local_generated_api_client/src/model/pricing_rule.dart';
 import 'package:bike_local_generated_api_client/src/model/rental_point.dart';
 import 'package:bike_local_generated_api_client/src/model/required_consent_input.dart';
 import 'package:bike_local_generated_api_client/src/model/response_meta.dart';
@@ -117,25 +135,41 @@ part 'serializers.g.dart';
   AccountDeletionRequest,
   ApproveContentSubmission200Response,
   Asset,
+  AssetCategory,
+  AssetStatusTransition,
   AuditLog,
   AuthIdentity,
+  AvailabilityCheckRequest,
+  AvailabilityConflict,
+  AvailabilityResult,
   Booking,
   BookingItem,
   BookingStatus,
   Branch,
   CancelBookingRequest,
   CashConfirmationRequest,
+  CheckAvailability200Response,
   ConsentStatus,
   ConsentSummary,
   ConsentType,
   ContentApprovalStatus,
   ContentSubmission,
+  CreateAssetCategory201Response,
+  CreateAssetCategoryRequest,
   CreateAssetRequest,
   CreateBookingRequest,
   CreateBranchRequest,
+  CreateEquipmentItem201Response,
+  CreateEquipmentItemRequest,
+  CreateInventoryUnit201Response,
+  CreateInventoryUnitRequest,
   CreatePaymentRequest,
   CreatePlace201Response,
   CreatePricingQuote200Response,
+  CreatePricingRule201Response,
+  CreatePricingRuleRequest,
+  CreateRentalPoint201Response,
+  CreateRentalPointRequest,
   CreateReturnRequest,
   CreateRideSessionRequest,
   CreateRoute201Response,
@@ -165,6 +199,7 @@ part 'serializers.g.dart';
   InlineObject6,
   InlineObject7,
   InlineObject8,
+  InventoryUnit,
   ListAssets200Response,
   ListAuditLogs200Response,
   ListStores200Response,
@@ -179,6 +214,7 @@ part 'serializers.g.dart';
   PlatformReport,
   PricingQuote,
   PricingQuoteRequest,
+  PricingRule,
   RentalPoint,
   RequiredConsentInput,
   ResponseMeta,

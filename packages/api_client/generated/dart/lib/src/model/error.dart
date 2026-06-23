@@ -13,10 +13,10 @@ part 'error.g.dart';
 /// Error
 ///
 /// Properties:
-/// * [code] 
-/// * [message] 
-/// * [details] 
-/// * [requestId] 
+/// * [code]
+/// * [message]
+/// * [details]
+/// * [requestId]
 @BuiltValue()
 abstract class Error implements Built<Error, ErrorBuilder> {
   @BuiltValueField(wireName: r'code')
@@ -153,4 +153,3 @@ class _$ErrorSerializer implements PrimitiveSerializer<Error> {
     return result.build();
   }
 }
-

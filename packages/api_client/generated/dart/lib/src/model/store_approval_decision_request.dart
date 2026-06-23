@@ -12,9 +12,9 @@ part 'store_approval_decision_request.g.dart';
 /// StoreApprovalDecisionRequest
 ///
 /// Properties:
-/// * [version] 
-/// * [decision] 
-/// * [reason] 
+/// * [version]
+/// * [decision]
+/// * [reason]
 @BuiltValue()
 abstract class StoreApprovalDecisionRequest implements Built<StoreApprovalDecisionRequest, StoreApprovalDecisionRequestBuilder> {
   @BuiltValueField(wireName: r'version')
@@ -137,4 +137,3 @@ class _$StoreApprovalDecisionRequestSerializer implements PrimitiveSerializer<St
     return result.build();
   }
 }
-

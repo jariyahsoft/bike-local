@@ -5,6 +5,7 @@
 // ignore_for_file: unused_element
 import 'package:bike_local_generated_api_client/src/model/entity_base.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:bike_local_generated_api_client/src/model/asset_status_transition.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -13,41 +14,48 @@ part 'asset.g.dart';
 /// Asset
 ///
 /// Properties:
-/// * [id] 
-/// * [schemaVersion] 
-/// * [tenantId] 
-/// * [createdAt] 
-/// * [createdBy] 
-/// * [updatedAt] 
-/// * [updatedBy] 
-/// * [deletedAt] 
-/// * [version] 
-/// * [storeId] 
-/// * [branchId] 
-/// * [categoryId] 
-/// * [code] 
-/// * [qrTokenReference] 
-/// * [brand] 
-/// * [model] 
-/// * [color] 
-/// * [size] 
-/// * [description] 
-/// * [status] 
-/// * [basePrice] 
-/// * [depositAmount] 
-/// * [currency] 
-/// * [currentPointId] 
-/// * [images] 
+/// * [id]
+/// * [schemaVersion]
+/// * [tenantId]
+/// * [createdAt]
+/// * [createdBy]
+/// * [updatedAt]
+/// * [updatedBy]
+/// * [deletedAt]
+/// * [version]
+/// * [storeId]
+/// * [branchId]
+/// * [categoryId]
+/// * [code]
+/// * [qrTokenReference]
+/// * [brand]
+/// * [model]
+/// * [color]
+/// * [size]
+/// * [description]
+/// * [status]
+/// * [basePrice]
+/// * [depositAmount]
+/// * [currency]
+/// * [currentPointId]
+/// * [images]
+/// * [cashAccepted]
+/// * [differentReturnAllowed]
+/// * [equipmentIds]
+/// * [statusHistory]
 @BuiltValue()
 abstract class Asset implements EntityBase, Built<Asset, AssetBuilder> {
   @BuiltValueField(wireName: r'deposit_amount')
   int get depositAmount;
 
+  @BuiltValueField(wireName: r'different_return_allowed')
+  bool get differentReturnAllowed;
+
   @BuiltValueField(wireName: r'branch_id')
   String get branchId;
 
   @BuiltValueField(wireName: r'images')
-  BuiltList<String>? get images;
+  BuiltList<String> get images;
 
   @BuiltValueField(wireName: r'code')
   String get code;
@@ -64,11 +72,20 @@ abstract class Asset implements EntityBase, Built<Asset, AssetBuilder> {
   @BuiltValueField(wireName: r'store_id')
   String get storeId;
 
+  @BuiltValueField(wireName: r'status_history')
+  BuiltList<AssetStatusTransition> get statusHistory;
+
   @BuiltValueField(wireName: r'size')
   String? get size;
 
+  @BuiltValueField(wireName: r'cash_accepted')
+  bool get cashAccepted;
+
   @BuiltValueField(wireName: r'qr_token_reference')
   String? get qrTokenReference;
+
+  @BuiltValueField(wireName: r'equipment_ids')
+  BuiltList<String> get equipmentIds;
 
   @BuiltValueField(wireName: r'model')
   String? get model;
@@ -150,6 +167,11 @@ class _$AssetSerializer implements PrimitiveSerializer<Asset> {
         specifiedType: const FullType(String),
       );
     }
+    yield r'equipment_ids';
+    yield serializers.serialize(
+      object.equipmentIds,
+      specifiedType: const FullType(BuiltList, [FullType(String)]),
+    );
     if (object.model != null) {
       yield r'model';
       yield serializers.serialize(
@@ -189,18 +211,21 @@ class _$AssetSerializer implements PrimitiveSerializer<Asset> {
       object.depositAmount,
       specifiedType: const FullType(int),
     );
+    yield r'different_return_allowed';
+    yield serializers.serialize(
+      object.differentReturnAllowed,
+      specifiedType: const FullType(bool),
+    );
     yield r'branch_id';
     yield serializers.serialize(
       object.branchId,
       specifiedType: const FullType(String),
     );
-    if (object.images != null) {
-      yield r'images';
-      yield serializers.serialize(
-        object.images,
-        specifiedType: const FullType(BuiltList, [FullType(String)]),
-      );
-    }
+    yield r'images';
+    yield serializers.serialize(
+      object.images,
+      specifiedType: const FullType(BuiltList, [FullType(String)]),
+    );
     yield r'schema_version';
     yield serializers.serialize(
       object.schemaVersion,
@@ -223,6 +248,11 @@ class _$AssetSerializer implements PrimitiveSerializer<Asset> {
       object.version,
       specifiedType: const FullType(int),
     );
+    yield r'status_history';
+    yield serializers.serialize(
+      object.statusHistory,
+      specifiedType: const FullType(BuiltList, [FullType(AssetStatusTransition)]),
+    );
     if (object.deletedAt != null) {
       yield r'deleted_at';
       yield serializers.serialize(
@@ -237,6 +267,11 @@ class _$AssetSerializer implements PrimitiveSerializer<Asset> {
         specifiedType: const FullType(String),
       );
     }
+    yield r'cash_accepted';
+    yield serializers.serialize(
+      object.cashAccepted,
+      specifiedType: const FullType(bool),
+    );
     if (object.createdBy != null) {
       yield r'created_by';
       yield serializers.serialize(
@@ -326,6 +361,13 @@ class _$AssetSerializer implements PrimitiveSerializer<Asset> {
           ) as String;
           result.qrTokenReference = valueDes;
           break;
+        case r'equipment_ids':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(BuiltList, [FullType(String)]),
+          ) as BuiltList<String>;
+          result.equipmentIds.replace(valueDes);
+          break;
         case r'model':
           final valueDes = serializers.deserialize(
             value,
@@ -375,6 +417,13 @@ class _$AssetSerializer implements PrimitiveSerializer<Asset> {
           ) as int;
           result.depositAmount = valueDes;
           break;
+        case r'different_return_allowed':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool;
+          result.differentReturnAllowed = valueDes;
+          break;
         case r'branch_id':
           final valueDes = serializers.deserialize(
             value,
@@ -417,6 +466,13 @@ class _$AssetSerializer implements PrimitiveSerializer<Asset> {
           ) as int;
           result.version = valueDes;
           break;
+        case r'status_history':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(BuiltList, [FullType(AssetStatusTransition)]),
+          ) as BuiltList<AssetStatusTransition>;
+          result.statusHistory.replace(valueDes);
+          break;
         case r'deleted_at':
           final valueDes = serializers.deserialize(
             value,
@@ -430,6 +486,13 @@ class _$AssetSerializer implements PrimitiveSerializer<Asset> {
             specifiedType: const FullType(String),
           ) as String;
           result.size = valueDes;
+          break;
+        case r'cash_accepted':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool;
+          result.cashAccepted = valueDes;
           break;
         case r'created_by':
           final valueDes = serializers.deserialize(
@@ -518,4 +581,3 @@ class AssetStatusEnum extends EnumClass {
   static BuiltSet<AssetStatusEnum> get values => _$assetStatusEnumValues;
   static AssetStatusEnum valueOf(String name) => _$assetStatusEnumValueOf(name);
 }
-

@@ -15,19 +15,19 @@ part 'user.g.dart';
 /// User
 ///
 /// Properties:
-/// * [id] 
-/// * [displayName] 
-/// * [locale] 
-/// * [status] 
-/// * [roles] 
-/// * [email] 
-/// * [phone] 
-/// * [consentSummaries] 
-/// * [authIdentities] 
-/// * [deletionRequestedAt] 
-/// * [version] 
-/// * [createdAt] 
-/// * [updatedAt] 
+/// * [id]
+/// * [displayName]
+/// * [locale]
+/// * [status]
+/// * [roles]
+/// * [email]
+/// * [phone]
+/// * [consentSummaries]
+/// * [authIdentities]
+/// * [deletionRequestedAt]
+/// * [version]
+/// * [createdAt]
+/// * [updatedAt]
 @BuiltValue()
 abstract class User implements Built<User, UserBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -339,4 +339,3 @@ class UserStatusEnum extends EnumClass {
   static BuiltSet<UserStatusEnum> get values => _$userStatusEnumValues;
   static UserStatusEnum valueOf(String name) => _$userStatusEnumValueOf(name);
 }
-

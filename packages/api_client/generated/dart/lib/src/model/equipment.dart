@@ -13,26 +13,30 @@ part 'equipment.g.dart';
 /// Equipment
 ///
 /// Properties:
-/// * [id] 
-/// * [schemaVersion] 
-/// * [tenantId] 
-/// * [createdAt] 
-/// * [createdBy] 
-/// * [updatedAt] 
-/// * [updatedBy] 
-/// * [deletedAt] 
-/// * [version] 
-/// * [storeId] 
-/// * [name] 
-/// * [rentalMode] 
-/// * [status] 
-/// * [priceAmount] 
-/// * [depositAmount] 
-/// * [currency] 
+/// * [id]
+/// * [schemaVersion]
+/// * [tenantId]
+/// * [createdAt]
+/// * [createdBy]
+/// * [updatedAt]
+/// * [updatedBy]
+/// * [deletedAt]
+/// * [version]
+/// * [storeId]
+/// * [branchId]
+/// * [name]
+/// * [rentalMode]
+/// * [status]
+/// * [priceAmount]
+/// * [depositAmount]
+/// * [currency]
 @BuiltValue()
 abstract class Equipment implements EntityBase, Built<Equipment, EquipmentBuilder> {
   @BuiltValueField(wireName: r'deposit_amount')
   int? get depositAmount;
+
+  @BuiltValueField(wireName: r'branch_id')
+  String? get branchId;
 
   @BuiltValueField(wireName: r'rental_mode')
   EquipmentRentalModeEnum get rentalMode;
@@ -82,6 +86,13 @@ class _$EquipmentSerializer implements PrimitiveSerializer<Equipment> {
       yield serializers.serialize(
         object.depositAmount,
         specifiedType: const FullType(int),
+      );
+    }
+    if (object.branchId != null) {
+      yield r'branch_id';
+      yield serializers.serialize(
+        object.branchId,
+        specifiedType: const FullType(String),
       );
     }
     yield r'rental_mode';
@@ -200,6 +211,13 @@ class _$EquipmentSerializer implements PrimitiveSerializer<Equipment> {
             specifiedType: const FullType(int),
           ) as int;
           result.depositAmount = valueDes;
+          break;
+        case r'branch_id':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.branchId = valueDes;
           break;
         case r'rental_mode':
           final valueDes = serializers.deserialize(
@@ -372,4 +390,3 @@ class EquipmentStatusEnum extends EnumClass {
   static BuiltSet<EquipmentStatusEnum> get values => _$equipmentStatusEnumValues;
   static EquipmentStatusEnum valueOf(String name) => _$equipmentStatusEnumValueOf(name);
 }
-

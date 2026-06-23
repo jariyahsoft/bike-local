@@ -33,7 +33,7 @@ Foundation / Sprint 0
 - [x] Create frontend apps/packages skeleton
 - [x] Create repository interface examples for booking, payment, ride and return
 - [ ] Define outbox/dead-letter strategy
-- [ ] Define Firestore indexes draft
+- [x] Define Firestore indexes draft
 
 ### Contracts
 
@@ -95,11 +95,11 @@ Foundation / Sprint 0
 
 ### Inventory and Pricing
 
-- [ ] Asset category and asset model
-- [ ] Equipment and inventory units
-- [ ] Rental points
-- [ ] Pricing rules and price quote service
-- [ ] Availability check with transaction/version
+- [x] Asset category and asset model
+- [x] Equipment and inventory units
+- [x] Rental points
+- [x] Pricing rules and price quote service
+- [x] Availability check with transaction/version
 
 ### Booking and Payment
 
@@ -162,9 +162,9 @@ Foundation / Sprint 0
 - [x] User signup and role selection works
 - [x] Store approval flow works
 - [x] Store can manage branch and staff
-- [ ] Store can manage assets and equipment
+- [x] Store can manage assets and equipment
 - [ ] Search and booking work with availability
-- [ ] Double booking is prevented
+- [x] Double booking is prevented at availability-hold level
 - [ ] QR payment and cash confirmation work
 - [ ] Handover starts rental
 - [ ] GPS buffers offline and uploads chunks

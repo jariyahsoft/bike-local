@@ -14,24 +14,24 @@ part 'sos_case.g.dart';
 /// SosCase
 ///
 /// Properties:
-/// * [id] 
-/// * [schemaVersion] 
-/// * [tenantId] 
-/// * [createdAt] 
-/// * [createdBy] 
-/// * [updatedAt] 
-/// * [updatedBy] 
-/// * [deletedAt] 
-/// * [version] 
-/// * [userId] 
-/// * [bookingId] 
-/// * [rentalId] 
-/// * [assetId] 
-/// * [phone] 
-/// * [location] 
-/// * [issueType] 
-/// * [status] 
-/// * [assignedStaffUserId] 
+/// * [id]
+/// * [schemaVersion]
+/// * [tenantId]
+/// * [createdAt]
+/// * [createdBy]
+/// * [updatedAt]
+/// * [updatedBy]
+/// * [deletedAt]
+/// * [version]
+/// * [userId]
+/// * [bookingId]
+/// * [rentalId]
+/// * [assetId]
+/// * [phone]
+/// * [location]
+/// * [issueType]
+/// * [status]
+/// * [assignedStaffUserId]
 @BuiltValue()
 abstract class SosCase implements EntityBase, Built<SosCase, SosCaseBuilder> {
   @BuiltValueField(wireName: r'issue_type')
@@ -411,4 +411,3 @@ class SosCaseStatusEnum extends EnumClass {
   static BuiltSet<SosCaseStatusEnum> get values => _$sosCaseStatusEnumValues;
   static SosCaseStatusEnum valueOf(String name) => _$sosCaseStatusEnumValueOf(name);
 }
-

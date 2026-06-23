@@ -13,16 +13,16 @@ part 'audit_log.g.dart';
 /// AuditLog
 ///
 /// Properties:
-/// * [id] 
-/// * [actorUserId] 
-/// * [action] 
-/// * [resourceType] 
-/// * [resourceId] 
-/// * [before] 
-/// * [after] 
-/// * [reason] 
-/// * [timestamp] 
-/// * [requestId] 
+/// * [id]
+/// * [actorUserId]
+/// * [action]
+/// * [resourceType]
+/// * [resourceId]
+/// * [before]
+/// * [after]
+/// * [reason]
+/// * [timestamp]
+/// * [requestId]
 @BuiltValue()
 abstract class AuditLog implements Built<AuditLog, AuditLogBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -255,4 +255,3 @@ class _$AuditLogSerializer implements PrimitiveSerializer<AuditLog> {
     return result.build();
   }
 }
-

@@ -28,6 +28,8 @@ Source: `docs/Bike-Local-SRS.md` sections 4.2, 6, 7.29, 10, 11, 12.4, 12.5, 14.6
 - Firebase custom claims may help cache platform roles, but store and branch authorization must come from backend data.
 - Business-critical Firestore and Storage writes are server-owned by default; client rules allow only explicitly safe cases.
 - GPS consent must capture version, purpose, and explicit foreground/background scope before location data is processed beyond basic app operation.
+- Asset categories, assets, equipment items, inventory units, rental points, pricing rules, and availability blocks are tenant/store scoped backend writes.
+- Availability reservations must be created through backend transaction/version-safe logic so overlapping holds for the same asset/time range fail atomically.
 
 ## Permission Catalog
 
@@ -126,6 +128,7 @@ Policy:
 - Allow public read only for approved public config documents in `system_configs`.
 - Allow notification read only for the owning authenticated user.
 - Deny direct client reads and writes for `users`, `auth_identities`, `bookings`, `payments`, `stores`, `branches`, `assets`, `ride_track_chunks`, `return_requests`, `sos_cases`, `settlements`, and `audit_logs`.
+- Deny direct client writes for `asset_categories`, `equipment_items`, `inventory_units`, `rental_points`, `pricing_rules`, and `availability_blocks`; server APIs enforce permissions, branch scope, and overlap checks.
 - All business-critical writes must go through backend services.
 
 This satisfies the Sprint 0 requirement that business-critical collections cannot be directly written by clients.
@@ -230,6 +233,7 @@ Current coverage from runnable tests:
 - Audit payload redaction for secrets and coordinates
 - Onboarding role validation, consent capture, duplicate auth identity rejection, and self-service account deletion request audit logging
 - Store owner registration, platform approval decisions, branch temporary closure audit, staff permission audit, and cross-tenant rejection
+- Inventory asset/category/equipment creation, duplicate store asset-code rejection, cross-tenant inventory denial, integer minor-unit pricing quote snapshots, availability hold conflicts, closed branch availability exclusion, and unsupported search-filter rejection
 - Firestore rules default-deny with public config exception
 - Firestore user-owned notification read exception
 - Storage public-read and owner-upload exceptions

@@ -13,27 +13,27 @@ part 'payment.g.dart';
 /// Payment
 ///
 /// Properties:
-/// * [id] 
-/// * [schemaVersion] 
-/// * [tenantId] 
-/// * [createdAt] 
-/// * [createdBy] 
-/// * [updatedAt] 
-/// * [updatedBy] 
-/// * [deletedAt] 
-/// * [version] 
-/// * [bookingId] 
-/// * [userId] 
-/// * [storeId] 
-/// * [provider] 
-/// * [providerReference] 
-/// * [method] 
-/// * [status] 
-/// * [amount] 
-/// * [currency] 
-/// * [idempotencyKey] 
-/// * [paidAt] 
-/// * [confirmedBy] 
+/// * [id]
+/// * [schemaVersion]
+/// * [tenantId]
+/// * [createdAt]
+/// * [createdBy]
+/// * [updatedAt]
+/// * [updatedBy]
+/// * [deletedAt]
+/// * [version]
+/// * [bookingId]
+/// * [userId]
+/// * [storeId]
+/// * [provider]
+/// * [providerReference]
+/// * [method]
+/// * [status]
+/// * [amount]
+/// * [currency]
+/// * [idempotencyKey]
+/// * [paidAt]
+/// * [confirmedBy]
 @BuiltValue()
 abstract class Payment implements EntityBase, Built<Payment, PaymentBuilder> {
   @BuiltValueField(wireName: r'amount')
@@ -458,4 +458,3 @@ class PaymentStatusEnum extends EnumClass {
   static BuiltSet<PaymentStatusEnum> get values => _$paymentStatusEnumValues;
   static PaymentStatusEnum valueOf(String name) => _$paymentStatusEnumValueOf(name);
 }
-

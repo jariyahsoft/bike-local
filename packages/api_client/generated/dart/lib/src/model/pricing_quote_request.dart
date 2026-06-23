@@ -12,11 +12,11 @@ part 'pricing_quote_request.g.dart';
 /// PricingQuoteRequest
 ///
 /// Properties:
-/// * [assetIds] 
-/// * [equipmentIds] 
-/// * [startAt] 
-/// * [endAt] 
-/// * [paymentMethod] 
+/// * [assetIds]
+/// * [equipmentIds]
+/// * [startAt]
+/// * [endAt]
+/// * [paymentMethod]
 @BuiltValue()
 abstract class PricingQuoteRequest implements Built<PricingQuoteRequest, PricingQuoteRequestBuilder> {
   @BuiltValueField(wireName: r'asset_ids')
@@ -186,4 +186,3 @@ class PricingQuoteRequestPaymentMethodEnum extends EnumClass {
   static BuiltSet<PricingQuoteRequestPaymentMethodEnum> get values => _$pricingQuoteRequestPaymentMethodEnumValues;
   static PricingQuoteRequestPaymentMethodEnum valueOf(String name) => _$pricingQuoteRequestPaymentMethodEnumValueOf(name);
 }
-

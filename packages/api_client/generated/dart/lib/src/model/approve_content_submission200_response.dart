@@ -14,8 +14,8 @@ part 'approve_content_submission200_response.g.dart';
 /// ApproveContentSubmission200Response
 ///
 /// Properties:
-/// * [data] 
-/// * [meta] 
+/// * [data]
+/// * [meta]
 @BuiltValue()
 abstract class ApproveContentSubmission200Response implements SuccessEnvelope, Built<ApproveContentSubmission200Response, ApproveContentSubmission200ResponseBuilder> {
   ApproveContentSubmission200Response._();
@@ -117,4 +117,3 @@ class _$ApproveContentSubmission200ResponseSerializer implements PrimitiveSerial
     return result.build();
   }
 }
-

@@ -219,9 +219,34 @@ Suspended store members must be removed from effective role assignment lookup im
 | deposit_amount | integer | minor unit |
 | currency | string | required |
 | current_point_id | string | ref rental_points |
+| images | array | public asset image refs |
+| cash_accepted | boolean | search/filter snapshot |
+| different_return_allowed | boolean | search/filter snapshot |
+| equipment_ids | array | included/required equipment refs |
+| status_history | array | status transitions with time, actor, reason |
 | gps_device_id, smart_lock_id | string | Phase 2 |
 | created_at, updated_at | timestamp | UTC |
 | version | integer | optimistic concurrency |
+
+Asset code is unique within a store. `qr_token_reference` is an opaque backend-managed reference only; raw long-lived QR token values are not stored in the asset document or returned to clients.
+
+### Asset Category, Equipment, Inventory Unit, Rental Point
+
+| Entity | Key fields | Notes |
+|---|---|---|
+| asset_categories | store_id, name, type, default_base_price, default_deposit_amount, currency, active | Category defaults use integer minor units and are store scoped. |
+| equipment_items | store_id, optional branch_id, name, rental_mode, status, price_amount, deposit_amount, currency | `rental_mode` supports separate rental, bundled rental, package included, and deposit required. |
+| inventory_units | store_id, branch_id, optional asset_id, optional equipment_item_id, status | Tracks branch-level stock/serialized units without coupling to Firestore paths. |
+| rental_points | store_id, branch_id, name, latitude, longitude, geohash, status | Pickup/return points are available only when parent store is approved/active and branch is active. |
+
+### Pricing Rule and Availability Block
+
+| Entity | Key fields | Notes |
+|---|---|---|
+| pricing_rules | store_id, optional branch_id, optional category_id, type, amount, currency, priority, active | Quote calculation snapshots applied rule IDs and policy refs into bookings. |
+| availability_blocks | asset_id, store_id, branch_id, start_at, end_at, reason, reference_id | Transaction-created hold/confirmed booking blocks prevent overlapping reservations. |
+
+Money fields remain integer minor units. Current open pricing-policy questions, such as final cancellation/deposit policy references, are kept in immutable `policy_snapshot` fields until product/legal decisions are finalized.
 
 ### Booking
 
@@ -239,6 +264,22 @@ Suspended store members must be removed from effective role assignment lookup im
 | price_snapshot, policy_snapshot | object | immutable snapshot |
 | created_at, updated_at | timestamp | UTC |
 | version | integer | optimistic concurrency |
+
+## Firestore Index Draft
+
+Expected composite indexes for Task 09 marketplace queries:
+
+| Collection | Fields | Query |
+|---|---|---|
+| assets | store_id, code | Unique store asset-code lookup enforced by backend transaction/check. |
+| assets | store_id, branch_id, status, base_price | Merchant list and renter price filtering. |
+| assets | cash_accepted, different_return_allowed, status, base_price | Search filters for cash, different return point, and price. |
+| asset_categories | store_id, type, active | Category management and type-filtered discovery. |
+| equipment_items | store_id, branch_id, status, rental_mode | Equipment management and package/deposit filtering. |
+| rental_points | store_id, branch_id, status | Pickup/return point lookup. |
+| pricing_rules | store_id, branch_id, category_id, active, priority | Quote rule selection. |
+| availability_blocks | asset_id, start_at, end_at | Overlap checks and booking holds. |
+| branches | store_id, status, geohash | Active branch search by location. |
 
 ### Payment
 

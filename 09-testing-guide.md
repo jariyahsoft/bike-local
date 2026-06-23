@@ -113,6 +113,7 @@ Critical flows:
 - Onboarding happy path with masked auth identity output and account deletion request audit
 - Duplicate auth identity rejection and unauthenticated self-service access rejection
 - Store approval workflow, approved-branch availability, temporary branch closure, staff invitation validation, permission audit, and cross-tenant denial
+- Inventory asset/category/equipment creation, duplicate asset-code rejection within a store, cross-tenant inventory denial, integer minor-unit pricing quotes with immutable snapshots, transaction-style availability hold conflict rejection, closed branch exclusion, and unsupported search-filter rejection
 
 ## Accessibility Tests
 
@@ -173,9 +174,9 @@ npm run test:frontend
 
 - [ ] User can register and select roles
 - [ ] Store can register and be approved
-- [ ] Store can add branches, staff, assets and equipment
+- [x] Store can add branches, staff, assets and equipment
 - [ ] Renter can search and book available asset
-- [ ] Double booking is prevented
+- [x] Double booking is prevented at availability-hold level
 - [ ] QR payment and cash payment work
 - [ ] Staff receives task after payment/cash confirmation
 - [ ] Handover starts rental

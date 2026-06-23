@@ -11,9 +11,9 @@ part 'location.g.dart';
 /// Location
 ///
 /// Properties:
-/// * [latitude] 
-/// * [longitude] 
-/// * [accuracyMeters] 
+/// * [latitude]
+/// * [longitude]
+/// * [accuracyMeters]
 @BuiltValue()
 abstract class Location implements Built<Location, LocationBuilder> {
   @BuiltValueField(wireName: r'latitude')
@@ -135,4 +135,3 @@ class _$LocationSerializer implements PrimitiveSerializer<Location> {
     return result.build();
   }
 }
-

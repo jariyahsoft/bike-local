@@ -14,19 +14,19 @@ part 'notification.g.dart';
 /// Notification
 ///
 /// Properties:
-/// * [id] 
-/// * [schemaVersion] 
-/// * [tenantId] 
-/// * [createdAt] 
-/// * [createdBy] 
-/// * [updatedAt] 
-/// * [updatedBy] 
-/// * [deletedAt] 
-/// * [version] 
-/// * [recipientUserId] 
-/// * [type] 
-/// * [deliveryStatus] 
-/// * [payload] 
+/// * [id]
+/// * [schemaVersion]
+/// * [tenantId]
+/// * [createdAt]
+/// * [createdBy]
+/// * [updatedAt]
+/// * [updatedBy]
+/// * [deletedAt]
+/// * [version]
+/// * [recipientUserId]
+/// * [type]
+/// * [deliveryStatus]
+/// * [payload]
 @BuiltValue()
 abstract class Notification implements EntityBase, Built<Notification, NotificationBuilder> {
   @BuiltValueField(wireName: r'recipient_user_id')
@@ -303,4 +303,3 @@ class NotificationDeliveryStatusEnum extends EnumClass {
   static BuiltSet<NotificationDeliveryStatusEnum> get values => _$notificationDeliveryStatusEnumValues;
   static NotificationDeliveryStatusEnum valueOf(String name) => _$notificationDeliveryStatusEnumValueOf(name);
 }
-

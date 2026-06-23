@@ -22,12 +22,12 @@ class SOSApi {
   const SOSApi(this._dio, this._serializers);
 
   /// Acknowledge SOS case by authorized staff.
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [idempotencyKey] 
-  /// * [xCorrelationId] 
+  /// * [id]
+  /// * [idempotencyKey]
+  /// * [xCorrelationId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -37,7 +37,7 @@ class SOSApi {
   ///
   /// Returns a [Future] containing a [Response] with a [InlineObject8] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<InlineObject8>> acknowledgeSosCase({ 
+  Future<Response<InlineObject8>> acknowledgeSosCase({
     required String id,
     required String idempotencyKey,
     String? xCorrelationId,
@@ -114,12 +114,12 @@ class SOSApi {
   }
 
   /// Open SOS case during active ride.
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [idempotencyKey] 
-  /// * [createSosCaseRequest] 
-  /// * [xCorrelationId] 
+  /// * [idempotencyKey]
+  /// * [createSosCaseRequest]
+  /// * [xCorrelationId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -129,7 +129,7 @@ class SOSApi {
   ///
   /// Returns a [Future] containing a [Response] with a [InlineObject8] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<InlineObject8>> createSosCase({ 
+  Future<Response<InlineObject8>> createSosCase({
     required String idempotencyKey,
     required CreateSosCaseRequest createSosCaseRequest,
     String? xCorrelationId,

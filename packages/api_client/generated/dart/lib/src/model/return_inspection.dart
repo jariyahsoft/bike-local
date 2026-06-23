@@ -13,24 +13,24 @@ part 'return_inspection.g.dart';
 /// ReturnInspection
 ///
 /// Properties:
-/// * [id] 
-/// * [schemaVersion] 
-/// * [tenantId] 
-/// * [createdAt] 
-/// * [createdBy] 
-/// * [updatedAt] 
-/// * [updatedBy] 
-/// * [deletedAt] 
-/// * [version] 
-/// * [returnRequestId] 
-/// * [condition] 
-/// * [imageRefs] 
-/// * [equipmentComplete] 
-/// * [damageNotes] 
-/// * [damageChargeAmount] 
-/// * [currency] 
-/// * [inspectorUserId] 
-/// * [inspectedAt] 
+/// * [id]
+/// * [schemaVersion]
+/// * [tenantId]
+/// * [createdAt]
+/// * [createdBy]
+/// * [updatedAt]
+/// * [updatedBy]
+/// * [deletedAt]
+/// * [version]
+/// * [returnRequestId]
+/// * [condition]
+/// * [imageRefs]
+/// * [equipmentComplete]
+/// * [damageNotes]
+/// * [damageChargeAmount]
+/// * [currency]
+/// * [inspectorUserId]
+/// * [inspectedAt]
 @BuiltValue()
 abstract class ReturnInspection implements EntityBase, Built<ReturnInspection, ReturnInspectionBuilder> {
   @BuiltValueField(wireName: r'return_request_id')
@@ -364,4 +364,3 @@ class _$ReturnInspectionSerializer implements PrimitiveSerializer<ReturnInspecti
     return result.build();
   }
 }
-

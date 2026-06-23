@@ -13,12 +13,12 @@ part 'update_store_member_request.g.dart';
 /// UpdateStoreMemberRequest
 ///
 /// Properties:
-/// * [role] 
-/// * [branchIds] 
-/// * [grantedPermissions] 
-/// * [deniedPermissions] 
-/// * [status] 
-/// * [version] 
+/// * [role]
+/// * [branchIds]
+/// * [grantedPermissions]
+/// * [deniedPermissions]
+/// * [status]
+/// * [version]
 @BuiltValue()
 abstract class UpdateStoreMemberRequest implements Built<UpdateStoreMemberRequest, UpdateStoreMemberRequestBuilder> {
   @BuiltValueField(wireName: r'role')
@@ -212,4 +212,3 @@ class UpdateStoreMemberRequestStatusEnum extends EnumClass {
   static BuiltSet<UpdateStoreMemberRequestStatusEnum> get values => _$updateStoreMemberRequestStatusEnumValues;
   static UpdateStoreMemberRequestStatusEnum valueOf(String name) => _$updateStoreMemberRequestStatusEnumValueOf(name);
 }
-

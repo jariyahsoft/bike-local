@@ -15,30 +15,30 @@ part 'branch.g.dart';
 /// Branch
 ///
 /// Properties:
-/// * [id] 
-/// * [schemaVersion] 
-/// * [tenantId] 
-/// * [createdAt] 
-/// * [createdBy] 
-/// * [updatedAt] 
-/// * [updatedBy] 
-/// * [deletedAt] 
-/// * [version] 
-/// * [storeId] 
-/// * [name] 
-/// * [address] 
-/// * [province] 
-/// * [district] 
-/// * [country] 
-/// * [latitude] 
-/// * [longitude] 
-/// * [geohash] 
-/// * [phone] 
-/// * [openingHours] 
-/// * [timezone] 
-/// * [status] 
-/// * [temporaryClosure] 
-/// * [availableForBooking] 
+/// * [id]
+/// * [schemaVersion]
+/// * [tenantId]
+/// * [createdAt]
+/// * [createdBy]
+/// * [updatedAt]
+/// * [updatedBy]
+/// * [deletedAt]
+/// * [version]
+/// * [storeId]
+/// * [name]
+/// * [address]
+/// * [province]
+/// * [district]
+/// * [country]
+/// * [latitude]
+/// * [longitude]
+/// * [geohash]
+/// * [phone]
+/// * [openingHours]
+/// * [timezone]
+/// * [status]
+/// * [temporaryClosure]
+/// * [availableForBooking]
 @BuiltValue()
 abstract class Branch implements EntityBase, Built<Branch, BranchBuilder> {
   @BuiltValueField(wireName: r'country')
@@ -488,4 +488,3 @@ class BranchStatusEnum extends EnumClass {
   static BuiltSet<BranchStatusEnum> get values => _$branchStatusEnumValues;
   static BranchStatusEnum valueOf(String name) => _$branchStatusEnumValueOf(name);
 }
-

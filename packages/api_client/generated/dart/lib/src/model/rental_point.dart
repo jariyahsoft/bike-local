@@ -13,21 +13,22 @@ part 'rental_point.g.dart';
 /// RentalPoint
 ///
 /// Properties:
-/// * [id] 
-/// * [schemaVersion] 
-/// * [tenantId] 
-/// * [createdAt] 
-/// * [createdBy] 
-/// * [updatedAt] 
-/// * [updatedBy] 
-/// * [deletedAt] 
-/// * [version] 
-/// * [storeId] 
-/// * [branchId] 
-/// * [name] 
-/// * [latitude] 
-/// * [longitude] 
-/// * [status] 
+/// * [id]
+/// * [schemaVersion]
+/// * [tenantId]
+/// * [createdAt]
+/// * [createdBy]
+/// * [updatedAt]
+/// * [updatedBy]
+/// * [deletedAt]
+/// * [version]
+/// * [storeId]
+/// * [branchId]
+/// * [name]
+/// * [latitude]
+/// * [longitude]
+/// * [geohash]
+/// * [status]
 @BuiltValue()
 abstract class RentalPoint implements EntityBase, Built<RentalPoint, RentalPointBuilder> {
   @BuiltValueField(wireName: r'branch_id')
@@ -35,6 +36,9 @@ abstract class RentalPoint implements EntityBase, Built<RentalPoint, RentalPoint
 
   @BuiltValueField(wireName: r'latitude')
   num get latitude;
+
+  @BuiltValueField(wireName: r'geohash')
+  String? get geohash;
 
   @BuiltValueField(wireName: r'name')
   String get name;
@@ -120,6 +124,13 @@ class _$RentalPointSerializer implements PrimitiveSerializer<RentalPoint> {
       yield r'created_by';
       yield serializers.serialize(
         object.createdBy,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.geohash != null) {
+      yield r'geohash';
+      yield serializers.serialize(
+        object.geohash,
         specifiedType: const FullType(String),
       );
     }
@@ -241,6 +252,13 @@ class _$RentalPointSerializer implements PrimitiveSerializer<RentalPoint> {
           ) as String;
           result.createdBy = valueDes;
           break;
+        case r'geohash':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.geohash = valueDes;
+          break;
         case r'name':
           final valueDes = serializers.deserialize(
             value,
@@ -326,4 +344,3 @@ class RentalPointStatusEnum extends EnumClass {
   static BuiltSet<RentalPointStatusEnum> get values => _$rentalPointStatusEnumValues;
   static RentalPointStatusEnum valueOf(String name) => _$rentalPointStatusEnumValueOf(name);
 }
-

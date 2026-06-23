@@ -24,13 +24,13 @@ class StaffApi {
   const StaffApi(this._dio, this._serializers);
 
   /// Invite staff to a store.
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [storeId] 
-  /// * [idempotencyKey] 
-  /// * [createStaffInvitationRequest] 
-  /// * [xCorrelationId] 
+  /// * [storeId]
+  /// * [idempotencyKey]
+  /// * [createStaffInvitationRequest]
+  /// * [xCorrelationId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -40,7 +40,7 @@ class StaffApi {
   ///
   /// Returns a [Future] containing a [Response] with a [CreateStaffInvitation202Response] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<CreateStaffInvitation202Response>> createStaffInvitation({ 
+  Future<Response<CreateStaffInvitation202Response>> createStaffInvitation({
     required String storeId,
     required String idempotencyKey,
     required CreateStaffInvitationRequest createStaffInvitationRequest,
@@ -138,12 +138,12 @@ class StaffApi {
   }
 
   /// Update store member role, branch access, or status.
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [updateStoreMemberRequest] 
-  /// * [xCorrelationId] 
+  /// * [id]
+  /// * [updateStoreMemberRequest]
+  /// * [xCorrelationId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -153,7 +153,7 @@ class StaffApi {
   ///
   /// Returns a [Future] containing a [Response] with a [UpdateStoreMember200Response] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<UpdateStoreMember200Response>> updateStoreMember({ 
+  Future<Response<UpdateStoreMember200Response>> updateStoreMember({
     required String id,
     required UpdateStoreMemberRequest updateStoreMemberRequest,
     String? xCorrelationId,

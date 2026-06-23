@@ -27,10 +27,10 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getReturnApi();
-final String id = id_example; // String | 
-final String idempotencyKey = idem_01HV9X8D9N9HQ; // String | 
-final ReturnInspection returnInspection = ; // ReturnInspection | 
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
+final String id = id_example; // String |
+final String idempotencyKey = idem_01HV9X8D9N9HQ; // String |
+final ReturnInspection returnInspection = ; // ReturnInspection |
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
 
 try {
     final response = api.acceptReturnRequest(id, idempotencyKey, returnInspection, xCorrelationId);
@@ -44,10 +44,10 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **String**|  | 
- **idempotencyKey** | **String**|  | 
- **returnInspection** | [**ReturnInspection**](ReturnInspection.md)|  | 
- **xCorrelationId** | **String**|  | [optional] 
+ **id** | **String**|  |
+ **idempotencyKey** | **String**|  |
+ **returnInspection** | [**ReturnInspection**](ReturnInspection.md)|  |
+ **xCorrelationId** | **String**|  | [optional]
 
 ### Return type
 
@@ -78,9 +78,9 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getReturnApi();
-final String idempotencyKey = idem_01HV9X8D9N9HQ; // String | 
-final CreateReturnRequest createReturnRequest = ; // CreateReturnRequest | 
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
+final String idempotencyKey = idem_01HV9X8D9N9HQ; // String |
+final CreateReturnRequest createReturnRequest = ; // CreateReturnRequest |
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
 
 try {
     final response = api.createReturnRequest(idempotencyKey, createReturnRequest, xCorrelationId);
@@ -94,9 +94,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **idempotencyKey** | **String**|  | 
- **createReturnRequest** | [**CreateReturnRequest**](CreateReturnRequest.md)|  | 
- **xCorrelationId** | **String**|  | [optional] 
+ **idempotencyKey** | **String**|  |
+ **createReturnRequest** | [**CreateReturnRequest**](CreateReturnRequest.md)|  |
+ **xCorrelationId** | **String**|  | [optional]
 
 ### Return type
 
@@ -112,4 +112,3 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-

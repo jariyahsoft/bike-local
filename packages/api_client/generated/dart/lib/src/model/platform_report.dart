@@ -11,14 +11,14 @@ part 'platform_report.g.dart';
 /// PlatformReport
 ///
 /// Properties:
-/// * [usersCount] 
-/// * [storesCount] 
-/// * [branchesCount] 
-/// * [assetsCount] 
-/// * [bookingsCount] 
-/// * [gmvAmount] 
-/// * [platformRevenueAmount] 
-/// * [currency] 
+/// * [usersCount]
+/// * [storesCount]
+/// * [branchesCount]
+/// * [assetsCount]
+/// * [bookingsCount]
+/// * [gmvAmount]
+/// * [platformRevenueAmount]
+/// * [currency]
 @BuiltValue()
 abstract class PlatformReport implements Built<PlatformReport, PlatformReportBuilder> {
   @BuiltValueField(wireName: r'users_count')
@@ -219,4 +219,3 @@ class _$PlatformReportSerializer implements PrimitiveSerializer<PlatformReport> 
     return result.build();
   }
 }
-

@@ -25,12 +25,12 @@ class ContentApi {
   const ContentApi(this._dio, this._serializers);
 
   /// Approve route/place/review content.
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [idempotencyKey] 
-  /// * [xCorrelationId] 
+  /// * [id]
+  /// * [idempotencyKey]
+  /// * [xCorrelationId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -40,7 +40,7 @@ class ContentApi {
   ///
   /// Returns a [Future] containing a [Response] with a [ApproveContentSubmission200Response] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ApproveContentSubmission200Response>> approveContentSubmission({ 
+  Future<Response<ApproveContentSubmission200Response>> approveContentSubmission({
     required String id,
     required String idempotencyKey,
     String? xCorrelationId,
@@ -117,12 +117,12 @@ class ContentApi {
   }
 
   /// Submit place content for approval.
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [idempotencyKey] 
-  /// * [place] 
-  /// * [xCorrelationId] 
+  /// * [idempotencyKey]
+  /// * [place]
+  /// * [xCorrelationId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -132,7 +132,7 @@ class ContentApi {
   ///
   /// Returns a [Future] containing a [Response] with a [CreatePlace201Response] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<CreatePlace201Response>> createPlace({ 
+  Future<Response<CreatePlace201Response>> createPlace({
     required String idempotencyKey,
     required Place place,
     String? xCorrelationId,
@@ -229,12 +229,12 @@ class ContentApi {
   }
 
   /// Submit route content for approval.
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [idempotencyKey] 
-  /// * [route] 
-  /// * [xCorrelationId] 
+  /// * [idempotencyKey]
+  /// * [route]
+  /// * [xCorrelationId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -244,7 +244,7 @@ class ContentApi {
   ///
   /// Returns a [Future] containing a [Response] with a [CreateRoute201Response] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<CreateRoute201Response>> createRoute({ 
+  Future<Response<CreateRoute201Response>> createRoute({
     required String idempotencyKey,
     required Route route,
     String? xCorrelationId,

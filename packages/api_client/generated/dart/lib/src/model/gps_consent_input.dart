@@ -11,9 +11,9 @@ part 'gps_consent_input.g.dart';
 /// GpsConsentInput
 ///
 /// Properties:
-/// * [version] 
-/// * [purpose] 
-/// * [backgroundAllowed] 
+/// * [version]
+/// * [purpose]
+/// * [backgroundAllowed]
 @BuiltValue()
 abstract class GpsConsentInput implements Built<GpsConsentInput, GpsConsentInputBuilder> {
   @BuiltValueField(wireName: r'version')
@@ -135,4 +135,3 @@ class _$GpsConsentInputSerializer implements PrimitiveSerializer<GpsConsentInput
     return result.build();
   }
 }
-

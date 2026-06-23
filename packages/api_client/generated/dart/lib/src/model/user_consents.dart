@@ -14,10 +14,10 @@ part 'user_consents.g.dart';
 /// UserConsents
 ///
 /// Properties:
-/// * [terms] 
-/// * [privacy] 
-/// * [gps] 
-/// * [marketing] 
+/// * [terms]
+/// * [privacy]
+/// * [gps]
+/// * [marketing]
 @BuiltValue()
 abstract class UserConsents implements Built<UserConsents, UserConsentsBuilder> {
   @BuiltValueField(wireName: r'terms')
@@ -158,4 +158,3 @@ class _$UserConsentsSerializer implements PrimitiveSerializer<UserConsents> {
     return result.build();
   }
 }
-

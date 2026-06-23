@@ -26,12 +26,12 @@ class StoresApi {
   const StoresApi(this._dio, this._serializers);
 
   /// Create store draft for approval.
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [idempotencyKey] 
-  /// * [createStoreRequest] 
-  /// * [xCorrelationId] 
+  /// * [idempotencyKey]
+  /// * [createStoreRequest]
+  /// * [xCorrelationId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -41,7 +41,7 @@ class StoresApi {
   ///
   /// Returns a [Future] containing a [Response] with a [InlineObject1] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<InlineObject1>> createStore({ 
+  Future<Response<InlineObject1>> createStore({
     required String idempotencyKey,
     required CreateStoreRequest createStoreRequest,
     String? xCorrelationId,
@@ -138,12 +138,12 @@ class StoresApi {
   }
 
   /// Record a platform approval, rejection, revision, suspension, or closure decision.
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [storeApprovalDecisionRequest] 
-  /// * [xCorrelationId] 
+  /// * [id]
+  /// * [storeApprovalDecisionRequest]
+  /// * [xCorrelationId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -153,7 +153,7 @@ class StoresApi {
   ///
   /// Returns a [Future] containing a [Response] with a [InlineObject1] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<InlineObject1>> decideStoreApproval({ 
+  Future<Response<InlineObject1>> decideStoreApproval({
     required String id,
     required StoreApprovalDecisionRequest storeApprovalDecisionRequest,
     String? xCorrelationId,
@@ -249,12 +249,12 @@ class StoresApi {
   }
 
   /// List stores visible to the current user.
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [limit] 
-  /// * [cursor] 
-  /// * [xCorrelationId] 
+  /// * [limit]
+  /// * [cursor]
+  /// * [xCorrelationId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -264,7 +264,7 @@ class StoresApi {
   ///
   /// Returns a [Future] containing a [Response] with a [ListStores200Response] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ListStores200Response>> listStores({ 
+  Future<Response<ListStores200Response>> listStores({
     int? limit = 20,
     String? cursor,
     String? xCorrelationId,
@@ -346,12 +346,12 @@ class StoresApi {
   }
 
   /// Submit a draft or revision-required store for platform approval.
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [submitStoreRequest] 
-  /// * [xCorrelationId] 
+  /// * [id]
+  /// * [submitStoreRequest]
+  /// * [xCorrelationId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -361,7 +361,7 @@ class StoresApi {
   ///
   /// Returns a [Future] containing a [Response] with a [InlineObject1] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<InlineObject1>> submitStore({ 
+  Future<Response<InlineObject1>> submitStore({
     required String id,
     required SubmitStoreRequest submitStoreRequest,
     String? xCorrelationId,
@@ -457,12 +457,12 @@ class StoresApi {
   }
 
   /// Update store details with optimistic concurrency.
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [updateStoreRequest] 
-  /// * [xCorrelationId] 
+  /// * [id]
+  /// * [updateStoreRequest]
+  /// * [xCorrelationId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -472,7 +472,7 @@ class StoresApi {
   ///
   /// Returns a [Future] containing a [Response] with a [InlineObject1] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<InlineObject1>> updateStore({ 
+  Future<Response<InlineObject1>> updateStore({
     required String id,
     required UpdateStoreRequest updateStoreRequest,
     String? xCorrelationId,

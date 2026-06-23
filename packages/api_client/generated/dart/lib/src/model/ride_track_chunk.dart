@@ -13,12 +13,12 @@ part 'ride_track_chunk.g.dart';
 /// RideTrackChunk
 ///
 /// Properties:
-/// * [rideSessionId] 
-/// * [sequence] 
-/// * [checksum] 
-/// * [capturedFrom] 
-/// * [capturedTo] 
-/// * [points] 
+/// * [rideSessionId]
+/// * [sequence]
+/// * [checksum]
+/// * [capturedFrom]
+/// * [capturedTo]
+/// * [points]
 @BuiltValue()
 abstract class RideTrackChunk implements Built<RideTrackChunk, RideTrackChunkBuilder> {
   @BuiltValueField(wireName: r'ride_session_id')
@@ -185,4 +185,3 @@ class _$RideTrackChunkSerializer implements PrimitiveSerializer<RideTrackChunk> 
     return result.build();
   }
 }
-

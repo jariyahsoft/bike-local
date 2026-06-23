@@ -28,10 +28,10 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getBookingApi();
-final String id = id_example; // String | 
-final String idempotencyKey = idem_01HV9X8D9N9HQ; // String | 
-final CancelBookingRequest cancelBookingRequest = ; // CancelBookingRequest | 
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
+final String id = id_example; // String |
+final String idempotencyKey = idem_01HV9X8D9N9HQ; // String |
+final CancelBookingRequest cancelBookingRequest = ; // CancelBookingRequest |
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
 
 try {
     final response = api.cancelBooking(id, idempotencyKey, cancelBookingRequest, xCorrelationId);
@@ -45,10 +45,10 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **String**|  | 
- **idempotencyKey** | **String**|  | 
- **cancelBookingRequest** | [**CancelBookingRequest**](CancelBookingRequest.md)|  | 
- **xCorrelationId** | **String**|  | [optional] 
+ **id** | **String**|  |
+ **idempotencyKey** | **String**|  |
+ **cancelBookingRequest** | [**CancelBookingRequest**](CancelBookingRequest.md)|  |
+ **xCorrelationId** | **String**|  | [optional]
 
 ### Return type
 
@@ -79,9 +79,9 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getBookingApi();
-final String idempotencyKey = idem_01HV9X8D9N9HQ; // String | 
-final CreateBookingRequest createBookingRequest = {"store_id":"store_123","branch_id":"brn_123","asset_ids":["ast_123"],"start_at":"2026-07-01T02:00:00Z","end_at":"2026-07-01T06:00:00Z","pickup_point_id":"point_1","return_point_id":"point_1","payment_method":"ONLINE"}; // CreateBookingRequest | 
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
+final String idempotencyKey = idem_01HV9X8D9N9HQ; // String |
+final CreateBookingRequest createBookingRequest = {"store_id":"store_123","branch_id":"brn_123","asset_ids":["ast_123"],"start_at":"2026-07-01T02:00:00Z","end_at":"2026-07-01T06:00:00Z","pickup_point_id":"point_1","return_point_id":"point_1","payment_method":"ONLINE"}; // CreateBookingRequest |
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
 
 try {
     final response = api.createBooking(idempotencyKey, createBookingRequest, xCorrelationId);
@@ -95,9 +95,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **idempotencyKey** | **String**|  | 
- **createBookingRequest** | [**CreateBookingRequest**](CreateBookingRequest.md)|  | 
- **xCorrelationId** | **String**|  | [optional] 
+ **idempotencyKey** | **String**|  |
+ **createBookingRequest** | [**CreateBookingRequest**](CreateBookingRequest.md)|  |
+ **xCorrelationId** | **String**|  | [optional]
 
 ### Return type
 
@@ -128,8 +128,8 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getBookingApi();
-final String id = id_example; // String | 
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
+final String id = id_example; // String |
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
 
 try {
     final response = api.getBooking(id, xCorrelationId);
@@ -143,8 +143,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **String**|  | 
- **xCorrelationId** | **String**|  | [optional] 
+ **id** | **String**|  |
+ **xCorrelationId** | **String**|  | [optional]
 
 ### Return type
 
@@ -160,4 +160,3 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-

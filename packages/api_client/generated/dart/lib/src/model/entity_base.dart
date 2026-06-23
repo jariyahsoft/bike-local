@@ -11,15 +11,15 @@ part 'entity_base.g.dart';
 /// EntityBase
 ///
 /// Properties:
-/// * [id] 
-/// * [schemaVersion] 
-/// * [tenantId] 
-/// * [createdAt] 
-/// * [createdBy] 
-/// * [updatedAt] 
-/// * [updatedBy] 
-/// * [deletedAt] 
-/// * [version] 
+/// * [id]
+/// * [schemaVersion]
+/// * [tenantId]
+/// * [createdAt]
+/// * [createdBy]
+/// * [updatedAt]
+/// * [updatedBy]
+/// * [deletedAt]
+/// * [version]
 @BuiltValue(instantiable: false)
 abstract class EntityBase  {
   @BuiltValueField(wireName: r'id')
@@ -272,4 +272,3 @@ class _$$EntityBaseSerializer implements PrimitiveSerializer<$EntityBase> {
     return result.build();
   }
 }
-

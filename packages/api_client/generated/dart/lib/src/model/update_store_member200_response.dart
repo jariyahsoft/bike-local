@@ -14,8 +14,8 @@ part 'update_store_member200_response.g.dart';
 /// UpdateStoreMember200Response
 ///
 /// Properties:
-/// * [data] 
-/// * [meta] 
+/// * [data]
+/// * [meta]
 @BuiltValue()
 abstract class UpdateStoreMember200Response implements SuccessEnvelope, Built<UpdateStoreMember200Response, UpdateStoreMember200ResponseBuilder> {
   UpdateStoreMember200Response._();
@@ -117,4 +117,3 @@ class _$UpdateStoreMember200ResponseSerializer implements PrimitiveSerializer<Up
     return result.build();
   }
 }
-

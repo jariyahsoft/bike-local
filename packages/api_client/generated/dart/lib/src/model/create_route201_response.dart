@@ -14,8 +14,8 @@ part 'create_route201_response.g.dart';
 /// CreateRoute201Response
 ///
 /// Properties:
-/// * [data] 
-/// * [meta] 
+/// * [data]
+/// * [meta]
 @BuiltValue()
 abstract class CreateRoute201Response implements SuccessEnvelope, Built<CreateRoute201Response, CreateRoute201ResponseBuilder> {
   CreateRoute201Response._();
@@ -117,4 +117,3 @@ class _$CreateRoute201ResponseSerializer implements PrimitiveSerializer<CreateRo
     return result.build();
   }
 }
-

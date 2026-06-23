@@ -49,15 +49,14 @@ import 'package:bike_local_generated_api_client/bike_local_generated_api_client.
 
 
 final api = BikeLocalGeneratedApiClient().getAssetsApi();
-final String idempotencyKey = idem_01HV9X8D9N9HQ; // String | 
-final CreateAssetRequest createAssetRequest = ; // CreateAssetRequest | 
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
+final AvailabilityCheckRequest availabilityCheckRequest = ; // AvailabilityCheckRequest |
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
 
 try {
-    final response = await api.createAsset(idempotencyKey, createAssetRequest, xCorrelationId);
+    final response = await api.checkAvailability(availabilityCheckRequest, xCorrelationId);
     print(response);
 } on DioException catch (e) {
-    print("Exception when calling AssetsApi->createAsset: $e\n");
+    print("Exception when calling AssetsApi->checkAvailability: $e\n");
 }
 
 ```
@@ -68,7 +67,11 @@ All URIs are relative to */api/v1*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+[*AssetsApi*](doc/AssetsApi.md) | [**checkAvailability**](doc/AssetsApi.md#checkavailability) | **POST** /availability/check | Check or reserve asset availability for a time range.
 [*AssetsApi*](doc/AssetsApi.md) | [**createAsset**](doc/AssetsApi.md#createasset) | **POST** /assets | Create rentable asset.
+[*AssetsApi*](doc/AssetsApi.md) | [**createAssetCategory**](doc/AssetsApi.md#createassetcategory) | **POST** /asset-categories | Create an asset category with default pricing and deposit.
+[*AssetsApi*](doc/AssetsApi.md) | [**createEquipmentItem**](doc/AssetsApi.md#createequipmentitem) | **POST** /equipment-items | Create rentable or bundled equipment.
+[*AssetsApi*](doc/AssetsApi.md) | [**createInventoryUnit**](doc/AssetsApi.md#createinventoryunit) | **POST** /inventory-units | Create an inventory unit for asset or equipment stock tracking.
 [*AssetsApi*](doc/AssetsApi.md) | [**listAssets**](doc/AssetsApi.md#listassets) | **GET** /assets | List assets by allowed filters.
 [*AssetsApi*](doc/AssetsApi.md) | [**updateAsset**](doc/AssetsApi.md#updateasset) | **PATCH** /assets/{id} | Update asset data or status.
 [*AuditApi*](doc/AuditApi.md) | [**listAuditLogs**](doc/AuditApi.md#listauditlogs) | **GET** /audit-logs | Search audit logs.
@@ -76,6 +79,7 @@ Class | Method | HTTP request | Description
 [*BookingApi*](doc/BookingApi.md) | [**createBooking**](doc/BookingApi.md#createbooking) | **POST** /bookings | Create booking with asset hold.
 [*BookingApi*](doc/BookingApi.md) | [**getBooking**](doc/BookingApi.md#getbooking) | **GET** /bookings/{id} | Get booking by ID.
 [*BranchesApi*](doc/BranchesApi.md) | [**createBranch**](doc/BranchesApi.md#createbranch) | **POST** /stores/{store_id}/branches | Create branch under a store.
+[*BranchesApi*](doc/BranchesApi.md) | [**createRentalPoint**](doc/BranchesApi.md#createrentalpoint) | **POST** /rental-points | Create a pickup or return point for an active branch.
 [*BranchesApi*](doc/BranchesApi.md) | [**getBranch**](doc/BranchesApi.md#getbranch) | **GET** /branches/{id} | Get branch by ID.
 [*BranchesApi*](doc/BranchesApi.md) | [**updateBranch**](doc/BranchesApi.md#updatebranch) | **PATCH** /branches/{id} | Update branch details or temporary closure state.
 [*ContentApi*](doc/ContentApi.md) | [**approveContentSubmission**](doc/ContentApi.md#approvecontentsubmission) | **POST** /content-submissions/{id}/approve | Approve route/place/review content.
@@ -90,6 +94,7 @@ Class | Method | HTTP request | Description
 [*PaymentApi*](doc/PaymentApi.md) | [**createPayment**](doc/PaymentApi.md#createpayment) | **POST** /payments | Create payment intent or cash payment record.
 [*PaymentApi*](doc/PaymentApi.md) | [**processPaymentWebhook**](doc/PaymentApi.md#processpaymentwebhook) | **POST** /payment-webhooks/{provider} | Process provider webhook with server-side verification.
 [*PricingApi*](doc/PricingApi.md) | [**createPricingQuote**](doc/PricingApi.md#createpricingquote) | **POST** /pricing/quote | Calculate price and deposit quote before booking.
+[*PricingApi*](doc/PricingApi.md) | [**createPricingRule**](doc/PricingApi.md#createpricingrule) | **POST** /pricing/rules | Create a store, branch, or category pricing rule.
 [*ReportsApi*](doc/ReportsApi.md) | [**getPlatformReport**](doc/ReportsApi.md#getplatformreport) | **GET** /reports/platform | Get platform overview report.
 [*ReportsApi*](doc/ReportsApi.md) | [**getStoreReport**](doc/ReportsApi.md#getstorereport) | **GET** /reports/store | Get merchant rental and revenue report.
 [*ReturnApi*](doc/ReturnApi.md) | [**acceptReturnRequest**](doc/ReturnApi.md#acceptreturnrequest) | **POST** /return-requests/{id}/accept | Accept return and record inspection.
@@ -115,25 +120,41 @@ Class | Method | HTTP request | Description
  - [AccountDeletionRequest](doc/AccountDeletionRequest.md)
  - [ApproveContentSubmission200Response](doc/ApproveContentSubmission200Response.md)
  - [Asset](doc/Asset.md)
+ - [AssetCategory](doc/AssetCategory.md)
+ - [AssetStatusTransition](doc/AssetStatusTransition.md)
  - [AuditLog](doc/AuditLog.md)
  - [AuthIdentity](doc/AuthIdentity.md)
+ - [AvailabilityCheckRequest](doc/AvailabilityCheckRequest.md)
+ - [AvailabilityConflict](doc/AvailabilityConflict.md)
+ - [AvailabilityResult](doc/AvailabilityResult.md)
  - [Booking](doc/Booking.md)
  - [BookingItem](doc/BookingItem.md)
  - [BookingStatus](doc/BookingStatus.md)
  - [Branch](doc/Branch.md)
  - [CancelBookingRequest](doc/CancelBookingRequest.md)
  - [CashConfirmationRequest](doc/CashConfirmationRequest.md)
+ - [CheckAvailability200Response](doc/CheckAvailability200Response.md)
  - [ConsentStatus](doc/ConsentStatus.md)
  - [ConsentSummary](doc/ConsentSummary.md)
  - [ConsentType](doc/ConsentType.md)
  - [ContentApprovalStatus](doc/ContentApprovalStatus.md)
  - [ContentSubmission](doc/ContentSubmission.md)
+ - [CreateAssetCategory201Response](doc/CreateAssetCategory201Response.md)
+ - [CreateAssetCategoryRequest](doc/CreateAssetCategoryRequest.md)
  - [CreateAssetRequest](doc/CreateAssetRequest.md)
  - [CreateBookingRequest](doc/CreateBookingRequest.md)
  - [CreateBranchRequest](doc/CreateBranchRequest.md)
+ - [CreateEquipmentItem201Response](doc/CreateEquipmentItem201Response.md)
+ - [CreateEquipmentItemRequest](doc/CreateEquipmentItemRequest.md)
+ - [CreateInventoryUnit201Response](doc/CreateInventoryUnit201Response.md)
+ - [CreateInventoryUnitRequest](doc/CreateInventoryUnitRequest.md)
  - [CreatePaymentRequest](doc/CreatePaymentRequest.md)
  - [CreatePlace201Response](doc/CreatePlace201Response.md)
  - [CreatePricingQuote200Response](doc/CreatePricingQuote200Response.md)
+ - [CreatePricingRule201Response](doc/CreatePricingRule201Response.md)
+ - [CreatePricingRuleRequest](doc/CreatePricingRuleRequest.md)
+ - [CreateRentalPoint201Response](doc/CreateRentalPoint201Response.md)
+ - [CreateRentalPointRequest](doc/CreateRentalPointRequest.md)
  - [CreateReturnRequest](doc/CreateReturnRequest.md)
  - [CreateRideSessionRequest](doc/CreateRideSessionRequest.md)
  - [CreateRoute201Response](doc/CreateRoute201Response.md)
@@ -163,6 +184,7 @@ Class | Method | HTTP request | Description
  - [InlineObject6](doc/InlineObject6.md)
  - [InlineObject7](doc/InlineObject7.md)
  - [InlineObject8](doc/InlineObject8.md)
+ - [InventoryUnit](doc/InventoryUnit.md)
  - [ListAssets200Response](doc/ListAssets200Response.md)
  - [ListAuditLogs200Response](doc/ListAuditLogs200Response.md)
  - [ListStores200Response](doc/ListStores200Response.md)
@@ -177,6 +199,7 @@ Class | Method | HTTP request | Description
  - [PlatformReport](doc/PlatformReport.md)
  - [PricingQuote](doc/PricingQuote.md)
  - [PricingQuoteRequest](doc/PricingQuoteRequest.md)
+ - [PricingRule](doc/PricingRule.md)
  - [RentalPoint](doc/RentalPoint.md)
  - [RequiredConsentInput](doc/RequiredConsentInput.md)
  - [ResponseMeta](doc/ResponseMeta.md)
@@ -226,6 +249,3 @@ Authentication schemes defined for the API:
 
 
 ## Author
-
-
-

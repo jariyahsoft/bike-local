@@ -11,8 +11,8 @@ part 'pagination_meta.g.dart';
 /// PaginationMeta
 ///
 /// Properties:
-/// * [nextCursor] 
-/// * [limit] 
+/// * [nextCursor]
+/// * [limit]
 @BuiltValue()
 abstract class PaginationMeta implements Built<PaginationMeta, PaginationMetaBuilder> {
   @BuiltValueField(wireName: r'next_cursor')
@@ -123,4 +123,3 @@ class _$PaginationMetaSerializer implements PrimitiveSerializer<PaginationMeta> 
     return result.build();
   }
 }
-

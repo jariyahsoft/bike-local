@@ -29,9 +29,9 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getIdentityApi();
-final String idempotencyKey = idem_01HV9X8D9N9HQ; // String | 
-final CreateUserRequest createUserRequest = ; // CreateUserRequest | 
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
+final String idempotencyKey = idem_01HV9X8D9N9HQ; // String |
+final CreateUserRequest createUserRequest = ; // CreateUserRequest |
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
 
 try {
     final response = api.createUser(idempotencyKey, createUserRequest, xCorrelationId);
@@ -45,9 +45,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **idempotencyKey** | **String**|  | 
- **createUserRequest** | [**CreateUserRequest**](CreateUserRequest.md)|  | 
- **xCorrelationId** | **String**|  | [optional] 
+ **idempotencyKey** | **String**|  |
+ **createUserRequest** | [**CreateUserRequest**](CreateUserRequest.md)|  |
+ **xCorrelationId** | **String**|  | [optional]
 
 ### Return type
 
@@ -78,7 +78,7 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getIdentityApi();
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
 
 try {
     final response = api.getMe(xCorrelationId);
@@ -92,7 +92,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **xCorrelationId** | **String**|  | [optional] 
+ **xCorrelationId** | **String**|  | [optional]
 
 ### Return type
 
@@ -123,8 +123,8 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getIdentityApi();
-final AccountDeletionRequest accountDeletionRequest = ; // AccountDeletionRequest | 
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
+final AccountDeletionRequest accountDeletionRequest = ; // AccountDeletionRequest |
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
 
 try {
     final response = api.requestAccountDeletion(accountDeletionRequest, xCorrelationId);
@@ -138,8 +138,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **accountDeletionRequest** | [**AccountDeletionRequest**](AccountDeletionRequest.md)|  | 
- **xCorrelationId** | **String**|  | [optional] 
+ **accountDeletionRequest** | [**AccountDeletionRequest**](AccountDeletionRequest.md)|  |
+ **xCorrelationId** | **String**|  | [optional]
 
 ### Return type
 
@@ -170,8 +170,8 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getIdentityApi();
-final UpdateUserRequest updateUserRequest = ; // UpdateUserRequest | 
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
+final UpdateUserRequest updateUserRequest = ; // UpdateUserRequest |
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
 
 try {
     final response = api.updateMe(updateUserRequest, xCorrelationId);
@@ -185,8 +185,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **updateUserRequest** | [**UpdateUserRequest**](UpdateUserRequest.md)|  | 
- **xCorrelationId** | **String**|  | [optional] 
+ **updateUserRequest** | [**UpdateUserRequest**](UpdateUserRequest.md)|  |
+ **xCorrelationId** | **String**|  | [optional]
 
 ### Return type
 
@@ -202,4 +202,3 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
