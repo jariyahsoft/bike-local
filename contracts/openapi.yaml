@@ -54,7 +54,7 @@ paths:
     post:
       tags: [Identity]
       operationId: createUser
-      summary: Create domain user profile after authentication.
+      summary: Create a domain user profile, link the authenticated identity, and record onboarding consent.
       parameters:
         - $ref: "#/components/parameters/IdempotencyKey"
         - $ref: "#/components/parameters/CorrelationId"
@@ -69,6 +69,8 @@ paths:
           $ref: "#/components/responses/UserSuccess"
         "401":
           $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
         "409":
           $ref: "#/components/responses/VersionConflict"
         "422":
@@ -87,10 +89,12 @@ paths:
           $ref: "#/components/responses/UserSuccess"
         "401":
           $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
     patch:
       tags: [Identity]
       operationId: updateMe
-      summary: Update current user profile.
+      summary: Update the current user profile, add onboarding roles, and append consent records.
       parameters:
         - $ref: "#/components/parameters/CorrelationId"
       requestBody:
@@ -104,6 +108,32 @@ paths:
           $ref: "#/components/responses/UserSuccess"
         "401":
           $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "409":
+          $ref: "#/components/responses/VersionConflict"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /me/deletion-request:
+    post:
+      tags: [Identity]
+      operationId: requestAccountDeletion
+      summary: Request account deletion while retaining legally required transactional and audit records.
+      parameters:
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AccountDeletionRequest"
+      responses:
+        "202":
+          $ref: "#/components/responses/UserSuccess"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
         "409":
           $ref: "#/components/responses/VersionConflict"
         "422":
@@ -1304,7 +1334,7 @@ components:
       properties:
         code:
           type: string
-          pattern: "^(AUTH|PERMISSION|VALIDATION|STORE|ASSET|BOOKING|PAYMENT|RIDE|RETURN|SOS|CONTENT|RATE_LIMIT|INTERNAL)_[A-Z0-9_]+$"
+          pattern: "^(AUTH|PERMISSION|VALIDATION|USER|STORE|ASSET|BOOKING|PAYMENT|RIDE|RETURN|SOS|CONTENT|RATE_LIMIT|INTERNAL)_[A-Z0-9_]+$"
         message:
           type: string
         details:
@@ -1354,60 +1384,102 @@ components:
           type: integer
           minimum: 0
     User:
-      allOf:
-        - $ref: "#/components/schemas/EntityBase"
-        - type: object
-          required: [display_name, locale, status, roles]
-          properties:
-            display_name:
-              type: string
-            phone:
-              type: string
-            email:
-              type: string
-              format: email
-            photo_url:
-              type: string
-              format: uri
-            locale:
-              type: string
-              enum: [th, en]
-            country_code:
-              type: string
-            weight_kg:
-              type: number
-            emergency_contact:
-              type: object
-              additionalProperties: true
-            status:
-              type: string
-              enum: [ACTIVE, SUSPENDED, DELETION_REQUESTED]
-            roles:
-              type: array
-              items:
-                $ref: "#/components/schemas/Role"
-            auth_identities:
-              type: array
-              items:
-                $ref: "#/components/schemas/AuthIdentity"
+      type: object
+      required:
+        [
+          id,
+          display_name,
+          locale,
+          status,
+          roles,
+          consent_summaries,
+          auth_identities,
+          version,
+          created_at,
+          updated_at,
+        ]
+      properties:
+        id:
+          type: string
+        display_name:
+          type: string
+        locale:
+          type: string
+          enum: [th, en]
+        status:
+          type: string
+          enum: [ACTIVE, SUSPENDED, DELETION_REQUESTED]
+        roles:
+          type: array
+          items:
+            $ref: "#/components/schemas/Role"
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        consent_summaries:
+          type: array
+          items:
+            $ref: "#/components/schemas/ConsentSummary"
+        auth_identities:
+          type: array
+          items:
+            $ref: "#/components/schemas/AuthIdentity"
+        deletion_requested_at:
+          $ref: "#/components/schemas/IsoDateTime"
+        version:
+          type: integer
+          minimum: 1
+        created_at:
+          $ref: "#/components/schemas/IsoDateTime"
+        updated_at:
+          $ref: "#/components/schemas/IsoDateTime"
     AuthIdentity:
-      allOf:
-        - $ref: "#/components/schemas/EntityBase"
-        - type: object
-          required: [user_id, provider, provider_subject, verified]
-          properties:
-            user_id:
-              type: string
-            provider:
-              type: string
-              enum: [PHONE, EMAIL_PASSWORD, GOOGLE, APPLE]
-            provider_subject:
-              type: string
-            verified:
-              type: boolean
+      type: object
+      required: [provider, provider_subject_hint, verified, last_authenticated_at]
+      properties:
+        provider:
+          type: string
+          enum: [PHONE, EMAIL_PASSWORD, GOOGLE, APPLE]
+        provider_subject_hint:
+          type: string
+          description: Masked provider subject for UI display. Raw provider subjects and tokens must never be exposed.
+        verified:
+          type: boolean
+        last_authenticated_at:
+          $ref: "#/components/schemas/IsoDateTime"
+    ConsentSummary:
+      type: object
+      required: [type, status, version_code, purpose, granted_at]
+      properties:
+        type:
+          $ref: "#/components/schemas/ConsentType"
+        status:
+          $ref: "#/components/schemas/ConsentStatus"
+        version_code:
+          type: string
+        purpose:
+          type: string
+        granted_at:
+          $ref: "#/components/schemas/IsoDateTime"
+        gps_scope:
+          $ref: "#/components/schemas/GpsConsentScope"
     Role:
       type: string
       enum: [RENTER, STORE_OWNER, STORE_MANAGER, STORE_STAFF, STORE_ACCOUNTING, PLATFORM_ADMIN, PLATFORM_MODERATOR, PLATFORM_SUPPORT]
+    OnboardingSelectableRole:
+      type: string
+      enum: [RENTER, STORE_OWNER]
+    ConsentType:
+      type: string
+      enum: [TERMS, PRIVACY, GPS, MARKETING]
+    ConsentStatus:
+      type: string
+      enum: [GRANTED, DENIED, REVOKED]
+    GpsConsentScope:
+      type: string
+      enum: [FOREGROUND_ONLY, BACKGROUND_ALLOWED]
     Store:
       allOf:
         - $ref: "#/components/schemas/EntityBase"
@@ -2011,23 +2083,60 @@ components:
           type: integer
         currency:
           type: string
+    RequiredConsentInput:
+      type: object
+      required: [version]
+      properties:
+        version:
+          type: string
+    GpsConsentInput:
+      type: object
+      required: [version, purpose, background_allowed]
+      properties:
+        version:
+          type: string
+        purpose:
+          type: string
+        background_allowed:
+          type: boolean
+    MarketingConsentInput:
+      type: object
+      required: [version, granted, purpose]
+      properties:
+        version:
+          type: string
+        granted:
+          type: boolean
+        purpose:
+          type: string
+    UserConsents:
+      type: object
+      required: [terms, privacy]
+      properties:
+        terms:
+          $ref: "#/components/schemas/RequiredConsentInput"
+        privacy:
+          $ref: "#/components/schemas/RequiredConsentInput"
+        gps:
+          $ref: "#/components/schemas/GpsConsentInput"
+        marketing:
+          $ref: "#/components/schemas/MarketingConsentInput"
     CreateUserRequest:
       type: object
-      required: [display_name, locale, accepted_terms_version, accepted_privacy_version]
+      required: [display_name, locale, selected_roles, consents]
       properties:
         display_name:
           type: string
         locale:
           type: string
           enum: [th, en]
-        accepted_terms_version:
-          type: string
-        accepted_privacy_version:
-          type: string
-        accepted_gps_version:
-          type: string
-        marketing_consent_version:
-          type: string
+        selected_roles:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/components/schemas/OnboardingSelectableRole"
+        consents:
+          $ref: "#/components/schemas/UserConsents"
     UpdateUserRequest:
       type: object
       required: [version]
@@ -2037,8 +2146,25 @@ components:
         locale:
           type: string
           enum: [th, en]
+        additional_roles:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/components/schemas/OnboardingSelectableRole"
+        consents:
+          $ref: "#/components/schemas/UserConsents"
         version:
           type: integer
+          minimum: 1
+    AccountDeletionRequest:
+      type: object
+      required: [version]
+      properties:
+        version:
+          type: integer
+          minimum: 1
+        reason:
+          type: string
     CreateStoreRequest:
       type: object
       required: [legal_name, display_name, default_currency, timezone]
@@ -2320,14 +2446,42 @@ components:
       value:
         data:
           id: usr_123
-          schema_version: 1
-          created_at: "2026-06-23T08:00:00Z"
-          updated_at: "2026-06-23T08:00:00Z"
-          version: 1
           display_name: Demo Renter
           locale: en
           status: ACTIVE
-          roles: [RENTER]
+          roles: [RENTER, STORE_OWNER]
+          email: renter@example.com
+          phone: "+66000000001"
+          consent_summaries:
+            - type: TERMS
+              status: GRANTED
+              version_code: terms-2026-06
+              purpose: terms_acceptance
+              granted_at: "2026-06-23T08:00:00Z"
+            - type: PRIVACY
+              status: GRANTED
+              version_code: privacy-2026-06
+              purpose: privacy_notice_acceptance
+              granted_at: "2026-06-23T08:00:00Z"
+            - type: GPS
+              status: GRANTED
+              version_code: gps-2026-06
+              purpose: ride_tracking_and_sos
+              gps_scope: BACKGROUND_ALLOWED
+              granted_at: "2026-06-23T08:00:00Z"
+            - type: MARKETING
+              status: DENIED
+              version_code: marketing-2026-06
+              purpose: campaign_updates
+              granted_at: "2026-06-23T08:00:00Z"
+          auth_identities:
+            - provider: EMAIL_PASSWORD
+              provider_subject_hint: fi***_1
+              verified: true
+              last_authenticated_at: "2026-06-23T08:00:00Z"
+          created_at: "2026-06-23T08:00:00Z"
+          updated_at: "2026-06-23T08:00:00Z"
+          version: 1
         meta:
           request_id: req_123
     StoreSuccess:

@@ -3,7 +3,6 @@
 //
 
 // ignore_for_file: unused_element
-import 'package:bike_local_generated_api_client/src/model/entity_base.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -13,33 +12,25 @@ part 'auth_identity.g.dart';
 /// AuthIdentity
 ///
 /// Properties:
-/// * [id] 
-/// * [schemaVersion] 
-/// * [tenantId] 
-/// * [createdAt] 
-/// * [createdBy] 
-/// * [updatedAt] 
-/// * [updatedBy] 
-/// * [deletedAt] 
-/// * [version] 
-/// * [userId] 
 /// * [provider] 
-/// * [providerSubject] 
+/// * [providerSubjectHint] - Masked provider subject for UI display. Raw provider subjects and tokens must never be exposed.
 /// * [verified] 
+/// * [lastAuthenticatedAt] 
 @BuiltValue()
-abstract class AuthIdentity implements EntityBase, Built<AuthIdentity, AuthIdentityBuilder> {
-  @BuiltValueField(wireName: r'provider_subject')
-  String get providerSubject;
-
+abstract class AuthIdentity implements Built<AuthIdentity, AuthIdentityBuilder> {
   @BuiltValueField(wireName: r'provider')
   AuthIdentityProviderEnum get provider;
   // enum providerEnum {  PHONE,  EMAIL_PASSWORD,  GOOGLE,  APPLE,  };
 
+  /// Masked provider subject for UI display. Raw provider subjects and tokens must never be exposed.
+  @BuiltValueField(wireName: r'provider_subject_hint')
+  String get providerSubjectHint;
+
   @BuiltValueField(wireName: r'verified')
   bool get verified;
 
-  @BuiltValueField(wireName: r'user_id')
-  String get userId;
+  @BuiltValueField(wireName: r'last_authenticated_at')
+  DateTime get lastAuthenticatedAt;
 
   AuthIdentity._();
 
@@ -64,77 +55,24 @@ class _$AuthIdentitySerializer implements PrimitiveSerializer<AuthIdentity> {
     AuthIdentity object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
-    yield r'provider_subject';
-    yield serializers.serialize(
-      object.providerSubject,
-      specifiedType: const FullType(String),
-    );
-    yield r'schema_version';
-    yield serializers.serialize(
-      object.schemaVersion,
-      specifiedType: const FullType(int),
-    );
-    if (object.updatedBy != null) {
-      yield r'updated_by';
-      yield serializers.serialize(
-        object.updatedBy,
-        specifiedType: const FullType(String),
-      );
-    }
-    yield r'verified';
-    yield serializers.serialize(
-      object.verified,
-      specifiedType: const FullType(bool),
-    );
-    yield r'user_id';
-    yield serializers.serialize(
-      object.userId,
-      specifiedType: const FullType(String),
-    );
-    yield r'version';
-    yield serializers.serialize(
-      object.version,
-      specifiedType: const FullType(int),
-    );
-    yield r'created_at';
-    yield serializers.serialize(
-      object.createdAt,
-      specifiedType: const FullType(DateTime),
-    );
-    if (object.deletedAt != null) {
-      yield r'deleted_at';
-      yield serializers.serialize(
-        object.deletedAt,
-        specifiedType: const FullType(DateTime),
-      );
-    }
     yield r'provider';
     yield serializers.serialize(
       object.provider,
       specifiedType: const FullType(AuthIdentityProviderEnum),
     );
-    if (object.createdBy != null) {
-      yield r'created_by';
-      yield serializers.serialize(
-        object.createdBy,
-        specifiedType: const FullType(String),
-      );
-    }
-    if (object.tenantId != null) {
-      yield r'tenant_id';
-      yield serializers.serialize(
-        object.tenantId,
-        specifiedType: const FullType(String),
-      );
-    }
-    yield r'id';
+    yield r'provider_subject_hint';
     yield serializers.serialize(
-      object.id,
+      object.providerSubjectHint,
       specifiedType: const FullType(String),
     );
-    yield r'updated_at';
+    yield r'verified';
     yield serializers.serialize(
-      object.updatedAt,
+      object.verified,
+      specifiedType: const FullType(bool),
+    );
+    yield r'last_authenticated_at';
+    yield serializers.serialize(
+      object.lastAuthenticatedAt,
       specifiedType: const FullType(DateTime),
     );
   }
@@ -160,26 +98,19 @@ class _$AuthIdentitySerializer implements PrimitiveSerializer<AuthIdentity> {
       final key = serializedList[i] as String;
       final value = serializedList[i + 1];
       switch (key) {
-        case r'provider_subject':
+        case r'provider':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(AuthIdentityProviderEnum),
+          ) as AuthIdentityProviderEnum;
+          result.provider = valueDes;
+          break;
+        case r'provider_subject_hint':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(String),
           ) as String;
-          result.providerSubject = valueDes;
-          break;
-        case r'schema_version':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          ) as int;
-          result.schemaVersion = valueDes;
-          break;
-        case r'updated_by':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.updatedBy = valueDes;
+          result.providerSubjectHint = valueDes;
           break;
         case r'verified':
           final valueDes = serializers.deserialize(
@@ -188,68 +119,12 @@ class _$AuthIdentitySerializer implements PrimitiveSerializer<AuthIdentity> {
           ) as bool;
           result.verified = valueDes;
           break;
-        case r'user_id':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.userId = valueDes;
-          break;
-        case r'version':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          ) as int;
-          result.version = valueDes;
-          break;
-        case r'created_at':
+        case r'last_authenticated_at':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(DateTime),
           ) as DateTime;
-          result.createdAt = valueDes;
-          break;
-        case r'deleted_at':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(DateTime),
-          ) as DateTime;
-          result.deletedAt = valueDes;
-          break;
-        case r'provider':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(AuthIdentityProviderEnum),
-          ) as AuthIdentityProviderEnum;
-          result.provider = valueDes;
-          break;
-        case r'created_by':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.createdBy = valueDes;
-          break;
-        case r'tenant_id':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.tenantId = valueDes;
-          break;
-        case r'id':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.id = valueDes;
-          break;
-        case r'updated_at':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(DateTime),
-          ) as DateTime;
-          result.updatedAt = valueDes;
+          result.lastAuthenticatedAt = valueDes;
           break;
         default:
           unhandled.add(key);

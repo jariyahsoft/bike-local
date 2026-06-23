@@ -9,15 +9,16 @@ All URIs are relative to */api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createUser**](IdentityApi.md#createuser) | **POST** /users | Create domain user profile after authentication.
+[**createUser**](IdentityApi.md#createuser) | **POST** /users | Create a domain user profile, link the authenticated identity, and record onboarding consent.
 [**getMe**](IdentityApi.md#getme) | **GET** /me | Get current user profile and auth identities.
-[**updateMe**](IdentityApi.md#updateme) | **PATCH** /me | Update current user profile.
+[**requestAccountDeletion**](IdentityApi.md#requestaccountdeletion) | **POST** /me/deletion-request | Request account deletion while retaining legally required transactional and audit records.
+[**updateMe**](IdentityApi.md#updateme) | **PATCH** /me | Update the current user profile, add onboarding roles, and append consent records.
 
 
 # **createUser**
 > InlineObject createUser(idempotencyKey, createUserRequest, xCorrelationId)
 
-Create domain user profile after authentication.
+Create a domain user profile, link the authenticated identity, and record onboarding consent.
 
 ### Example
 ```dart
@@ -108,10 +109,57 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **requestAccountDeletion**
+> InlineObject requestAccountDeletion(accountDeletionRequest, xCorrelationId)
+
+Request account deletion while retaining legally required transactional and audit records.
+
+### Example
+```dart
+import 'package:bike_local_generated_api_client/api.dart';
+// TODO Configure API key authorization: appCheck
+//defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
+
+final api = BikeLocalGeneratedApiClient().getIdentityApi();
+final AccountDeletionRequest accountDeletionRequest = ; // AccountDeletionRequest | 
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
+
+try {
+    final response = api.requestAccountDeletion(accountDeletionRequest, xCorrelationId);
+    print(response);
+} on DioException catch (e) {
+    print('Exception when calling IdentityApi->requestAccountDeletion: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **accountDeletionRequest** | [**AccountDeletionRequest**](AccountDeletionRequest.md)|  | 
+ **xCorrelationId** | **String**|  | [optional] 
+
+### Return type
+
+[**InlineObject**](InlineObject.md)
+
+### Authorization
+
+[appCheck](../README.md#appCheck), [bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **updateMe**
 > InlineObject updateMe(updateUserRequest, xCorrelationId)
 
-Update current user profile.
+Update the current user profile, add onboarding roles, and append consent records.
 
 ### Example
 ```dart

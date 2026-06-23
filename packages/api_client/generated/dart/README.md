@@ -81,9 +81,10 @@ Class | Method | HTTP request | Description
 [*ContentApi*](doc/ContentApi.md) | [**createPlace**](doc/ContentApi.md#createplace) | **POST** /places | Submit place content for approval.
 [*ContentApi*](doc/ContentApi.md) | [**createRoute**](doc/ContentApi.md#createroute) | **POST** /routes | Submit route content for approval.
 [*HandoverApi*](doc/HandoverApi.md) | [**handoverBooking**](doc/HandoverApi.md#handoverbooking) | **POST** /bookings/{id}/handover | Perform handover checklist and start rental.
-[*IdentityApi*](doc/IdentityApi.md) | [**createUser**](doc/IdentityApi.md#createuser) | **POST** /users | Create domain user profile after authentication.
+[*IdentityApi*](doc/IdentityApi.md) | [**createUser**](doc/IdentityApi.md#createuser) | **POST** /users | Create a domain user profile, link the authenticated identity, and record onboarding consent.
 [*IdentityApi*](doc/IdentityApi.md) | [**getMe**](doc/IdentityApi.md#getme) | **GET** /me | Get current user profile and auth identities.
-[*IdentityApi*](doc/IdentityApi.md) | [**updateMe**](doc/IdentityApi.md#updateme) | **PATCH** /me | Update current user profile.
+[*IdentityApi*](doc/IdentityApi.md) | [**requestAccountDeletion**](doc/IdentityApi.md#requestaccountdeletion) | **POST** /me/deletion-request | Request account deletion while retaining legally required transactional and audit records.
+[*IdentityApi*](doc/IdentityApi.md) | [**updateMe**](doc/IdentityApi.md#updateme) | **PATCH** /me | Update the current user profile, add onboarding roles, and append consent records.
 [*PaymentApi*](doc/PaymentApi.md) | [**confirmCashPayment**](doc/PaymentApi.md#confirmcashpayment) | **POST** /bookings/{id}/cash-confirmations | Confirm cash payment by authorized staff.
 [*PaymentApi*](doc/PaymentApi.md) | [**createPayment**](doc/PaymentApi.md#createpayment) | **POST** /payments | Create payment intent or cash payment record.
 [*PaymentApi*](doc/PaymentApi.md) | [**processPaymentWebhook**](doc/PaymentApi.md#processpaymentwebhook) | **POST** /payment-webhooks/{provider} | Process provider webhook with server-side verification.
@@ -108,6 +109,7 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
+ - [AccountDeletionRequest](doc/AccountDeletionRequest.md)
  - [ApproveContentSubmission200Response](doc/ApproveContentSubmission200Response.md)
  - [Asset](doc/Asset.md)
  - [AuditLog](doc/AuditLog.md)
@@ -118,6 +120,9 @@ Class | Method | HTTP request | Description
  - [Branch](doc/Branch.md)
  - [CancelBookingRequest](doc/CancelBookingRequest.md)
  - [CashConfirmationRequest](doc/CashConfirmationRequest.md)
+ - [ConsentStatus](doc/ConsentStatus.md)
+ - [ConsentSummary](doc/ConsentSummary.md)
+ - [ConsentType](doc/ConsentType.md)
  - [ContentApprovalStatus](doc/ContentApprovalStatus.md)
  - [ContentSubmission](doc/ContentSubmission.md)
  - [CreateAssetRequest](doc/CreateAssetRequest.md)
@@ -142,6 +147,8 @@ Class | Method | HTTP request | Description
  - [ErrorEnvelope](doc/ErrorEnvelope.md)
  - [GetPlatformReport200Response](doc/GetPlatformReport200Response.md)
  - [GetStoreReport200Response](doc/GetStoreReport200Response.md)
+ - [GpsConsentInput](doc/GpsConsentInput.md)
+ - [GpsConsentScope](doc/GpsConsentScope.md)
  - [GpsPoint](doc/GpsPoint.md)
  - [HandoverRequest](doc/HandoverRequest.md)
  - [InlineObject](doc/InlineObject.md)
@@ -157,8 +164,10 @@ Class | Method | HTTP request | Description
  - [ListAuditLogs200Response](doc/ListAuditLogs200Response.md)
  - [ListStores200Response](doc/ListStores200Response.md)
  - [Location](doc/Location.md)
+ - [MarketingConsentInput](doc/MarketingConsentInput.md)
  - [Money](doc/Money.md)
  - [Notification](doc/Notification.md)
+ - [OnboardingSelectableRole](doc/OnboardingSelectableRole.md)
  - [PaginationMeta](doc/PaginationMeta.md)
  - [Payment](doc/Payment.md)
  - [Place](doc/Place.md)
@@ -166,6 +175,7 @@ Class | Method | HTTP request | Description
  - [PricingQuote](doc/PricingQuote.md)
  - [PricingQuoteRequest](doc/PricingQuoteRequest.md)
  - [RentalPoint](doc/RentalPoint.md)
+ - [RequiredConsentInput](doc/RequiredConsentInput.md)
  - [ResponseMeta](doc/ResponseMeta.md)
  - [ReturnInspection](doc/ReturnInspection.md)
  - [ReturnRequest](doc/ReturnRequest.md)
@@ -187,6 +197,7 @@ Class | Method | HTTP request | Description
  - [UpdateUserRequest](doc/UpdateUserRequest.md)
  - [UploadRideTrackChunk202Response](doc/UploadRideTrackChunk202Response.md)
  - [User](doc/User.md)
+ - [UserConsents](doc/UserConsents.md)
 
 
 ## Documentation For Authorization

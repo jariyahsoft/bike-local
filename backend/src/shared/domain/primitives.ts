@@ -6,6 +6,8 @@ export type DomainId<Entity extends string = string> = Brand<
 >;
 export type TenantId = DomainId<"Tenant">;
 export type UserId = DomainId<"User">;
+export type AuthIdentityId = DomainId<"AuthIdentity">;
+export type ConsentRecordId = DomainId<"ConsentRecord">;
 export type StoreId = DomainId<"Store">;
 export type BranchId = DomainId<"Branch">;
 export type BookingId = DomainId<"Booking">;

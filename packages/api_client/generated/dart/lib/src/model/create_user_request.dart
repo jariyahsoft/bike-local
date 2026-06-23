@@ -4,6 +4,8 @@
 
 // ignore_for_file: unused_element
 import 'package:built_collection/built_collection.dart';
+import 'package:bike_local_generated_api_client/src/model/onboarding_selectable_role.dart';
+import 'package:bike_local_generated_api_client/src/model/user_consents.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -14,10 +16,8 @@ part 'create_user_request.g.dart';
 /// Properties:
 /// * [displayName] 
 /// * [locale] 
-/// * [acceptedTermsVersion] 
-/// * [acceptedPrivacyVersion] 
-/// * [acceptedGpsVersion] 
-/// * [marketingConsentVersion] 
+/// * [selectedRoles] 
+/// * [consents] 
 @BuiltValue()
 abstract class CreateUserRequest implements Built<CreateUserRequest, CreateUserRequestBuilder> {
   @BuiltValueField(wireName: r'display_name')
@@ -27,17 +27,11 @@ abstract class CreateUserRequest implements Built<CreateUserRequest, CreateUserR
   CreateUserRequestLocaleEnum get locale;
   // enum localeEnum {  th,  en,  };
 
-  @BuiltValueField(wireName: r'accepted_terms_version')
-  String get acceptedTermsVersion;
+  @BuiltValueField(wireName: r'selected_roles')
+  BuiltList<OnboardingSelectableRole> get selectedRoles;
 
-  @BuiltValueField(wireName: r'accepted_privacy_version')
-  String get acceptedPrivacyVersion;
-
-  @BuiltValueField(wireName: r'accepted_gps_version')
-  String? get acceptedGpsVersion;
-
-  @BuiltValueField(wireName: r'marketing_consent_version')
-  String? get marketingConsentVersion;
+  @BuiltValueField(wireName: r'consents')
+  UserConsents get consents;
 
   CreateUserRequest._();
 
@@ -72,30 +66,16 @@ class _$CreateUserRequestSerializer implements PrimitiveSerializer<CreateUserReq
       object.locale,
       specifiedType: const FullType(CreateUserRequestLocaleEnum),
     );
-    yield r'accepted_terms_version';
+    yield r'selected_roles';
     yield serializers.serialize(
-      object.acceptedTermsVersion,
-      specifiedType: const FullType(String),
+      object.selectedRoles,
+      specifiedType: const FullType(BuiltList, [FullType(OnboardingSelectableRole)]),
     );
-    yield r'accepted_privacy_version';
+    yield r'consents';
     yield serializers.serialize(
-      object.acceptedPrivacyVersion,
-      specifiedType: const FullType(String),
+      object.consents,
+      specifiedType: const FullType(UserConsents),
     );
-    if (object.acceptedGpsVersion != null) {
-      yield r'accepted_gps_version';
-      yield serializers.serialize(
-        object.acceptedGpsVersion,
-        specifiedType: const FullType(String),
-      );
-    }
-    if (object.marketingConsentVersion != null) {
-      yield r'marketing_consent_version';
-      yield serializers.serialize(
-        object.marketingConsentVersion,
-        specifiedType: const FullType(String),
-      );
-    }
   }
 
   @override
@@ -133,33 +113,19 @@ class _$CreateUserRequestSerializer implements PrimitiveSerializer<CreateUserReq
           ) as CreateUserRequestLocaleEnum;
           result.locale = valueDes;
           break;
-        case r'accepted_terms_version':
+        case r'selected_roles':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.acceptedTermsVersion = valueDes;
+            specifiedType: const FullType(BuiltList, [FullType(OnboardingSelectableRole)]),
+          ) as BuiltList<OnboardingSelectableRole>;
+          result.selectedRoles.replace(valueDes);
           break;
-        case r'accepted_privacy_version':
+        case r'consents':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.acceptedPrivacyVersion = valueDes;
-          break;
-        case r'accepted_gps_version':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.acceptedGpsVersion = valueDes;
-          break;
-        case r'marketing_consent_version':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.marketingConsentVersion = valueDes;
+            specifiedType: const FullType(UserConsents),
+          ) as UserConsents;
+          result.consents.replace(valueDes);
           break;
         default:
           unhandled.add(key);

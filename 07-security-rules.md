@@ -22,9 +22,11 @@ Source: `docs/Bike-Local-SRS.md` sections 4.2, 6, 7.29, 10, 11, 12.4, 12.5, 14.6
 - Firebase Authentication handles sign-in, OTP, Google Sign-In, and future Apple Sign-In.
 - Domain User ID remains separate from Firebase UID.
 - `auth_identities` maps provider identities to domain users.
+- Onboarding role selection is limited to `RENTER` and `STORE_OWNER`; broader role grants remain backend-managed.
 - Backend resolves the active domain user and role assignments on every protected request.
 - Firebase custom claims may help cache platform roles, but store and branch authorization must come from backend data.
 - Business-critical Firestore and Storage writes are server-owned by default; client rules allow only explicitly safe cases.
+- GPS consent must capture version, purpose, and explicit foreground/background scope before location data is processed beyond basic app operation.
 
 ## Permission Catalog
 
@@ -153,6 +155,7 @@ Audit types and sanitization helpers are scaffolded in `backend/src/audit/domain
 - Damage fee edits
 - Refunds
 - Account suspension
+- Account deletion requests
 - Content approval
 - Admin and support override actions
 
@@ -190,7 +193,7 @@ Audit types and sanitization helpers are scaffolded in `backend/src/audit/domain
 ### Open retention questions
 
 - Exact raw GPS retention window needs legal/compliance approval under ADR-012.
-- Account deletion must define which payment, audit, dispute, and tax records remain after profile pseudonymization.
+- Account deletion preserves payment, audit, dispute, and tax records while the user profile moves to `DELETION_REQUESTED`; later pseudonymization policy still needs legal/compliance approval.
 - Merchant identity document retention needs a statutory tail period decision.
 
 ## Abuse and Rate Limit Controls
@@ -222,6 +225,7 @@ Current coverage from runnable tests:
 - Object-level own-booking authorization
 - API error response mapping
 - Audit payload redaction for secrets and coordinates
+- Onboarding role validation, consent capture, duplicate auth identity rejection, and self-service account deletion request audit logging
 - Firestore rules default-deny with public config exception
 - Firestore user-owned notification read exception
 - Storage public-read and owner-upload exceptions

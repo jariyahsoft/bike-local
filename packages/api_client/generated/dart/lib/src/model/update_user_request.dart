@@ -4,6 +4,8 @@
 
 // ignore_for_file: unused_element
 import 'package:built_collection/built_collection.dart';
+import 'package:bike_local_generated_api_client/src/model/onboarding_selectable_role.dart';
+import 'package:bike_local_generated_api_client/src/model/user_consents.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -14,6 +16,8 @@ part 'update_user_request.g.dart';
 /// Properties:
 /// * [displayName] 
 /// * [locale] 
+/// * [additionalRoles] 
+/// * [consents] 
 /// * [version] 
 @BuiltValue()
 abstract class UpdateUserRequest implements Built<UpdateUserRequest, UpdateUserRequestBuilder> {
@@ -23,6 +27,12 @@ abstract class UpdateUserRequest implements Built<UpdateUserRequest, UpdateUserR
   @BuiltValueField(wireName: r'locale')
   UpdateUserRequestLocaleEnum? get locale;
   // enum localeEnum {  th,  en,  };
+
+  @BuiltValueField(wireName: r'additional_roles')
+  BuiltList<OnboardingSelectableRole>? get additionalRoles;
+
+  @BuiltValueField(wireName: r'consents')
+  UserConsents? get consents;
 
   @BuiltValueField(wireName: r'version')
   int get version;
@@ -62,6 +72,20 @@ class _$UpdateUserRequestSerializer implements PrimitiveSerializer<UpdateUserReq
       yield serializers.serialize(
         object.locale,
         specifiedType: const FullType(UpdateUserRequestLocaleEnum),
+      );
+    }
+    if (object.additionalRoles != null) {
+      yield r'additional_roles';
+      yield serializers.serialize(
+        object.additionalRoles,
+        specifiedType: const FullType(BuiltList, [FullType(OnboardingSelectableRole)]),
+      );
+    }
+    if (object.consents != null) {
+      yield r'consents';
+      yield serializers.serialize(
+        object.consents,
+        specifiedType: const FullType(UserConsents),
       );
     }
     yield r'version';
@@ -105,6 +129,20 @@ class _$UpdateUserRequestSerializer implements PrimitiveSerializer<UpdateUserReq
             specifiedType: const FullType(UpdateUserRequestLocaleEnum),
           ) as UpdateUserRequestLocaleEnum;
           result.locale = valueDes;
+          break;
+        case r'additional_roles':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(BuiltList, [FullType(OnboardingSelectableRole)]),
+          ) as BuiltList<OnboardingSelectableRole>;
+          result.additionalRoles.replace(valueDes);
+          break;
+        case r'consents':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(UserConsents),
+          ) as UserConsents;
+          result.consents.replace(valueDes);
           break;
         case r'version':
           final valueDes = serializers.deserialize(

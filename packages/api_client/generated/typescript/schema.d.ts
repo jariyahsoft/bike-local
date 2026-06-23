@@ -13,7 +13,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Create domain user profile after authentication. */
+        /** Create a domain user profile, link the authenticated identity, and record onboarding consent. */
         post: operations["createUser"];
         delete?: never;
         options?: never;
@@ -35,8 +35,25 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        /** Update current user profile. */
+        /** Update the current user profile, add onboarding roles, and append consent records. */
         patch: operations["updateMe"];
+        trace?: never;
+    };
+    "/me/deletion-request": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Request account deletion while retaining legally required transactional and audit records. */
+        post: operations["requestAccountDeletion"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/stores": {
@@ -621,34 +638,50 @@ export interface components {
             deleted_at?: components["schemas"]["IsoDateTime"];
             version: number;
         };
-        User: components["schemas"]["EntityBase"] & {
+        User: {
+            id: string;
             display_name: string;
-            phone?: string;
-            /** Format: email */
-            email?: string;
-            /** Format: uri */
-            photo_url?: string;
             /** @enum {string} */
             locale: "th" | "en";
-            country_code?: string;
-            weight_kg?: number;
-            emergency_contact?: {
-                [key: string]: unknown;
-            };
             /** @enum {string} */
             status: "ACTIVE" | "SUSPENDED" | "DELETION_REQUESTED";
             roles: components["schemas"]["Role"][];
-            auth_identities?: components["schemas"]["AuthIdentity"][];
+            /** Format: email */
+            email?: string;
+            phone?: string;
+            consent_summaries: components["schemas"]["ConsentSummary"][];
+            auth_identities: components["schemas"]["AuthIdentity"][];
+            deletion_requested_at?: components["schemas"]["IsoDateTime"];
+            version: number;
+            created_at: components["schemas"]["IsoDateTime"];
+            updated_at: components["schemas"]["IsoDateTime"];
         };
-        AuthIdentity: components["schemas"]["EntityBase"] & {
-            user_id: string;
+        AuthIdentity: {
             /** @enum {string} */
             provider: "PHONE" | "EMAIL_PASSWORD" | "GOOGLE" | "APPLE";
-            provider_subject: string;
+            /** @description Masked provider subject for UI display. Raw provider subjects and tokens must never be exposed. */
+            provider_subject_hint: string;
             verified: boolean;
+            last_authenticated_at: components["schemas"]["IsoDateTime"];
+        };
+        ConsentSummary: {
+            type: components["schemas"]["ConsentType"];
+            status: components["schemas"]["ConsentStatus"];
+            version_code: string;
+            purpose: string;
+            granted_at: components["schemas"]["IsoDateTime"];
+            gps_scope?: components["schemas"]["GpsConsentScope"];
         };
         /** @enum {string} */
         Role: "RENTER" | "STORE_OWNER" | "STORE_MANAGER" | "STORE_STAFF" | "STORE_ACCOUNTING" | "PLATFORM_ADMIN" | "PLATFORM_MODERATOR" | "PLATFORM_SUPPORT";
+        /** @enum {string} */
+        OnboardingSelectableRole: "RENTER" | "STORE_OWNER";
+        /** @enum {string} */
+        ConsentType: "TERMS" | "PRIVACY" | "GPS" | "MARKETING";
+        /** @enum {string} */
+        ConsentStatus: "GRANTED" | "DENIED" | "REVOKED";
+        /** @enum {string} */
+        GpsConsentScope: "FOREGROUND_ONLY" | "BACKGROUND_ALLOWED";
         Store: components["schemas"]["EntityBase"] & {
             owner_user_id: string;
             legal_name: string;
@@ -945,20 +978,43 @@ export interface components {
             platform_revenue_amount: number;
             currency: string;
         };
+        RequiredConsentInput: {
+            version: string;
+        };
+        GpsConsentInput: {
+            version: string;
+            purpose: string;
+            background_allowed: boolean;
+        };
+        MarketingConsentInput: {
+            version: string;
+            granted: boolean;
+            purpose: string;
+        };
+        UserConsents: {
+            terms: components["schemas"]["RequiredConsentInput"];
+            privacy: components["schemas"]["RequiredConsentInput"];
+            gps?: components["schemas"]["GpsConsentInput"];
+            marketing?: components["schemas"]["MarketingConsentInput"];
+        };
         CreateUserRequest: {
             display_name: string;
             /** @enum {string} */
             locale: "th" | "en";
-            accepted_terms_version: string;
-            accepted_privacy_version: string;
-            accepted_gps_version?: string;
-            marketing_consent_version?: string;
+            selected_roles: components["schemas"]["OnboardingSelectableRole"][];
+            consents: components["schemas"]["UserConsents"];
         };
         UpdateUserRequest: {
             display_name?: string;
             /** @enum {string} */
             locale?: "th" | "en";
+            additional_roles?: components["schemas"]["OnboardingSelectableRole"][];
+            consents?: components["schemas"]["UserConsents"];
             version: number;
+        };
+        AccountDeletionRequest: {
+            version: number;
+            reason?: string;
         };
         CreateStoreRequest: {
             legal_name: string;
@@ -1316,6 +1372,7 @@ export interface operations {
         responses: {
             201: components["responses"]["UserSuccess"];
             401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
             409: components["responses"]["VersionConflict"];
             422: components["responses"]["ValidationError"];
             429: components["responses"]["RateLimited"];
@@ -1335,6 +1392,7 @@ export interface operations {
         responses: {
             200: components["responses"]["UserSuccess"];
             401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
         };
     };
     updateMe: {
@@ -1355,6 +1413,30 @@ export interface operations {
         responses: {
             200: components["responses"]["UserSuccess"];
             401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            409: components["responses"]["VersionConflict"];
+            422: components["responses"]["ValidationError"];
+        };
+    };
+    requestAccountDeletion: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @example req_01HV9X8D9N9HQ */
+                "X-Correlation-Id"?: components["parameters"]["CorrelationId"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AccountDeletionRequest"];
+            };
+        };
+        responses: {
+            202: components["responses"]["UserSuccess"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
             409: components["responses"]["VersionConflict"];
             422: components["responses"]["ValidationError"];
         };

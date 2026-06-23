@@ -16,6 +16,7 @@ Domain Layer coverage target: at least 80%
 
 Must cover:
 
+- Identity onboarding and consent validation
 - Pricing
 - Availability
 - Booking state
@@ -51,6 +52,7 @@ Current scaffold:
 - Application services
 - Repository contracts
 - API validation
+- Identity onboarding, profile update, and account deletion request flows
 - Authorization and tenant isolation
 - Idempotency
 - Transactions/concurrency
@@ -93,12 +95,21 @@ Critical flows:
 - Privilege escalation
 - Invalid token
 - Missing App Check
+- Duplicate auth identity linking
+- Consent validation and self-service access boundaries
 - File upload abuse
 - Rate limit
 - Injection
 - Broken object-level authorization
 - Payment webhook replay
 - Audit immutability
+
+## Current Backend Coverage
+
+- Identity role selection validation for renter/store owner onboarding
+- Required terms/privacy consent capture plus explicit GPS background scope validation
+- Onboarding happy path with masked auth identity output and account deletion request audit
+- Duplicate auth identity rejection and unauthenticated self-service access rejection
 
 ## Accessibility Tests
 

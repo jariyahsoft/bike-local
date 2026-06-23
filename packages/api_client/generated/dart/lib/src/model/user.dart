@@ -3,11 +3,10 @@
 //
 
 // ignore_for_file: unused_element
-import 'package:bike_local_generated_api_client/src/model/entity_base.dart';
+import 'package:bike_local_generated_api_client/src/model/consent_summary.dart';
 import 'package:bike_local_generated_api_client/src/model/role.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:bike_local_generated_api_client/src/model/auth_identity.dart';
-import 'package:built_value/json_object.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -17,61 +16,60 @@ part 'user.g.dart';
 ///
 /// Properties:
 /// * [id] 
-/// * [schemaVersion] 
-/// * [tenantId] 
-/// * [createdAt] 
-/// * [createdBy] 
-/// * [updatedAt] 
-/// * [updatedBy] 
-/// * [deletedAt] 
-/// * [version] 
 /// * [displayName] 
-/// * [phone] 
-/// * [email] 
-/// * [photoUrl] 
 /// * [locale] 
-/// * [countryCode] 
-/// * [weightKg] 
-/// * [emergencyContact] 
 /// * [status] 
 /// * [roles] 
+/// * [email] 
+/// * [phone] 
+/// * [consentSummaries] 
 /// * [authIdentities] 
+/// * [deletionRequestedAt] 
+/// * [version] 
+/// * [createdAt] 
+/// * [updatedAt] 
 @BuiltValue()
-abstract class User implements EntityBase, Built<User, UserBuilder> {
-  @BuiltValueField(wireName: r'photo_url')
-  String? get photoUrl;
-
-  @BuiltValueField(wireName: r'phone')
-  String? get phone;
+abstract class User implements Built<User, UserBuilder> {
+  @BuiltValueField(wireName: r'id')
+  String get id;
 
   @BuiltValueField(wireName: r'display_name')
   String get displayName;
-
-  @BuiltValueField(wireName: r'country_code')
-  String? get countryCode;
-
-  @BuiltValueField(wireName: r'emergency_contact')
-  BuiltMap<String, JsonObject?>? get emergencyContact;
-
-  @BuiltValueField(wireName: r'roles')
-  BuiltList<Role> get roles;
-
-  @BuiltValueField(wireName: r'auth_identities')
-  BuiltList<AuthIdentity>? get authIdentities;
 
   @BuiltValueField(wireName: r'locale')
   UserLocaleEnum get locale;
   // enum localeEnum {  th,  en,  };
 
-  @BuiltValueField(wireName: r'email')
-  String? get email;
-
-  @BuiltValueField(wireName: r'weight_kg')
-  num? get weightKg;
-
   @BuiltValueField(wireName: r'status')
   UserStatusEnum get status;
   // enum statusEnum {  ACTIVE,  SUSPENDED,  DELETION_REQUESTED,  };
+
+  @BuiltValueField(wireName: r'roles')
+  BuiltList<Role> get roles;
+
+  @BuiltValueField(wireName: r'email')
+  String? get email;
+
+  @BuiltValueField(wireName: r'phone')
+  String? get phone;
+
+  @BuiltValueField(wireName: r'consent_summaries')
+  BuiltList<ConsentSummary> get consentSummaries;
+
+  @BuiltValueField(wireName: r'auth_identities')
+  BuiltList<AuthIdentity> get authIdentities;
+
+  @BuiltValueField(wireName: r'deletion_requested_at')
+  DateTime? get deletionRequestedAt;
+
+  @BuiltValueField(wireName: r'version')
+  int get version;
+
+  @BuiltValueField(wireName: r'created_at')
+  DateTime get createdAt;
+
+  @BuiltValueField(wireName: r'updated_at')
+  DateTime get updatedAt;
 
   User._();
 
@@ -96,62 +94,36 @@ class _$UserSerializer implements PrimitiveSerializer<User> {
     User object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
-    yield r'schema_version';
+    yield r'id';
     yield serializers.serialize(
-      object.schemaVersion,
-      specifiedType: const FullType(int),
+      object.id,
+      specifiedType: const FullType(String),
     );
-    if (object.updatedBy != null) {
-      yield r'updated_by';
-      yield serializers.serialize(
-        object.updatedBy,
-        specifiedType: const FullType(String),
-      );
-    }
     yield r'display_name';
     yield serializers.serialize(
       object.displayName,
       specifiedType: const FullType(String),
-    );
-    if (object.emergencyContact != null) {
-      yield r'emergency_contact';
-      yield serializers.serialize(
-        object.emergencyContact,
-        specifiedType: const FullType(BuiltMap, [FullType(String), FullType.nullable(JsonObject)]),
-      );
-    }
-    yield r'roles';
-    yield serializers.serialize(
-      object.roles,
-      specifiedType: const FullType(BuiltList, [FullType(Role)]),
     );
     yield r'locale';
     yield serializers.serialize(
       object.locale,
       specifiedType: const FullType(UserLocaleEnum),
     );
-    yield r'version';
+    yield r'status';
     yield serializers.serialize(
-      object.version,
-      specifiedType: const FullType(int),
+      object.status,
+      specifiedType: const FullType(UserStatusEnum),
     );
-    if (object.photoUrl != null) {
-      yield r'photo_url';
+    yield r'roles';
+    yield serializers.serialize(
+      object.roles,
+      specifiedType: const FullType(BuiltList, [FullType(Role)]),
+    );
+    if (object.email != null) {
+      yield r'email';
       yield serializers.serialize(
-        object.photoUrl,
+        object.email,
         specifiedType: const FullType(String),
-      );
-    }
-    yield r'created_at';
-    yield serializers.serialize(
-      object.createdAt,
-      specifiedType: const FullType(DateTime),
-    );
-    if (object.deletedAt != null) {
-      yield r'deleted_at';
-      yield serializers.serialize(
-        object.deletedAt,
-        specifiedType: const FullType(DateTime),
       );
     }
     if (object.phone != null) {
@@ -161,57 +133,32 @@ class _$UserSerializer implements PrimitiveSerializer<User> {
         specifiedType: const FullType(String),
       );
     }
-    if (object.createdBy != null) {
-      yield r'created_by';
-      yield serializers.serialize(
-        object.createdBy,
-        specifiedType: const FullType(String),
-      );
-    }
-    if (object.countryCode != null) {
-      yield r'country_code';
-      yield serializers.serialize(
-        object.countryCode,
-        specifiedType: const FullType(String),
-      );
-    }
-    if (object.authIdentities != null) {
-      yield r'auth_identities';
-      yield serializers.serialize(
-        object.authIdentities,
-        specifiedType: const FullType(BuiltList, [FullType(AuthIdentity)]),
-      );
-    }
-    if (object.tenantId != null) {
-      yield r'tenant_id';
-      yield serializers.serialize(
-        object.tenantId,
-        specifiedType: const FullType(String),
-      );
-    }
-    yield r'id';
+    yield r'consent_summaries';
     yield serializers.serialize(
-      object.id,
-      specifiedType: const FullType(String),
+      object.consentSummaries,
+      specifiedType: const FullType(BuiltList, [FullType(ConsentSummary)]),
     );
-    if (object.email != null) {
-      yield r'email';
-      yield serializers.serialize(
-        object.email,
-        specifiedType: const FullType(String),
-      );
-    }
-    if (object.weightKg != null) {
-      yield r'weight_kg';
-      yield serializers.serialize(
-        object.weightKg,
-        specifiedType: const FullType(num),
-      );
-    }
-    yield r'status';
+    yield r'auth_identities';
     yield serializers.serialize(
-      object.status,
-      specifiedType: const FullType(UserStatusEnum),
+      object.authIdentities,
+      specifiedType: const FullType(BuiltList, [FullType(AuthIdentity)]),
+    );
+    if (object.deletionRequestedAt != null) {
+      yield r'deletion_requested_at';
+      yield serializers.serialize(
+        object.deletionRequestedAt,
+        specifiedType: const FullType(DateTime),
+      );
+    }
+    yield r'version';
+    yield serializers.serialize(
+      object.version,
+      specifiedType: const FullType(int),
+    );
+    yield r'created_at';
+    yield serializers.serialize(
+      object.createdAt,
+      specifiedType: const FullType(DateTime),
     );
     yield r'updated_at';
     yield serializers.serialize(
@@ -241,19 +188,12 @@ class _$UserSerializer implements PrimitiveSerializer<User> {
       final key = serializedList[i] as String;
       final value = serializedList[i + 1];
       switch (key) {
-        case r'schema_version':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          ) as int;
-          result.schemaVersion = valueDes;
-          break;
-        case r'updated_by':
+        case r'id':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(String),
           ) as String;
-          result.updatedBy = valueDes;
+          result.id = valueDes;
           break;
         case r'display_name':
           final valueDes = serializers.deserialize(
@@ -262,12 +202,19 @@ class _$UserSerializer implements PrimitiveSerializer<User> {
           ) as String;
           result.displayName = valueDes;
           break;
-        case r'emergency_contact':
+        case r'locale':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(BuiltMap, [FullType(String), FullType.nullable(JsonObject)]),
-          ) as BuiltMap<String, JsonObject?>;
-          result.emergencyContact.replace(valueDes);
+            specifiedType: const FullType(UserLocaleEnum),
+          ) as UserLocaleEnum;
+          result.locale = valueDes;
+          break;
+        case r'status':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(UserStatusEnum),
+          ) as UserStatusEnum;
+          result.status = valueDes;
           break;
         case r'roles':
           final valueDes = serializers.deserialize(
@@ -276,40 +223,12 @@ class _$UserSerializer implements PrimitiveSerializer<User> {
           ) as BuiltList<Role>;
           result.roles.replace(valueDes);
           break;
-        case r'locale':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(UserLocaleEnum),
-          ) as UserLocaleEnum;
-          result.locale = valueDes;
-          break;
-        case r'version':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          ) as int;
-          result.version = valueDes;
-          break;
-        case r'photo_url':
+        case r'email':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(String),
           ) as String;
-          result.photoUrl = valueDes;
-          break;
-        case r'created_at':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(DateTime),
-          ) as DateTime;
-          result.createdAt = valueDes;
-          break;
-        case r'deleted_at':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(DateTime),
-          ) as DateTime;
-          result.deletedAt = valueDes;
+          result.email = valueDes;
           break;
         case r'phone':
           final valueDes = serializers.deserialize(
@@ -318,19 +237,12 @@ class _$UserSerializer implements PrimitiveSerializer<User> {
           ) as String;
           result.phone = valueDes;
           break;
-        case r'created_by':
+        case r'consent_summaries':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.createdBy = valueDes;
-          break;
-        case r'country_code':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.countryCode = valueDes;
+            specifiedType: const FullType(BuiltList, [FullType(ConsentSummary)]),
+          ) as BuiltList<ConsentSummary>;
+          result.consentSummaries.replace(valueDes);
           break;
         case r'auth_identities':
           final valueDes = serializers.deserialize(
@@ -339,40 +251,26 @@ class _$UserSerializer implements PrimitiveSerializer<User> {
           ) as BuiltList<AuthIdentity>;
           result.authIdentities.replace(valueDes);
           break;
-        case r'tenant_id':
+        case r'deletion_requested_at':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.tenantId = valueDes;
+            specifiedType: const FullType(DateTime),
+          ) as DateTime;
+          result.deletionRequestedAt = valueDes;
           break;
-        case r'id':
+        case r'version':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.id = valueDes;
+            specifiedType: const FullType(int),
+          ) as int;
+          result.version = valueDes;
           break;
-        case r'email':
+        case r'created_at':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.email = valueDes;
-          break;
-        case r'weight_kg':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(num),
-          ) as num;
-          result.weightKg = valueDes;
-          break;
-        case r'status':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(UserStatusEnum),
-          ) as UserStatusEnum;
-          result.status = valueDes;
+            specifiedType: const FullType(DateTime),
+          ) as DateTime;
+          result.createdAt = valueDes;
           break;
         case r'updated_at':
           final valueDes = serializers.deserialize(

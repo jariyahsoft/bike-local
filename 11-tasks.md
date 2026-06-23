@@ -79,11 +79,11 @@ Foundation / Sprint 0
 
 ### Identity and RBAC
 
-- [ ] Domain User and Auth Identity model
-- [ ] Role and permission model
-- [ ] User onboarding and role selection API
-- [ ] Consent records
-- [ ] Account deletion request flow
+- [x] Domain User and Auth Identity model
+- [x] Role and permission model
+- [x] User onboarding and role selection API
+- [x] Consent records
+- [x] Account deletion request flow
 
 ### Store and Branch
 
@@ -159,7 +159,7 @@ Foundation / Sprint 0
 
 ## Verification Checklist
 
-- [ ] User signup and role selection works
+- [x] User signup and role selection works
 - [ ] Store approval flow works
 - [ ] Store can manage branch, staff, assets and equipment
 - [ ] Search and booking work with availability
@@ -173,7 +173,7 @@ Foundation / Sprint 0
 - [ ] SOS opens with latest location and escalates
 - [ ] Reports load
 - [ ] Admin approval and audit search work
-- [ ] Contract tests pass
+- [x] Contract tests pass
 
 ## Deployment Checklist
 

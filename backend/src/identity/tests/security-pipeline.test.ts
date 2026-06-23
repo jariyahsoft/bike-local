@@ -187,7 +187,7 @@ test("security errors map to API error responses with contract fields", () => {
       details: {
         permission: "payment.cash.confirm",
       },
-      requestId: "req_123",
+      request_id: "req_123",
     },
   });
 });

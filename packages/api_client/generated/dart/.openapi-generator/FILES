@@ -1,6 +1,7 @@
 .gitignore
 README.md
 analysis_options.yaml
+doc/AccountDeletionRequest.md
 doc/ApproveContentSubmission200Response.md
 doc/Asset.md
 doc/AssetsApi.md
@@ -15,6 +16,9 @@ doc/Branch.md
 doc/BranchesApi.md
 doc/CancelBookingRequest.md
 doc/CashConfirmationRequest.md
+doc/ConsentStatus.md
+doc/ConsentSummary.md
+doc/ConsentType.md
 doc/ContentApi.md
 doc/ContentApprovalStatus.md
 doc/ContentSubmission.md
@@ -40,6 +44,8 @@ doc/Error.md
 doc/ErrorEnvelope.md
 doc/GetPlatformReport200Response.md
 doc/GetStoreReport200Response.md
+doc/GpsConsentInput.md
+doc/GpsConsentScope.md
 doc/GpsPoint.md
 doc/HandoverApi.md
 doc/HandoverRequest.md
@@ -57,8 +63,10 @@ doc/ListAssets200Response.md
 doc/ListAuditLogs200Response.md
 doc/ListStores200Response.md
 doc/Location.md
+doc/MarketingConsentInput.md
 doc/Money.md
 doc/Notification.md
+doc/OnboardingSelectableRole.md
 doc/PaginationMeta.md
 doc/Payment.md
 doc/PaymentApi.md
@@ -69,6 +77,7 @@ doc/PricingQuote.md
 doc/PricingQuoteRequest.md
 doc/RentalPoint.md
 doc/ReportsApi.md
+doc/RequiredConsentInput.md
 doc/ResponseMeta.md
 doc/ReturnApi.md
 doc/ReturnInspection.md
@@ -96,6 +105,7 @@ doc/UpdateStoreRequest.md
 doc/UpdateUserRequest.md
 doc/UploadRideTrackChunk202Response.md
 doc/User.md
+doc/UserConsents.md
 lib/bike_local_generated_api_client.dart
 lib/src/api.dart
 lib/src/api/assets_api.dart
@@ -121,6 +131,7 @@ lib/src/auth/basic_auth.dart
 lib/src/auth/bearer_auth.dart
 lib/src/auth/oauth.dart
 lib/src/date_serializer.dart
+lib/src/model/account_deletion_request.dart
 lib/src/model/approve_content_submission200_response.dart
 lib/src/model/asset.dart
 lib/src/model/audit_log.dart
@@ -131,6 +142,9 @@ lib/src/model/booking_status.dart
 lib/src/model/branch.dart
 lib/src/model/cancel_booking_request.dart
 lib/src/model/cash_confirmation_request.dart
+lib/src/model/consent_status.dart
+lib/src/model/consent_summary.dart
+lib/src/model/consent_type.dart
 lib/src/model/content_approval_status.dart
 lib/src/model/content_submission.dart
 lib/src/model/create_asset_request.dart
@@ -156,6 +170,8 @@ lib/src/model/error.dart
 lib/src/model/error_envelope.dart
 lib/src/model/get_platform_report200_response.dart
 lib/src/model/get_store_report200_response.dart
+lib/src/model/gps_consent_input.dart
+lib/src/model/gps_consent_scope.dart
 lib/src/model/gps_point.dart
 lib/src/model/handover_request.dart
 lib/src/model/inline_object.dart
@@ -171,8 +187,10 @@ lib/src/model/list_assets200_response.dart
 lib/src/model/list_audit_logs200_response.dart
 lib/src/model/list_stores200_response.dart
 lib/src/model/location.dart
+lib/src/model/marketing_consent_input.dart
 lib/src/model/money.dart
 lib/src/model/notification.dart
+lib/src/model/onboarding_selectable_role.dart
 lib/src/model/pagination_meta.dart
 lib/src/model/payment.dart
 lib/src/model/place.dart
@@ -180,6 +198,7 @@ lib/src/model/platform_report.dart
 lib/src/model/pricing_quote.dart
 lib/src/model/pricing_quote_request.dart
 lib/src/model/rental_point.dart
+lib/src/model/required_consent_input.dart
 lib/src/model/response_meta.dart
 lib/src/model/return_inspection.dart
 lib/src/model/return_request.dart
@@ -201,5 +220,16 @@ lib/src/model/update_store_request.dart
 lib/src/model/update_user_request.dart
 lib/src/model/upload_ride_track_chunk202_response.dart
 lib/src/model/user.dart
+lib/src/model/user_consents.dart
 lib/src/serializers.dart
 pubspec.yaml
+test/account_deletion_request_test.dart
+test/consent_status_test.dart
+test/consent_summary_test.dart
+test/consent_type_test.dart
+test/gps_consent_input_test.dart
+test/gps_consent_scope_test.dart
+test/marketing_consent_input_test.dart
+test/onboarding_selectable_role_test.dart
+test/required_consent_input_test.dart
+test/user_consents_test.dart

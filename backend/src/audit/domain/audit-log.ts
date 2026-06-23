@@ -32,6 +32,7 @@ export interface AuditLogEntry {
     | "damage_fee.edited"
     | "payment.refunded"
     | "account.suspended"
+    | "account.deletion.requested"
     | "content.approved"
     | "admin.action";
   readonly resourceType: string;

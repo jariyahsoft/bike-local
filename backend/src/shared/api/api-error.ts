@@ -4,7 +4,7 @@ export interface ApiError<
   readonly code: string;
   readonly message: string;
   readonly details: Details;
-  readonly requestId: string;
+  readonly request_id: string;
 }
 
 export interface ApiErrorResponse<
@@ -23,6 +23,6 @@ export const buildApiErrorResponse = <Details extends Record<string, unknown>>(
     code,
     message,
     details,
-    requestId,
+    request_id: requestId,
   },
 });

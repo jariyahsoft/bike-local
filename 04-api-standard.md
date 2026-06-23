@@ -42,7 +42,7 @@ Breaking change ต้องเพิ่ม version ใหม่
 {
   "data": {},
   "meta": {
-    "requestId": "req_..."
+    "request_id": "req_..."
   }
 }
 ```
@@ -55,7 +55,7 @@ Breaking change ต้องเพิ่ม version ใหม่
     "code": "BOOKING_ASSET_NOT_AVAILABLE",
     "message": "จักรยานไม่พร้อมให้เช่าในช่วงเวลาที่เลือก",
     "details": {},
-    "requestId": "req_..."
+    "request_id": "req_..."
   }
 }
 ```
@@ -177,7 +177,7 @@ Event types ขั้นต่ำ:
 
 | Module | Example endpoints |
 |---|---|
-| Identity/Users | `POST /api/v1/users`, `GET /api/v1/me`, `PATCH /api/v1/me` |
+| Identity/Users | `POST /api/v1/users`, `GET /api/v1/me`, `PATCH /api/v1/me`, `POST /api/v1/me/deletion-request` |
 | Stores | `POST /api/v1/stores`, `GET /api/v1/stores`, `PATCH /api/v1/stores/{id}` |
 | Branches | `POST /api/v1/stores/{storeId}/branches`, `GET /api/v1/branches/{id}` |
 | Staff | `POST /api/v1/stores/{storeId}/staff-invitations`, `PATCH /api/v1/store-members/{id}` |
