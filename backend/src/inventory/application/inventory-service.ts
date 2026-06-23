@@ -31,9 +31,11 @@ import {
   createInventoryUnitProfile,
   createPricingRuleProfile,
   createRentalPointProfile,
+  applyAssetStatusTransition,
 } from "../domain/inventory-policies.js";
 import type {
   Asset,
+  AssetStatus,
   AssetCategory,
   AssetCategoryRepository,
   AssetRepository,
@@ -566,6 +568,25 @@ export class InventoryService {
       "Asset",
       "assetId",
     );
+  }
+
+  async transitionAssetStatus(input: {
+    readonly assetId: AssetId;
+    readonly toStatus: AssetStatus;
+    readonly actorUserId?: UserId | undefined;
+    readonly reason?: string | undefined;
+    readonly now: IsoUtcDateTime;
+  }): Promise<Asset> {
+    const asset = await this.getAsset(input.assetId);
+    const updated = applyAssetStatusTransition(asset, input.toStatus, {
+      changedByUserId: input.actorUserId,
+      reason: input.reason,
+      now: input.now,
+    });
+
+    return this.dependencies.assetRepository.save(updated, {
+      expectedVersion: asset.version,
+    });
   }
 
   async getAssetCategory(categoryId: AssetCategoryId): Promise<AssetCategory> {

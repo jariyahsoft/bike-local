@@ -237,6 +237,7 @@ Current coverage from runnable tests:
 - Store owner registration, platform approval decisions, branch temporary closure audit, staff permission audit, and cross-tenant rejection
 - Inventory asset/category/equipment creation, duplicate store asset-code rejection, cross-tenant inventory denial, integer minor-unit pricing quote snapshots, availability hold conflicts, closed branch availability exclusion, and unsupported search-filter rejection
 - Booking create idempotency, availability reservation conflict rejection, booking state-machine invalid transition rejection, payment webhook proof/replay handling, cash confirmation permission/audit logging, and deposit release-before-inspection rejection
+- Handover QR token invalid/expired/used rejection, branch-scoped staff handover, rental start audit/outbox, ride GPS consent enforcement, chunk sequence/checksum dedupe, return request notification, staff-only inspection close, and post-inspection deposit release
 - Firestore rules default-deny with public config exception
 - Firestore user-owned notification read exception
 - Storage public-read and owner-upload exceptions

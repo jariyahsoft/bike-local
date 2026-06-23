@@ -4,6 +4,7 @@
 
 // ignore_for_file: unused_element
 import 'package:bike_local_generated_api_client/src/model/entity_base.dart';
+import 'package:bike_local_generated_api_client/src/model/location.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -25,19 +26,23 @@ part 'return_request.g.dart';
 /// * [bookingId]
 /// * [userId]
 /// * [storeId]
+/// * [branchId]
 /// * [status]
 /// * [returnType]
 /// * [returnPointId]
 /// * [requestedAt]
+/// * [location]
 /// * [evidenceImageRefs]
 /// * [notes]
+/// * [damageChargeAmount]
+/// * [currency]
 @BuiltValue()
 abstract class ReturnRequest implements EntityBase, Built<ReturnRequest, ReturnRequestBuilder> {
+  @BuiltValueField(wireName: r'branch_id')
+  String get branchId;
+
   @BuiltValueField(wireName: r'notes')
   String? get notes;
-
-  @BuiltValueField(wireName: r'requested_at')
-  DateTime get requestedAt;
 
   @BuiltValueField(wireName: r'return_point_id')
   String? get returnPointId;
@@ -53,6 +58,18 @@ abstract class ReturnRequest implements EntityBase, Built<ReturnRequest, ReturnR
 
   @BuiltValueField(wireName: r'booking_id')
   String get bookingId;
+
+  @BuiltValueField(wireName: r'requested_at')
+  DateTime get requestedAt;
+
+  @BuiltValueField(wireName: r'location')
+  Location get location;
+
+  @BuiltValueField(wireName: r'currency')
+  String? get currency;
+
+  @BuiltValueField(wireName: r'damage_charge_amount')
+  int? get damageChargeAmount;
 
   @BuiltValueField(wireName: r'return_type')
   ReturnRequestReturnTypeEnum get returnType;
@@ -85,6 +102,11 @@ class _$ReturnRequestSerializer implements PrimitiveSerializer<ReturnRequest> {
     ReturnRequest object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
+    yield r'branch_id';
+    yield serializers.serialize(
+      object.branchId,
+      specifiedType: const FullType(String),
+    );
     if (object.notes != null) {
       yield r'notes';
       yield serializers.serialize(
@@ -167,11 +189,30 @@ class _$ReturnRequestSerializer implements PrimitiveSerializer<ReturnRequest> {
         specifiedType: const FullType(String),
       );
     }
+    yield r'location';
+    yield serializers.serialize(
+      object.location,
+      specifiedType: const FullType(Location),
+    );
+    if (object.currency != null) {
+      yield r'currency';
+      yield serializers.serialize(
+        object.currency,
+        specifiedType: const FullType(String),
+      );
+    }
     yield r'id';
     yield serializers.serialize(
       object.id,
       specifiedType: const FullType(String),
     );
+    if (object.damageChargeAmount != null) {
+      yield r'damage_charge_amount';
+      yield serializers.serialize(
+        object.damageChargeAmount,
+        specifiedType: const FullType(int),
+      );
+    }
     yield r'return_type';
     yield serializers.serialize(
       object.returnType,
@@ -210,6 +251,13 @@ class _$ReturnRequestSerializer implements PrimitiveSerializer<ReturnRequest> {
       final key = serializedList[i] as String;
       final value = serializedList[i + 1];
       switch (key) {
+        case r'branch_id':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.branchId = valueDes;
+          break;
         case r'notes':
           final valueDes = serializers.deserialize(
             value,
@@ -308,12 +356,33 @@ class _$ReturnRequestSerializer implements PrimitiveSerializer<ReturnRequest> {
           ) as String;
           result.tenantId = valueDes;
           break;
+        case r'location':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(Location),
+          ) as Location;
+          result.location.replace(valueDes);
+          break;
+        case r'currency':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.currency = valueDes;
+          break;
         case r'id':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(String),
           ) as String;
           result.id = valueDes;
+          break;
+        case r'damage_charge_amount':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          ) as int;
+          result.damageChargeAmount = valueDes;
           break;
         case r'return_type':
           final valueDes = serializers.deserialize(

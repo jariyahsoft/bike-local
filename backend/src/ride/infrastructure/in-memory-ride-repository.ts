@@ -22,13 +22,20 @@ export class InMemoryRideRepository implements RideRepository {
 
   async appendTrackChunk(chunk: RideTrackChunk): Promise<RideTrackChunk> {
     const existing = this.chunks.get(chunk.rideSessionId) ?? [];
-    if (existing.some((item) => item.sequence === chunk.sequence)) {
+    const existingSequence = existing.find(
+      (item) => item.sequence === chunk.sequence,
+    );
+    if (existingSequence?.checksum === chunk.checksum) {
+      return existingSequence;
+    }
+    if (existingSequence !== undefined) {
       throw new DomainError(
-        "VALIDATION_INVALID",
-        "Ride track chunk sequence already exists",
+        "RIDE_TRACK_SEQUENCE_CONFLICT",
+        "Ride track chunk sequence already exists with a different checksum.",
         {
           rideSessionId: chunk.rideSessionId,
           sequence: chunk.sequence,
+          existingChecksum: existingSequence.checksum,
         },
       );
     }

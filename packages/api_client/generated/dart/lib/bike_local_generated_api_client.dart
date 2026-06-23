@@ -84,6 +84,7 @@ export 'package:bike_local_generated_api_client/src/model/get_platform_report200
 export 'package:bike_local_generated_api_client/src/model/get_store_report200_response.dart';
 export 'package:bike_local_generated_api_client/src/model/gps_consent_input.dart';
 export 'package:bike_local_generated_api_client/src/model/gps_consent_scope.dart';
+export 'package:bike_local_generated_api_client/src/model/gps_gap.dart';
 export 'package:bike_local_generated_api_client/src/model/gps_point.dart';
 export 'package:bike_local_generated_api_client/src/model/handover_request.dart';
 export 'package:bike_local_generated_api_client/src/model/inline_object.dart';
@@ -142,5 +143,6 @@ export 'package:bike_local_generated_api_client/src/model/update_store_member_re
 export 'package:bike_local_generated_api_client/src/model/update_store_request.dart';
 export 'package:bike_local_generated_api_client/src/model/update_user_request.dart';
 export 'package:bike_local_generated_api_client/src/model/upload_ride_track_chunk202_response.dart';
+export 'package:bike_local_generated_api_client/src/model/upload_ride_track_chunk_request.dart';
 export 'package:bike_local_generated_api_client/src/model/user.dart';
 export 'package:bike_local_generated_api_client/src/model/user_consents.dart';

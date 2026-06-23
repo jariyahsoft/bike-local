@@ -174,6 +174,7 @@ Class | Method | HTTP request | Description
  - [GetStoreReport200Response](doc/GetStoreReport200Response.md)
  - [GpsConsentInput](doc/GpsConsentInput.md)
  - [GpsConsentScope](doc/GpsConsentScope.md)
+ - [GpsGap](doc/GpsGap.md)
  - [GpsPoint](doc/GpsPoint.md)
  - [HandoverRequest](doc/HandoverRequest.md)
  - [InlineObject](doc/InlineObject.md)
@@ -232,6 +233,7 @@ Class | Method | HTTP request | Description
  - [UpdateStoreRequest](doc/UpdateStoreRequest.md)
  - [UpdateUserRequest](doc/UpdateUserRequest.md)
  - [UploadRideTrackChunk202Response](doc/UploadRideTrackChunk202Response.md)
+ - [UploadRideTrackChunkRequest](doc/UploadRideTrackChunkRequest.md)
  - [User](doc/User.md)
  - [UserConsents](doc/UserConsents.md)
 

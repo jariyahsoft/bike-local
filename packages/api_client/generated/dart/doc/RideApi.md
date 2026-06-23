@@ -115,7 +115,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **uploadRideTrackChunk**
-> UploadRideTrackChunk202Response uploadRideTrackChunk(id, idempotencyKey, rideTrackChunk, xCorrelationId)
+> UploadRideTrackChunk202Response uploadRideTrackChunk(id, idempotencyKey, uploadRideTrackChunkRequest, xCorrelationId)
 
 Upload buffered GPS track chunk.
 
@@ -130,11 +130,11 @@ import 'package:bike_local_generated_api_client/api.dart';
 final api = BikeLocalGeneratedApiClient().getRideApi();
 final String id = id_example; // String |
 final String idempotencyKey = idem_01HV9X8D9N9HQ; // String |
-final RideTrackChunk rideTrackChunk = ; // RideTrackChunk |
+final UploadRideTrackChunkRequest uploadRideTrackChunkRequest = ; // UploadRideTrackChunkRequest |
 final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
 
 try {
-    final response = api.uploadRideTrackChunk(id, idempotencyKey, rideTrackChunk, xCorrelationId);
+    final response = api.uploadRideTrackChunk(id, idempotencyKey, uploadRideTrackChunkRequest, xCorrelationId);
     print(response);
 } on DioException catch (e) {
     print('Exception when calling RideApi->uploadRideTrackChunk: $e\n');
@@ -147,7 +147,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **String**|  |
  **idempotencyKey** | **String**|  |
- **rideTrackChunk** | [**RideTrackChunk**](RideTrackChunk.md)|  |
+ **uploadRideTrackChunkRequest** | [**UploadRideTrackChunkRequest**](UploadRideTrackChunkRequest.md)|  |
  **xCorrelationId** | **String**|  | [optional]
 
 ### Return type

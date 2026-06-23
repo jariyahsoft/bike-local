@@ -325,7 +325,13 @@ Deposits cannot transition to `RELEASED` before return inspection reaches `INSPE
 
 ### Ride Session and Track Chunk
 
-Ride Session เก็บ summary และ reference ส่วน Track Chunk เก็บ GPS chunks พร้อม checksum เพื่อรองรับ offline/batch upload และการย้าย payload ขนาดใหญ่ไป Cloud Storage
+Ride Session เก็บ summary และ reference ส่วน Track Chunk เก็บ GPS chunks พร้อม checksum เพื่อรองรับ offline/batch upload และการย้าย payload ขนาดใหญ่ไป Cloud Storage. MVP contract ใช้ local encrypted buffer interface ฝั่งแอป โดย upload เป็น chunk ที่มี `sequence`, `checksum`, `captured_from`, `captured_to`, `point_count`, `points`, และ `gaps`; ห้ามเติมจุด GPS ที่ขาดเอง และ duplicate `(ride_session_id, sequence)` จะรับซ้ำได้เฉพาะ checksum เดิมเท่านั้น.
+
+### Handover and Return Inspection
+
+Handover ตรวจ QR booking token แบบ one-time/time-limited ผ่าน token reference เท่านั้น ไม่เก็บ raw long-lived secret ใน booking record. เมื่อ handover สำเร็จ booking เปลี่ยนเป็น `IN_PROGRESS`, asset เปลี่ยนเป็น `RENTED`, deposit เปลี่ยนเป็น `HELD` เมื่อมี deposit, สร้าง ride session เริ่มต้น, audit log, และ outbox event ใน service boundary เดียว.
+
+Return request เก็บ `return_type`, evidence photos, return location, notes, และ notify store/staff ผ่าน outbox. Smart Dock ยังเป็น Phase 2 placeholder และไม่รับใน MVP. Staff inspection เป็นจุดเดียวที่ close rental ได้: booking ไป `INSPECTION_PENDING` แล้ว `COMPLETED` หรือ `DISPUTED`, asset ไป `AVAILABLE` หรือ `MAINTENANCE`, และ deposit release/deduction เกิดหลัง inspection เท่านั้น.
 
 ### Audit Log
 

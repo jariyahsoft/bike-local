@@ -206,6 +206,14 @@ Event types ขั้นต่ำ:
 | Reports | `GET /api/v1/reports/store`, `GET /api/v1/reports/platform` |
 | Audit | `GET /api/v1/audit-logs` |
 
+Task 11 ride lifecycle rules:
+
+- Handover requires scoped `rental.handover`, App Check, expected booking version, one-time/time-limited QR booking token proof, checklist photos, and equipment confirmation.
+- Ride chunk upload requires renter ownership, active location consent proof, sequence/checksum idempotency, buffered point chunks, and explicit GPS gap records.
+- Ending a ride session does not close the rental; only return inspection can close booking/asset/deposit state.
+- Return request supports `STORE`, `DEFINED_POINT`, and `STAFF_PICKUP`; Smart Dock remains Phase 2.
+- Return acceptance requires scoped `return.accept` and records inspection evidence before deposit release or damage deduction.
+
 ## API Security Checklist
 
 - [ ] Token verified

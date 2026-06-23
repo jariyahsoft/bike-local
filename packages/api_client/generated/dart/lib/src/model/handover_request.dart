@@ -13,8 +13,10 @@ part 'handover_request.g.dart';
 ///
 /// Properties:
 /// * [staffUserId]
+/// * [qrBookingToken]
 /// * [checklistImageRefs]
 /// * [conditionNotes]
+/// * [equipmentConfirmed]
 /// * [existingDamageNotes]
 /// * [version]
 @BuiltValue()
@@ -22,11 +24,17 @@ abstract class HandoverRequest implements Built<HandoverRequest, HandoverRequest
   @BuiltValueField(wireName: r'staff_user_id')
   String get staffUserId;
 
+  @BuiltValueField(wireName: r'qr_booking_token')
+  String get qrBookingToken;
+
   @BuiltValueField(wireName: r'checklist_image_refs')
   BuiltList<String> get checklistImageRefs;
 
   @BuiltValueField(wireName: r'condition_notes')
   String get conditionNotes;
+
+  @BuiltValueField(wireName: r'equipment_confirmed')
+  bool get equipmentConfirmed;
 
   @BuiltValueField(wireName: r'existing_damage_notes')
   String? get existingDamageNotes;
@@ -62,6 +70,11 @@ class _$HandoverRequestSerializer implements PrimitiveSerializer<HandoverRequest
       object.staffUserId,
       specifiedType: const FullType(String),
     );
+    yield r'qr_booking_token';
+    yield serializers.serialize(
+      object.qrBookingToken,
+      specifiedType: const FullType(String),
+    );
     yield r'checklist_image_refs';
     yield serializers.serialize(
       object.checklistImageRefs,
@@ -71,6 +84,11 @@ class _$HandoverRequestSerializer implements PrimitiveSerializer<HandoverRequest
     yield serializers.serialize(
       object.conditionNotes,
       specifiedType: const FullType(String),
+    );
+    yield r'equipment_confirmed';
+    yield serializers.serialize(
+      object.equipmentConfirmed,
+      specifiedType: const FullType(bool),
     );
     if (object.existingDamageNotes != null) {
       yield r'existing_damage_notes';
@@ -114,6 +132,13 @@ class _$HandoverRequestSerializer implements PrimitiveSerializer<HandoverRequest
           ) as String;
           result.staffUserId = valueDes;
           break;
+        case r'qr_booking_token':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.qrBookingToken = valueDes;
+          break;
         case r'checklist_image_refs':
           final valueDes = serializers.deserialize(
             value,
@@ -127,6 +152,13 @@ class _$HandoverRequestSerializer implements PrimitiveSerializer<HandoverRequest
             specifiedType: const FullType(String),
           ) as String;
           result.conditionNotes = valueDes;
+          break;
+        case r'equipment_confirmed':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool;
+          result.equipmentConfirmed = valueDes;
           break;
         case r'existing_damage_notes':
           final valueDes = serializers.deserialize(

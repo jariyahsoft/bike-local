@@ -9,25 +9,20 @@ import 'package:bike_local_generated_api_client/src/model/gps_point.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
-part 'ride_track_chunk.g.dart';
+part 'upload_ride_track_chunk_request.g.dart';
 
-/// RideTrackChunk
+/// UploadRideTrackChunkRequest
 ///
 /// Properties:
-/// * [rideSessionId]
 /// * [sequence]
 /// * [checksum]
 /// * [capturedFrom]
 /// * [capturedTo]
-/// * [pointCount]
+/// * [locationConsentGranted]
 /// * [points]
 /// * [gaps]
-/// * [schemaVersion]
 @BuiltValue()
-abstract class RideTrackChunk implements Built<RideTrackChunk, RideTrackChunkBuilder> {
-  @BuiltValueField(wireName: r'ride_session_id')
-  String get rideSessionId;
-
+abstract class UploadRideTrackChunkRequest implements Built<UploadRideTrackChunkRequest, UploadRideTrackChunkRequestBuilder> {
   @BuiltValueField(wireName: r'sequence')
   int get sequence;
 
@@ -40,46 +35,38 @@ abstract class RideTrackChunk implements Built<RideTrackChunk, RideTrackChunkBui
   @BuiltValueField(wireName: r'captured_to')
   DateTime get capturedTo;
 
-  @BuiltValueField(wireName: r'point_count')
-  int get pointCount;
+  @BuiltValueField(wireName: r'location_consent_granted')
+  bool get locationConsentGranted;
 
   @BuiltValueField(wireName: r'points')
   BuiltList<GpsPoint> get points;
 
   @BuiltValueField(wireName: r'gaps')
-  BuiltList<GpsGap> get gaps;
+  BuiltList<GpsGap>? get gaps;
 
-  @BuiltValueField(wireName: r'schema_version')
-  int get schemaVersion;
+  UploadRideTrackChunkRequest._();
 
-  RideTrackChunk._();
-
-  factory RideTrackChunk([void updates(RideTrackChunkBuilder b)]) = _$RideTrackChunk;
+  factory UploadRideTrackChunkRequest([void updates(UploadRideTrackChunkRequestBuilder b)]) = _$UploadRideTrackChunkRequest;
 
   @BuiltValueHook(initializeBuilder: true)
-  static void _defaults(RideTrackChunkBuilder b) => b;
+  static void _defaults(UploadRideTrackChunkRequestBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<RideTrackChunk> get serializer => _$RideTrackChunkSerializer();
+  static Serializer<UploadRideTrackChunkRequest> get serializer => _$UploadRideTrackChunkRequestSerializer();
 }
 
-class _$RideTrackChunkSerializer implements PrimitiveSerializer<RideTrackChunk> {
+class _$UploadRideTrackChunkRequestSerializer implements PrimitiveSerializer<UploadRideTrackChunkRequest> {
   @override
-  final Iterable<Type> types = const [RideTrackChunk, _$RideTrackChunk];
+  final Iterable<Type> types = const [UploadRideTrackChunkRequest, _$UploadRideTrackChunkRequest];
 
   @override
-  final String wireName = r'RideTrackChunk';
+  final String wireName = r'UploadRideTrackChunkRequest';
 
   Iterable<Object?> _serializeProperties(
     Serializers serializers,
-    RideTrackChunk object, {
+    UploadRideTrackChunkRequest object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
-    yield r'ride_session_id';
-    yield serializers.serialize(
-      object.rideSessionId,
-      specifiedType: const FullType(String),
-    );
     yield r'sequence';
     yield serializers.serialize(
       object.sequence,
@@ -100,32 +87,29 @@ class _$RideTrackChunkSerializer implements PrimitiveSerializer<RideTrackChunk> 
       object.capturedTo,
       specifiedType: const FullType(DateTime),
     );
-    yield r'point_count';
+    yield r'location_consent_granted';
     yield serializers.serialize(
-      object.pointCount,
-      specifiedType: const FullType(int),
+      object.locationConsentGranted,
+      specifiedType: const FullType(bool),
     );
     yield r'points';
     yield serializers.serialize(
       object.points,
       specifiedType: const FullType(BuiltList, [FullType(GpsPoint)]),
     );
-    yield r'gaps';
-    yield serializers.serialize(
-      object.gaps,
-      specifiedType: const FullType(BuiltList, [FullType(GpsGap)]),
-    );
-    yield r'schema_version';
-    yield serializers.serialize(
-      object.schemaVersion,
-      specifiedType: const FullType(int),
-    );
+    if (object.gaps != null) {
+      yield r'gaps';
+      yield serializers.serialize(
+        object.gaps,
+        specifiedType: const FullType(BuiltList, [FullType(GpsGap)]),
+      );
+    }
   }
 
   @override
   Object serialize(
     Serializers serializers,
-    RideTrackChunk object, {
+    UploadRideTrackChunkRequest object, {
     FullType specifiedType = FullType.unspecified,
   }) {
     return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
@@ -136,20 +120,13 @@ class _$RideTrackChunkSerializer implements PrimitiveSerializer<RideTrackChunk> 
     Object serialized, {
     FullType specifiedType = FullType.unspecified,
     required List<Object?> serializedList,
-    required RideTrackChunkBuilder result,
+    required UploadRideTrackChunkRequestBuilder result,
     required List<Object?> unhandled,
   }) {
     for (var i = 0; i < serializedList.length; i += 2) {
       final key = serializedList[i] as String;
       final value = serializedList[i + 1];
       switch (key) {
-        case r'ride_session_id':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.rideSessionId = valueDes;
-          break;
         case r'sequence':
           final valueDes = serializers.deserialize(
             value,
@@ -178,12 +155,12 @@ class _$RideTrackChunkSerializer implements PrimitiveSerializer<RideTrackChunk> 
           ) as DateTime;
           result.capturedTo = valueDes;
           break;
-        case r'point_count':
+        case r'location_consent_granted':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(int),
-          ) as int;
-          result.pointCount = valueDes;
+            specifiedType: const FullType(bool),
+          ) as bool;
+          result.locationConsentGranted = valueDes;
           break;
         case r'points':
           final valueDes = serializers.deserialize(
@@ -199,13 +176,6 @@ class _$RideTrackChunkSerializer implements PrimitiveSerializer<RideTrackChunk> 
           ) as BuiltList<GpsGap>;
           result.gaps.replace(valueDes);
           break;
-        case r'schema_version':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          ) as int;
-          result.schemaVersion = valueDes;
-          break;
         default:
           unhandled.add(key);
           unhandled.add(value);
@@ -215,12 +185,12 @@ class _$RideTrackChunkSerializer implements PrimitiveSerializer<RideTrackChunk> 
   }
 
   @override
-  RideTrackChunk deserialize(
+  UploadRideTrackChunkRequest deserialize(
     Serializers serializers,
     Object serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = RideTrackChunkBuilder();
+    final result = UploadRideTrackChunkRequestBuilder();
     final serializedList = (serialized as Iterable<Object?>).toList();
     final unhandled = <Object?>[];
     _deserializeProperties(

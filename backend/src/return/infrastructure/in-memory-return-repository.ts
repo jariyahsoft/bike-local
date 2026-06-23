@@ -8,12 +8,14 @@ import type {
 } from "../../shared/domain/index.js";
 import type {
   ReturnRepository,
+  ReturnInspection,
   ReturnRequest,
   ReturnRequestSearchFilter,
 } from "../domain/return-repository.js";
 
 export class InMemoryReturnRepository implements ReturnRepository {
   private readonly requests = new Map<ReturnRequestId, ReturnRequest>();
+  private readonly inspections = new Map<string, ReturnInspection>();
 
   async findById(id: ReturnRequestId): Promise<ReturnRequest | null> {
     return this.requests.get(id) ?? null;
@@ -23,6 +25,16 @@ export class InMemoryReturnRepository implements ReturnRepository {
     return (
       [...this.requests.values()].find(
         (request) => request.bookingId === bookingId,
+      ) ?? null
+    );
+  }
+
+  async findInspectionByReturnRequestId(
+    returnRequestId: ReturnRequestId,
+  ): Promise<ReturnInspection | null> {
+    return (
+      [...this.inspections.values()].find(
+        (inspection) => inspection.returnRequestId === returnRequestId,
       ) ?? null
     );
   }
@@ -68,5 +80,24 @@ export class InMemoryReturnRepository implements ReturnRepository {
     }
     this.requests.set(request.id, request);
     return request;
+  }
+
+  async saveInspection(
+    inspection: ReturnInspection,
+    options?: SaveOptions,
+  ): Promise<ReturnInspection> {
+    const current = this.inspections.get(inspection.id);
+    if (
+      options?.expectedVersion !== undefined &&
+      current?.version !== options.expectedVersion
+    ) {
+      throw new DomainError(
+        "VERSION_CONFLICT",
+        "Return inspection version conflict",
+        { returnInspectionId: inspection.id },
+      );
+    }
+    this.inspections.set(inspection.id, inspection);
+    return inspection;
   }
 }

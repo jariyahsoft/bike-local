@@ -1090,6 +1090,7 @@ export interface components {
             /** @enum {string} */
             status: "ACTIVE" | "PAUSED" | "ENDED" | "SYNC_PENDING";
             started_at: components["schemas"]["IsoDateTime"];
+            resumed_at?: components["schemas"]["IsoDateTime"];
             ended_at?: components["schemas"]["IsoDateTime"];
             distance_meters?: number;
             gps_gap_count?: number;
@@ -1100,7 +1101,19 @@ export interface components {
             checksum: string;
             captured_from: components["schemas"]["IsoDateTime"];
             captured_to: components["schemas"]["IsoDateTime"];
+            point_count: number;
             points: components["schemas"]["GpsPoint"][];
+            gaps: components["schemas"]["GpsGap"][];
+            schema_version: number;
+        };
+        UploadRideTrackChunkRequest: {
+            sequence: number;
+            checksum: string;
+            captured_from: components["schemas"]["IsoDateTime"];
+            captured_to: components["schemas"]["IsoDateTime"];
+            location_consent_granted: boolean;
+            points: components["schemas"]["GpsPoint"][];
+            gaps?: components["schemas"]["GpsGap"][];
         };
         GpsPoint: {
             captured_at: components["schemas"]["IsoDateTime"];
@@ -1110,29 +1123,38 @@ export interface components {
             speed_mps?: number;
             altitude_meters?: number;
         };
+        GpsGap: {
+            from: components["schemas"]["IsoDateTime"];
+            to: components["schemas"]["IsoDateTime"];
+            /** @enum {string} */
+            reason: "APP_INTERRUPTED" | "PERMISSION_REVOKED" | "SIGNAL_LOST" | "DEVICE_OFFLINE";
+        };
         ReturnRequest: components["schemas"]["EntityBase"] & {
             booking_id: string;
             user_id: string;
             store_id: string;
+            branch_id: string;
             /** @enum {string} */
             status: "REQUESTED" | "VALIDATING_LOCATION" | "WAITING_FOR_STORE" | "STAFF_ASSIGNED" | "PICKUP_IN_PROGRESS" | "INSPECTION_PENDING" | "ACCEPTED" | "REJECTED" | "DISPUTED" | "CANCELLED";
             /** @enum {string} */
             return_type: "STORE" | "DEFINED_POINT" | "STAFF_PICKUP" | "SMART_DOCK";
             return_point_id?: string;
             requested_at: components["schemas"]["IsoDateTime"];
+            location: components["schemas"]["Location"];
             evidence_image_refs: string[];
             notes?: string;
+            damage_charge_amount?: number;
+            currency?: string;
         };
-        ReturnInspection: components["schemas"]["EntityBase"] & {
-            return_request_id: string;
+        ReturnInspection: {
             condition: string;
             image_refs: string[];
             equipment_complete: boolean;
             damage_notes?: string;
             damage_charge_amount?: number;
             currency?: string;
-            inspector_user_id: string;
-            inspected_at: components["schemas"]["IsoDateTime"];
+            /** @enum {string} */
+            decision: "PASS" | "DAMAGE_CHARGE" | "MAINTENANCE" | "DISPUTE";
         };
         SosCase: components["schemas"]["EntityBase"] & {
             user_id: string;
@@ -1490,8 +1512,10 @@ export interface components {
         };
         HandoverRequest: {
             staff_user_id: string;
+            qr_booking_token: string;
             checklist_image_refs: string[];
             condition_notes: string;
+            equipment_confirmed: boolean;
             existing_damage_notes?: string;
             version: number;
         };
@@ -2664,7 +2688,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["RideTrackChunk"];
+                "application/json": components["schemas"]["UploadRideTrackChunkRequest"];
             };
         };
         responses: {

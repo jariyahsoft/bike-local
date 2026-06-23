@@ -953,7 +953,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/RideTrackChunk"
+              $ref: "#/components/schemas/UploadRideTrackChunkRequest"
       responses:
         "202":
           description: Track chunk accepted.
@@ -2328,6 +2328,8 @@ components:
               enum: [ACTIVE, PAUSED, ENDED, SYNC_PENDING]
             started_at:
               $ref: "#/components/schemas/IsoDateTime"
+            resumed_at:
+              $ref: "#/components/schemas/IsoDateTime"
             ended_at:
               $ref: "#/components/schemas/IsoDateTime"
             distance_meters:
@@ -2336,7 +2338,18 @@ components:
               type: integer
     RideTrackChunk:
       type: object
-      required: [ride_session_id, sequence, checksum, captured_from, captured_to, points]
+      required:
+        [
+          ride_session_id,
+          sequence,
+          checksum,
+          captured_from,
+          captured_to,
+          point_count,
+          points,
+          gaps,
+          schema_version,
+        ]
       properties:
         ride_session_id:
           type: string
@@ -2349,10 +2362,50 @@ components:
           $ref: "#/components/schemas/IsoDateTime"
         captured_to:
           $ref: "#/components/schemas/IsoDateTime"
+        point_count:
+          type: integer
+          minimum: 0
         points:
           type: array
           items:
             $ref: "#/components/schemas/GpsPoint"
+        gaps:
+          type: array
+          items:
+            $ref: "#/components/schemas/GpsGap"
+        schema_version:
+          type: integer
+    UploadRideTrackChunkRequest:
+      type: object
+      required:
+        [
+          sequence,
+          checksum,
+          captured_from,
+          captured_to,
+          location_consent_granted,
+          points,
+        ]
+      properties:
+        sequence:
+          type: integer
+          minimum: 0
+        checksum:
+          type: string
+        captured_from:
+          $ref: "#/components/schemas/IsoDateTime"
+        captured_to:
+          $ref: "#/components/schemas/IsoDateTime"
+        location_consent_granted:
+          type: boolean
+        points:
+          type: array
+          items:
+            $ref: "#/components/schemas/GpsPoint"
+        gaps:
+          type: array
+          items:
+            $ref: "#/components/schemas/GpsGap"
     GpsPoint:
       type: object
       required: [captured_at, latitude, longitude, accuracy_meters]
@@ -2369,17 +2422,47 @@ components:
           type: number
         altitude_meters:
           type: number
+    GpsGap:
+      type: object
+      required: [from, to, reason]
+      properties:
+        from:
+          $ref: "#/components/schemas/IsoDateTime"
+        to:
+          $ref: "#/components/schemas/IsoDateTime"
+        reason:
+          type: string
+          enum:
+            [
+              APP_INTERRUPTED,
+              PERMISSION_REVOKED,
+              SIGNAL_LOST,
+              DEVICE_OFFLINE,
+            ]
     ReturnRequest:
       allOf:
         - $ref: "#/components/schemas/EntityBase"
         - type: object
-          required: [booking_id, user_id, store_id, status, return_type, requested_at, evidence_image_refs]
+          required:
+            [
+              booking_id,
+              user_id,
+              store_id,
+              branch_id,
+              status,
+              return_type,
+              requested_at,
+              location,
+              evidence_image_refs,
+            ]
           properties:
             booking_id:
               type: string
             user_id:
               type: string
             store_id:
+              type: string
+            branch_id:
               type: string
             status:
               type: string
@@ -2391,38 +2474,39 @@ components:
               type: string
             requested_at:
               $ref: "#/components/schemas/IsoDateTime"
+            location:
+              $ref: "#/components/schemas/Location"
             evidence_image_refs:
               type: array
               items:
                 type: string
             notes:
               type: string
-    ReturnInspection:
-      allOf:
-        - $ref: "#/components/schemas/EntityBase"
-        - type: object
-          required: [return_request_id, condition, image_refs, equipment_complete, inspector_user_id, inspected_at]
-          properties:
-            return_request_id:
-              type: string
-            condition:
-              type: string
-            image_refs:
-              type: array
-              items:
-                type: string
-            equipment_complete:
-              type: boolean
-            damage_notes:
-              type: string
             damage_charge_amount:
               type: integer
             currency:
               type: string
-            inspector_user_id:
-              type: string
-            inspected_at:
-              $ref: "#/components/schemas/IsoDateTime"
+    ReturnInspection:
+      type: object
+      required: [condition, image_refs, equipment_complete, decision]
+      properties:
+        condition:
+          type: string
+        image_refs:
+          type: array
+          items:
+            type: string
+        equipment_complete:
+          type: boolean
+        damage_notes:
+          type: string
+        damage_charge_amount:
+          type: integer
+        currency:
+          type: string
+        decision:
+          type: string
+          enum: [PASS, DAMAGE_CHARGE, MAINTENANCE, DISPUTE]
     SosCase:
       allOf:
         - $ref: "#/components/schemas/EntityBase"
@@ -3133,9 +3217,19 @@ components:
           type: string
     HandoverRequest:
       type: object
-      required: [staff_user_id, checklist_image_refs, condition_notes, version]
+      required:
+        [
+          staff_user_id,
+          qr_booking_token,
+          checklist_image_refs,
+          condition_notes,
+          equipment_confirmed,
+          version,
+        ]
       properties:
         staff_user_id:
+          type: string
+        qr_booking_token:
           type: string
         checklist_image_refs:
           type: array
@@ -3143,6 +3237,8 @@ components:
             type: string
         condition_notes:
           type: string
+        equipment_confirmed:
+          type: boolean
         existing_damage_notes:
           type: string
         version:
@@ -3359,9 +3455,14 @@ components:
           booking_id: bkg_123
           user_id: usr_123
           store_id: store_123
+          branch_id: brn_123
           status: REQUESTED
           return_type: STORE
           requested_at: "2026-07-01T06:05:00Z"
+          location:
+            latitude: 13.7563
+            longitude: 100.5018
+            accuracy_meters: 9
           evidence_image_refs: [storage://return/photo-1.jpg]
         meta:
           request_id: req_123

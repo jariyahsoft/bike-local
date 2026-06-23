@@ -71,6 +71,7 @@ import 'package:bike_local_generated_api_client/src/model/get_platform_report200
 import 'package:bike_local_generated_api_client/src/model/get_store_report200_response.dart';
 import 'package:bike_local_generated_api_client/src/model/gps_consent_input.dart';
 import 'package:bike_local_generated_api_client/src/model/gps_consent_scope.dart';
+import 'package:bike_local_generated_api_client/src/model/gps_gap.dart';
 import 'package:bike_local_generated_api_client/src/model/gps_point.dart';
 import 'package:bike_local_generated_api_client/src/model/handover_request.dart';
 import 'package:bike_local_generated_api_client/src/model/inline_object.dart';
@@ -129,6 +130,7 @@ import 'package:bike_local_generated_api_client/src/model/update_store_member_re
 import 'package:bike_local_generated_api_client/src/model/update_store_request.dart';
 import 'package:bike_local_generated_api_client/src/model/update_user_request.dart';
 import 'package:bike_local_generated_api_client/src/model/upload_ride_track_chunk202_response.dart';
+import 'package:bike_local_generated_api_client/src/model/upload_ride_track_chunk_request.dart';
 import 'package:bike_local_generated_api_client/src/model/user.dart';
 import 'package:bike_local_generated_api_client/src/model/user_consents.dart';
 
@@ -192,6 +194,7 @@ part 'serializers.g.dart';
   GetStoreReport200Response,
   GpsConsentInput,
   GpsConsentScope,
+  GpsGap,
   GpsPoint,
   HandoverRequest,
   InlineObject,
@@ -250,6 +253,7 @@ part 'serializers.g.dart';
   UpdateStoreRequest,
   UpdateUserRequest,
   UploadRideTrackChunk202Response,
+  UploadRideTrackChunkRequest,
   User,
   UserConsents,
 ])

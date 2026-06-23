@@ -13,8 +13,8 @@ import 'package:bike_local_generated_api_client/src/model/create_ride_session_re
 import 'package:bike_local_generated_api_client/src/model/end_ride_session_request.dart';
 import 'package:bike_local_generated_api_client/src/model/error_envelope.dart';
 import 'package:bike_local_generated_api_client/src/model/inline_object6.dart';
-import 'package:bike_local_generated_api_client/src/model/ride_track_chunk.dart';
 import 'package:bike_local_generated_api_client/src/model/upload_ride_track_chunk202_response.dart';
+import 'package:bike_local_generated_api_client/src/model/upload_ride_track_chunk_request.dart';
 
 class RideApi {
 
@@ -256,7 +256,7 @@ class RideApi {
   /// Parameters:
   /// * [id]
   /// * [idempotencyKey]
-  /// * [rideTrackChunk]
+  /// * [uploadRideTrackChunkRequest]
   /// * [xCorrelationId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
@@ -270,7 +270,7 @@ class RideApi {
   Future<Response<UploadRideTrackChunk202Response>> uploadRideTrackChunk({
     required String id,
     required String idempotencyKey,
-    required RideTrackChunk rideTrackChunk,
+    required UploadRideTrackChunkRequest uploadRideTrackChunkRequest,
     String? xCorrelationId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -309,8 +309,8 @@ class RideApi {
     dynamic _bodyData;
 
     try {
-      const _type = FullType(RideTrackChunk);
-      _bodyData = _serializers.serialize(rideTrackChunk, specifiedType: _type);
+      const _type = FullType(UploadRideTrackChunkRequest);
+      _bodyData = _serializers.serialize(uploadRideTrackChunkRequest, specifiedType: _type);
 
     } catch(error, stackTrace) {
       throw DioException(

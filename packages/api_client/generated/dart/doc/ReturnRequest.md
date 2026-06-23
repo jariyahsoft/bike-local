@@ -20,11 +20,15 @@ Name | Type | Description | Notes
 **bookingId** | **String** |  |
 **userId** | **String** |  |
 **storeId** | **String** |  |
+**branchId** | **String** |  |
 **status** | **String** |  |
 **returnType** | **String** |  |
 **returnPointId** | **String** |  | [optional]
 **requestedAt** | [**DateTime**](DateTime.md) |  |
+**location** | [**Location**](Location.md) |  |
 **evidenceImageRefs** | **BuiltList&lt;String&gt;** |  |
 **notes** | **String** |  | [optional]
+**damageChargeAmount** | **int** |  | [optional]
+**currency** | **String** |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

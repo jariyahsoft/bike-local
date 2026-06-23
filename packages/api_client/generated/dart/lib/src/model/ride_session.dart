@@ -26,6 +26,7 @@ part 'ride_session.g.dart';
 /// * [userId]
 /// * [status]
 /// * [startedAt]
+/// * [resumedAt]
 /// * [endedAt]
 /// * [distanceMeters]
 /// * [gpsGapCount]
@@ -42,6 +43,9 @@ abstract class RideSession implements EntityBase, Built<RideSession, RideSession
 
   @BuiltValueField(wireName: r'started_at')
   DateTime get startedAt;
+
+  @BuiltValueField(wireName: r'resumed_at')
+  DateTime? get resumedAt;
 
   @BuiltValueField(wireName: r'user_id')
   String get userId;
@@ -153,6 +157,13 @@ class _$RideSessionSerializer implements PrimitiveSerializer<RideSession> {
       yield serializers.serialize(
         object.tenantId,
         specifiedType: const FullType(String),
+      );
+    }
+    if (object.resumedAt != null) {
+      yield r'resumed_at';
+      yield serializers.serialize(
+        object.resumedAt,
+        specifiedType: const FullType(DateTime),
       );
     }
     yield r'id';
@@ -283,6 +294,13 @@ class _$RideSessionSerializer implements PrimitiveSerializer<RideSession> {
             specifiedType: const FullType(String),
           ) as String;
           result.tenantId = valueDes;
+          break;
+        case r'resumed_at':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(DateTime),
+          ) as DateTime;
+          result.resumedAt = valueDes;
           break;
         case r'id':
           final valueDes = serializers.deserialize(

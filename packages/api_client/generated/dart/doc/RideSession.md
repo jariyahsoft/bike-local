@@ -21,6 +21,7 @@ Name | Type | Description | Notes
 **userId** | **String** |  |
 **status** | **String** |  |
 **startedAt** | [**DateTime**](DateTime.md) |  |
+**resumedAt** | [**DateTime**](DateTime.md) |  | [optional]
 **endedAt** | [**DateTime**](DateTime.md) |  | [optional]
 **distanceMeters** | **int** |  | [optional]
 **gpsGapCount** | **int** |  | [optional]

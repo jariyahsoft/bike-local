@@ -3,7 +3,6 @@
 //
 
 // ignore_for_file: unused_element
-import 'package:bike_local_generated_api_client/src/model/entity_base.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -13,52 +12,36 @@ part 'return_inspection.g.dart';
 /// ReturnInspection
 ///
 /// Properties:
-/// * [id]
-/// * [schemaVersion]
-/// * [tenantId]
-/// * [createdAt]
-/// * [createdBy]
-/// * [updatedAt]
-/// * [updatedBy]
-/// * [deletedAt]
-/// * [version]
-/// * [returnRequestId]
 /// * [condition]
 /// * [imageRefs]
 /// * [equipmentComplete]
 /// * [damageNotes]
 /// * [damageChargeAmount]
 /// * [currency]
-/// * [inspectorUserId]
-/// * [inspectedAt]
+/// * [decision]
 @BuiltValue()
-abstract class ReturnInspection implements EntityBase, Built<ReturnInspection, ReturnInspectionBuilder> {
-  @BuiltValueField(wireName: r'return_request_id')
-  String get returnRequestId;
-
-  @BuiltValueField(wireName: r'inspector_user_id')
-  String get inspectorUserId;
-
+abstract class ReturnInspection implements Built<ReturnInspection, ReturnInspectionBuilder> {
   @BuiltValueField(wireName: r'condition')
   String get condition;
-
-  @BuiltValueField(wireName: r'inspected_at')
-  DateTime get inspectedAt;
-
-  @BuiltValueField(wireName: r'currency')
-  String? get currency;
-
-  @BuiltValueField(wireName: r'damage_notes')
-  String? get damageNotes;
 
   @BuiltValueField(wireName: r'image_refs')
   BuiltList<String> get imageRefs;
 
+  @BuiltValueField(wireName: r'equipment_complete')
+  bool get equipmentComplete;
+
+  @BuiltValueField(wireName: r'damage_notes')
+  String? get damageNotes;
+
   @BuiltValueField(wireName: r'damage_charge_amount')
   int? get damageChargeAmount;
 
-  @BuiltValueField(wireName: r'equipment_complete')
-  bool get equipmentComplete;
+  @BuiltValueField(wireName: r'currency')
+  String? get currency;
+
+  @BuiltValueField(wireName: r'decision')
+  ReturnInspectionDecisionEnum get decision;
+  // enum decisionEnum {  PASS,  DAMAGE_CHARGE,  MAINTENANCE,  DISPUTE,  };
 
   ReturnInspection._();
 
@@ -83,28 +66,21 @@ class _$ReturnInspectionSerializer implements PrimitiveSerializer<ReturnInspecti
     ReturnInspection object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
-    yield r'return_request_id';
+    yield r'condition';
     yield serializers.serialize(
-      object.returnRequestId,
+      object.condition,
       specifiedType: const FullType(String),
     );
-    yield r'inspector_user_id';
+    yield r'image_refs';
     yield serializers.serialize(
-      object.inspectorUserId,
-      specifiedType: const FullType(String),
+      object.imageRefs,
+      specifiedType: const FullType(BuiltList, [FullType(String)]),
     );
-    yield r'schema_version';
+    yield r'equipment_complete';
     yield serializers.serialize(
-      object.schemaVersion,
-      specifiedType: const FullType(int),
+      object.equipmentComplete,
+      specifiedType: const FullType(bool),
     );
-    if (object.updatedBy != null) {
-      yield r'updated_by';
-      yield serializers.serialize(
-        object.updatedBy,
-        specifiedType: const FullType(String),
-      );
-    }
     if (object.damageNotes != null) {
       yield r'damage_notes';
       yield serializers.serialize(
@@ -112,50 +88,11 @@ class _$ReturnInspectionSerializer implements PrimitiveSerializer<ReturnInspecti
         specifiedType: const FullType(String),
       );
     }
-    yield r'version';
-    yield serializers.serialize(
-      object.version,
-      specifiedType: const FullType(int),
-    );
-    yield r'equipment_complete';
-    yield serializers.serialize(
-      object.equipmentComplete,
-      specifiedType: const FullType(bool),
-    );
-    yield r'created_at';
-    yield serializers.serialize(
-      object.createdAt,
-      specifiedType: const FullType(DateTime),
-    );
-    yield r'condition';
-    yield serializers.serialize(
-      object.condition,
-      specifiedType: const FullType(String),
-    );
-    yield r'inspected_at';
-    yield serializers.serialize(
-      object.inspectedAt,
-      specifiedType: const FullType(DateTime),
-    );
-    if (object.deletedAt != null) {
-      yield r'deleted_at';
+    if (object.damageChargeAmount != null) {
+      yield r'damage_charge_amount';
       yield serializers.serialize(
-        object.deletedAt,
-        specifiedType: const FullType(DateTime),
-      );
-    }
-    if (object.createdBy != null) {
-      yield r'created_by';
-      yield serializers.serialize(
-        object.createdBy,
-        specifiedType: const FullType(String),
-      );
-    }
-    if (object.tenantId != null) {
-      yield r'tenant_id';
-      yield serializers.serialize(
-        object.tenantId,
-        specifiedType: const FullType(String),
+        object.damageChargeAmount,
+        specifiedType: const FullType(int),
       );
     }
     if (object.currency != null) {
@@ -165,27 +102,10 @@ class _$ReturnInspectionSerializer implements PrimitiveSerializer<ReturnInspecti
         specifiedType: const FullType(String),
       );
     }
-    yield r'id';
+    yield r'decision';
     yield serializers.serialize(
-      object.id,
-      specifiedType: const FullType(String),
-    );
-    yield r'image_refs';
-    yield serializers.serialize(
-      object.imageRefs,
-      specifiedType: const FullType(BuiltList, [FullType(String)]),
-    );
-    if (object.damageChargeAmount != null) {
-      yield r'damage_charge_amount';
-      yield serializers.serialize(
-        object.damageChargeAmount,
-        specifiedType: const FullType(int),
-      );
-    }
-    yield r'updated_at';
-    yield serializers.serialize(
-      object.updatedAt,
-      specifiedType: const FullType(DateTime),
+      object.decision,
+      specifiedType: const FullType(ReturnInspectionDecisionEnum),
     );
   }
 
@@ -210,110 +130,12 @@ class _$ReturnInspectionSerializer implements PrimitiveSerializer<ReturnInspecti
       final key = serializedList[i] as String;
       final value = serializedList[i + 1];
       switch (key) {
-        case r'return_request_id':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.returnRequestId = valueDes;
-          break;
-        case r'inspector_user_id':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.inspectorUserId = valueDes;
-          break;
-        case r'schema_version':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          ) as int;
-          result.schemaVersion = valueDes;
-          break;
-        case r'updated_by':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.updatedBy = valueDes;
-          break;
-        case r'damage_notes':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.damageNotes = valueDes;
-          break;
-        case r'version':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          ) as int;
-          result.version = valueDes;
-          break;
-        case r'equipment_complete':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          ) as bool;
-          result.equipmentComplete = valueDes;
-          break;
-        case r'created_at':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(DateTime),
-          ) as DateTime;
-          result.createdAt = valueDes;
-          break;
         case r'condition':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(String),
           ) as String;
           result.condition = valueDes;
-          break;
-        case r'inspected_at':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(DateTime),
-          ) as DateTime;
-          result.inspectedAt = valueDes;
-          break;
-        case r'deleted_at':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(DateTime),
-          ) as DateTime;
-          result.deletedAt = valueDes;
-          break;
-        case r'created_by':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.createdBy = valueDes;
-          break;
-        case r'tenant_id':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.tenantId = valueDes;
-          break;
-        case r'currency':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.currency = valueDes;
-          break;
-        case r'id':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.id = valueDes;
           break;
         case r'image_refs':
           final valueDes = serializers.deserialize(
@@ -322,6 +144,20 @@ class _$ReturnInspectionSerializer implements PrimitiveSerializer<ReturnInspecti
           ) as BuiltList<String>;
           result.imageRefs.replace(valueDes);
           break;
+        case r'equipment_complete':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool;
+          result.equipmentComplete = valueDes;
+          break;
+        case r'damage_notes':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.damageNotes = valueDes;
+          break;
         case r'damage_charge_amount':
           final valueDes = serializers.deserialize(
             value,
@@ -329,12 +165,19 @@ class _$ReturnInspectionSerializer implements PrimitiveSerializer<ReturnInspecti
           ) as int;
           result.damageChargeAmount = valueDes;
           break;
-        case r'updated_at':
+        case r'currency':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(DateTime),
-          ) as DateTime;
-          result.updatedAt = valueDes;
+            specifiedType: const FullType(String),
+          ) as String;
+          result.currency = valueDes;
+          break;
+        case r'decision':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(ReturnInspectionDecisionEnum),
+          ) as ReturnInspectionDecisionEnum;
+          result.decision = valueDes;
           break;
         default:
           unhandled.add(key);
@@ -363,4 +206,23 @@ class _$ReturnInspectionSerializer implements PrimitiveSerializer<ReturnInspecti
     );
     return result.build();
   }
+}
+
+class ReturnInspectionDecisionEnum extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: r'PASS')
+  static const ReturnInspectionDecisionEnum PASS = _$returnInspectionDecisionEnum_PASS;
+  @BuiltValueEnumConst(wireName: r'DAMAGE_CHARGE')
+  static const ReturnInspectionDecisionEnum DAMAGE_CHARGE = _$returnInspectionDecisionEnum_DAMAGE_CHARGE;
+  @BuiltValueEnumConst(wireName: r'MAINTENANCE')
+  static const ReturnInspectionDecisionEnum MAINTENANCE = _$returnInspectionDecisionEnum_MAINTENANCE;
+  @BuiltValueEnumConst(wireName: r'DISPUTE')
+  static const ReturnInspectionDecisionEnum DISPUTE = _$returnInspectionDecisionEnum_DISPUTE;
+
+  static Serializer<ReturnInspectionDecisionEnum> get serializer => _$returnInspectionDecisionEnumSerializer;
+
+  const ReturnInspectionDecisionEnum._(String name): super(name);
+
+  static BuiltSet<ReturnInspectionDecisionEnum> get values => _$returnInspectionDecisionEnumValues;
+  static ReturnInspectionDecisionEnum valueOf(String name) => _$returnInspectionDecisionEnumValueOf(name);
 }

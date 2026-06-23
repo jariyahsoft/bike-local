@@ -63,6 +63,7 @@ doc/GetPlatformReport200Response.md
 doc/GetStoreReport200Response.md
 doc/GpsConsentInput.md
 doc/GpsConsentScope.md
+doc/GpsGap.md
 doc/GpsPoint.md
 doc/HandoverApi.md
 doc/HandoverRequest.md
@@ -132,6 +133,7 @@ doc/UpdateStoreMemberRequest.md
 doc/UpdateStoreRequest.md
 doc/UpdateUserRequest.md
 doc/UploadRideTrackChunk202Response.md
+doc/UploadRideTrackChunkRequest.md
 doc/User.md
 doc/UserConsents.md
 lib/bike_local_generated_api_client.dart
@@ -217,6 +219,7 @@ lib/src/model/get_platform_report200_response.dart
 lib/src/model/get_store_report200_response.dart
 lib/src/model/gps_consent_input.dart
 lib/src/model/gps_consent_scope.dart
+lib/src/model/gps_gap.dart
 lib/src/model/gps_point.dart
 lib/src/model/handover_request.dart
 lib/src/model/inline_object.dart
@@ -275,10 +278,10 @@ lib/src/model/update_store_member_request.dart
 lib/src/model/update_store_request.dart
 lib/src/model/update_user_request.dart
 lib/src/model/upload_ride_track_chunk202_response.dart
+lib/src/model/upload_ride_track_chunk_request.dart
 lib/src/model/user.dart
 lib/src/model/user_consents.dart
 lib/src/serializers.dart
 pubspec.yaml
-test/booking_status_transition_test.dart
-test/payment_webhook_accepted_test.dart
-test/process_payment_webhook202_response_test.dart
+test/gps_gap_test.dart
+test/upload_ride_track_chunk_request_test.dart

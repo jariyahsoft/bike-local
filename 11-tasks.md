@@ -166,10 +166,10 @@ Foundation / Sprint 0
 - [x] Search and booking work with availability
 - [x] Double booking is prevented at availability-hold level
 - [x] Payment adapter stub and cash confirmation work
-- [ ] Handover starts rental
-- [ ] GPS buffers offline and uploads chunks
-- [ ] Ending ride does not close rental
-- [ ] Return request and inspection close rental
+- [x] Handover starts rental
+- [x] GPS buffers offline and uploads chunks
+- [x] Ending ride does not close rental
+- [x] Return request and inspection close rental
 - [x] Deposit is not released before inspection
 - [ ] SOS opens with latest location and escalates
 - [ ] Reports load

@@ -115,6 +115,7 @@ Critical flows:
 - Store approval workflow, approved-branch availability, temporary branch closure, staff invitation validation, permission audit, and cross-tenant denial
 - Inventory asset/category/equipment creation, duplicate asset-code rejection within a store, cross-tenant inventory denial, integer minor-unit pricing quotes with immutable snapshots, transaction-style availability hold conflict rejection, closed branch exclusion, and unsupported search-filter rejection
 - Booking creation idempotency, same-asset booking conflict rejection, booking state machine valid/invalid transitions, provider-verified payment webhook replay safety, cash confirmation permission/audit flow, and deposit release-before-inspection guard
+- Handover rejects invalid/expired/used QR booking tokens, starts rental state across booking/asset/deposit/ride/audit/outbox, ride tracking enforces GPS consent and chunk dedupe, ending a ride does not close rental, and return inspection closes booking/asset/deposit only after authorized staff acceptance
 
 ## Accessibility Tests
 
@@ -143,8 +144,8 @@ Seed data should include:
 - Assets across all important states
 - Pricing rules and deposits
 - Booking/payment/cash/deposit examples
-- Ride sessions with GPS gaps
-- Return requests and SOS cases
+- Ride sessions with GPS gaps, buffered chunk uploads, and duplicate sequence/checksum examples
+- Return requests, inspection decisions, deposit release/deduction examples, and SOS cases
 
 ## CI Test Commands
 
@@ -180,11 +181,11 @@ npm run test:frontend
 - [x] Double booking is prevented at availability-hold level
 - [x] Payment adapter stub and cash confirmation workflow work
 - [ ] Staff receives task after payment/cash confirmation
-- [ ] Handover starts rental
-- [ ] Ride tracking buffers offline GPS
-- [ ] Ride ending does not close rental
-- [ ] Return request notifies store
-- [ ] Inspection closes rental and handles deposit
+- [x] Handover starts rental
+- [x] Ride tracking buffers offline GPS
+- [x] Ride ending does not close rental
+- [x] Return request notifies store
+- [x] Inspection closes rental and handles deposit
 - [ ] SOS sends latest location and escalates
 - [ ] Basic reports load
 - [ ] Admin can approve content/store

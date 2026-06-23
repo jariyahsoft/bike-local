@@ -9,8 +9,10 @@ import 'package:bike_local_generated_api_client/api.dart';
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **staffUserId** | **String** |  |
+**qrBookingToken** | **String** |  |
 **checklistImageRefs** | **BuiltList&lt;String&gt;** |  |
 **conditionNotes** | **String** |  |
+**equipmentConfirmed** | **bool** |  |
 **existingDamageNotes** | **String** |  | [optional]
 **version** | **int** |  |
 
