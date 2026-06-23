@@ -5,7 +5,17 @@
     "backend"
   ],
   "scripts": {
+    "contract:lint": "redocly lint contracts/openapi.yaml",
+    "generate:dart": "openapi-generator-cli generate -i contracts/openapi.yaml -g dart-dio -o packages/api_client/generated/dart --additional-properties=pubName=bike_local_generated_api_client,pubVersion=0.1.0",
+    "generate:types": "openapi-typescript contracts/openapi.yaml -o packages/api_client/generated/typescript/schema.d.ts",
+    "mock:api": "npx --yes @stoplight/prism-cli@5.14.2 mock contracts/openapi.yaml --host 127.0.0.1 --port 4010",
+    "test:contract": "npm run contract:lint",
     "typecheck": "npm --workspace backend run typecheck",
     "test": "npm --workspace backend test"
+  },
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.39.0",
+    "@redocly/cli": "^2.34.0",
+    "openapi-typescript": "^7.13.0"
   }
 }

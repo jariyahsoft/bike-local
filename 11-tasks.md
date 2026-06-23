@@ -37,14 +37,14 @@ Foundation / Sprint 0
 
 ### Contracts
 
-- [ ] Create `contracts/openapi.yaml`
-- [ ] Add schemas for user, store, branch, asset, booking, payment, ride, return, sos and error
-- [ ] Add success/error examples
-- [ ] Add pagination, idempotency and version conflict examples
-- [ ] Set up generated Dart API client
-- [ ] Set up TypeScript API types
-- [ ] Set up mock server
-- [ ] Set up contract test command
+- [x] Create `contracts/openapi.yaml`
+- [x] Add schemas for user, store, branch, asset, booking, payment, ride, return, sos and error
+- [x] Add success/error examples
+- [x] Add pagination, idempotency and version conflict examples
+- [x] Set up generated Dart API client
+- [x] Set up TypeScript API types
+- [x] Set up mock server
+- [x] Set up contract test command
 
 ### Security
 

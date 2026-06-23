@@ -1,0 +1,2471 @@
+openapi: 3.1.0
+info:
+  title: Bike Local API
+  version: 0.1.0
+  license:
+    name: Proprietary
+    identifier: LicenseRef-Proprietary
+  summary: Contract-first REST API for Bike Local MVP workflows.
+  description: >
+    Backend API boundary for business-critical Bike Local workflows. Clients must
+    use generated API clients and must not directly read or write business data in
+    Firestore.
+servers:
+  - url: /api/v1
+    description: Versioned API root
+security:
+  - bearerAuth: []
+    appCheck: []
+tags:
+  - name: Identity
+    description: User profile, auth identity, role selection, and self-service APIs.
+  - name: Stores
+    description: Store registration, approval-facing store data, and merchant settings.
+  - name: Branches
+    description: Branch location, operating hours, status, and pickup/return context.
+  - name: Staff
+    description: Staff invitations, roles, branch access, and store member updates.
+  - name: Assets
+    description: Bike and rentable asset inventory APIs.
+  - name: Search
+    description: Store and asset discovery APIs with map and availability filters.
+  - name: Pricing
+    description: Quote APIs for price snapshots, deposits, and policy snapshots.
+  - name: Booking
+    description: Booking creation, retrieval, cancellation, and state transition APIs.
+  - name: Payment
+    description: Online payment, webhook, cash confirmation, and refund-adjacent APIs.
+  - name: Handover
+    description: QR verification and handover checklist APIs.
+  - name: Ride
+    description: Ride session lifecycle and GPS chunk upload APIs.
+  - name: Return
+    description: Return request, acceptance, inspection, and rental close APIs.
+  - name: SOS
+    description: SOS case creation and staff response APIs.
+  - name: Content
+    description: Route, place, review, and moderation APIs.
+  - name: Reports
+    description: Merchant and platform reporting APIs.
+  - name: Audit
+    description: Audit log search APIs for sensitive actions.
+paths:
+  /users:
+    post:
+      tags: [Identity]
+      operationId: createUser
+      summary: Create domain user profile after authentication.
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUserRequest"
+      responses:
+        "201":
+          $ref: "#/components/responses/UserSuccess"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/VersionConflict"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+  /me:
+    get:
+      tags: [Identity]
+      operationId: getMe
+      summary: Get current user profile and auth identities.
+      parameters:
+        - $ref: "#/components/parameters/CorrelationId"
+      responses:
+        "200":
+          $ref: "#/components/responses/UserSuccess"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+    patch:
+      tags: [Identity]
+      operationId: updateMe
+      summary: Update current user profile.
+      parameters:
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateUserRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/UserSuccess"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/VersionConflict"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /stores:
+    post:
+      tags: [Stores]
+      operationId: createStore
+      summary: Create store draft for approval.
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        $ref: "#/components/requestBodies/CreateStore"
+      responses:
+        "201":
+          $ref: "#/components/responses/StoreSuccess"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+    get:
+      tags: [Stores]
+      operationId: listStores
+      summary: List stores visible to the current user.
+      parameters:
+        - $ref: "#/components/parameters/Limit"
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/CorrelationId"
+      responses:
+        "200":
+          description: Store list.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/SuccessEnvelope"
+                  - type: object
+                    required: [data]
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Store"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /stores/{id}:
+    patch:
+      tags: [Stores]
+      operationId: updateStore
+      summary: Update store details with optimistic concurrency.
+      parameters:
+        - $ref: "#/components/parameters/StoreIdPath"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateStoreRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/StoreSuccess"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "409":
+          $ref: "#/components/responses/VersionConflict"
+  /stores/{store_id}/branches:
+    post:
+      tags: [Branches]
+      operationId: createBranch
+      summary: Create branch under a store.
+      parameters:
+        - $ref: "#/components/parameters/StoreIdNestedPath"
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        $ref: "#/components/requestBodies/CreateBranch"
+      responses:
+        "201":
+          $ref: "#/components/responses/BranchSuccess"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /branches/{id}:
+    get:
+      tags: [Branches]
+      operationId: getBranch
+      summary: Get branch by ID.
+      parameters:
+        - $ref: "#/components/parameters/BranchIdPath"
+        - $ref: "#/components/parameters/CorrelationId"
+      responses:
+        "200":
+          $ref: "#/components/responses/BranchSuccess"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /stores/{store_id}/staff-invitations:
+    post:
+      tags: [Staff]
+      operationId: createStaffInvitation
+      summary: Invite staff to a store.
+      parameters:
+        - $ref: "#/components/parameters/StoreIdNestedPath"
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateStaffInvitationRequest"
+      responses:
+        "202":
+          description: Staff invitation accepted for processing.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/SuccessEnvelope"
+                  - type: object
+                    required: [data]
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/StaffInvitation"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+  /store-members/{id}:
+    patch:
+      tags: [Staff]
+      operationId: updateStoreMember
+      summary: Update store member role, branch access, or status.
+      parameters:
+        - $ref: "#/components/parameters/StoreMemberIdPath"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateStoreMemberRequest"
+      responses:
+        "200":
+          description: Store member updated.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/SuccessEnvelope"
+                  - type: object
+                    required: [data]
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/StoreMember"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "409":
+          $ref: "#/components/responses/VersionConflict"
+  /assets:
+    post:
+      tags: [Assets]
+      operationId: createAsset
+      summary: Create rentable asset.
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateAssetRequest"
+      responses:
+        "201":
+          $ref: "#/components/responses/AssetSuccess"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+    get:
+      tags: [Assets]
+      operationId: listAssets
+      summary: List assets by allowed filters.
+      parameters:
+        - $ref: "#/components/parameters/StoreIdQuery"
+        - $ref: "#/components/parameters/BranchIdQuery"
+        - $ref: "#/components/parameters/Limit"
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/CorrelationId"
+      responses:
+        "200":
+          description: Asset list.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/SuccessEnvelope"
+                  - type: object
+                    required: [data]
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Asset"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+  /assets/{id}:
+    patch:
+      tags: [Assets]
+      operationId: updateAsset
+      summary: Update asset data or status.
+      parameters:
+        - $ref: "#/components/parameters/AssetIdPath"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateAssetRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/AssetSuccess"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "409":
+          $ref: "#/components/responses/VersionConflict"
+  /search/stores:
+    get:
+      tags: [Search]
+      operationId: searchStores
+      summary: Search stores by text, location, and filters.
+      parameters:
+        - $ref: "#/components/parameters/SearchQuery"
+        - $ref: "#/components/parameters/Latitude"
+        - $ref: "#/components/parameters/Longitude"
+        - $ref: "#/components/parameters/Limit"
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/CorrelationId"
+      responses:
+        "200":
+          description: Store search results.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/SuccessEnvelope"
+                  - type: object
+                    required: [data]
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Store"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+  /search/assets:
+    get:
+      tags: [Search]
+      operationId: searchAssets
+      summary: Search available assets by date/time and filters.
+      parameters:
+        - $ref: "#/components/parameters/SearchQuery"
+        - $ref: "#/components/parameters/StoreIdQuery"
+        - $ref: "#/components/parameters/BranchIdQuery"
+        - name: start_at
+          in: query
+          schema:
+            $ref: "#/components/schemas/IsoDateTime"
+        - name: end_at
+          in: query
+          schema:
+            $ref: "#/components/schemas/IsoDateTime"
+        - $ref: "#/components/parameters/Limit"
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/CorrelationId"
+      responses:
+        "200":
+          description: Asset search results.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/SuccessEnvelope"
+                  - type: object
+                    required: [data]
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Asset"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /pricing/quote:
+    post:
+      tags: [Pricing]
+      operationId: createPricingQuote
+      summary: Calculate price and deposit quote before booking.
+      parameters:
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PricingQuoteRequest"
+      responses:
+        "200":
+          description: Pricing quote.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/SuccessEnvelope"
+                  - type: object
+                    required: [data]
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/PricingQuote"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /bookings:
+    post:
+      tags: [Booking]
+      operationId: createBooking
+      summary: Create booking with asset hold.
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateBookingRequest"
+            examples:
+              booking_request:
+                value:
+                  store_id: store_123
+                  branch_id: brn_123
+                  asset_ids: [ast_123]
+                  start_at: "2026-07-01T02:00:00Z"
+                  end_at: "2026-07-01T06:00:00Z"
+                  pickup_point_id: point_1
+                  return_point_id: point_1
+                  payment_method: ONLINE
+      responses:
+        "201":
+          $ref: "#/components/responses/BookingSuccess"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          description: Asset unavailable or version conflict.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorEnvelope"
+              examples:
+                asset_unavailable:
+                  $ref: "#/components/examples/AssetUnavailableError"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+  /bookings/{id}:
+    get:
+      tags: [Booking]
+      operationId: getBooking
+      summary: Get booking by ID.
+      parameters:
+        - $ref: "#/components/parameters/BookingIdPath"
+        - $ref: "#/components/parameters/CorrelationId"
+      responses:
+        "200":
+          $ref: "#/components/responses/BookingSuccess"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /bookings/{id}/cancel:
+    post:
+      tags: [Booking]
+      operationId: cancelBooking
+      summary: Cancel booking and calculate refund eligibility.
+      parameters:
+        - $ref: "#/components/parameters/BookingIdPath"
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CancelBookingRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/BookingSuccess"
+        "409":
+          $ref: "#/components/responses/VersionConflict"
+  /payments:
+    post:
+      tags: [Payment]
+      operationId: createPayment
+      summary: Create payment intent or cash payment record.
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePaymentRequest"
+      responses:
+        "201":
+          $ref: "#/components/responses/PaymentSuccess"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /payment-webhooks/{provider}:
+    post:
+      tags: [Payment]
+      operationId: processPaymentWebhook
+      summary: Process provider webhook with server-side verification.
+      security: []
+      parameters:
+        - name: provider
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        "202":
+          description: Webhook accepted.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessEnvelope"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/VersionConflict"
+  /bookings/{id}/cash-confirmations:
+    post:
+      tags: [Payment]
+      operationId: confirmCashPayment
+      summary: Confirm cash payment by authorized staff.
+      parameters:
+        - $ref: "#/components/parameters/BookingIdPath"
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CashConfirmationRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/PaymentSuccess"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "409":
+          $ref: "#/components/responses/VersionConflict"
+  /bookings/{id}/handover:
+    post:
+      tags: [Handover]
+      operationId: handoverBooking
+      summary: Perform handover checklist and start rental.
+      parameters:
+        - $ref: "#/components/parameters/BookingIdPath"
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HandoverRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/BookingSuccess"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "409":
+          $ref: "#/components/responses/VersionConflict"
+  /ride-sessions:
+    post:
+      tags: [Ride]
+      operationId: createRideSession
+      summary: Start ride session for an in-progress rental.
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateRideSessionRequest"
+      responses:
+        "201":
+          $ref: "#/components/responses/RideSessionSuccess"
+        "409":
+          $ref: "#/components/responses/VersionConflict"
+  /ride-sessions/{id}/chunks:
+    post:
+      tags: [Ride]
+      operationId: uploadRideTrackChunk
+      summary: Upload buffered GPS track chunk.
+      parameters:
+        - $ref: "#/components/parameters/RideSessionIdPath"
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RideTrackChunk"
+      responses:
+        "202":
+          description: Track chunk accepted.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/SuccessEnvelope"
+                  - type: object
+                    required: [data]
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/RideTrackChunk"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /ride-sessions/{id}/end:
+    post:
+      tags: [Ride]
+      operationId: endRideSession
+      summary: End ride session without closing rental.
+      parameters:
+        - $ref: "#/components/parameters/RideSessionIdPath"
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EndRideSessionRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/RideSessionSuccess"
+        "409":
+          $ref: "#/components/responses/VersionConflict"
+  /return-requests:
+    post:
+      tags: [Return]
+      operationId: createReturnRequest
+      summary: Request bike return with evidence.
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateReturnRequest"
+      responses:
+        "201":
+          $ref: "#/components/responses/ReturnRequestSuccess"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /return-requests/{id}/accept:
+    post:
+      tags: [Return]
+      operationId: acceptReturnRequest
+      summary: Accept return and record inspection.
+      parameters:
+        - $ref: "#/components/parameters/ReturnRequestIdPath"
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReturnInspection"
+      responses:
+        "200":
+          $ref: "#/components/responses/ReturnRequestSuccess"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "409":
+          $ref: "#/components/responses/VersionConflict"
+  /sos-cases:
+    post:
+      tags: [SOS]
+      operationId: createSosCase
+      summary: Open SOS case during active ride.
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateSosCaseRequest"
+      responses:
+        "201":
+          $ref: "#/components/responses/SosCaseSuccess"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+  /sos-cases/{id}/acknowledge:
+    post:
+      tags: [SOS]
+      operationId: acknowledgeSosCase
+      summary: Acknowledge SOS case by authorized staff.
+      parameters:
+        - $ref: "#/components/parameters/SosCaseIdPath"
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      responses:
+        "200":
+          $ref: "#/components/responses/SosCaseSuccess"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+  /routes:
+    post:
+      tags: [Content]
+      operationId: createRoute
+      summary: Submit route content for approval.
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Route"
+      responses:
+        "201":
+          description: Route submitted.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/SuccessEnvelope"
+                  - type: object
+                    required: [data]
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/Route"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /places:
+    post:
+      tags: [Content]
+      operationId: createPlace
+      summary: Submit place content for approval.
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Place"
+      responses:
+        "201":
+          description: Place submitted.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/SuccessEnvelope"
+                  - type: object
+                    required: [data]
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/Place"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /content-submissions/{id}/approve:
+    post:
+      tags: [Content]
+      operationId: approveContentSubmission
+      summary: Approve route/place/review content.
+      parameters:
+        - $ref: "#/components/parameters/ContentSubmissionIdPath"
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      responses:
+        "200":
+          description: Content approved.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/SuccessEnvelope"
+                  - type: object
+                    required: [data]
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/ContentSubmission"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+  /reports/store:
+    get:
+      tags: [Reports]
+      operationId: getStoreReport
+      summary: Get merchant rental and revenue report.
+      parameters:
+        - $ref: "#/components/parameters/StoreIdQuery"
+        - name: from
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/IsoDateTime"
+        - name: to
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/IsoDateTime"
+        - $ref: "#/components/parameters/CorrelationId"
+      responses:
+        "200":
+          description: Store report.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/SuccessEnvelope"
+                  - type: object
+                    required: [data]
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/StoreReport"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+  /reports/platform:
+    get:
+      tags: [Reports]
+      operationId: getPlatformReport
+      summary: Get platform overview report.
+      parameters:
+        - name: from
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/IsoDateTime"
+        - name: to
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/IsoDateTime"
+        - $ref: "#/components/parameters/CorrelationId"
+      responses:
+        "200":
+          description: Platform report.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/SuccessEnvelope"
+                  - type: object
+                    required: [data]
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/PlatformReport"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+  /audit-logs:
+    get:
+      tags: [Audit]
+      operationId: listAuditLogs
+      summary: Search audit logs.
+      parameters:
+        - name: resource_type
+          in: query
+          schema:
+            type: string
+        - name: resource_id
+          in: query
+          schema:
+            type: string
+        - name: actor_user_id
+          in: query
+          schema:
+            type: string
+        - $ref: "#/components/parameters/Limit"
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/CorrelationId"
+      responses:
+        "200":
+          description: Audit log list.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/SuccessEnvelope"
+                  - type: object
+                    required: [data]
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/AuditLog"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Firebase ID token
+    appCheck:
+      type: apiKey
+      in: header
+      name: X-Firebase-AppCheck
+  parameters:
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      schema:
+        type: string
+        minLength: 8
+      example: idem_01HV9X8D9N9HQ
+    CorrelationId:
+      name: X-Correlation-Id
+      in: header
+      required: false
+      schema:
+        type: string
+      example: req_01HV9X8D9N9HQ
+    Limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+    Cursor:
+      name: cursor
+      in: query
+      required: false
+      schema:
+        type: string
+    SearchQuery:
+      name: q
+      in: query
+      required: false
+      schema:
+        type: string
+        maxLength: 120
+    Latitude:
+      name: latitude
+      in: query
+      required: false
+      schema:
+        type: number
+        minimum: -90
+        maximum: 90
+    Longitude:
+      name: longitude
+      in: query
+      required: false
+      schema:
+        type: number
+        minimum: -180
+        maximum: 180
+    StoreIdPath:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    StoreIdNestedPath:
+      name: store_id
+      in: path
+      required: true
+      schema:
+        type: string
+    BranchIdPath:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    BookingIdPath:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    AssetIdPath:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    RideSessionIdPath:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    ReturnRequestIdPath:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    SosCaseIdPath:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    ContentSubmissionIdPath:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    StoreMemberIdPath:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    StoreIdQuery:
+      name: store_id
+      in: query
+      schema:
+        type: string
+    BranchIdQuery:
+      name: branch_id
+      in: query
+      schema:
+        type: string
+  requestBodies:
+    CreateStore:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CreateStoreRequest"
+    CreateBranch:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CreateBranchRequest"
+  responses:
+    UserSuccess:
+      description: User response.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/SuccessEnvelope"
+              - type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/User"
+          examples:
+            success:
+              $ref: "#/components/examples/UserSuccess"
+    StoreSuccess:
+      description: Store response.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/SuccessEnvelope"
+              - type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Store"
+          examples:
+            success:
+              $ref: "#/components/examples/StoreSuccess"
+    BranchSuccess:
+      description: Branch response.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/SuccessEnvelope"
+              - type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Branch"
+    AssetSuccess:
+      description: Asset response.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/SuccessEnvelope"
+              - type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Asset"
+    BookingSuccess:
+      description: Booking response.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/SuccessEnvelope"
+              - type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Booking"
+          examples:
+            success:
+              $ref: "#/components/examples/BookingSuccess"
+    PaymentSuccess:
+      description: Payment response.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/SuccessEnvelope"
+              - type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Payment"
+          examples:
+            success:
+              $ref: "#/components/examples/PaymentSuccess"
+    RideSessionSuccess:
+      description: Ride session response.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/SuccessEnvelope"
+              - type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/RideSession"
+    ReturnRequestSuccess:
+      description: Return request response.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/SuccessEnvelope"
+              - type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/ReturnRequest"
+          examples:
+            success:
+              $ref: "#/components/examples/ReturnSuccess"
+    SosCaseSuccess:
+      description: SOS case response.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/SuccessEnvelope"
+              - type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/SosCase"
+    Unauthorized:
+      description: Authentication required or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorEnvelope"
+          examples:
+            unauthorized:
+              $ref: "#/components/examples/UnauthorizedError"
+    Forbidden:
+      description: Permission, tenant, or branch access denied.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorEnvelope"
+          examples:
+            forbidden:
+              $ref: "#/components/examples/ForbiddenError"
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorEnvelope"
+          examples:
+            not_found:
+              $ref: "#/components/examples/NotFoundError"
+    VersionConflict:
+      description: Optimistic concurrency or idempotency conflict.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorEnvelope"
+          examples:
+            conflict:
+              $ref: "#/components/examples/VersionConflictError"
+    ValidationError:
+      description: Request validation failed.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorEnvelope"
+          examples:
+            validation:
+              $ref: "#/components/examples/ValidationError"
+    RateLimited:
+      description: Rate limit exceeded.
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+          description: Seconds until retry is allowed.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorEnvelope"
+          examples:
+            rate_limited:
+              $ref: "#/components/examples/RateLimitError"
+  schemas:
+    SuccessEnvelope:
+      type: object
+      required: [data, meta]
+      properties:
+        data: true
+        meta:
+          $ref: "#/components/schemas/ResponseMeta"
+    ResponseMeta:
+      type: object
+      required: [request_id]
+      properties:
+        request_id:
+          type: string
+        correlation_id:
+          type: string
+        pagination:
+          $ref: "#/components/schemas/PaginationMeta"
+    PaginationMeta:
+      type: object
+      properties:
+        next_cursor:
+          type: string
+        limit:
+          type: integer
+          minimum: 1
+          maximum: 100
+    ErrorEnvelope:
+      type: object
+      required: [error]
+      properties:
+        error:
+          $ref: "#/components/schemas/Error"
+    Error:
+      type: object
+      required: [code, message, details, request_id]
+      properties:
+        code:
+          type: string
+          pattern: "^(AUTH|PERMISSION|VALIDATION|STORE|ASSET|BOOKING|PAYMENT|RIDE|RETURN|SOS|CONTENT|RATE_LIMIT|INTERNAL)_[A-Z0-9_]+$"
+        message:
+          type: string
+        details:
+          type: object
+          additionalProperties: true
+        request_id:
+          type: string
+    IsoDateTime:
+      type: string
+      format: date-time
+      examples: ["2026-07-01T02:00:00Z"]
+    Money:
+      type: object
+      required: [amount, currency]
+      properties:
+        amount:
+          type: integer
+          description: Integer minor units only.
+          examples: [25000]
+        currency:
+          type: string
+          minLength: 3
+          maxLength: 3
+          examples: [THB]
+    EntityBase:
+      type: object
+      required: [id, schema_version, created_at, updated_at, version]
+      properties:
+        id:
+          type: string
+        schema_version:
+          type: integer
+          minimum: 1
+        tenant_id:
+          type: string
+        created_at:
+          $ref: "#/components/schemas/IsoDateTime"
+        created_by:
+          type: string
+        updated_at:
+          $ref: "#/components/schemas/IsoDateTime"
+        updated_by:
+          type: string
+        deleted_at:
+          $ref: "#/components/schemas/IsoDateTime"
+        version:
+          type: integer
+          minimum: 0
+    User:
+      allOf:
+        - $ref: "#/components/schemas/EntityBase"
+        - type: object
+          required: [display_name, locale, status, roles]
+          properties:
+            display_name:
+              type: string
+            phone:
+              type: string
+            email:
+              type: string
+              format: email
+            photo_url:
+              type: string
+              format: uri
+            locale:
+              type: string
+              enum: [th, en]
+            country_code:
+              type: string
+            weight_kg:
+              type: number
+            emergency_contact:
+              type: object
+              additionalProperties: true
+            status:
+              type: string
+              enum: [ACTIVE, SUSPENDED, DELETION_REQUESTED]
+            roles:
+              type: array
+              items:
+                $ref: "#/components/schemas/Role"
+            auth_identities:
+              type: array
+              items:
+                $ref: "#/components/schemas/AuthIdentity"
+    AuthIdentity:
+      allOf:
+        - $ref: "#/components/schemas/EntityBase"
+        - type: object
+          required: [user_id, provider, provider_subject, verified]
+          properties:
+            user_id:
+              type: string
+            provider:
+              type: string
+              enum: [PHONE, EMAIL_PASSWORD, GOOGLE, APPLE]
+            provider_subject:
+              type: string
+            verified:
+              type: boolean
+    Role:
+      type: string
+      enum: [RENTER, STORE_OWNER, STORE_MANAGER, STORE_STAFF, STORE_ACCOUNTING, PLATFORM_ADMIN, PLATFORM_MODERATOR, PLATFORM_SUPPORT]
+    Store:
+      allOf:
+        - $ref: "#/components/schemas/EntityBase"
+        - type: object
+          required: [owner_user_id, legal_name, display_name, default_currency, timezone, approval_status]
+          properties:
+            owner_user_id:
+              type: string
+            legal_name:
+              type: string
+            display_name:
+              type: string
+            description:
+              type: string
+            phone:
+              type: string
+            email:
+              type: string
+              format: email
+            default_currency:
+              type: string
+            timezone:
+              type: string
+            approval_status:
+              $ref: "#/components/schemas/StoreApprovalStatus"
+            commission_plan_id:
+              type: string
+    StoreApprovalStatus:
+      type: string
+      enum: [DRAFT, SUBMITTED, UNDER_REVIEW, REVISION_REQUIRED, APPROVED, REJECTED, SUSPENDED, CLOSED]
+    Branch:
+      allOf:
+        - $ref: "#/components/schemas/EntityBase"
+        - type: object
+          required: [store_id, name, address, country, latitude, longitude, status]
+          properties:
+            store_id:
+              type: string
+            name:
+              type: string
+            address:
+              type: string
+            province:
+              type: string
+            district:
+              type: string
+            country:
+              type: string
+            latitude:
+              type: number
+            longitude:
+              type: number
+            geohash:
+              type: string
+            phone:
+              type: string
+            opening_hours:
+              type: object
+              additionalProperties: true
+            status:
+              type: string
+              enum: [ACTIVE, TEMPORARILY_CLOSED, INACTIVE]
+    StoreMember:
+      allOf:
+        - $ref: "#/components/schemas/EntityBase"
+        - type: object
+          required: [store_id, user_id, role, branch_ids, status]
+          properties:
+            store_id:
+              type: string
+            user_id:
+              type: string
+            role:
+              $ref: "#/components/schemas/Role"
+            branch_ids:
+              type: array
+              items:
+                type: string
+            permissions:
+              type: array
+              items:
+                type: string
+            status:
+              type: string
+              enum: [ACTIVE, SUSPENDED]
+    StaffInvitation:
+      type: object
+      required: [id, store_id, role, status]
+      properties:
+        id:
+          type: string
+        store_id:
+          type: string
+        role:
+          $ref: "#/components/schemas/Role"
+        phone:
+          type: string
+        email:
+          type: string
+          format: email
+        status:
+          type: string
+          enum: [PENDING, ACCEPTED, EXPIRED, CANCELLED]
+    Asset:
+      allOf:
+        - $ref: "#/components/schemas/EntityBase"
+        - type: object
+          required: [store_id, branch_id, category_id, code, status, base_price, deposit_amount, currency]
+          properties:
+            store_id:
+              type: string
+            branch_id:
+              type: string
+            category_id:
+              type: string
+            code:
+              type: string
+            qr_token_reference:
+              type: string
+            brand:
+              type: string
+            model:
+              type: string
+            color:
+              type: string
+            size:
+              type: string
+            description:
+              type: string
+            status:
+              type: string
+              enum: [AVAILABLE, RESERVED, PREPARING, AWAITING_HANDOVER, RENTED, RETURN_PENDING, INSPECTION_PENDING, MAINTENANCE, INACTIVE, LOST]
+            base_price:
+              type: integer
+            deposit_amount:
+              type: integer
+            currency:
+              type: string
+            current_point_id:
+              type: string
+            images:
+              type: array
+              items:
+                type: string
+    Equipment:
+      allOf:
+        - $ref: "#/components/schemas/EntityBase"
+        - type: object
+          required: [store_id, name, rental_mode, status]
+          properties:
+            store_id:
+              type: string
+            name:
+              type: string
+            rental_mode:
+              type: string
+              enum: [SEPARATE, BUNDLED, PACKAGE_INCLUDED, DEPOSIT_REQUIRED]
+            status:
+              type: string
+              enum: [AVAILABLE, RENTED, MAINTENANCE, INACTIVE]
+            price_amount:
+              type: integer
+            deposit_amount:
+              type: integer
+            currency:
+              type: string
+    RentalPoint:
+      allOf:
+        - $ref: "#/components/schemas/EntityBase"
+        - type: object
+          required: [store_id, branch_id, name, latitude, longitude, status]
+          properties:
+            store_id:
+              type: string
+            branch_id:
+              type: string
+            name:
+              type: string
+            latitude:
+              type: number
+            longitude:
+              type: number
+            status:
+              type: string
+              enum: [ACTIVE, INACTIVE]
+    Booking:
+      allOf:
+        - $ref: "#/components/schemas/EntityBase"
+        - type: object
+          required: [booking_number, user_id, store_id, branch_id, status, start_at, end_at, payment_method, currency, subtotal_amount, fee_amount, deposit_amount, discount_amount, total_amount, booking_items]
+          properties:
+            booking_number:
+              type: string
+            user_id:
+              type: string
+            store_id:
+              type: string
+            branch_id:
+              type: string
+            status:
+              $ref: "#/components/schemas/BookingStatus"
+            start_at:
+              $ref: "#/components/schemas/IsoDateTime"
+            end_at:
+              $ref: "#/components/schemas/IsoDateTime"
+            pickup_point_id:
+              type: string
+            return_point_id:
+              type: string
+            payment_method:
+              type: string
+              enum: [ONLINE, CASH]
+            currency:
+              type: string
+            subtotal_amount:
+              type: integer
+            fee_amount:
+              type: integer
+            deposit_amount:
+              type: integer
+            discount_amount:
+              type: integer
+            total_amount:
+              type: integer
+            price_snapshot:
+              type: object
+              additionalProperties: true
+            policy_snapshot:
+              type: object
+              additionalProperties: true
+            booking_items:
+              type: array
+              items:
+                $ref: "#/components/schemas/BookingItem"
+    BookingStatus:
+      type: string
+      enum: [PENDING_PAYMENT, PENDING_STORE_CONFIRMATION, CONFIRMED, PREPARING, AWAITING_PICKUP, IN_PROGRESS, RETURN_PENDING, INSPECTION_PENDING, COMPLETED, CANCELLED, NO_SHOW, DISPUTED]
+    BookingItem:
+      allOf:
+        - $ref: "#/components/schemas/EntityBase"
+        - type: object
+          required: [booking_id, item_type, item_id, quantity, amount]
+          properties:
+            booking_id:
+              type: string
+            item_type:
+              type: string
+              enum: [ASSET, EQUIPMENT]
+            item_id:
+              type: string
+            quantity:
+              type: integer
+              minimum: 1
+            amount:
+              type: integer
+    Payment:
+      allOf:
+        - $ref: "#/components/schemas/EntityBase"
+        - type: object
+          required: [booking_id, user_id, store_id, method, status, amount, currency, idempotency_key]
+          properties:
+            booking_id:
+              type: string
+            user_id:
+              type: string
+            store_id:
+              type: string
+            provider:
+              type: string
+            provider_reference:
+              type: string
+            method:
+              type: string
+              enum: [GATEWAY, CASH]
+            status:
+              type: string
+              enum: [PENDING, PROCESSING, PAID, FAILED, EXPIRED, PARTIALLY_REFUNDED, REFUNDED, DISPUTED]
+            amount:
+              type: integer
+            currency:
+              type: string
+            idempotency_key:
+              type: string
+            paid_at:
+              $ref: "#/components/schemas/IsoDateTime"
+            confirmed_by:
+              type: string
+    Deposit:
+      allOf:
+        - $ref: "#/components/schemas/EntityBase"
+        - type: object
+          required: [booking_id, status, amount, currency]
+          properties:
+            booking_id:
+              type: string
+            status:
+              type: string
+              enum: [NOT_REQUIRED, PENDING, HELD, PARTIALLY_DEDUCTED, RELEASED, FORFEITED]
+            amount:
+              type: integer
+            currency:
+              type: string
+            deducted_amount:
+              type: integer
+    RideSession:
+      allOf:
+        - $ref: "#/components/schemas/EntityBase"
+        - type: object
+          required: [booking_id, user_id, status, started_at]
+          properties:
+            booking_id:
+              type: string
+            user_id:
+              type: string
+            status:
+              type: string
+              enum: [ACTIVE, PAUSED, ENDED, SYNC_PENDING]
+            started_at:
+              $ref: "#/components/schemas/IsoDateTime"
+            ended_at:
+              $ref: "#/components/schemas/IsoDateTime"
+            distance_meters:
+              type: integer
+            gps_gap_count:
+              type: integer
+    RideTrackChunk:
+      type: object
+      required: [ride_session_id, sequence, checksum, captured_from, captured_to, points]
+      properties:
+        ride_session_id:
+          type: string
+        sequence:
+          type: integer
+          minimum: 0
+        checksum:
+          type: string
+        captured_from:
+          $ref: "#/components/schemas/IsoDateTime"
+        captured_to:
+          $ref: "#/components/schemas/IsoDateTime"
+        points:
+          type: array
+          items:
+            $ref: "#/components/schemas/GpsPoint"
+    GpsPoint:
+      type: object
+      required: [captured_at, latitude, longitude, accuracy_meters]
+      properties:
+        captured_at:
+          $ref: "#/components/schemas/IsoDateTime"
+        latitude:
+          type: number
+        longitude:
+          type: number
+        accuracy_meters:
+          type: number
+        speed_mps:
+          type: number
+        altitude_meters:
+          type: number
+    ReturnRequest:
+      allOf:
+        - $ref: "#/components/schemas/EntityBase"
+        - type: object
+          required: [booking_id, user_id, store_id, status, return_type, requested_at, evidence_image_refs]
+          properties:
+            booking_id:
+              type: string
+            user_id:
+              type: string
+            store_id:
+              type: string
+            status:
+              type: string
+              enum: [REQUESTED, VALIDATING_LOCATION, WAITING_FOR_STORE, STAFF_ASSIGNED, PICKUP_IN_PROGRESS, INSPECTION_PENDING, ACCEPTED, REJECTED, DISPUTED, CANCELLED]
+            return_type:
+              type: string
+              enum: [STORE, DEFINED_POINT, STAFF_PICKUP, SMART_DOCK]
+            return_point_id:
+              type: string
+            requested_at:
+              $ref: "#/components/schemas/IsoDateTime"
+            evidence_image_refs:
+              type: array
+              items:
+                type: string
+            notes:
+              type: string
+    ReturnInspection:
+      allOf:
+        - $ref: "#/components/schemas/EntityBase"
+        - type: object
+          required: [return_request_id, condition, image_refs, equipment_complete, inspector_user_id, inspected_at]
+          properties:
+            return_request_id:
+              type: string
+            condition:
+              type: string
+            image_refs:
+              type: array
+              items:
+                type: string
+            equipment_complete:
+              type: boolean
+            damage_notes:
+              type: string
+            damage_charge_amount:
+              type: integer
+            currency:
+              type: string
+            inspector_user_id:
+              type: string
+            inspected_at:
+              $ref: "#/components/schemas/IsoDateTime"
+    SosCase:
+      allOf:
+        - $ref: "#/components/schemas/EntityBase"
+        - type: object
+          required: [user_id, booking_id, rental_id, asset_id, phone, location, issue_type, status]
+          properties:
+            user_id:
+              type: string
+            booking_id:
+              type: string
+            rental_id:
+              type: string
+            asset_id:
+              type: string
+            phone:
+              type: string
+            location:
+              $ref: "#/components/schemas/Location"
+            issue_type:
+              type: string
+              enum: [BIKE_BROKEN, FLAT_TIRE, ACCIDENT, LOST, HEALTH, UNSAFE, OTHER]
+            status:
+              type: string
+              enum: [OPEN, ACKNOWLEDGED, ASSIGNED, IN_PROGRESS, RESOLVED, CLOSED]
+            assigned_staff_user_id:
+              type: string
+    Notification:
+      allOf:
+        - $ref: "#/components/schemas/EntityBase"
+        - type: object
+          required: [recipient_user_id, type, delivery_status]
+          properties:
+            recipient_user_id:
+              type: string
+            type:
+              type: string
+            delivery_status:
+              type: string
+              enum: [QUEUED, SENT, DELIVERED, FAILED, READ]
+            payload:
+              type: object
+              additionalProperties: true
+    AuditLog:
+      type: object
+      required: [id, actor_user_id, action, resource_type, resource_id, timestamp, request_id]
+      properties:
+        id:
+          type: string
+        actor_user_id:
+          type: string
+        action:
+          type: string
+        resource_type:
+          type: string
+        resource_id:
+          type: string
+        before:
+          type: object
+          additionalProperties: true
+        after:
+          type: object
+          additionalProperties: true
+        reason:
+          type: string
+        timestamp:
+          $ref: "#/components/schemas/IsoDateTime"
+        request_id:
+          type: string
+    Location:
+      type: object
+      required: [latitude, longitude, accuracy_meters]
+      properties:
+        latitude:
+          type: number
+        longitude:
+          type: number
+        accuracy_meters:
+          type: number
+    Route:
+      allOf:
+        - $ref: "#/components/schemas/EntityBase"
+        - type: object
+          required: [name, description, start_location, end_location, distance_meters, difficulty, status]
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            start_location:
+              $ref: "#/components/schemas/Location"
+            end_location:
+              $ref: "#/components/schemas/Location"
+            distance_meters:
+              type: integer
+            difficulty:
+              type: string
+            surface:
+              type: string
+            warning:
+              type: string
+            suitable_bike_types:
+              type: array
+              items:
+                type: string
+            status:
+              $ref: "#/components/schemas/ContentApprovalStatus"
+    Place:
+      allOf:
+        - $ref: "#/components/schemas/EntityBase"
+        - type: object
+          required: [name, place_type, location, status]
+          properties:
+            name:
+              type: string
+            place_type:
+              type: string
+              enum: [CHECK_IN, VIEWPOINT, CAFE, RESTAURANT, REPAIR_POINT, WATER_POINT, TOILET, HAZARD, TOURIST_ATTRACTION]
+            location:
+              $ref: "#/components/schemas/Location"
+            status:
+              $ref: "#/components/schemas/ContentApprovalStatus"
+    ContentSubmission:
+      allOf:
+        - $ref: "#/components/schemas/EntityBase"
+        - type: object
+          required: [content_type, content_id, status]
+          properties:
+            content_type:
+              type: string
+              enum: [ROUTE, PLACE, REVIEW]
+            content_id:
+              type: string
+            status:
+              $ref: "#/components/schemas/ContentApprovalStatus"
+    ContentApprovalStatus:
+      type: string
+      enum: [DRAFT, SUBMITTED, UNDER_REVIEW, REVISION_REQUIRED, APPROVED, REJECTED, SUSPENDED, OUTDATED]
+    StoreReport:
+      type: object
+      required: [store_id, gross_revenue_amount, net_revenue_amount, currency]
+      properties:
+        store_id:
+          type: string
+        bookings_count:
+          type: integer
+        completed_count:
+          type: integer
+        cancelled_count:
+          type: integer
+        no_show_count:
+          type: integer
+        gross_revenue_amount:
+          type: integer
+        net_revenue_amount:
+          type: integer
+        cash_amount:
+          type: integer
+        online_amount:
+          type: integer
+        deposit_amount:
+          type: integer
+        refund_amount:
+          type: integer
+        penalty_amount:
+          type: integer
+        platform_fee_amount:
+          type: integer
+        currency:
+          type: string
+    PlatformReport:
+      type: object
+      required: [users_count, stores_count, bookings_count, gmv_amount, platform_revenue_amount, currency]
+      properties:
+        users_count:
+          type: integer
+        stores_count:
+          type: integer
+        branches_count:
+          type: integer
+        assets_count:
+          type: integer
+        bookings_count:
+          type: integer
+        gmv_amount:
+          type: integer
+        platform_revenue_amount:
+          type: integer
+        currency:
+          type: string
+    CreateUserRequest:
+      type: object
+      required: [display_name, locale, accepted_terms_version, accepted_privacy_version]
+      properties:
+        display_name:
+          type: string
+        locale:
+          type: string
+          enum: [th, en]
+        accepted_terms_version:
+          type: string
+        accepted_privacy_version:
+          type: string
+        accepted_gps_version:
+          type: string
+        marketing_consent_version:
+          type: string
+    UpdateUserRequest:
+      type: object
+      required: [version]
+      properties:
+        display_name:
+          type: string
+        locale:
+          type: string
+          enum: [th, en]
+        version:
+          type: integer
+    CreateStoreRequest:
+      type: object
+      required: [legal_name, display_name, default_currency, timezone]
+      properties:
+        legal_name:
+          type: string
+        display_name:
+          type: string
+        default_currency:
+          type: string
+        timezone:
+          type: string
+    UpdateStoreRequest:
+      type: object
+      required: [version]
+      properties:
+        display_name:
+          type: string
+        description:
+          type: string
+        version:
+          type: integer
+    CreateBranchRequest:
+      type: object
+      required: [name, address, country, latitude, longitude]
+      properties:
+        name:
+          type: string
+        address:
+          type: string
+        country:
+          type: string
+        latitude:
+          type: number
+        longitude:
+          type: number
+        phone:
+          type: string
+        opening_hours:
+          type: object
+          additionalProperties: true
+    CreateStaffInvitationRequest:
+      type: object
+      required: [role]
+      properties:
+        role:
+          $ref: "#/components/schemas/Role"
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        branch_ids:
+          type: array
+          items:
+            type: string
+    UpdateStoreMemberRequest:
+      type: object
+      required: [version]
+      properties:
+        role:
+          $ref: "#/components/schemas/Role"
+        branch_ids:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+          enum: [ACTIVE, SUSPENDED]
+        version:
+          type: integer
+    CreateAssetRequest:
+      type: object
+      required: [store_id, branch_id, category_id, code, base_price, deposit_amount, currency]
+      properties:
+        store_id:
+          type: string
+        branch_id:
+          type: string
+        category_id:
+          type: string
+        code:
+          type: string
+        brand:
+          type: string
+        model:
+          type: string
+        base_price:
+          type: integer
+        deposit_amount:
+          type: integer
+        currency:
+          type: string
+    UpdateAssetRequest:
+      type: object
+      required: [version]
+      properties:
+        status:
+          type: string
+        base_price:
+          type: integer
+        deposit_amount:
+          type: integer
+        version:
+          type: integer
+    PricingQuoteRequest:
+      type: object
+      required: [asset_ids, start_at, end_at, payment_method]
+      properties:
+        asset_ids:
+          type: array
+          items:
+            type: string
+        equipment_ids:
+          type: array
+          items:
+            type: string
+        start_at:
+          $ref: "#/components/schemas/IsoDateTime"
+        end_at:
+          $ref: "#/components/schemas/IsoDateTime"
+        payment_method:
+          type: string
+          enum: [ONLINE, CASH]
+    PricingQuote:
+      type: object
+      required: [subtotal_amount, fee_amount, deposit_amount, discount_amount, total_amount, currency]
+      properties:
+        subtotal_amount:
+          type: integer
+        fee_amount:
+          type: integer
+        deposit_amount:
+          type: integer
+        discount_amount:
+          type: integer
+        total_amount:
+          type: integer
+        currency:
+          type: string
+        price_snapshot:
+          type: object
+          additionalProperties: true
+        policy_snapshot:
+          type: object
+          additionalProperties: true
+    CreateBookingRequest:
+      type: object
+      required: [store_id, branch_id, asset_ids, start_at, end_at, pickup_point_id, return_point_id, payment_method]
+      properties:
+        store_id:
+          type: string
+        branch_id:
+          type: string
+        asset_ids:
+          type: array
+          items:
+            type: string
+        equipment_ids:
+          type: array
+          items:
+            type: string
+        start_at:
+          $ref: "#/components/schemas/IsoDateTime"
+        end_at:
+          $ref: "#/components/schemas/IsoDateTime"
+        pickup_point_id:
+          type: string
+        return_point_id:
+          type: string
+        payment_method:
+          type: string
+          enum: [ONLINE, CASH]
+    CancelBookingRequest:
+      type: object
+      required: [reason, version]
+      properties:
+        reason:
+          type: string
+        version:
+          type: integer
+    CreatePaymentRequest:
+      type: object
+      required: [booking_id, method, amount, currency]
+      properties:
+        booking_id:
+          type: string
+        method:
+          type: string
+          enum: [GATEWAY, CASH]
+        amount:
+          type: integer
+        currency:
+          type: string
+    CashConfirmationRequest:
+      type: object
+      required: [amount, currency, receiver_user_id, branch_id]
+      properties:
+        amount:
+          type: integer
+        currency:
+          type: string
+        receiver_user_id:
+          type: string
+        branch_id:
+          type: string
+        notes:
+          type: string
+        evidence_image_ref:
+          type: string
+    HandoverRequest:
+      type: object
+      required: [staff_user_id, checklist_image_refs, condition_notes, version]
+      properties:
+        staff_user_id:
+          type: string
+        checklist_image_refs:
+          type: array
+          items:
+            type: string
+        condition_notes:
+          type: string
+        existing_damage_notes:
+          type: string
+        version:
+          type: integer
+    CreateRideSessionRequest:
+      type: object
+      required: [booking_id]
+      properties:
+        booking_id:
+          type: string
+    EndRideSessionRequest:
+      type: object
+      required: [ended_at, version]
+      properties:
+        ended_at:
+          $ref: "#/components/schemas/IsoDateTime"
+        version:
+          type: integer
+    CreateReturnRequest:
+      type: object
+      required: [booking_id, return_type, evidence_image_refs, location]
+      properties:
+        booking_id:
+          type: string
+        return_type:
+          type: string
+          enum: [STORE, DEFINED_POINT, STAFF_PICKUP]
+        return_point_id:
+          type: string
+        evidence_image_refs:
+          type: array
+          items:
+            type: string
+        location:
+          $ref: "#/components/schemas/Location"
+        notes:
+          type: string
+    CreateSosCaseRequest:
+      type: object
+      required: [booking_id, rental_id, asset_id, phone, location, issue_type]
+      properties:
+        booking_id:
+          type: string
+        rental_id:
+          type: string
+        asset_id:
+          type: string
+        phone:
+          type: string
+        location:
+          $ref: "#/components/schemas/Location"
+        issue_type:
+          type: string
+          enum: [BIKE_BROKEN, FLAT_TIRE, ACCIDENT, LOST, HEALTH, UNSAFE, OTHER]
+  examples:
+    UserSuccess:
+      value:
+        data:
+          id: usr_123
+          schema_version: 1
+          created_at: "2026-06-23T08:00:00Z"
+          updated_at: "2026-06-23T08:00:00Z"
+          version: 1
+          display_name: Demo Renter
+          locale: en
+          status: ACTIVE
+          roles: [RENTER]
+        meta:
+          request_id: req_123
+    StoreSuccess:
+      value:
+        data:
+          id: store_123
+          schema_version: 1
+          tenant_id: store_123
+          created_at: "2026-06-23T08:00:00Z"
+          updated_at: "2026-06-23T08:00:00Z"
+          version: 1
+          owner_user_id: usr_123
+          legal_name: Bike Local Demo Co.
+          display_name: Bike Local Demo
+          default_currency: THB
+          timezone: Asia/Bangkok
+          approval_status: DRAFT
+        meta:
+          request_id: req_123
+    BookingSuccess:
+      value:
+        data:
+          id: bkg_123
+          schema_version: 1
+          tenant_id: store_123
+          created_at: "2026-06-23T08:00:00Z"
+          updated_at: "2026-06-23T08:00:00Z"
+          version: 1
+          booking_number: BL-0001
+          user_id: usr_123
+          store_id: store_123
+          branch_id: brn_123
+          status: PENDING_PAYMENT
+          start_at: "2026-07-01T02:00:00Z"
+          end_at: "2026-07-01T06:00:00Z"
+          pickup_point_id: point_1
+          return_point_id: point_1
+          payment_method: ONLINE
+          currency: THB
+          subtotal_amount: 30000
+          fee_amount: 0
+          deposit_amount: 100000
+          discount_amount: 0
+          total_amount: 130000
+          booking_items: []
+        meta:
+          request_id: req_123
+    PaymentSuccess:
+      value:
+        data:
+          id: pay_123
+          schema_version: 1
+          tenant_id: store_123
+          created_at: "2026-06-23T08:00:00Z"
+          updated_at: "2026-06-23T08:00:00Z"
+          version: 1
+          booking_id: bkg_123
+          user_id: usr_123
+          store_id: store_123
+          method: GATEWAY
+          status: PROCESSING
+          amount: 130000
+          currency: THB
+          idempotency_key: idem_123
+        meta:
+          request_id: req_123
+    ReturnSuccess:
+      value:
+        data:
+          id: ret_123
+          schema_version: 1
+          tenant_id: store_123
+          created_at: "2026-06-23T08:00:00Z"
+          updated_at: "2026-06-23T08:00:00Z"
+          version: 1
+          booking_id: bkg_123
+          user_id: usr_123
+          store_id: store_123
+          status: REQUESTED
+          return_type: STORE
+          requested_at: "2026-07-01T06:05:00Z"
+          evidence_image_refs: [storage://return/photo-1.jpg]
+        meta:
+          request_id: req_123
+    UnauthorizedError:
+      value:
+        error:
+          code: AUTH_INVALID_TOKEN
+          message: Authentication token is missing or invalid.
+          details: {}
+          request_id: req_123
+    ForbiddenError:
+      value:
+        error:
+          code: PERMISSION_DENIED
+          message: Actor does not have permission for this resource.
+          details:
+            permission: store.update
+          request_id: req_123
+    NotFoundError:
+      value:
+        error:
+          code: STORE_NOT_FOUND
+          message: Resource was not found.
+          details: {}
+          request_id: req_123
+    VersionConflictError:
+      value:
+        error:
+          code: BOOKING_VERSION_CONFLICT
+          message: Entity version has changed. Refresh and retry.
+          details:
+            expected_version: 3
+            current_version: 4
+          request_id: req_123
+    AssetUnavailableError:
+      value:
+        error:
+          code: BOOKING_ASSET_NOT_AVAILABLE
+          message: Asset is not available for the selected time range.
+          details:
+            asset_id: ast_123
+          request_id: req_123
+    ValidationError:
+      value:
+        error:
+          code: VALIDATION_INVALID_FIELD
+          message: Request validation failed.
+          details:
+            fields:
+              - field: start_at
+                message: start_at must be before end_at
+          request_id: req_123
+    RateLimitError:
+      value:
+        error:
+          code: RATE_LIMIT_EXCEEDED
+          message: Too many requests. Retry later.
+          details:
+            retry_after_seconds: 60
+          request_id: req_123
