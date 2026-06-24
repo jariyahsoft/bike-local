@@ -14,28 +14,28 @@ part 'return_request.g.dart';
 /// ReturnRequest
 ///
 /// Properties:
-/// * [id]
-/// * [schemaVersion]
-/// * [tenantId]
-/// * [createdAt]
-/// * [createdBy]
-/// * [updatedAt]
-/// * [updatedBy]
-/// * [deletedAt]
-/// * [version]
-/// * [bookingId]
-/// * [userId]
-/// * [storeId]
-/// * [branchId]
-/// * [status]
-/// * [returnType]
-/// * [returnPointId]
-/// * [requestedAt]
-/// * [location]
-/// * [evidenceImageRefs]
-/// * [notes]
-/// * [damageChargeAmount]
-/// * [currency]
+/// * [id] 
+/// * [schemaVersion] 
+/// * [tenantId] 
+/// * [createdAt] 
+/// * [createdBy] 
+/// * [updatedAt] 
+/// * [updatedBy] 
+/// * [deletedAt] 
+/// * [version] 
+/// * [bookingId] 
+/// * [userId] 
+/// * [storeId] 
+/// * [branchId] 
+/// * [status] 
+/// * [returnType] 
+/// * [returnPointId] 
+/// * [requestedAt] 
+/// * [location] 
+/// * [evidenceImageRefs] 
+/// * [notes] 
+/// * [damageChargeAmount] 
+/// * [currency] 
 @BuiltValue()
 abstract class ReturnRequest implements EntityBase, Built<ReturnRequest, ReturnRequestBuilder> {
   @BuiltValueField(wireName: r'branch_id')
@@ -483,3 +483,4 @@ class ReturnRequestReturnTypeEnum extends EnumClass {
   static BuiltSet<ReturnRequestReturnTypeEnum> get values => _$returnRequestReturnTypeEnumValues;
   static ReturnRequestReturnTypeEnum valueOf(String name) => _$returnRequestReturnTypeEnumValueOf(name);
 }
+

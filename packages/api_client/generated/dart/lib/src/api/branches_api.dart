@@ -25,13 +25,13 @@ class BranchesApi {
   const BranchesApi(this._dio, this._serializers);
 
   /// Create branch under a store.
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [storeId]
-  /// * [idempotencyKey]
-  /// * [createBranchRequest]
-  /// * [xCorrelationId]
+  /// * [storeId] 
+  /// * [idempotencyKey] 
+  /// * [createBranchRequest] 
+  /// * [xCorrelationId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -41,7 +41,7 @@ class BranchesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [InlineObject2] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<InlineObject2>> createBranch({
+  Future<Response<InlineObject2>> createBranch({ 
     required String storeId,
     required String idempotencyKey,
     required CreateBranchRequest createBranchRequest,
@@ -139,12 +139,12 @@ class BranchesApi {
   }
 
   /// Create a pickup or return point for an active branch.
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [idempotencyKey]
-  /// * [createRentalPointRequest]
-  /// * [xCorrelationId]
+  /// * [idempotencyKey] 
+  /// * [createRentalPointRequest] 
+  /// * [xCorrelationId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -154,7 +154,7 @@ class BranchesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [CreateRentalPoint201Response] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<CreateRentalPoint201Response>> createRentalPoint({
+  Future<Response<CreateRentalPoint201Response>> createRentalPoint({ 
     required String idempotencyKey,
     required CreateRentalPointRequest createRentalPointRequest,
     String? xCorrelationId,
@@ -251,11 +251,11 @@ class BranchesApi {
   }
 
   /// Get branch by ID.
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [id]
-  /// * [xCorrelationId]
+  /// * [id] 
+  /// * [xCorrelationId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -265,7 +265,7 @@ class BranchesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [InlineObject2] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<InlineObject2>> getBranch({
+  Future<Response<InlineObject2>> getBranch({ 
     required String id,
     String? xCorrelationId,
     CancelToken? cancelToken,
@@ -340,12 +340,12 @@ class BranchesApi {
   }
 
   /// Update branch details or temporary closure state.
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [id]
-  /// * [updateBranchRequest]
-  /// * [xCorrelationId]
+  /// * [id] 
+  /// * [updateBranchRequest] 
+  /// * [xCorrelationId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -355,7 +355,7 @@ class BranchesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [InlineObject2] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<InlineObject2>> updateBranch({
+  Future<Response<InlineObject2>> updateBranch({ 
     required String id,
     required UpdateBranchRequest updateBranchRequest,
     String? xCorrelationId,

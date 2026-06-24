@@ -12,13 +12,13 @@ part 'create_asset_category_request.g.dart';
 /// CreateAssetCategoryRequest
 ///
 /// Properties:
-/// * [storeId]
-/// * [name]
-/// * [type]
-/// * [description]
+/// * [storeId] 
+/// * [name] 
+/// * [type] 
+/// * [description] 
 /// * [defaultBasePrice] - Integer minor units only.
 /// * [defaultDepositAmount] - Integer minor units only.
-/// * [currency]
+/// * [currency] 
 @BuiltValue()
 abstract class CreateAssetCategoryRequest implements Built<CreateAssetCategoryRequest, CreateAssetCategoryRequestBuilder> {
   @BuiltValueField(wireName: r'store_id')
@@ -224,3 +224,4 @@ class CreateAssetCategoryRequestTypeEnum extends EnumClass {
   static BuiltSet<CreateAssetCategoryRequestTypeEnum> get values => _$createAssetCategoryRequestTypeEnumValues;
   static CreateAssetCategoryRequestTypeEnum valueOf(String name) => _$createAssetCategoryRequestTypeEnumValueOf(name);
 }
+

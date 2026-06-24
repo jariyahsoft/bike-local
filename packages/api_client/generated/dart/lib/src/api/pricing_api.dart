@@ -23,11 +23,11 @@ class PricingApi {
   const PricingApi(this._dio, this._serializers);
 
   /// Calculate price and deposit quote before booking.
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [pricingQuoteRequest]
-  /// * [xCorrelationId]
+  /// * [pricingQuoteRequest] 
+  /// * [xCorrelationId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -37,7 +37,7 @@ class PricingApi {
   ///
   /// Returns a [Future] containing a [Response] with a [CreatePricingQuote200Response] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<CreatePricingQuote200Response>> createPricingQuote({
+  Future<Response<CreatePricingQuote200Response>> createPricingQuote({ 
     required PricingQuoteRequest pricingQuoteRequest,
     String? xCorrelationId,
     CancelToken? cancelToken,
@@ -132,12 +132,12 @@ class PricingApi {
   }
 
   /// Create a store, branch, or category pricing rule.
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [idempotencyKey]
-  /// * [createPricingRuleRequest]
-  /// * [xCorrelationId]
+  /// * [idempotencyKey] 
+  /// * [createPricingRuleRequest] 
+  /// * [xCorrelationId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -147,7 +147,7 @@ class PricingApi {
   ///
   /// Returns a [Future] containing a [Response] with a [CreatePricingRule201Response] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<CreatePricingRule201Response>> createPricingRule({
+  Future<Response<CreatePricingRule201Response>> createPricingRule({ 
     required String idempotencyKey,
     required CreatePricingRuleRequest createPricingRuleRequest,
     String? xCorrelationId,

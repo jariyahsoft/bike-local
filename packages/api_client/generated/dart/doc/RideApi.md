@@ -28,9 +28,9 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getRideApi();
-final String idempotencyKey = idem_01HV9X8D9N9HQ; // String |
-final CreateRideSessionRequest createRideSessionRequest = ; // CreateRideSessionRequest |
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
+final String idempotencyKey = idem_01HV9X8D9N9HQ; // String | 
+final CreateRideSessionRequest createRideSessionRequest = ; // CreateRideSessionRequest | 
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
 
 try {
     final response = api.createRideSession(idempotencyKey, createRideSessionRequest, xCorrelationId);
@@ -44,9 +44,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **idempotencyKey** | **String**|  |
- **createRideSessionRequest** | [**CreateRideSessionRequest**](CreateRideSessionRequest.md)|  |
- **xCorrelationId** | **String**|  | [optional]
+ **idempotencyKey** | **String**|  | 
+ **createRideSessionRequest** | [**CreateRideSessionRequest**](CreateRideSessionRequest.md)|  | 
+ **xCorrelationId** | **String**|  | [optional] 
 
 ### Return type
 
@@ -77,10 +77,10 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getRideApi();
-final String id = id_example; // String |
-final String idempotencyKey = idem_01HV9X8D9N9HQ; // String |
-final EndRideSessionRequest endRideSessionRequest = ; // EndRideSessionRequest |
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
+final String id = id_example; // String | 
+final String idempotencyKey = idem_01HV9X8D9N9HQ; // String | 
+final EndRideSessionRequest endRideSessionRequest = ; // EndRideSessionRequest | 
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
 
 try {
     final response = api.endRideSession(id, idempotencyKey, endRideSessionRequest, xCorrelationId);
@@ -94,10 +94,10 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **String**|  |
- **idempotencyKey** | **String**|  |
- **endRideSessionRequest** | [**EndRideSessionRequest**](EndRideSessionRequest.md)|  |
- **xCorrelationId** | **String**|  | [optional]
+ **id** | **String**|  | 
+ **idempotencyKey** | **String**|  | 
+ **endRideSessionRequest** | [**EndRideSessionRequest**](EndRideSessionRequest.md)|  | 
+ **xCorrelationId** | **String**|  | [optional] 
 
 ### Return type
 
@@ -128,10 +128,10 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getRideApi();
-final String id = id_example; // String |
-final String idempotencyKey = idem_01HV9X8D9N9HQ; // String |
-final UploadRideTrackChunkRequest uploadRideTrackChunkRequest = ; // UploadRideTrackChunkRequest |
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
+final String id = id_example; // String | 
+final String idempotencyKey = idem_01HV9X8D9N9HQ; // String | 
+final UploadRideTrackChunkRequest uploadRideTrackChunkRequest = ; // UploadRideTrackChunkRequest | 
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
 
 try {
     final response = api.uploadRideTrackChunk(id, idempotencyKey, uploadRideTrackChunkRequest, xCorrelationId);
@@ -145,10 +145,10 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **String**|  |
- **idempotencyKey** | **String**|  |
- **uploadRideTrackChunkRequest** | [**UploadRideTrackChunkRequest**](UploadRideTrackChunkRequest.md)|  |
- **xCorrelationId** | **String**|  | [optional]
+ **id** | **String**|  | 
+ **idempotencyKey** | **String**|  | 
+ **uploadRideTrackChunkRequest** | [**UploadRideTrackChunkRequest**](UploadRideTrackChunkRequest.md)|  | 
+ **xCorrelationId** | **String**|  | [optional] 
 
 ### Return type
 
@@ -164,3 +164,4 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+

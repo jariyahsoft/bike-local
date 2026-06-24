@@ -11,8 +11,8 @@ part 'account_deletion_request.g.dart';
 /// AccountDeletionRequest
 ///
 /// Properties:
-/// * [version]
-/// * [reason]
+/// * [version] 
+/// * [reason] 
 @BuiltValue()
 abstract class AccountDeletionRequest implements Built<AccountDeletionRequest, AccountDeletionRequestBuilder> {
   @BuiltValueField(wireName: r'version')
@@ -121,3 +121,4 @@ class _$AccountDeletionRequestSerializer implements PrimitiveSerializer<AccountD
     return result.build();
   }
 }
+

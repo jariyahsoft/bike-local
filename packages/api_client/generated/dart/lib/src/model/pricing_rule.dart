@@ -13,23 +13,23 @@ part 'pricing_rule.g.dart';
 /// PricingRule
 ///
 /// Properties:
-/// * [id]
-/// * [schemaVersion]
-/// * [tenantId]
-/// * [createdAt]
-/// * [createdBy]
-/// * [updatedAt]
-/// * [updatedBy]
-/// * [deletedAt]
-/// * [version]
-/// * [storeId]
-/// * [branchId]
-/// * [categoryId]
-/// * [type]
+/// * [id] 
+/// * [schemaVersion] 
+/// * [tenantId] 
+/// * [createdAt] 
+/// * [createdBy] 
+/// * [updatedAt] 
+/// * [updatedBy] 
+/// * [deletedAt] 
+/// * [version] 
+/// * [storeId] 
+/// * [branchId] 
+/// * [categoryId] 
+/// * [type] 
 /// * [amount] - Integer minor units only; percent discounts use whole percentage points.
-/// * [currency]
-/// * [priority]
-/// * [active]
+/// * [currency] 
+/// * [priority] 
+/// * [active] 
 @BuiltValue()
 abstract class PricingRule implements EntityBase, Built<PricingRule, PricingRuleBuilder> {
   @BuiltValueField(wireName: r'branch_id')
@@ -367,3 +367,4 @@ class PricingRuleTypeEnum extends EnumClass {
   static BuiltSet<PricingRuleTypeEnum> get values => _$pricingRuleTypeEnumValues;
   static PricingRuleTypeEnum valueOf(String name) => _$pricingRuleTypeEnumValueOf(name);
 }
+

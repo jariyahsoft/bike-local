@@ -23,13 +23,13 @@ class BookingApi {
   const BookingApi(this._dio, this._serializers);
 
   /// Cancel booking and calculate refund eligibility.
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [id]
-  /// * [idempotencyKey]
-  /// * [cancelBookingRequest]
-  /// * [xCorrelationId]
+  /// * [id] 
+  /// * [idempotencyKey] 
+  /// * [cancelBookingRequest] 
+  /// * [xCorrelationId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -39,7 +39,7 @@ class BookingApi {
   ///
   /// Returns a [Future] containing a [Response] with a [InlineObject4] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<InlineObject4>> cancelBooking({
+  Future<Response<InlineObject4>> cancelBooking({ 
     required String id,
     required String idempotencyKey,
     required CancelBookingRequest cancelBookingRequest,
@@ -137,12 +137,12 @@ class BookingApi {
   }
 
   /// Create booking with asset hold.
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [idempotencyKey]
-  /// * [createBookingRequest]
-  /// * [xCorrelationId]
+  /// * [idempotencyKey] 
+  /// * [createBookingRequest] 
+  /// * [xCorrelationId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -152,7 +152,7 @@ class BookingApi {
   ///
   /// Returns a [Future] containing a [Response] with a [InlineObject4] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<InlineObject4>> createBooking({
+  Future<Response<InlineObject4>> createBooking({ 
     required String idempotencyKey,
     required CreateBookingRequest createBookingRequest,
     String? xCorrelationId,
@@ -249,11 +249,11 @@ class BookingApi {
   }
 
   /// Get booking by ID.
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [id]
-  /// * [xCorrelationId]
+  /// * [id] 
+  /// * [xCorrelationId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -263,7 +263,7 @@ class BookingApi {
   ///
   /// Returns a [Future] containing a [Response] with a [InlineObject4] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<InlineObject4>> getBooking({
+  Future<Response<InlineObject4>> getBooking({ 
     required String id,
     String? xCorrelationId,
     CancelToken? cancelToken,

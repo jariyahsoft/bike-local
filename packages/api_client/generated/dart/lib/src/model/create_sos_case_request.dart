@@ -13,28 +13,24 @@ part 'create_sos_case_request.g.dart';
 /// CreateSosCaseRequest
 ///
 /// Properties:
-/// * [bookingId]
-/// * [rentalId]
-/// * [assetId]
-/// * [phone]
-/// * [location]
-/// * [issueType]
+/// * [bookingId] 
+/// * [rideSessionId] 
+/// * [phone] 
+/// * [latestLocation] 
+/// * [issueType] 
 @BuiltValue()
 abstract class CreateSosCaseRequest implements Built<CreateSosCaseRequest, CreateSosCaseRequestBuilder> {
   @BuiltValueField(wireName: r'booking_id')
   String get bookingId;
 
-  @BuiltValueField(wireName: r'rental_id')
-  String get rentalId;
-
-  @BuiltValueField(wireName: r'asset_id')
-  String get assetId;
+  @BuiltValueField(wireName: r'ride_session_id')
+  String? get rideSessionId;
 
   @BuiltValueField(wireName: r'phone')
   String get phone;
 
-  @BuiltValueField(wireName: r'location')
-  Location get location;
+  @BuiltValueField(wireName: r'latest_location')
+  Location get latestLocation;
 
   @BuiltValueField(wireName: r'issue_type')
   CreateSosCaseRequestIssueTypeEnum get issueType;
@@ -68,24 +64,21 @@ class _$CreateSosCaseRequestSerializer implements PrimitiveSerializer<CreateSosC
       object.bookingId,
       specifiedType: const FullType(String),
     );
-    yield r'rental_id';
-    yield serializers.serialize(
-      object.rentalId,
-      specifiedType: const FullType(String),
-    );
-    yield r'asset_id';
-    yield serializers.serialize(
-      object.assetId,
-      specifiedType: const FullType(String),
-    );
+    if (object.rideSessionId != null) {
+      yield r'ride_session_id';
+      yield serializers.serialize(
+        object.rideSessionId,
+        specifiedType: const FullType(String),
+      );
+    }
     yield r'phone';
     yield serializers.serialize(
       object.phone,
       specifiedType: const FullType(String),
     );
-    yield r'location';
+    yield r'latest_location';
     yield serializers.serialize(
-      object.location,
+      object.latestLocation,
       specifiedType: const FullType(Location),
     );
     yield r'issue_type';
@@ -123,19 +116,12 @@ class _$CreateSosCaseRequestSerializer implements PrimitiveSerializer<CreateSosC
           ) as String;
           result.bookingId = valueDes;
           break;
-        case r'rental_id':
+        case r'ride_session_id':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(String),
           ) as String;
-          result.rentalId = valueDes;
-          break;
-        case r'asset_id':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.assetId = valueDes;
+          result.rideSessionId = valueDes;
           break;
         case r'phone':
           final valueDes = serializers.deserialize(
@@ -144,12 +130,12 @@ class _$CreateSosCaseRequestSerializer implements PrimitiveSerializer<CreateSosC
           ) as String;
           result.phone = valueDes;
           break;
-        case r'location':
+        case r'latest_location':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(Location),
           ) as Location;
-          result.location.replace(valueDes);
+          result.latestLocation.replace(valueDes);
           break;
         case r'issue_type':
           final valueDes = serializers.deserialize(
@@ -211,3 +197,4 @@ class CreateSosCaseRequestIssueTypeEnum extends EnumClass {
   static BuiltSet<CreateSosCaseRequestIssueTypeEnum> get values => _$createSosCaseRequestIssueTypeEnumValues;
   static CreateSosCaseRequestIssueTypeEnum valueOf(String name) => _$createSosCaseRequestIssueTypeEnumValueOf(name);
 }
+

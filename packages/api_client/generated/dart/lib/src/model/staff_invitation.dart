@@ -13,16 +13,16 @@ part 'staff_invitation.g.dart';
 /// StaffInvitation
 ///
 /// Properties:
-/// * [id]
-/// * [storeId]
-/// * [role]
-/// * [channel]
-/// * [phone]
-/// * [email]
+/// * [id] 
+/// * [storeId] 
+/// * [role] 
+/// * [channel] 
+/// * [phone] 
+/// * [email] 
 /// * [inviteLinkHint] - Masked invitation link/QR reference; raw invitation secrets are never returned.
-/// * [branchIds]
-/// * [permissionOverrides]
-/// * [status]
+/// * [branchIds] 
+/// * [permissionOverrides] 
+/// * [status] 
 @BuiltValue()
 abstract class StaffInvitation implements Built<StaffInvitation, StaffInvitationBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -297,3 +297,4 @@ class StaffInvitationStatusEnum extends EnumClass {
   static BuiltSet<StaffInvitationStatusEnum> get values => _$staffInvitationStatusEnumValues;
   static StaffInvitationStatusEnum valueOf(String name) => _$staffInvitationStatusEnumValueOf(name);
 }
+

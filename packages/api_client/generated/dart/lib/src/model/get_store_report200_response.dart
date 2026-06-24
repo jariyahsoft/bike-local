@@ -14,8 +14,8 @@ part 'get_store_report200_response.g.dart';
 /// GetStoreReport200Response
 ///
 /// Properties:
-/// * [data]
-/// * [meta]
+/// * [data] 
+/// * [meta] 
 @BuiltValue()
 abstract class GetStoreReport200Response implements SuccessEnvelope, Built<GetStoreReport200Response, GetStoreReport200ResponseBuilder> {
   GetStoreReport200Response._();
@@ -117,3 +117,4 @@ class _$GetStoreReport200ResponseSerializer implements PrimitiveSerializer<GetSt
     return result.build();
   }
 }
+

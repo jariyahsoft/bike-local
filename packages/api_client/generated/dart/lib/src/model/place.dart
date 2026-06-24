@@ -15,21 +15,30 @@ part 'place.g.dart';
 /// Place
 ///
 /// Properties:
-/// * [id]
-/// * [schemaVersion]
-/// * [tenantId]
-/// * [createdAt]
-/// * [createdBy]
-/// * [updatedAt]
-/// * [updatedBy]
-/// * [deletedAt]
-/// * [version]
-/// * [name]
-/// * [placeType]
-/// * [location]
-/// * [status]
+/// * [id] 
+/// * [schemaVersion] 
+/// * [tenantId] 
+/// * [createdAt] 
+/// * [createdBy] 
+/// * [updatedAt] 
+/// * [updatedBy] 
+/// * [deletedAt] 
+/// * [version] 
+/// * [submittedByUserId] 
+/// * [storeId] 
+/// * [branchId] 
+/// * [name] 
+/// * [placeType] 
+/// * [location] 
+/// * [status] 
 @BuiltValue()
 abstract class Place implements EntityBase, Built<Place, PlaceBuilder> {
+  @BuiltValueField(wireName: r'submitted_by_user_id')
+  String get submittedByUserId;
+
+  @BuiltValueField(wireName: r'branch_id')
+  String? get branchId;
+
   @BuiltValueField(wireName: r'place_type')
   PlacePlaceTypeEnum get placeType;
   // enum placeTypeEnum {  CHECK_IN,  VIEWPOINT,  CAFE,  RESTAURANT,  REPAIR_POINT,  WATER_POINT,  TOILET,  HAZARD,  TOURIST_ATTRACTION,  };
@@ -39,6 +48,9 @@ abstract class Place implements EntityBase, Built<Place, PlaceBuilder> {
 
   @BuiltValueField(wireName: r'location')
   Location get location;
+
+  @BuiltValueField(wireName: r'store_id')
+  String? get storeId;
 
   @BuiltValueField(wireName: r'status')
   ContentApprovalStatus get status;
@@ -67,6 +79,13 @@ class _$PlaceSerializer implements PrimitiveSerializer<Place> {
     Place object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
+    if (object.branchId != null) {
+      yield r'branch_id';
+      yield serializers.serialize(
+        object.branchId,
+        specifiedType: const FullType(String),
+      );
+    }
     yield r'schema_version';
     yield serializers.serialize(
       object.schemaVersion,
@@ -79,10 +98,22 @@ class _$PlaceSerializer implements PrimitiveSerializer<Place> {
         specifiedType: const FullType(String),
       );
     }
+    if (object.storeId != null) {
+      yield r'store_id';
+      yield serializers.serialize(
+        object.storeId,
+        specifiedType: const FullType(String),
+      );
+    }
     yield r'version';
     yield serializers.serialize(
       object.version,
       specifiedType: const FullType(int),
+    );
+    yield r'submitted_by_user_id';
+    yield serializers.serialize(
+      object.submittedByUserId,
+      specifiedType: const FullType(String),
     );
     yield r'created_at';
     yield serializers.serialize(
@@ -163,6 +194,13 @@ class _$PlaceSerializer implements PrimitiveSerializer<Place> {
       final key = serializedList[i] as String;
       final value = serializedList[i + 1];
       switch (key) {
+        case r'branch_id':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.branchId = valueDes;
+          break;
         case r'schema_version':
           final valueDes = serializers.deserialize(
             value,
@@ -177,12 +215,26 @@ class _$PlaceSerializer implements PrimitiveSerializer<Place> {
           ) as String;
           result.updatedBy = valueDes;
           break;
+        case r'store_id':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.storeId = valueDes;
+          break;
         case r'version':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(int),
           ) as int;
           result.version = valueDes;
+          break;
+        case r'submitted_by_user_id':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.submittedByUserId = valueDes;
           break;
         case r'created_at':
           final valueDes = serializers.deserialize(
@@ -311,3 +363,4 @@ class PlacePlaceTypeEnum extends EnumClass {
   static BuiltSet<PlacePlaceTypeEnum> get values => _$placePlaceTypeEnumValues;
   static PlacePlaceTypeEnum valueOf(String name) => _$placePlaceTypeEnumValueOf(name);
 }
+

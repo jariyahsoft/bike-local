@@ -22,12 +22,12 @@ class ReportsApi {
   const ReportsApi(this._dio, this._serializers);
 
   /// Get platform overview report.
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [from]
-  /// * [to]
-  /// * [xCorrelationId]
+  /// * [from] 
+  /// * [to] 
+  /// * [xCorrelationId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -37,7 +37,7 @@ class ReportsApi {
   ///
   /// Returns a [Future] containing a [Response] with a [GetPlatformReport200Response] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<GetPlatformReport200Response>> getPlatformReport({
+  Future<Response<GetPlatformReport200Response>> getPlatformReport({ 
     required DateTime from,
     required DateTime to,
     String? xCorrelationId,
@@ -119,13 +119,13 @@ class ReportsApi {
   }
 
   /// Get merchant rental and revenue report.
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [from]
-  /// * [to]
-  /// * [storeId]
-  /// * [xCorrelationId]
+  /// * [from] 
+  /// * [to] 
+  /// * [storeId] 
+  /// * [xCorrelationId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -135,7 +135,7 @@ class ReportsApi {
   ///
   /// Returns a [Future] containing a [Response] with a [GetStoreReport200Response] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<GetStoreReport200Response>> getStoreReport({
+  Future<Response<GetStoreReport200Response>> getStoreReport({ 
     required DateTime from,
     required DateTime to,
     String? storeId,

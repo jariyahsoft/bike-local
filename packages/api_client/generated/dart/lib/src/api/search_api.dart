@@ -22,17 +22,17 @@ class SearchApi {
   const SearchApi(this._dio, this._serializers);
 
   /// Search available assets by date/time and filters.
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [q]
-  /// * [storeId]
-  /// * [branchId]
-  /// * [startAt]
-  /// * [endAt]
-  /// * [limit]
-  /// * [cursor]
-  /// * [xCorrelationId]
+  /// * [q] 
+  /// * [storeId] 
+  /// * [branchId] 
+  /// * [startAt] 
+  /// * [endAt] 
+  /// * [limit] 
+  /// * [cursor] 
+  /// * [xCorrelationId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -42,7 +42,7 @@ class SearchApi {
   ///
   /// Returns a [Future] containing a [Response] with a [ListAssets200Response] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ListAssets200Response>> searchAssets({
+  Future<Response<ListAssets200Response>> searchAssets({ 
     String? q,
     String? storeId,
     String? branchId,
@@ -134,15 +134,15 @@ class SearchApi {
   }
 
   /// Search stores by text, location, and filters.
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [q]
-  /// * [latitude]
-  /// * [longitude]
-  /// * [limit]
-  /// * [cursor]
-  /// * [xCorrelationId]
+  /// * [q] 
+  /// * [latitude] 
+  /// * [longitude] 
+  /// * [limit] 
+  /// * [cursor] 
+  /// * [xCorrelationId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -152,7 +152,7 @@ class SearchApi {
   ///
   /// Returns a [Future] containing a [Response] with a [ListStores200Response] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ListStores200Response>> searchStores({
+  Future<Response<ListStores200Response>> searchStores({ 
     String? q,
     num? latitude,
     num? longitude,

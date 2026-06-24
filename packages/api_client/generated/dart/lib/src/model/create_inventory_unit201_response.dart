@@ -14,8 +14,8 @@ part 'create_inventory_unit201_response.g.dart';
 /// CreateInventoryUnit201Response
 ///
 /// Properties:
-/// * [data]
-/// * [meta]
+/// * [data] 
+/// * [meta] 
 @BuiltValue()
 abstract class CreateInventoryUnit201Response implements SuccessEnvelope, Built<CreateInventoryUnit201Response, CreateInventoryUnit201ResponseBuilder> {
   CreateInventoryUnit201Response._();
@@ -117,3 +117,4 @@ class _$CreateInventoryUnit201ResponseSerializer implements PrimitiveSerializer<
     return result.build();
   }
 }
+

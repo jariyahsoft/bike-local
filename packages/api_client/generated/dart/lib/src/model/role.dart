@@ -43,3 +43,4 @@ class Role extends EnumClass {
 ///
 /// Trigger mixin generation by writing a line like this one next to your enum.
 abstract class RoleMixin = Object with _$RoleMixin;
+

@@ -14,8 +14,8 @@ part 'create_asset_category201_response.g.dart';
 /// CreateAssetCategory201Response
 ///
 /// Properties:
-/// * [data]
-/// * [meta]
+/// * [data] 
+/// * [meta] 
 @BuiltValue()
 abstract class CreateAssetCategory201Response implements SuccessEnvelope, Built<CreateAssetCategory201Response, CreateAssetCategory201ResponseBuilder> {
   CreateAssetCategory201Response._();
@@ -117,3 +117,4 @@ class _$CreateAssetCategory201ResponseSerializer implements PrimitiveSerializer<
     return result.build();
   }
 }
+

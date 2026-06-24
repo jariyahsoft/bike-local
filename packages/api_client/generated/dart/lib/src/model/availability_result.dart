@@ -13,8 +13,8 @@ part 'availability_result.g.dart';
 /// AvailabilityResult
 ///
 /// Properties:
-/// * [available]
-/// * [conflicts]
+/// * [available] 
+/// * [conflicts] 
 @BuiltValue()
 abstract class AvailabilityResult implements Built<AvailabilityResult, AvailabilityResultBuilder> {
   @BuiltValueField(wireName: r'available')
@@ -121,3 +121,4 @@ class _$AvailabilityResultSerializer implements PrimitiveSerializer<Availability
     return result.build();
   }
 }
+

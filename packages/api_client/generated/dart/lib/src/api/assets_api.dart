@@ -32,11 +32,11 @@ class AssetsApi {
   const AssetsApi(this._dio, this._serializers);
 
   /// Check or reserve asset availability for a time range.
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [availabilityCheckRequest]
-  /// * [xCorrelationId]
+  /// * [availabilityCheckRequest] 
+  /// * [xCorrelationId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -46,7 +46,7 @@ class AssetsApi {
   ///
   /// Returns a [Future] containing a [Response] with a [CheckAvailability200Response] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<CheckAvailability200Response>> checkAvailability({
+  Future<Response<CheckAvailability200Response>> checkAvailability({ 
     required AvailabilityCheckRequest availabilityCheckRequest,
     String? xCorrelationId,
     CancelToken? cancelToken,
@@ -141,12 +141,12 @@ class AssetsApi {
   }
 
   /// Create rentable asset.
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [idempotencyKey]
-  /// * [createAssetRequest]
-  /// * [xCorrelationId]
+  /// * [idempotencyKey] 
+  /// * [createAssetRequest] 
+  /// * [xCorrelationId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -156,7 +156,7 @@ class AssetsApi {
   ///
   /// Returns a [Future] containing a [Response] with a [InlineObject3] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<InlineObject3>> createAsset({
+  Future<Response<InlineObject3>> createAsset({ 
     required String idempotencyKey,
     required CreateAssetRequest createAssetRequest,
     String? xCorrelationId,
@@ -253,12 +253,12 @@ class AssetsApi {
   }
 
   /// Create an asset category with default pricing and deposit.
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [idempotencyKey]
-  /// * [createAssetCategoryRequest]
-  /// * [xCorrelationId]
+  /// * [idempotencyKey] 
+  /// * [createAssetCategoryRequest] 
+  /// * [xCorrelationId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -268,7 +268,7 @@ class AssetsApi {
   ///
   /// Returns a [Future] containing a [Response] with a [CreateAssetCategory201Response] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<CreateAssetCategory201Response>> createAssetCategory({
+  Future<Response<CreateAssetCategory201Response>> createAssetCategory({ 
     required String idempotencyKey,
     required CreateAssetCategoryRequest createAssetCategoryRequest,
     String? xCorrelationId,
@@ -365,12 +365,12 @@ class AssetsApi {
   }
 
   /// Create rentable or bundled equipment.
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [idempotencyKey]
-  /// * [createEquipmentItemRequest]
-  /// * [xCorrelationId]
+  /// * [idempotencyKey] 
+  /// * [createEquipmentItemRequest] 
+  /// * [xCorrelationId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -380,7 +380,7 @@ class AssetsApi {
   ///
   /// Returns a [Future] containing a [Response] with a [CreateEquipmentItem201Response] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<CreateEquipmentItem201Response>> createEquipmentItem({
+  Future<Response<CreateEquipmentItem201Response>> createEquipmentItem({ 
     required String idempotencyKey,
     required CreateEquipmentItemRequest createEquipmentItemRequest,
     String? xCorrelationId,
@@ -477,12 +477,12 @@ class AssetsApi {
   }
 
   /// Create an inventory unit for asset or equipment stock tracking.
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [idempotencyKey]
-  /// * [createInventoryUnitRequest]
-  /// * [xCorrelationId]
+  /// * [idempotencyKey] 
+  /// * [createInventoryUnitRequest] 
+  /// * [xCorrelationId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -492,7 +492,7 @@ class AssetsApi {
   ///
   /// Returns a [Future] containing a [Response] with a [CreateInventoryUnit201Response] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<CreateInventoryUnit201Response>> createInventoryUnit({
+  Future<Response<CreateInventoryUnit201Response>> createInventoryUnit({ 
     required String idempotencyKey,
     required CreateInventoryUnitRequest createInventoryUnitRequest,
     String? xCorrelationId,
@@ -589,14 +589,14 @@ class AssetsApi {
   }
 
   /// List assets by allowed filters.
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [storeId]
-  /// * [branchId]
-  /// * [limit]
-  /// * [cursor]
-  /// * [xCorrelationId]
+  /// * [storeId] 
+  /// * [branchId] 
+  /// * [limit] 
+  /// * [cursor] 
+  /// * [xCorrelationId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -606,7 +606,7 @@ class AssetsApi {
   ///
   /// Returns a [Future] containing a [Response] with a [ListAssets200Response] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ListAssets200Response>> listAssets({
+  Future<Response<ListAssets200Response>> listAssets({ 
     String? storeId,
     String? branchId,
     int? limit = 20,
@@ -692,12 +692,12 @@ class AssetsApi {
   }
 
   /// Update asset data or status.
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [id]
-  /// * [updateAssetRequest]
-  /// * [xCorrelationId]
+  /// * [id] 
+  /// * [updateAssetRequest] 
+  /// * [xCorrelationId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -707,7 +707,7 @@ class AssetsApi {
   ///
   /// Returns a [Future] containing a [Response] with a [InlineObject3] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<InlineObject3>> updateAsset({
+  Future<Response<InlineObject3>> updateAsset({ 
     required String id,
     required UpdateAssetRequest updateAssetRequest,
     String? xCorrelationId,

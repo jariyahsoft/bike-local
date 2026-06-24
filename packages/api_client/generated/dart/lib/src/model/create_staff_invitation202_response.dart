@@ -14,8 +14,8 @@ part 'create_staff_invitation202_response.g.dart';
 /// CreateStaffInvitation202Response
 ///
 /// Properties:
-/// * [data]
-/// * [meta]
+/// * [data] 
+/// * [meta] 
 @BuiltValue()
 abstract class CreateStaffInvitation202Response implements SuccessEnvelope, Built<CreateStaffInvitation202Response, CreateStaffInvitation202ResponseBuilder> {
   CreateStaffInvitation202Response._();
@@ -117,3 +117,4 @@ class _$CreateStaffInvitation202ResponseSerializer implements PrimitiveSerialize
     return result.build();
   }
 }
+

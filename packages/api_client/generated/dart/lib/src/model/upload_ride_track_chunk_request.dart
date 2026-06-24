@@ -14,13 +14,13 @@ part 'upload_ride_track_chunk_request.g.dart';
 /// UploadRideTrackChunkRequest
 ///
 /// Properties:
-/// * [sequence]
-/// * [checksum]
-/// * [capturedFrom]
-/// * [capturedTo]
-/// * [locationConsentGranted]
-/// * [points]
-/// * [gaps]
+/// * [sequence] 
+/// * [checksum] 
+/// * [capturedFrom] 
+/// * [capturedTo] 
+/// * [locationConsentGranted] 
+/// * [points] 
+/// * [gaps] 
 @BuiltValue()
 abstract class UploadRideTrackChunkRequest implements Built<UploadRideTrackChunkRequest, UploadRideTrackChunkRequestBuilder> {
   @BuiltValueField(wireName: r'sequence')
@@ -204,3 +204,4 @@ class _$UploadRideTrackChunkRequestSerializer implements PrimitiveSerializer<Upl
     return result.build();
   }
 }
+

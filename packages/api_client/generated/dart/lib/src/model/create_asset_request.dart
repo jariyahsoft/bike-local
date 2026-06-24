@@ -12,24 +12,24 @@ part 'create_asset_request.g.dart';
 /// CreateAssetRequest
 ///
 /// Properties:
-/// * [storeId]
-/// * [branchId]
-/// * [categoryId]
-/// * [code]
+/// * [storeId] 
+/// * [branchId] 
+/// * [categoryId] 
+/// * [code] 
 /// * [qrTokenReference] - Opaque token reference only; raw long-lived QR token values must not be stored.
-/// * [brand]
-/// * [model]
-/// * [color]
-/// * [size]
-/// * [description]
+/// * [brand] 
+/// * [model] 
+/// * [color] 
+/// * [size] 
+/// * [description] 
 /// * [basePrice] - Integer minor units only.
 /// * [depositAmount] - Integer minor units only.
-/// * [currency]
-/// * [currentPointId]
-/// * [images]
-/// * [cashAccepted]
-/// * [differentReturnAllowed]
-/// * [equipmentIds]
+/// * [currency] 
+/// * [currentPointId] 
+/// * [images] 
+/// * [cashAccepted] 
+/// * [differentReturnAllowed] 
+/// * [equipmentIds] 
 @BuiltValue()
 abstract class CreateAssetRequest implements Built<CreateAssetRequest, CreateAssetRequestBuilder> {
   @BuiltValueField(wireName: r'store_id')
@@ -401,3 +401,4 @@ class _$CreateAssetRequestSerializer implements PrimitiveSerializer<CreateAssetR
     return result.build();
   }
 }
+

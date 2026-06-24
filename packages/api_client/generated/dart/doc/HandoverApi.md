@@ -26,10 +26,10 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getHandoverApi();
-final String id = id_example; // String |
-final String idempotencyKey = idem_01HV9X8D9N9HQ; // String |
-final HandoverRequest handoverRequest = ; // HandoverRequest |
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
+final String id = id_example; // String | 
+final String idempotencyKey = idem_01HV9X8D9N9HQ; // String | 
+final HandoverRequest handoverRequest = ; // HandoverRequest | 
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
 
 try {
     final response = api.handoverBooking(id, idempotencyKey, handoverRequest, xCorrelationId);
@@ -43,10 +43,10 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **String**|  |
- **idempotencyKey** | **String**|  |
- **handoverRequest** | [**HandoverRequest**](HandoverRequest.md)|  |
- **xCorrelationId** | **String**|  | [optional]
+ **id** | **String**|  | 
+ **idempotencyKey** | **String**|  | 
+ **handoverRequest** | [**HandoverRequest**](HandoverRequest.md)|  | 
+ **xCorrelationId** | **String**|  | [optional] 
 
 ### Return type
 
@@ -62,3 +62,4 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+

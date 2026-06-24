@@ -12,13 +12,13 @@ part 'create_pricing_rule_request.g.dart';
 /// CreatePricingRuleRequest
 ///
 /// Properties:
-/// * [storeId]
-/// * [branchId]
-/// * [categoryId]
-/// * [type]
+/// * [storeId] 
+/// * [branchId] 
+/// * [categoryId] 
+/// * [type] 
 /// * [amount] - Integer minor units only; percent discounts use whole percentage points.
-/// * [currency]
-/// * [priority]
+/// * [currency] 
+/// * [priority] 
 @BuiltValue()
 abstract class CreatePricingRuleRequest implements Built<CreatePricingRuleRequest, CreatePricingRuleRequestBuilder> {
   @BuiltValueField(wireName: r'store_id')
@@ -227,3 +227,4 @@ class CreatePricingRuleRequestTypeEnum extends EnumClass {
   static BuiltSet<CreatePricingRuleRequestTypeEnum> get values => _$createPricingRuleRequestTypeEnumValues;
   static CreatePricingRuleRequestTypeEnum valueOf(String name) => _$createPricingRuleRequestTypeEnumValueOf(name);
 }
+

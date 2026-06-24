@@ -12,14 +12,14 @@ part 'store_document_metadata.g.dart';
 /// StoreDocumentMetadata
 ///
 /// Properties:
-/// * [id]
-/// * [type]
+/// * [id] 
+/// * [type] 
 /// * [storageObjectRef] - Storage object reference only; clients must not send raw document bytes through this API.
-/// * [fileName]
-/// * [contentType]
-/// * [sizeBytes]
-/// * [status]
-/// * [uploadedAt]
+/// * [fileName] 
+/// * [contentType] 
+/// * [sizeBytes] 
+/// * [status] 
+/// * [uploadedAt] 
 @BuiltValue()
 abstract class StoreDocumentMetadata implements Built<StoreDocumentMetadata, StoreDocumentMetadataBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -257,3 +257,4 @@ class StoreDocumentMetadataStatusEnum extends EnumClass {
   static BuiltSet<StoreDocumentMetadataStatusEnum> get values => _$storeDocumentMetadataStatusEnumValues;
   static StoreDocumentMetadataStatusEnum valueOf(String name) => _$storeDocumentMetadataStatusEnumValueOf(name);
 }
+

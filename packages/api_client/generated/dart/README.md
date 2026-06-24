@@ -49,8 +49,8 @@ import 'package:bike_local_generated_api_client/bike_local_generated_api_client.
 
 
 final api = BikeLocalGeneratedApiClient().getAssetsApi();
-final AvailabilityCheckRequest availabilityCheckRequest = ; // AvailabilityCheckRequest |
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
+final AvailabilityCheckRequest availabilityCheckRequest = ; // AvailabilityCheckRequest | 
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
 
 try {
     final response = await api.checkAvailability(availabilityCheckRequest, xCorrelationId);
@@ -84,12 +84,19 @@ Class | Method | HTTP request | Description
 [*BranchesApi*](doc/BranchesApi.md) | [**updateBranch**](doc/BranchesApi.md#updatebranch) | **PATCH** /branches/{id} | Update branch details or temporary closure state.
 [*ContentApi*](doc/ContentApi.md) | [**approveContentSubmission**](doc/ContentApi.md#approvecontentsubmission) | **POST** /content-submissions/{id}/approve | Approve route/place/review content.
 [*ContentApi*](doc/ContentApi.md) | [**createPlace**](doc/ContentApi.md#createplace) | **POST** /places | Submit place content for approval.
+[*ContentApi*](doc/ContentApi.md) | [**createReview**](doc/ContentApi.md#createreview) | **POST** /reviews | Create a review from the renter&#39;s completed booking.
 [*ContentApi*](doc/ContentApi.md) | [**createRoute**](doc/ContentApi.md#createroute) | **POST** /routes | Submit route content for approval.
+[*ContentApi*](doc/ContentApi.md) | [**hideReview**](doc/ContentApi.md#hidereview) | **POST** /reviews/{id}/hide | Hide a review with a moderation reason.
+[*ContentApi*](doc/ContentApi.md) | [**rejectContentSubmission**](doc/ContentApi.md#rejectcontentsubmission) | **POST** /content-submissions/{id}/reject | Reject route/place/review content.
+[*ContentApi*](doc/ContentApi.md) | [**reportContent**](doc/ContentApi.md#reportcontent) | **POST** /content-reports | Report unsafe, wrong, outdated, or abusive public content.
 [*HandoverApi*](doc/HandoverApi.md) | [**handoverBooking**](doc/HandoverApi.md#handoverbooking) | **POST** /bookings/{id}/handover | Perform handover checklist and start rental.
 [*IdentityApi*](doc/IdentityApi.md) | [**createUser**](doc/IdentityApi.md#createuser) | **POST** /users | Create a domain user profile, link the authenticated identity, and record onboarding consent.
 [*IdentityApi*](doc/IdentityApi.md) | [**getMe**](doc/IdentityApi.md#getme) | **GET** /me | Get current user profile and auth identities.
 [*IdentityApi*](doc/IdentityApi.md) | [**requestAccountDeletion**](doc/IdentityApi.md#requestaccountdeletion) | **POST** /me/deletion-request | Request account deletion while retaining legally required transactional and audit records.
 [*IdentityApi*](doc/IdentityApi.md) | [**updateMe**](doc/IdentityApi.md#updateme) | **PATCH** /me | Update the current user profile, add onboarding roles, and append consent records.
+[*NotificationsApi*](doc/NotificationsApi.md) | [**listNotifications**](doc/NotificationsApi.md#listnotifications) | **GET** /notifications | List inbox notifications for the signed-in user.
+[*NotificationsApi*](doc/NotificationsApi.md) | [**markNotificationRead**](doc/NotificationsApi.md#marknotificationread) | **POST** /notifications/{id}/read | Mark a notification as read by its recipient.
+[*NotificationsApi*](doc/NotificationsApi.md) | [**registerNotificationDevice**](doc/NotificationsApi.md#registernotificationdevice) | **POST** /notification-devices | Register or refresh an FCM device token reference for the signed-in user.
 [*PaymentApi*](doc/PaymentApi.md) | [**confirmCashPayment**](doc/PaymentApi.md#confirmcashpayment) | **POST** /bookings/{id}/cash-confirmations | Confirm cash payment by authorized staff.
 [*PaymentApi*](doc/PaymentApi.md) | [**createPayment**](doc/PaymentApi.md#createpayment) | **POST** /payments | Create payment intent or cash payment record.
 [*PaymentApi*](doc/PaymentApi.md) | [**processPaymentWebhook**](doc/PaymentApi.md#processpaymentwebhook) | **POST** /payment-webhooks/{provider} | Process provider webhook with server-side verification.
@@ -103,7 +110,11 @@ Class | Method | HTTP request | Description
 [*RideApi*](doc/RideApi.md) | [**endRideSession**](doc/RideApi.md#endridesession) | **POST** /ride-sessions/{id}/end | End ride session without closing rental.
 [*RideApi*](doc/RideApi.md) | [**uploadRideTrackChunk**](doc/RideApi.md#uploadridetrackchunk) | **POST** /ride-sessions/{id}/chunks | Upload buffered GPS track chunk.
 [*SOSApi*](doc/SOSApi.md) | [**acknowledgeSosCase**](doc/SOSApi.md#acknowledgesoscase) | **POST** /sos-cases/{id}/acknowledge | Acknowledge SOS case by authorized staff.
+[*SOSApi*](doc/SOSApi.md) | [**assignSosCase**](doc/SOSApi.md#assignsoscase) | **POST** /sos-cases/{id}/assign | Assign SOS case to a store staff responder.
+[*SOSApi*](doc/SOSApi.md) | [**closeSosCase**](doc/SOSApi.md#closesoscase) | **POST** /sos-cases/{id}/close | Close SOS case after follow-up is complete.
 [*SOSApi*](doc/SOSApi.md) | [**createSosCase**](doc/SOSApi.md#createsoscase) | **POST** /sos-cases | Open SOS case during active ride.
+[*SOSApi*](doc/SOSApi.md) | [**resolveSosCase**](doc/SOSApi.md#resolvesoscase) | **POST** /sos-cases/{id}/resolve | Resolve SOS case with closure notes.
+[*SOSApi*](doc/SOSApi.md) | [**startSosCase**](doc/SOSApi.md#startsoscase) | **POST** /sos-cases/{id}/start | Mark an assigned SOS case as being actively handled.
 [*SearchApi*](doc/SearchApi.md) | [**searchAssets**](doc/SearchApi.md#searchassets) | **GET** /search/assets | Search available assets by date/time and filters.
 [*SearchApi*](doc/SearchApi.md) | [**searchStores**](doc/SearchApi.md#searchstores) | **GET** /search/stores | Search stores by text, location, and filters.
 [*StaffApi*](doc/StaffApi.md) | [**createStaffInvitation**](doc/StaffApi.md#createstaffinvitation) | **POST** /stores/{store_id}/staff-invitations | Invite staff to a store.
@@ -118,10 +129,10 @@ Class | Method | HTTP request | Description
 ## Documentation For Models
 
  - [AccountDeletionRequest](doc/AccountDeletionRequest.md)
- - [ApproveContentSubmission200Response](doc/ApproveContentSubmission200Response.md)
  - [Asset](doc/Asset.md)
  - [AssetCategory](doc/AssetCategory.md)
  - [AssetStatusTransition](doc/AssetStatusTransition.md)
+ - [AssignSosCaseRequest](doc/AssignSosCaseRequest.md)
  - [AuditLog](doc/AuditLog.md)
  - [AuthIdentity](doc/AuthIdentity.md)
  - [AvailabilityCheckRequest](doc/AvailabilityCheckRequest.md)
@@ -135,30 +146,34 @@ Class | Method | HTTP request | Description
  - [CancelBookingRequest](doc/CancelBookingRequest.md)
  - [CashConfirmationRequest](doc/CashConfirmationRequest.md)
  - [CheckAvailability200Response](doc/CheckAvailability200Response.md)
+ - [CloseSosCaseRequest](doc/CloseSosCaseRequest.md)
  - [ConsentStatus](doc/ConsentStatus.md)
  - [ConsentSummary](doc/ConsentSummary.md)
  - [ConsentType](doc/ConsentType.md)
  - [ContentApprovalStatus](doc/ContentApprovalStatus.md)
+ - [ContentReport](doc/ContentReport.md)
  - [ContentSubmission](doc/ContentSubmission.md)
  - [CreateAssetCategory201Response](doc/CreateAssetCategory201Response.md)
  - [CreateAssetCategoryRequest](doc/CreateAssetCategoryRequest.md)
  - [CreateAssetRequest](doc/CreateAssetRequest.md)
  - [CreateBookingRequest](doc/CreateBookingRequest.md)
  - [CreateBranchRequest](doc/CreateBranchRequest.md)
+ - [CreateContentReportRequest](doc/CreateContentReportRequest.md)
  - [CreateEquipmentItem201Response](doc/CreateEquipmentItem201Response.md)
  - [CreateEquipmentItemRequest](doc/CreateEquipmentItemRequest.md)
  - [CreateInventoryUnit201Response](doc/CreateInventoryUnit201Response.md)
  - [CreateInventoryUnitRequest](doc/CreateInventoryUnitRequest.md)
  - [CreatePaymentRequest](doc/CreatePaymentRequest.md)
- - [CreatePlace201Response](doc/CreatePlace201Response.md)
+ - [CreatePlaceRequest](doc/CreatePlaceRequest.md)
  - [CreatePricingQuote200Response](doc/CreatePricingQuote200Response.md)
  - [CreatePricingRule201Response](doc/CreatePricingRule201Response.md)
  - [CreatePricingRuleRequest](doc/CreatePricingRuleRequest.md)
  - [CreateRentalPoint201Response](doc/CreateRentalPoint201Response.md)
  - [CreateRentalPointRequest](doc/CreateRentalPointRequest.md)
  - [CreateReturnRequest](doc/CreateReturnRequest.md)
+ - [CreateReviewRequest](doc/CreateReviewRequest.md)
  - [CreateRideSessionRequest](doc/CreateRideSessionRequest.md)
- - [CreateRoute201Response](doc/CreateRoute201Response.md)
+ - [CreateRouteRequest](doc/CreateRouteRequest.md)
  - [CreateSosCaseRequest](doc/CreateSosCaseRequest.md)
  - [CreateStaffInvitation202Response](doc/CreateStaffInvitation202Response.md)
  - [CreateStaffInvitationRequest](doc/CreateStaffInvitationRequest.md)
@@ -177,8 +192,16 @@ Class | Method | HTTP request | Description
  - [GpsGap](doc/GpsGap.md)
  - [GpsPoint](doc/GpsPoint.md)
  - [HandoverRequest](doc/HandoverRequest.md)
+ - [HideReviewRequest](doc/HideReviewRequest.md)
  - [InlineObject](doc/InlineObject.md)
  - [InlineObject1](doc/InlineObject1.md)
+ - [InlineObject10](doc/InlineObject10.md)
+ - [InlineObject11](doc/InlineObject11.md)
+ - [InlineObject12](doc/InlineObject12.md)
+ - [InlineObject13](doc/InlineObject13.md)
+ - [InlineObject14](doc/InlineObject14.md)
+ - [InlineObject15](doc/InlineObject15.md)
+ - [InlineObject16](doc/InlineObject16.md)
  - [InlineObject2](doc/InlineObject2.md)
  - [InlineObject3](doc/InlineObject3.md)
  - [InlineObject4](doc/InlineObject4.md)
@@ -186,14 +209,22 @@ Class | Method | HTTP request | Description
  - [InlineObject6](doc/InlineObject6.md)
  - [InlineObject7](doc/InlineObject7.md)
  - [InlineObject8](doc/InlineObject8.md)
+ - [InlineObject9](doc/InlineObject9.md)
  - [InventoryUnit](doc/InventoryUnit.md)
  - [ListAssets200Response](doc/ListAssets200Response.md)
  - [ListAuditLogs200Response](doc/ListAuditLogs200Response.md)
  - [ListStores200Response](doc/ListStores200Response.md)
  - [Location](doc/Location.md)
  - [MarketingConsentInput](doc/MarketingConsentInput.md)
+ - [ModerateContentSubmissionRequest](doc/ModerateContentSubmissionRequest.md)
  - [Money](doc/Money.md)
  - [Notification](doc/Notification.md)
+ - [NotificationChannel](doc/NotificationChannel.md)
+ - [NotificationDeliveryStatus](doc/NotificationDeliveryStatus.md)
+ - [NotificationDevice](doc/NotificationDevice.md)
+ - [NotificationDevicePlatform](doc/NotificationDevicePlatform.md)
+ - [NotificationDeviceStatus](doc/NotificationDeviceStatus.md)
+ - [NotificationEventType](doc/NotificationEventType.md)
  - [OnboardingSelectableRole](doc/OnboardingSelectableRole.md)
  - [PaginationMeta](doc/PaginationMeta.md)
  - [Payment](doc/Payment.md)
@@ -204,16 +235,21 @@ Class | Method | HTTP request | Description
  - [PricingQuoteRequest](doc/PricingQuoteRequest.md)
  - [PricingRule](doc/PricingRule.md)
  - [ProcessPaymentWebhook202Response](doc/ProcessPaymentWebhook202Response.md)
+ - [RegisterNotificationDeviceRequest](doc/RegisterNotificationDeviceRequest.md)
  - [RentalPoint](doc/RentalPoint.md)
  - [RequiredConsentInput](doc/RequiredConsentInput.md)
+ - [ResolveSosCaseRequest](doc/ResolveSosCaseRequest.md)
  - [ResponseMeta](doc/ResponseMeta.md)
  - [ReturnInspection](doc/ReturnInspection.md)
  - [ReturnRequest](doc/ReturnRequest.md)
+ - [Review](doc/Review.md)
  - [RideSession](doc/RideSession.md)
  - [RideTrackChunk](doc/RideTrackChunk.md)
  - [Role](doc/Role.md)
  - [Route](doc/Route.md)
  - [SosCase](doc/SosCase.md)
+ - [SosCaseNoteRequest](doc/SosCaseNoteRequest.md)
+ - [SosTimelineEvent](doc/SosTimelineEvent.md)
  - [StaffInvitation](doc/StaffInvitation.md)
  - [Store](doc/Store.md)
  - [StoreApprovalDecisionRequest](doc/StoreApprovalDecisionRequest.md)
@@ -254,3 +290,6 @@ Authentication schemes defined for the API:
 
 
 ## Author
+
+
+

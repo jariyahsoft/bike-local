@@ -14,8 +14,8 @@ part 'create_rental_point201_response.g.dart';
 /// CreateRentalPoint201Response
 ///
 /// Properties:
-/// * [data]
-/// * [meta]
+/// * [data] 
+/// * [meta] 
 @BuiltValue()
 abstract class CreateRentalPoint201Response implements SuccessEnvelope, Built<CreateRentalPoint201Response, CreateRentalPoint201ResponseBuilder> {
   CreateRentalPoint201Response._();
@@ -117,3 +117,4 @@ class _$CreateRentalPoint201ResponseSerializer implements PrimitiveSerializer<Cr
     return result.build();
   }
 }
+

@@ -13,22 +13,22 @@ part 'rental_point.g.dart';
 /// RentalPoint
 ///
 /// Properties:
-/// * [id]
-/// * [schemaVersion]
-/// * [tenantId]
-/// * [createdAt]
-/// * [createdBy]
-/// * [updatedAt]
-/// * [updatedBy]
-/// * [deletedAt]
-/// * [version]
-/// * [storeId]
-/// * [branchId]
-/// * [name]
-/// * [latitude]
-/// * [longitude]
-/// * [geohash]
-/// * [status]
+/// * [id] 
+/// * [schemaVersion] 
+/// * [tenantId] 
+/// * [createdAt] 
+/// * [createdBy] 
+/// * [updatedAt] 
+/// * [updatedBy] 
+/// * [deletedAt] 
+/// * [version] 
+/// * [storeId] 
+/// * [branchId] 
+/// * [name] 
+/// * [latitude] 
+/// * [longitude] 
+/// * [geohash] 
+/// * [status] 
 @BuiltValue()
 abstract class RentalPoint implements EntityBase, Built<RentalPoint, RentalPointBuilder> {
   @BuiltValueField(wireName: r'branch_id')
@@ -344,3 +344,4 @@ class RentalPointStatusEnum extends EnumClass {
   static BuiltSet<RentalPointStatusEnum> get values => _$rentalPointStatusEnumValues;
   static RentalPointStatusEnum valueOf(String name) => _$rentalPointStatusEnumValueOf(name);
 }
+

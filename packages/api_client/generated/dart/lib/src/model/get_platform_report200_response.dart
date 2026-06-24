@@ -14,8 +14,8 @@ part 'get_platform_report200_response.g.dart';
 /// GetPlatformReport200Response
 ///
 /// Properties:
-/// * [data]
-/// * [meta]
+/// * [data] 
+/// * [meta] 
 @BuiltValue()
 abstract class GetPlatformReport200Response implements SuccessEnvelope, Built<GetPlatformReport200Response, GetPlatformReport200ResponseBuilder> {
   GetPlatformReport200Response._();
@@ -117,3 +117,4 @@ class _$GetPlatformReport200ResponseSerializer implements PrimitiveSerializer<Ge
     return result.build();
   }
 }
+

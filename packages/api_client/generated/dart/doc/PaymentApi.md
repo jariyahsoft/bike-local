@@ -28,10 +28,10 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getPaymentApi();
-final String id = id_example; // String |
-final String idempotencyKey = idem_01HV9X8D9N9HQ; // String |
-final CashConfirmationRequest cashConfirmationRequest = ; // CashConfirmationRequest |
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
+final String id = id_example; // String | 
+final String idempotencyKey = idem_01HV9X8D9N9HQ; // String | 
+final CashConfirmationRequest cashConfirmationRequest = ; // CashConfirmationRequest | 
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
 
 try {
     final response = api.confirmCashPayment(id, idempotencyKey, cashConfirmationRequest, xCorrelationId);
@@ -45,10 +45,10 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **String**|  |
- **idempotencyKey** | **String**|  |
- **cashConfirmationRequest** | [**CashConfirmationRequest**](CashConfirmationRequest.md)|  |
- **xCorrelationId** | **String**|  | [optional]
+ **id** | **String**|  | 
+ **idempotencyKey** | **String**|  | 
+ **cashConfirmationRequest** | [**CashConfirmationRequest**](CashConfirmationRequest.md)|  | 
+ **xCorrelationId** | **String**|  | [optional] 
 
 ### Return type
 
@@ -79,9 +79,9 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getPaymentApi();
-final String idempotencyKey = idem_01HV9X8D9N9HQ; // String |
-final CreatePaymentRequest createPaymentRequest = ; // CreatePaymentRequest |
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
+final String idempotencyKey = idem_01HV9X8D9N9HQ; // String | 
+final CreatePaymentRequest createPaymentRequest = ; // CreatePaymentRequest | 
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
 
 try {
     final response = api.createPayment(idempotencyKey, createPaymentRequest, xCorrelationId);
@@ -95,9 +95,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **idempotencyKey** | **String**|  |
- **createPaymentRequest** | [**CreatePaymentRequest**](CreatePaymentRequest.md)|  |
- **xCorrelationId** | **String**|  | [optional]
+ **idempotencyKey** | **String**|  | 
+ **createPaymentRequest** | [**CreatePaymentRequest**](CreatePaymentRequest.md)|  | 
+ **xCorrelationId** | **String**|  | [optional] 
 
 ### Return type
 
@@ -124,10 +124,10 @@ Process provider webhook with server-side verification.
 import 'package:bike_local_generated_api_client/api.dart';
 
 final api = BikeLocalGeneratedApiClient().getPaymentApi();
-final String provider = provider_example; // String |
-final String idempotencyKey = idem_01HV9X8D9N9HQ; // String |
-final BuiltMap<String, JsonObject> requestBody = Object; // BuiltMap<String, JsonObject> |
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
+final String provider = provider_example; // String | 
+final String idempotencyKey = idem_01HV9X8D9N9HQ; // String | 
+final BuiltMap<String, JsonObject> requestBody = Object; // BuiltMap<String, JsonObject> | 
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
 
 try {
     final response = api.processPaymentWebhook(provider, idempotencyKey, requestBody, xCorrelationId);
@@ -141,10 +141,10 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **provider** | **String**|  |
- **idempotencyKey** | **String**|  |
- **requestBody** | [**BuiltMap&lt;String, JsonObject&gt;**](JsonObject.md)|  |
- **xCorrelationId** | **String**|  | [optional]
+ **provider** | **String**|  | 
+ **idempotencyKey** | **String**|  | 
+ **requestBody** | [**BuiltMap&lt;String, JsonObject&gt;**](JsonObject.md)|  | 
+ **xCorrelationId** | **String**|  | [optional] 
 
 ### Return type
 
@@ -160,3 +160,4 @@ No authorization required
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+

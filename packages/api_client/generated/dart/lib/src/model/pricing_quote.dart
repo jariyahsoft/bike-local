@@ -13,14 +13,14 @@ part 'pricing_quote.g.dart';
 /// PricingQuote
 ///
 /// Properties:
-/// * [subtotalAmount]
-/// * [feeAmount]
-/// * [depositAmount]
-/// * [discountAmount]
-/// * [totalAmount]
-/// * [currency]
-/// * [priceSnapshot]
-/// * [policySnapshot]
+/// * [subtotalAmount] 
+/// * [feeAmount] 
+/// * [depositAmount] 
+/// * [discountAmount] 
+/// * [totalAmount] 
+/// * [currency] 
+/// * [priceSnapshot] 
+/// * [policySnapshot] 
 @BuiltValue()
 abstract class PricingQuote implements Built<PricingQuote, PricingQuoteBuilder> {
   @BuiltValueField(wireName: r'subtotal_amount')
@@ -221,3 +221,4 @@ class _$PricingQuoteSerializer implements PrimitiveSerializer<PricingQuote> {
     return result.build();
   }
 }
+

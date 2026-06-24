@@ -13,20 +13,20 @@ part 'deposit.g.dart';
 /// Deposit
 ///
 /// Properties:
-/// * [id]
-/// * [schemaVersion]
-/// * [tenantId]
-/// * [createdAt]
-/// * [createdBy]
-/// * [updatedAt]
-/// * [updatedBy]
-/// * [deletedAt]
-/// * [version]
-/// * [bookingId]
-/// * [status]
-/// * [amount]
-/// * [currency]
-/// * [deductedAmount]
+/// * [id] 
+/// * [schemaVersion] 
+/// * [tenantId] 
+/// * [createdAt] 
+/// * [createdBy] 
+/// * [updatedAt] 
+/// * [updatedBy] 
+/// * [deletedAt] 
+/// * [version] 
+/// * [bookingId] 
+/// * [status] 
+/// * [amount] 
+/// * [currency] 
+/// * [deductedAmount] 
 @BuiltValue()
 abstract class Deposit implements EntityBase, Built<Deposit, DepositBuilder> {
   @BuiltValueField(wireName: r'amount')
@@ -320,3 +320,4 @@ class DepositStatusEnum extends EnumClass {
   static BuiltSet<DepositStatusEnum> get values => _$depositStatusEnumValues;
   static DepositStatusEnum valueOf(String name) => _$depositStatusEnumValueOf(name);
 }
+

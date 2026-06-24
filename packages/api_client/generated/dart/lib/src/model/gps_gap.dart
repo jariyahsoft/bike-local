@@ -12,9 +12,9 @@ part 'gps_gap.g.dart';
 /// GpsGap
 ///
 /// Properties:
-/// * [from]
-/// * [to]
-/// * [reason]
+/// * [from] 
+/// * [to] 
+/// * [reason] 
 @BuiltValue()
 abstract class GpsGap implements Built<GpsGap, GpsGapBuilder> {
   @BuiltValueField(wireName: r'from')
@@ -156,3 +156,4 @@ class GpsGapReasonEnum extends EnumClass {
   static BuiltSet<GpsGapReasonEnum> get values => _$gpsGapReasonEnumValues;
   static GpsGapReasonEnum valueOf(String name) => _$gpsGapReasonEnumValueOf(name);
 }
+

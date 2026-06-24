@@ -11,10 +11,10 @@ part 'create_inventory_unit_request.g.dart';
 /// CreateInventoryUnitRequest
 ///
 /// Properties:
-/// * [storeId]
-/// * [branchId]
-/// * [assetId]
-/// * [equipmentItemId]
+/// * [storeId] 
+/// * [branchId] 
+/// * [assetId] 
+/// * [equipmentItemId] 
 @BuiltValue()
 abstract class CreateInventoryUnitRequest implements Built<CreateInventoryUnitRequest, CreateInventoryUnitRequestBuilder> {
   @BuiltValueField(wireName: r'store_id')
@@ -155,3 +155,4 @@ class _$CreateInventoryUnitRequestSerializer implements PrimitiveSerializer<Crea
     return result.build();
   }
 }
+

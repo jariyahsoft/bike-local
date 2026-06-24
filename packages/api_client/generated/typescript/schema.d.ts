@@ -620,6 +620,125 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/sos-cases/{id}/assign": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Assign SOS case to a store staff responder. */
+        post: operations["assignSosCase"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/sos-cases/{id}/start": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Mark an assigned SOS case as being actively handled. */
+        post: operations["startSosCase"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/sos-cases/{id}/resolve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Resolve SOS case with closure notes. */
+        post: operations["resolveSosCase"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/sos-cases/{id}/close": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Close SOS case after follow-up is complete. */
+        post: operations["closeSosCase"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/notification-devices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Register or refresh an FCM device token reference for the signed-in user. */
+        post: operations["registerNotificationDevice"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/notifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List inbox notifications for the signed-in user. */
+        get: operations["listNotifications"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/notifications/{id}/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Mark a notification as read by its recipient. */
+        post: operations["markNotificationRead"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/routes": {
         parameters: {
             query?: never;
@@ -665,6 +784,74 @@ export interface paths {
         put?: never;
         /** Approve route/place/review content. */
         post: operations["approveContentSubmission"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/content-submissions/{id}/reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reject route/place/review content. */
+        post: operations["rejectContentSubmission"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/reviews": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create a review from the renter's completed booking. */
+        post: operations["createReview"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/content-reports": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Report unsafe, wrong, outdated, or abusive public content. */
+        post: operations["reportContent"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/reviews/{id}/hide": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Hide a review with a moderation reason. */
+        post: operations["hideReview"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1159,24 +1346,59 @@ export interface components {
         SosCase: components["schemas"]["EntityBase"] & {
             user_id: string;
             booking_id: string;
-            rental_id: string;
+            ride_session_id: string;
             asset_id: string;
+            store_id: string;
+            branch_id: string;
             phone: string;
-            location: components["schemas"]["Location"];
+            latest_location: components["schemas"]["Location"];
             /** @enum {string} */
             issue_type: "BIKE_BROKEN" | "FLAT_TIRE" | "ACCIDENT" | "LOST" | "HEALTH" | "UNSAFE" | "OTHER";
             /** @enum {string} */
             status: "OPEN" | "ACKNOWLEDGED" | "ASSIGNED" | "IN_PROGRESS" | "RESOLVED" | "CLOSED";
+            disclaimer_text: string;
+            escalation_level: number;
             assigned_staff_user_id?: string;
+            timeline: components["schemas"]["SosTimelineEvent"][];
+        };
+        SosTimelineEvent: {
+            /** @enum {string} */
+            event_type: "OPENED" | "ACKNOWLEDGED" | "ESCALATED" | "ASSIGNED" | "STARTED" | "RESOLVED" | "CLOSED";
+            occurred_at: components["schemas"]["IsoDateTime"];
+            actor_user_id?: string;
+            notes?: string;
+            escalation_level?: number;
+        };
+        /** @enum {string} */
+        NotificationEventType: "BOOKING_CREATED" | "BOOKING_CONFIRMED" | "PAYMENT_COMPLETED" | "CASH_PAYMENT_SELECTED" | "STAFF_TASK_ASSIGNED" | "RENTAL_STARTED" | "RENTAL_NEAR_EXPIRY" | "RENTAL_OVERDUE" | "RETURN_REQUESTED" | "RETURN_ACCEPTED" | "SOS_OPENED" | "SOS_ASSIGNED" | "REFUND_COMPLETED";
+        /** @enum {string} */
+        NotificationDeliveryStatus: "QUEUED" | "SENT" | "DELIVERED" | "FAILED" | "READ";
+        /** @enum {string} */
+        NotificationChannel: "PUSH" | "INBOX";
+        /** @enum {string} */
+        NotificationDevicePlatform: "IOS" | "ANDROID" | "WEB";
+        /** @enum {string} */
+        NotificationDeviceStatus: "ACTIVE" | "REVOKED";
+        NotificationDevice: components["schemas"]["EntityBase"] & {
+            tenant_id: string;
+            user_id: string;
+            platform: components["schemas"]["NotificationDevicePlatform"];
+            device_id: string;
+            token_fingerprint: string;
+            status: components["schemas"]["NotificationDeviceStatus"];
+            last_seen_at: components["schemas"]["IsoDateTime"];
         };
         Notification: components["schemas"]["EntityBase"] & {
+            tenant_id: string;
             recipient_user_id: string;
-            type: string;
-            /** @enum {string} */
-            delivery_status: "QUEUED" | "SENT" | "DELIVERED" | "FAILED" | "READ";
-            payload?: {
+            type: components["schemas"]["NotificationEventType"];
+            channel: components["schemas"]["NotificationChannel"];
+            delivery_status: components["schemas"]["NotificationDeliveryStatus"];
+            payload: {
                 [key: string]: unknown;
             };
+            read_at?: components["schemas"]["IsoDateTime"];
+            last_delivery_attempt_at?: components["schemas"]["IsoDateTime"];
         };
         AuditLog: {
             id: string;
@@ -1200,6 +1422,10 @@ export interface components {
             accuracy_meters: number;
         };
         Route: components["schemas"]["EntityBase"] & {
+            tenant_id: string;
+            submitted_by_user_id: string;
+            store_id?: string;
+            branch_id?: string;
             name: string;
             description: string;
             start_location: components["schemas"]["Location"];
@@ -1208,10 +1434,14 @@ export interface components {
             difficulty: string;
             surface?: string;
             warning?: string;
-            suitable_bike_types?: string[];
+            suitable_bike_types: string[];
             status: components["schemas"]["ContentApprovalStatus"];
         };
         Place: components["schemas"]["EntityBase"] & {
+            tenant_id: string;
+            submitted_by_user_id: string;
+            store_id?: string;
+            branch_id?: string;
             name: string;
             /** @enum {string} */
             place_type: "CHECK_IN" | "VIEWPOINT" | "CAFE" | "RESTAURANT" | "REPAIR_POINT" | "WATER_POINT" | "TOILET" | "HAZARD" | "TOURIST_ATTRACTION";
@@ -1219,10 +1449,36 @@ export interface components {
             status: components["schemas"]["ContentApprovalStatus"];
         };
         ContentSubmission: components["schemas"]["EntityBase"] & {
+            tenant_id: string;
             /** @enum {string} */
             content_type: "ROUTE" | "PLACE" | "REVIEW";
             content_id: string;
+            submitted_by_user_id: string;
             status: components["schemas"]["ContentApprovalStatus"];
+            moderation_reason?: string;
+            moderated_by_user_id?: string;
+            moderated_at?: components["schemas"]["IsoDateTime"];
+        };
+        Review: components["schemas"]["EntityBase"] & {
+            tenant_id: string;
+            booking_id: string;
+            user_id: string;
+            store_id: string;
+            branch_id: string;
+            rating: number;
+            body: string;
+            status: components["schemas"]["ContentApprovalStatus"];
+            hidden_reason?: string;
+        };
+        ContentReport: components["schemas"]["EntityBase"] & {
+            tenant_id: string;
+            /** @enum {string} */
+            content_type: "ROUTE" | "PLACE" | "REVIEW";
+            content_id: string;
+            reported_by_user_id: string;
+            /** @enum {string} */
+            reason: "UNSAFE" | "WRONG" | "OUTDATED" | "ABUSE" | "OTHER";
+            notes?: string;
         };
         /** @enum {string} */
         ContentApprovalStatus: "DRAFT" | "SUBMITTED" | "UNDER_REVIEW" | "REVISION_REQUIRED" | "APPROVED" | "REJECTED" | "SUSPENDED" | "OUTDATED";
@@ -1537,12 +1793,69 @@ export interface components {
         };
         CreateSosCaseRequest: {
             booking_id: string;
-            rental_id: string;
-            asset_id: string;
+            ride_session_id?: string;
             phone: string;
-            location: components["schemas"]["Location"];
+            latest_location: components["schemas"]["Location"];
             /** @enum {string} */
             issue_type: "BIKE_BROKEN" | "FLAT_TIRE" | "ACCIDENT" | "LOST" | "HEALTH" | "UNSAFE" | "OTHER";
+        };
+        SosCaseNoteRequest: {
+            notes?: string;
+        };
+        AssignSosCaseRequest: {
+            assigned_staff_user_id: string;
+            notes?: string;
+        };
+        ResolveSosCaseRequest: {
+            notes: string;
+        };
+        CloseSosCaseRequest: {
+            notes: string;
+        };
+        RegisterNotificationDeviceRequest: {
+            platform: components["schemas"]["NotificationDevicePlatform"];
+            device_id: string;
+            fcm_token: string;
+        };
+        CreateRouteRequest: {
+            store_id: string;
+            branch_id?: string;
+            name: string;
+            description: string;
+            start_location: components["schemas"]["Location"];
+            end_location: components["schemas"]["Location"];
+            distance_meters: number;
+            difficulty: string;
+            surface?: string;
+            warning?: string;
+            suitable_bike_types?: string[];
+        };
+        CreatePlaceRequest: {
+            store_id: string;
+            branch_id?: string;
+            name: string;
+            /** @enum {string} */
+            place_type: "CHECK_IN" | "VIEWPOINT" | "CAFE" | "RESTAURANT" | "REPAIR_POINT" | "WATER_POINT" | "TOILET" | "HAZARD" | "TOURIST_ATTRACTION";
+            location: components["schemas"]["Location"];
+        };
+        ModerateContentSubmissionRequest: {
+            reason: string;
+        };
+        CreateReviewRequest: {
+            booking_id: string;
+            rating: number;
+            body: string;
+        };
+        CreateContentReportRequest: {
+            /** @enum {string} */
+            content_type: "ROUTE" | "PLACE" | "REVIEW";
+            content_id: string;
+            /** @enum {string} */
+            reason: "UNSAFE" | "WRONG" | "OUTDATED" | "ABUSE" | "OTHER";
+            notes?: string;
+        };
+        HideReviewRequest: {
+            reason: string;
         };
     };
     responses: {
@@ -1645,6 +1958,94 @@ export interface components {
                 };
             };
         };
+        /** @description Notification device response. */
+        NotificationDeviceSuccess: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["SuccessEnvelope"] & {
+                    data: components["schemas"]["NotificationDevice"];
+                };
+            };
+        };
+        /** @description Notification response. */
+        NotificationSuccess: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["SuccessEnvelope"] & {
+                    data: components["schemas"]["Notification"];
+                };
+            };
+        };
+        /** @description Notification inbox response. */
+        NotificationListSuccess: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["SuccessEnvelope"] & {
+                    data: components["schemas"]["Notification"][];
+                };
+            };
+        };
+        /** @description Route response. */
+        RouteSuccess: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["SuccessEnvelope"] & {
+                    data: components["schemas"]["Route"];
+                };
+            };
+        };
+        /** @description Place response. */
+        PlaceSuccess: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["SuccessEnvelope"] & {
+                    data: components["schemas"]["Place"];
+                };
+            };
+        };
+        /** @description Content submission response. */
+        ContentSubmissionSuccess: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["SuccessEnvelope"] & {
+                    data: components["schemas"]["ContentSubmission"];
+                };
+            };
+        };
+        /** @description Review response. */
+        ReviewSuccess: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["SuccessEnvelope"] & {
+                    data: components["schemas"]["Review"];
+                };
+            };
+        };
+        /** @description Content report response. */
+        ContentReportSuccess: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["SuccessEnvelope"] & {
+                    data: components["schemas"]["ContentReport"];
+                };
+            };
+        };
         /** @description Authentication required or invalid. */
         Unauthorized: {
             headers: {
@@ -1720,7 +2121,9 @@ export interface components {
         RideSessionIdPath: string;
         ReturnRequestIdPath: string;
         SosCaseIdPath: string;
+        NotificationIdPath: string;
         ContentSubmissionIdPath: string;
+        ReviewIdPath: string;
         StoreMemberIdPath: string;
         StoreIdQuery: string;
         BranchIdQuery: string;
@@ -2813,9 +3216,171 @@ export interface operations {
             };
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["SosCaseNoteRequest"];
+            };
+        };
         responses: {
             200: components["responses"]["SosCaseSuccess"];
+            403: components["responses"]["Forbidden"];
+        };
+    };
+    assignSosCase: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @example idem_01HV9X8D9N9HQ */
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+                /** @example req_01HV9X8D9N9HQ */
+                "X-Correlation-Id"?: components["parameters"]["CorrelationId"];
+            };
+            path: {
+                id: components["parameters"]["SosCaseIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AssignSosCaseRequest"];
+            };
+        };
+        responses: {
+            200: components["responses"]["SosCaseSuccess"];
+            403: components["responses"]["Forbidden"];
+            409: components["responses"]["VersionConflict"];
+        };
+    };
+    startSosCase: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @example idem_01HV9X8D9N9HQ */
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+                /** @example req_01HV9X8D9N9HQ */
+                "X-Correlation-Id"?: components["parameters"]["CorrelationId"];
+            };
+            path: {
+                id: components["parameters"]["SosCaseIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["SosCaseNoteRequest"];
+            };
+        };
+        responses: {
+            200: components["responses"]["SosCaseSuccess"];
+            403: components["responses"]["Forbidden"];
+            409: components["responses"]["VersionConflict"];
+        };
+    };
+    resolveSosCase: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @example idem_01HV9X8D9N9HQ */
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+                /** @example req_01HV9X8D9N9HQ */
+                "X-Correlation-Id"?: components["parameters"]["CorrelationId"];
+            };
+            path: {
+                id: components["parameters"]["SosCaseIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ResolveSosCaseRequest"];
+            };
+        };
+        responses: {
+            200: components["responses"]["SosCaseSuccess"];
+            403: components["responses"]["Forbidden"];
+            409: components["responses"]["VersionConflict"];
+        };
+    };
+    closeSosCase: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @example idem_01HV9X8D9N9HQ */
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+                /** @example req_01HV9X8D9N9HQ */
+                "X-Correlation-Id"?: components["parameters"]["CorrelationId"];
+            };
+            path: {
+                id: components["parameters"]["SosCaseIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CloseSosCaseRequest"];
+            };
+        };
+        responses: {
+            200: components["responses"]["SosCaseSuccess"];
+            403: components["responses"]["Forbidden"];
+            409: components["responses"]["VersionConflict"];
+        };
+    };
+    registerNotificationDevice: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @example idem_01HV9X8D9N9HQ */
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+                /** @example req_01HV9X8D9N9HQ */
+                "X-Correlation-Id"?: components["parameters"]["CorrelationId"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RegisterNotificationDeviceRequest"];
+            };
+        };
+        responses: {
+            201: components["responses"]["NotificationDeviceSuccess"];
+            422: components["responses"]["ValidationError"];
+        };
+    };
+    listNotifications: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @example req_01HV9X8D9N9HQ */
+                "X-Correlation-Id"?: components["parameters"]["CorrelationId"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["NotificationListSuccess"];
+            401: components["responses"]["Unauthorized"];
+        };
+    };
+    markNotificationRead: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @example idem_01HV9X8D9N9HQ */
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+                /** @example req_01HV9X8D9N9HQ */
+                "X-Correlation-Id"?: components["parameters"]["CorrelationId"];
+            };
+            path: {
+                id: components["parameters"]["NotificationIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["NotificationSuccess"];
             403: components["responses"]["Forbidden"];
         };
     };
@@ -2833,21 +3398,11 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["Route"];
+                "application/json": components["schemas"]["CreateRouteRequest"];
             };
         };
         responses: {
-            /** @description Route submitted. */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SuccessEnvelope"] & {
-                        data: components["schemas"]["Route"];
-                    };
-                };
-            };
+            201: components["responses"]["RouteSuccess"];
             422: components["responses"]["ValidationError"];
         };
     };
@@ -2865,21 +3420,11 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["Place"];
+                "application/json": components["schemas"]["CreatePlaceRequest"];
             };
         };
         responses: {
-            /** @description Place submitted. */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SuccessEnvelope"] & {
-                        data: components["schemas"]["Place"];
-                    };
-                };
-            };
+            201: components["responses"]["PlaceSuccess"];
             422: components["responses"]["ValidationError"];
         };
     };
@@ -2897,19 +3442,105 @@ export interface operations {
             };
             cookie?: never;
         };
-        requestBody?: never;
-        responses: {
-            /** @description Content approved. */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SuccessEnvelope"] & {
-                        data: components["schemas"]["ContentSubmission"];
-                    };
-                };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ModerateContentSubmissionRequest"];
             };
+        };
+        responses: {
+            200: components["responses"]["ContentSubmissionSuccess"];
+            403: components["responses"]["Forbidden"];
+        };
+    };
+    rejectContentSubmission: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @example idem_01HV9X8D9N9HQ */
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+                /** @example req_01HV9X8D9N9HQ */
+                "X-Correlation-Id"?: components["parameters"]["CorrelationId"];
+            };
+            path: {
+                id: components["parameters"]["ContentSubmissionIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ModerateContentSubmissionRequest"];
+            };
+        };
+        responses: {
+            200: components["responses"]["ContentSubmissionSuccess"];
+            403: components["responses"]["Forbidden"];
+        };
+    };
+    createReview: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @example idem_01HV9X8D9N9HQ */
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+                /** @example req_01HV9X8D9N9HQ */
+                "X-Correlation-Id"?: components["parameters"]["CorrelationId"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateReviewRequest"];
+            };
+        };
+        responses: {
+            201: components["responses"]["ReviewSuccess"];
+            422: components["responses"]["ValidationError"];
+        };
+    };
+    reportContent: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @example idem_01HV9X8D9N9HQ */
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+                /** @example req_01HV9X8D9N9HQ */
+                "X-Correlation-Id"?: components["parameters"]["CorrelationId"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateContentReportRequest"];
+            };
+        };
+        responses: {
+            201: components["responses"]["ContentReportSuccess"];
+            422: components["responses"]["ValidationError"];
+        };
+    };
+    hideReview: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @example idem_01HV9X8D9N9HQ */
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+                /** @example req_01HV9X8D9N9HQ */
+                "X-Correlation-Id"?: components["parameters"]["CorrelationId"];
+            };
+            path: {
+                id: components["parameters"]["ReviewIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HideReviewRequest"];
+            };
+        };
+        responses: {
+            200: components["responses"]["ReviewSuccess"];
             403: components["responses"]["Forbidden"];
         };
     };

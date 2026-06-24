@@ -122,11 +122,11 @@ Foundation / Sprint 0
 
 ### SOS and Notification
 
-- [ ] SOS case model and state machine
-- [ ] SOS escalation rules
-- [ ] Notification event catalog
-- [ ] FCM token registration
-- [ ] Delivery log
+- [x] SOS case model and state machine
+- [x] SOS escalation rules
+- [x] Notification event catalog
+- [x] FCM token registration
+- [x] Delivery log
 
 ### Reports and Settlement
 
@@ -171,7 +171,7 @@ Foundation / Sprint 0
 - [x] Ending ride does not close rental
 - [x] Return request and inspection close rental
 - [x] Deposit is not released before inspection
-- [ ] SOS opens with latest location and escalates
+- [x] SOS opens with latest location and escalates
 - [ ] Reports load
 - [x] Admin approval works with audit logging
 - [ ] Audit search works

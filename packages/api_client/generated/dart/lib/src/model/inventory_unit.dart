@@ -13,20 +13,20 @@ part 'inventory_unit.g.dart';
 /// InventoryUnit
 ///
 /// Properties:
-/// * [id]
-/// * [schemaVersion]
-/// * [tenantId]
-/// * [createdAt]
-/// * [createdBy]
-/// * [updatedAt]
-/// * [updatedBy]
-/// * [deletedAt]
-/// * [version]
-/// * [storeId]
-/// * [branchId]
-/// * [assetId]
-/// * [equipmentItemId]
-/// * [status]
+/// * [id] 
+/// * [schemaVersion] 
+/// * [tenantId] 
+/// * [createdAt] 
+/// * [createdBy] 
+/// * [updatedAt] 
+/// * [updatedBy] 
+/// * [deletedAt] 
+/// * [version] 
+/// * [storeId] 
+/// * [branchId] 
+/// * [assetId] 
+/// * [equipmentItemId] 
+/// * [status] 
 @BuiltValue()
 abstract class InventoryUnit implements EntityBase, Built<InventoryUnit, InventoryUnitBuilder> {
   @BuiltValueField(wireName: r'branch_id')
@@ -320,3 +320,4 @@ class InventoryUnitStatusEnum extends EnumClass {
   static BuiltSet<InventoryUnitStatusEnum> get values => _$inventoryUnitStatusEnumValues;
   static InventoryUnitStatusEnum valueOf(String name) => _$inventoryUnitStatusEnumValueOf(name);
 }
+

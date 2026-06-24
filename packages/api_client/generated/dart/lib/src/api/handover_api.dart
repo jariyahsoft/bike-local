@@ -22,13 +22,13 @@ class HandoverApi {
   const HandoverApi(this._dio, this._serializers);
 
   /// Perform handover checklist and start rental.
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [id]
-  /// * [idempotencyKey]
-  /// * [handoverRequest]
-  /// * [xCorrelationId]
+  /// * [id] 
+  /// * [idempotencyKey] 
+  /// * [handoverRequest] 
+  /// * [xCorrelationId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -38,7 +38,7 @@ class HandoverApi {
   ///
   /// Returns a [Future] containing a [Response] with a [InlineObject4] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<InlineObject4>> handoverBooking({
+  Future<Response<InlineObject4>> handoverBooking({ 
     required String id,
     required String idempotencyKey,
     required HandoverRequest handoverRequest,

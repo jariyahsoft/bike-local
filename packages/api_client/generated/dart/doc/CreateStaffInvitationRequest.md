@@ -8,12 +8,14 @@ import 'package:bike_local_generated_api_client/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**role** | [**Role**](Role.md) |  |
-**channel** | **String** |  |
-**email** | **String** |  | [optional]
-**phone** | **String** |  | [optional]
-**branchIds** | **BuiltList&lt;String&gt;** |  | [optional]
-**permissionOverrides** | **BuiltList&lt;String&gt;** |  | [optional]
-**expiresAt** | [**DateTime**](DateTime.md) |  | [optional]
+**role** | [**Role**](Role.md) |  | 
+**channel** | **String** |  | 
+**email** | **String** |  | [optional] 
+**phone** | **String** |  | [optional] 
+**branchIds** | **BuiltList&lt;String&gt;** |  | [optional] 
+**permissionOverrides** | **BuiltList&lt;String&gt;** |  | [optional] 
+**expiresAt** | [**DateTime**](DateTime.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

@@ -32,8 +32,8 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getAssetsApi();
-final AvailabilityCheckRequest availabilityCheckRequest = ; // AvailabilityCheckRequest |
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
+final AvailabilityCheckRequest availabilityCheckRequest = ; // AvailabilityCheckRequest | 
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
 
 try {
     final response = api.checkAvailability(availabilityCheckRequest, xCorrelationId);
@@ -47,8 +47,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **availabilityCheckRequest** | [**AvailabilityCheckRequest**](AvailabilityCheckRequest.md)|  |
- **xCorrelationId** | **String**|  | [optional]
+ **availabilityCheckRequest** | [**AvailabilityCheckRequest**](AvailabilityCheckRequest.md)|  | 
+ **xCorrelationId** | **String**|  | [optional] 
 
 ### Return type
 
@@ -79,9 +79,9 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getAssetsApi();
-final String idempotencyKey = idem_01HV9X8D9N9HQ; // String |
-final CreateAssetRequest createAssetRequest = ; // CreateAssetRequest |
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
+final String idempotencyKey = idem_01HV9X8D9N9HQ; // String | 
+final CreateAssetRequest createAssetRequest = ; // CreateAssetRequest | 
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
 
 try {
     final response = api.createAsset(idempotencyKey, createAssetRequest, xCorrelationId);
@@ -95,9 +95,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **idempotencyKey** | **String**|  |
- **createAssetRequest** | [**CreateAssetRequest**](CreateAssetRequest.md)|  |
- **xCorrelationId** | **String**|  | [optional]
+ **idempotencyKey** | **String**|  | 
+ **createAssetRequest** | [**CreateAssetRequest**](CreateAssetRequest.md)|  | 
+ **xCorrelationId** | **String**|  | [optional] 
 
 ### Return type
 
@@ -128,9 +128,9 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getAssetsApi();
-final String idempotencyKey = idem_01HV9X8D9N9HQ; // String |
-final CreateAssetCategoryRequest createAssetCategoryRequest = ; // CreateAssetCategoryRequest |
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
+final String idempotencyKey = idem_01HV9X8D9N9HQ; // String | 
+final CreateAssetCategoryRequest createAssetCategoryRequest = ; // CreateAssetCategoryRequest | 
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
 
 try {
     final response = api.createAssetCategory(idempotencyKey, createAssetCategoryRequest, xCorrelationId);
@@ -144,9 +144,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **idempotencyKey** | **String**|  |
- **createAssetCategoryRequest** | [**CreateAssetCategoryRequest**](CreateAssetCategoryRequest.md)|  |
- **xCorrelationId** | **String**|  | [optional]
+ **idempotencyKey** | **String**|  | 
+ **createAssetCategoryRequest** | [**CreateAssetCategoryRequest**](CreateAssetCategoryRequest.md)|  | 
+ **xCorrelationId** | **String**|  | [optional] 
 
 ### Return type
 
@@ -177,9 +177,9 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getAssetsApi();
-final String idempotencyKey = idem_01HV9X8D9N9HQ; // String |
-final CreateEquipmentItemRequest createEquipmentItemRequest = ; // CreateEquipmentItemRequest |
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
+final String idempotencyKey = idem_01HV9X8D9N9HQ; // String | 
+final CreateEquipmentItemRequest createEquipmentItemRequest = ; // CreateEquipmentItemRequest | 
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
 
 try {
     final response = api.createEquipmentItem(idempotencyKey, createEquipmentItemRequest, xCorrelationId);
@@ -193,9 +193,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **idempotencyKey** | **String**|  |
- **createEquipmentItemRequest** | [**CreateEquipmentItemRequest**](CreateEquipmentItemRequest.md)|  |
- **xCorrelationId** | **String**|  | [optional]
+ **idempotencyKey** | **String**|  | 
+ **createEquipmentItemRequest** | [**CreateEquipmentItemRequest**](CreateEquipmentItemRequest.md)|  | 
+ **xCorrelationId** | **String**|  | [optional] 
 
 ### Return type
 
@@ -226,9 +226,9 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getAssetsApi();
-final String idempotencyKey = idem_01HV9X8D9N9HQ; // String |
-final CreateInventoryUnitRequest createInventoryUnitRequest = ; // CreateInventoryUnitRequest |
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
+final String idempotencyKey = idem_01HV9X8D9N9HQ; // String | 
+final CreateInventoryUnitRequest createInventoryUnitRequest = ; // CreateInventoryUnitRequest | 
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
 
 try {
     final response = api.createInventoryUnit(idempotencyKey, createInventoryUnitRequest, xCorrelationId);
@@ -242,9 +242,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **idempotencyKey** | **String**|  |
- **createInventoryUnitRequest** | [**CreateInventoryUnitRequest**](CreateInventoryUnitRequest.md)|  |
- **xCorrelationId** | **String**|  | [optional]
+ **idempotencyKey** | **String**|  | 
+ **createInventoryUnitRequest** | [**CreateInventoryUnitRequest**](CreateInventoryUnitRequest.md)|  | 
+ **xCorrelationId** | **String**|  | [optional] 
 
 ### Return type
 
@@ -275,11 +275,11 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getAssetsApi();
-final String storeId = storeId_example; // String |
-final String branchId = branchId_example; // String |
-final int limit = 56; // int |
-final String cursor = cursor_example; // String |
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
+final String storeId = storeId_example; // String | 
+final String branchId = branchId_example; // String | 
+final int limit = 56; // int | 
+final String cursor = cursor_example; // String | 
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
 
 try {
     final response = api.listAssets(storeId, branchId, limit, cursor, xCorrelationId);
@@ -293,11 +293,11 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **storeId** | **String**|  | [optional]
- **branchId** | **String**|  | [optional]
+ **storeId** | **String**|  | [optional] 
+ **branchId** | **String**|  | [optional] 
  **limit** | **int**|  | [optional] [default to 20]
- **cursor** | **String**|  | [optional]
- **xCorrelationId** | **String**|  | [optional]
+ **cursor** | **String**|  | [optional] 
+ **xCorrelationId** | **String**|  | [optional] 
 
 ### Return type
 
@@ -328,9 +328,9 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getAssetsApi();
-final String id = id_example; // String |
-final UpdateAssetRequest updateAssetRequest = ; // UpdateAssetRequest |
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
+final String id = id_example; // String | 
+final UpdateAssetRequest updateAssetRequest = ; // UpdateAssetRequest | 
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
 
 try {
     final response = api.updateAsset(id, updateAssetRequest, xCorrelationId);
@@ -344,9 +344,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **String**|  |
- **updateAssetRequest** | [**UpdateAssetRequest**](UpdateAssetRequest.md)|  |
- **xCorrelationId** | **String**|  | [optional]
+ **id** | **String**|  | 
+ **updateAssetRequest** | [**UpdateAssetRequest**](UpdateAssetRequest.md)|  | 
+ **xCorrelationId** | **String**|  | [optional] 
 
 ### Return type
 
@@ -362,3 +362,4 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+

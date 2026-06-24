@@ -26,13 +26,13 @@ class PaymentApi {
   const PaymentApi(this._dio, this._serializers);
 
   /// Confirm cash payment by authorized staff.
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [id]
-  /// * [idempotencyKey]
-  /// * [cashConfirmationRequest]
-  /// * [xCorrelationId]
+  /// * [id] 
+  /// * [idempotencyKey] 
+  /// * [cashConfirmationRequest] 
+  /// * [xCorrelationId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -42,7 +42,7 @@ class PaymentApi {
   ///
   /// Returns a [Future] containing a [Response] with a [InlineObject5] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<InlineObject5>> confirmCashPayment({
+  Future<Response<InlineObject5>> confirmCashPayment({ 
     required String id,
     required String idempotencyKey,
     required CashConfirmationRequest cashConfirmationRequest,
@@ -140,12 +140,12 @@ class PaymentApi {
   }
 
   /// Create payment intent or cash payment record.
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [idempotencyKey]
-  /// * [createPaymentRequest]
-  /// * [xCorrelationId]
+  /// * [idempotencyKey] 
+  /// * [createPaymentRequest] 
+  /// * [xCorrelationId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -155,7 +155,7 @@ class PaymentApi {
   ///
   /// Returns a [Future] containing a [Response] with a [InlineObject5] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<InlineObject5>> createPayment({
+  Future<Response<InlineObject5>> createPayment({ 
     required String idempotencyKey,
     required CreatePaymentRequest createPaymentRequest,
     String? xCorrelationId,
@@ -252,13 +252,13 @@ class PaymentApi {
   }
 
   /// Process provider webhook with server-side verification.
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [provider]
-  /// * [idempotencyKey]
-  /// * [requestBody]
-  /// * [xCorrelationId]
+  /// * [provider] 
+  /// * [idempotencyKey] 
+  /// * [requestBody] 
+  /// * [xCorrelationId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -268,7 +268,7 @@ class PaymentApi {
   ///
   /// Returns a [Future] containing a [Response] with a [ProcessPaymentWebhook202Response] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ProcessPaymentWebhook202Response>> processPaymentWebhook({
+  Future<Response<ProcessPaymentWebhook202Response>> processPaymentWebhook({ 
     required String provider,
     required String idempotencyKey,
     required BuiltMap<String, JsonObject> requestBody,

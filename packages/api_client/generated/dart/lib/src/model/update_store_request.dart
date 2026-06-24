@@ -11,9 +11,9 @@ part 'update_store_request.g.dart';
 /// UpdateStoreRequest
 ///
 /// Properties:
-/// * [displayName]
-/// * [description]
-/// * [version]
+/// * [displayName] 
+/// * [description] 
+/// * [version] 
 @BuiltValue()
 abstract class UpdateStoreRequest implements Built<UpdateStoreRequest, UpdateStoreRequestBuilder> {
   @BuiltValueField(wireName: r'display_name')
@@ -139,3 +139,4 @@ class _$UpdateStoreRequestSerializer implements PrimitiveSerializer<UpdateStoreR
     return result.build();
   }
 }
+

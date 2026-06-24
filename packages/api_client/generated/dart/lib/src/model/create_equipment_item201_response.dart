@@ -14,8 +14,8 @@ part 'create_equipment_item201_response.g.dart';
 /// CreateEquipmentItem201Response
 ///
 /// Properties:
-/// * [data]
-/// * [meta]
+/// * [data] 
+/// * [meta] 
 @BuiltValue()
 abstract class CreateEquipmentItem201Response implements SuccessEnvelope, Built<CreateEquipmentItem201Response, CreateEquipmentItem201ResponseBuilder> {
   CreateEquipmentItem201Response._();
@@ -117,3 +117,4 @@ class _$CreateEquipmentItem201ResponseSerializer implements PrimitiveSerializer<
     return result.build();
   }
 }
+

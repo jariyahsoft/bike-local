@@ -11,9 +11,9 @@ part 'payment_webhook_accepted.g.dart';
 /// PaymentWebhookAccepted
 ///
 /// Properties:
-/// * [accepted]
-/// * [replayed]
-/// * [paymentId]
+/// * [accepted] 
+/// * [replayed] 
+/// * [paymentId] 
 @BuiltValue()
 abstract class PaymentWebhookAccepted implements Built<PaymentWebhookAccepted, PaymentWebhookAcceptedBuilder> {
   @BuiltValueField(wireName: r'accepted')
@@ -137,3 +137,4 @@ class _$PaymentWebhookAcceptedSerializer implements PrimitiveSerializer<PaymentW
     return result.build();
   }
 }
+

@@ -27,9 +27,9 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getReportsApi();
-final DateTime from = 2013-10-20T19:20:30+01:00; // DateTime |
-final DateTime to = 2013-10-20T19:20:30+01:00; // DateTime |
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
+final DateTime from = 2013-10-20T19:20:30+01:00; // DateTime | 
+final DateTime to = 2013-10-20T19:20:30+01:00; // DateTime | 
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
 
 try {
     final response = api.getPlatformReport(from, to, xCorrelationId);
@@ -43,9 +43,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **from** | **DateTime**|  |
- **to** | **DateTime**|  |
- **xCorrelationId** | **String**|  | [optional]
+ **from** | **DateTime**|  | 
+ **to** | **DateTime**|  | 
+ **xCorrelationId** | **String**|  | [optional] 
 
 ### Return type
 
@@ -76,10 +76,10 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getReportsApi();
-final DateTime from = 2013-10-20T19:20:30+01:00; // DateTime |
-final DateTime to = 2013-10-20T19:20:30+01:00; // DateTime |
-final String storeId = storeId_example; // String |
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
+final DateTime from = 2013-10-20T19:20:30+01:00; // DateTime | 
+final DateTime to = 2013-10-20T19:20:30+01:00; // DateTime | 
+final String storeId = storeId_example; // String | 
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
 
 try {
     final response = api.getStoreReport(from, to, storeId, xCorrelationId);
@@ -93,10 +93,10 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **from** | **DateTime**|  |
- **to** | **DateTime**|  |
- **storeId** | **String**|  | [optional]
- **xCorrelationId** | **String**|  | [optional]
+ **from** | **DateTime**|  | 
+ **to** | **DateTime**|  | 
+ **storeId** | **String**|  | [optional] 
+ **xCorrelationId** | **String**|  | [optional] 
 
 ### Return type
 
@@ -112,3 +112,4 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+

@@ -15,8 +15,8 @@ part 'list_audit_logs200_response.g.dart';
 /// ListAuditLogs200Response
 ///
 /// Properties:
-/// * [data]
-/// * [meta]
+/// * [data] 
+/// * [meta] 
 @BuiltValue()
 abstract class ListAuditLogs200Response implements SuccessEnvelope, Built<ListAuditLogs200Response, ListAuditLogs200ResponseBuilder> {
   ListAuditLogs200Response._();
@@ -118,3 +118,4 @@ class _$ListAuditLogs200ResponseSerializer implements PrimitiveSerializer<ListAu
     return result.build();
   }
 }
+

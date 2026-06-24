@@ -12,9 +12,9 @@ part 'availability_conflict.g.dart';
 /// AvailabilityConflict
 ///
 /// Properties:
-/// * [assetId]
-/// * [reason]
-/// * [referenceId]
+/// * [assetId] 
+/// * [reason] 
+/// * [referenceId] 
 @BuiltValue()
 abstract class AvailabilityConflict implements Built<AvailabilityConflict, AvailabilityConflictBuilder> {
   @BuiltValueField(wireName: r'asset_id')
@@ -152,3 +152,4 @@ class AvailabilityConflictReasonEnum extends EnumClass {
   static BuiltSet<AvailabilityConflictReasonEnum> get values => _$availabilityConflictReasonEnumValues;
   static AvailabilityConflictReasonEnum valueOf(String name) => _$availabilityConflictReasonEnumValueOf(name);
 }
+

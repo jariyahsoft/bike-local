@@ -14,11 +14,11 @@ part 'update_user_request.g.dart';
 /// UpdateUserRequest
 ///
 /// Properties:
-/// * [displayName]
-/// * [locale]
-/// * [additionalRoles]
-/// * [consents]
-/// * [version]
+/// * [displayName] 
+/// * [locale] 
+/// * [additionalRoles] 
+/// * [consents] 
+/// * [version] 
 @BuiltValue()
 abstract class UpdateUserRequest implements Built<UpdateUserRequest, UpdateUserRequestBuilder> {
   @BuiltValueField(wireName: r'display_name')
@@ -194,3 +194,4 @@ class UpdateUserRequestLocaleEnum extends EnumClass {
   static BuiltSet<UpdateUserRequestLocaleEnum> get values => _$updateUserRequestLocaleEnumValues;
   static UpdateUserRequestLocaleEnum valueOf(String name) => _$updateUserRequestLocaleEnumValueOf(name);
 }
+

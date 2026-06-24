@@ -16,31 +16,31 @@ part 'store.g.dart';
 /// Store
 ///
 /// Properties:
-/// * [id]
-/// * [schemaVersion]
-/// * [tenantId]
-/// * [createdAt]
-/// * [createdBy]
-/// * [updatedAt]
-/// * [updatedBy]
-/// * [deletedAt]
-/// * [version]
-/// * [ownerUserId]
-/// * [legalName]
-/// * [displayName]
-/// * [description]
-/// * [phone]
-/// * [email]
-/// * [defaultCurrency]
-/// * [timezone]
-/// * [approvalStatus]
-/// * [operationalStatus]
-/// * [commissionPlanId]
-/// * [documentMetadata]
-/// * [submittedAt]
-/// * [reviewedAt]
-/// * [reviewedBy]
-/// * [decisionReason]
+/// * [id] 
+/// * [schemaVersion] 
+/// * [tenantId] 
+/// * [createdAt] 
+/// * [createdBy] 
+/// * [updatedAt] 
+/// * [updatedBy] 
+/// * [deletedAt] 
+/// * [version] 
+/// * [ownerUserId] 
+/// * [legalName] 
+/// * [displayName] 
+/// * [description] 
+/// * [phone] 
+/// * [email] 
+/// * [defaultCurrency] 
+/// * [timezone] 
+/// * [approvalStatus] 
+/// * [operationalStatus] 
+/// * [commissionPlanId] 
+/// * [documentMetadata] 
+/// * [submittedAt] 
+/// * [reviewedAt] 
+/// * [reviewedBy] 
+/// * [decisionReason] 
 @BuiltValue()
 abstract class Store implements EntityBase, Built<Store, StoreBuilder> {
   @BuiltValueField(wireName: r'approval_status')
@@ -491,3 +491,4 @@ class _$StoreSerializer implements PrimitiveSerializer<Store> {
     return result.build();
   }
 }
+

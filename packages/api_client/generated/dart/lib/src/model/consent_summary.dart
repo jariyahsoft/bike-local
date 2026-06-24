@@ -14,12 +14,12 @@ part 'consent_summary.g.dart';
 /// ConsentSummary
 ///
 /// Properties:
-/// * [type]
-/// * [status]
-/// * [versionCode]
-/// * [purpose]
-/// * [grantedAt]
-/// * [gpsScope]
+/// * [type] 
+/// * [status] 
+/// * [versionCode] 
+/// * [purpose] 
+/// * [grantedAt] 
+/// * [gpsScope] 
 @BuiltValue()
 abstract class ConsentSummary implements Built<ConsentSummary, ConsentSummaryBuilder> {
   @BuiltValueField(wireName: r'type')
@@ -191,3 +191,4 @@ class _$ConsentSummarySerializer implements PrimitiveSerializer<ConsentSummary> 
     return result.build();
   }
 }
+

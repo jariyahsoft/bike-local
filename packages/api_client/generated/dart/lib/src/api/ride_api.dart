@@ -25,12 +25,12 @@ class RideApi {
   const RideApi(this._dio, this._serializers);
 
   /// Start ride session for an in-progress rental.
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [idempotencyKey]
-  /// * [createRideSessionRequest]
-  /// * [xCorrelationId]
+  /// * [idempotencyKey] 
+  /// * [createRideSessionRequest] 
+  /// * [xCorrelationId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -40,7 +40,7 @@ class RideApi {
   ///
   /// Returns a [Future] containing a [Response] with a [InlineObject6] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<InlineObject6>> createRideSession({
+  Future<Response<InlineObject6>> createRideSession({ 
     required String idempotencyKey,
     required CreateRideSessionRequest createRideSessionRequest,
     String? xCorrelationId,
@@ -137,13 +137,13 @@ class RideApi {
   }
 
   /// End ride session without closing rental.
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [id]
-  /// * [idempotencyKey]
-  /// * [endRideSessionRequest]
-  /// * [xCorrelationId]
+  /// * [id] 
+  /// * [idempotencyKey] 
+  /// * [endRideSessionRequest] 
+  /// * [xCorrelationId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -153,7 +153,7 @@ class RideApi {
   ///
   /// Returns a [Future] containing a [Response] with a [InlineObject6] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<InlineObject6>> endRideSession({
+  Future<Response<InlineObject6>> endRideSession({ 
     required String id,
     required String idempotencyKey,
     required EndRideSessionRequest endRideSessionRequest,
@@ -251,13 +251,13 @@ class RideApi {
   }
 
   /// Upload buffered GPS track chunk.
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [id]
-  /// * [idempotencyKey]
-  /// * [uploadRideTrackChunkRequest]
-  /// * [xCorrelationId]
+  /// * [id] 
+  /// * [idempotencyKey] 
+  /// * [uploadRideTrackChunkRequest] 
+  /// * [xCorrelationId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -267,7 +267,7 @@ class RideApi {
   ///
   /// Returns a [Future] containing a [Response] with a [UploadRideTrackChunk202Response] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<UploadRideTrackChunk202Response>> uploadRideTrackChunk({
+  Future<Response<UploadRideTrackChunk202Response>> uploadRideTrackChunk({ 
     required String id,
     required String idempotencyKey,
     required UploadRideTrackChunkRequest uploadRideTrackChunkRequest,

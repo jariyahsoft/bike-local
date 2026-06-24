@@ -15,53 +15,65 @@ part 'route.g.dart';
 /// Route
 ///
 /// Properties:
-/// * [id]
-/// * [schemaVersion]
-/// * [tenantId]
-/// * [createdAt]
-/// * [createdBy]
-/// * [updatedAt]
-/// * [updatedBy]
-/// * [deletedAt]
-/// * [version]
-/// * [name]
-/// * [description]
-/// * [startLocation]
-/// * [endLocation]
-/// * [distanceMeters]
-/// * [difficulty]
-/// * [surface]
-/// * [warning]
-/// * [suitableBikeTypes]
-/// * [status]
+/// * [id] 
+/// * [schemaVersion] 
+/// * [tenantId] 
+/// * [createdAt] 
+/// * [createdBy] 
+/// * [updatedAt] 
+/// * [updatedBy] 
+/// * [deletedAt] 
+/// * [version] 
+/// * [submittedByUserId] 
+/// * [storeId] 
+/// * [branchId] 
+/// * [name] 
+/// * [description] 
+/// * [startLocation] 
+/// * [endLocation] 
+/// * [distanceMeters] 
+/// * [difficulty] 
+/// * [surface] 
+/// * [warning] 
+/// * [suitableBikeTypes] 
+/// * [status] 
 @BuiltValue()
 abstract class Route implements EntityBase, Built<Route, RouteBuilder> {
-  @BuiltValueField(wireName: r'difficulty')
-  String get difficulty;
+  @BuiltValueField(wireName: r'branch_id')
+  String? get branchId;
 
   @BuiltValueField(wireName: r'distance_meters')
   int get distanceMeters;
 
-  @BuiltValueField(wireName: r'start_location')
-  Location get startLocation;
-
   @BuiltValueField(wireName: r'surface')
   String? get surface;
 
-  @BuiltValueField(wireName: r'name')
-  String get name;
-
   @BuiltValueField(wireName: r'description')
   String get description;
+
+  @BuiltValueField(wireName: r'store_id')
+  String? get storeId;
+
+  @BuiltValueField(wireName: r'suitable_bike_types')
+  BuiltList<String> get suitableBikeTypes;
+
+  @BuiltValueField(wireName: r'submitted_by_user_id')
+  String get submittedByUserId;
+
+  @BuiltValueField(wireName: r'difficulty')
+  String get difficulty;
+
+  @BuiltValueField(wireName: r'start_location')
+  Location get startLocation;
+
+  @BuiltValueField(wireName: r'name')
+  String get name;
 
   @BuiltValueField(wireName: r'warning')
   String? get warning;
 
   @BuiltValueField(wireName: r'end_location')
   Location get endLocation;
-
-  @BuiltValueField(wireName: r'suitable_bike_types')
-  BuiltList<String>? get suitableBikeTypes;
 
   @BuiltValueField(wireName: r'status')
   ContentApprovalStatus get status;
@@ -90,6 +102,13 @@ class _$RouteSerializer implements PrimitiveSerializer<Route> {
     Route object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
+    if (object.branchId != null) {
+      yield r'branch_id';
+      yield serializers.serialize(
+        object.branchId,
+        specifiedType: const FullType(String),
+      );
+    }
     yield r'distance_meters';
     yield serializers.serialize(
       object.distanceMeters,
@@ -119,18 +138,28 @@ class _$RouteSerializer implements PrimitiveSerializer<Route> {
       object.description,
       specifiedType: const FullType(String),
     );
+    if (object.storeId != null) {
+      yield r'store_id';
+      yield serializers.serialize(
+        object.storeId,
+        specifiedType: const FullType(String),
+      );
+    }
     yield r'version';
     yield serializers.serialize(
       object.version,
       specifiedType: const FullType(int),
     );
-    if (object.suitableBikeTypes != null) {
-      yield r'suitable_bike_types';
-      yield serializers.serialize(
-        object.suitableBikeTypes,
-        specifiedType: const FullType(BuiltList, [FullType(String)]),
-      );
-    }
+    yield r'suitable_bike_types';
+    yield serializers.serialize(
+      object.suitableBikeTypes,
+      specifiedType: const FullType(BuiltList, [FullType(String)]),
+    );
+    yield r'submitted_by_user_id';
+    yield serializers.serialize(
+      object.submittedByUserId,
+      specifiedType: const FullType(String),
+    );
     yield r'difficulty';
     yield serializers.serialize(
       object.difficulty,
@@ -222,6 +251,13 @@ class _$RouteSerializer implements PrimitiveSerializer<Route> {
       final key = serializedList[i] as String;
       final value = serializedList[i + 1];
       switch (key) {
+        case r'branch_id':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.branchId = valueDes;
+          break;
         case r'distance_meters':
           final valueDes = serializers.deserialize(
             value,
@@ -257,6 +293,13 @@ class _$RouteSerializer implements PrimitiveSerializer<Route> {
           ) as String;
           result.description = valueDes;
           break;
+        case r'store_id':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.storeId = valueDes;
+          break;
         case r'version':
           final valueDes = serializers.deserialize(
             value,
@@ -270,6 +313,13 @@ class _$RouteSerializer implements PrimitiveSerializer<Route> {
             specifiedType: const FullType(BuiltList, [FullType(String)]),
           ) as BuiltList<String>;
           result.suitableBikeTypes.replace(valueDes);
+          break;
+        case r'submitted_by_user_id':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.submittedByUserId = valueDes;
           break;
         case r'difficulty':
           final valueDes = serializers.deserialize(
@@ -383,3 +433,4 @@ class _$RouteSerializer implements PrimitiveSerializer<Route> {
     return result.build();
   }
 }
+

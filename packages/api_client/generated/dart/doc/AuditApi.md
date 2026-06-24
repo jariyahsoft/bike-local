@@ -26,12 +26,12 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getAuditApi();
-final String resourceType = resourceType_example; // String |
-final String resourceId = resourceId_example; // String |
-final String actorUserId = actorUserId_example; // String |
-final int limit = 56; // int |
-final String cursor = cursor_example; // String |
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
+final String resourceType = resourceType_example; // String | 
+final String resourceId = resourceId_example; // String | 
+final String actorUserId = actorUserId_example; // String | 
+final int limit = 56; // int | 
+final String cursor = cursor_example; // String | 
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
 
 try {
     final response = api.listAuditLogs(resourceType, resourceId, actorUserId, limit, cursor, xCorrelationId);
@@ -45,12 +45,12 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **resourceType** | **String**|  | [optional]
- **resourceId** | **String**|  | [optional]
- **actorUserId** | **String**|  | [optional]
+ **resourceType** | **String**|  | [optional] 
+ **resourceId** | **String**|  | [optional] 
+ **actorUserId** | **String**|  | [optional] 
  **limit** | **int**|  | [optional] [default to 20]
- **cursor** | **String**|  | [optional]
- **xCorrelationId** | **String**|  | [optional]
+ **cursor** | **String**|  | [optional] 
+ **xCorrelationId** | **String**|  | [optional] 
 
 ### Return type
 
@@ -66,3 +66,4 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+

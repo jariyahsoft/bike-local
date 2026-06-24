@@ -14,8 +14,8 @@ part 'inline_object.g.dart';
 /// InlineObject
 ///
 /// Properties:
-/// * [data]
-/// * [meta]
+/// * [data] 
+/// * [meta] 
 @BuiltValue()
 abstract class InlineObject implements SuccessEnvelope, Built<InlineObject, InlineObjectBuilder> {
   InlineObject._();
@@ -117,3 +117,4 @@ class _$InlineObjectSerializer implements PrimitiveSerializer<InlineObject> {
     return result.build();
   }
 }
+

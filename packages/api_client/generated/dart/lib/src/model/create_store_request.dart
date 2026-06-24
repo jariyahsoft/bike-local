@@ -13,14 +13,14 @@ part 'create_store_request.g.dart';
 /// CreateStoreRequest
 ///
 /// Properties:
-/// * [legalName]
-/// * [displayName]
-/// * [defaultCurrency]
-/// * [timezone]
-/// * [phone]
-/// * [email]
-/// * [description]
-/// * [documents]
+/// * [legalName] 
+/// * [displayName] 
+/// * [defaultCurrency] 
+/// * [timezone] 
+/// * [phone] 
+/// * [email] 
+/// * [description] 
+/// * [documents] 
 @BuiltValue()
 abstract class CreateStoreRequest implements Built<CreateStoreRequest, CreateStoreRequestBuilder> {
   @BuiltValueField(wireName: r'legal_name')
@@ -225,3 +225,4 @@ class _$CreateStoreRequestSerializer implements PrimitiveSerializer<CreateStoreR
     return result.build();
   }
 }
+

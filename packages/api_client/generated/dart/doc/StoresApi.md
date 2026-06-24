@@ -30,9 +30,9 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getStoresApi();
-final String idempotencyKey = idem_01HV9X8D9N9HQ; // String |
-final CreateStoreRequest createStoreRequest = ; // CreateStoreRequest |
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
+final String idempotencyKey = idem_01HV9X8D9N9HQ; // String | 
+final CreateStoreRequest createStoreRequest = ; // CreateStoreRequest | 
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
 
 try {
     final response = api.createStore(idempotencyKey, createStoreRequest, xCorrelationId);
@@ -46,9 +46,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **idempotencyKey** | **String**|  |
- **createStoreRequest** | [**CreateStoreRequest**](CreateStoreRequest.md)|  |
- **xCorrelationId** | **String**|  | [optional]
+ **idempotencyKey** | **String**|  | 
+ **createStoreRequest** | [**CreateStoreRequest**](CreateStoreRequest.md)|  | 
+ **xCorrelationId** | **String**|  | [optional] 
 
 ### Return type
 
@@ -79,9 +79,9 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getStoresApi();
-final String id = id_example; // String |
-final StoreApprovalDecisionRequest storeApprovalDecisionRequest = ; // StoreApprovalDecisionRequest |
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
+final String id = id_example; // String | 
+final StoreApprovalDecisionRequest storeApprovalDecisionRequest = ; // StoreApprovalDecisionRequest | 
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
 
 try {
     final response = api.decideStoreApproval(id, storeApprovalDecisionRequest, xCorrelationId);
@@ -95,9 +95,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **String**|  |
- **storeApprovalDecisionRequest** | [**StoreApprovalDecisionRequest**](StoreApprovalDecisionRequest.md)|  |
- **xCorrelationId** | **String**|  | [optional]
+ **id** | **String**|  | 
+ **storeApprovalDecisionRequest** | [**StoreApprovalDecisionRequest**](StoreApprovalDecisionRequest.md)|  | 
+ **xCorrelationId** | **String**|  | [optional] 
 
 ### Return type
 
@@ -128,9 +128,9 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getStoresApi();
-final int limit = 56; // int |
-final String cursor = cursor_example; // String |
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
+final int limit = 56; // int | 
+final String cursor = cursor_example; // String | 
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
 
 try {
     final response = api.listStores(limit, cursor, xCorrelationId);
@@ -145,8 +145,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **limit** | **int**|  | [optional] [default to 20]
- **cursor** | **String**|  | [optional]
- **xCorrelationId** | **String**|  | [optional]
+ **cursor** | **String**|  | [optional] 
+ **xCorrelationId** | **String**|  | [optional] 
 
 ### Return type
 
@@ -177,9 +177,9 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getStoresApi();
-final String id = id_example; // String |
-final SubmitStoreRequest submitStoreRequest = ; // SubmitStoreRequest |
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
+final String id = id_example; // String | 
+final SubmitStoreRequest submitStoreRequest = ; // SubmitStoreRequest | 
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
 
 try {
     final response = api.submitStore(id, submitStoreRequest, xCorrelationId);
@@ -193,9 +193,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **String**|  |
- **submitStoreRequest** | [**SubmitStoreRequest**](SubmitStoreRequest.md)|  |
- **xCorrelationId** | **String**|  | [optional]
+ **id** | **String**|  | 
+ **submitStoreRequest** | [**SubmitStoreRequest**](SubmitStoreRequest.md)|  | 
+ **xCorrelationId** | **String**|  | [optional] 
 
 ### Return type
 
@@ -226,9 +226,9 @@ import 'package:bike_local_generated_api_client/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('appCheck').apiKeyPrefix = 'Bearer';
 
 final api = BikeLocalGeneratedApiClient().getStoresApi();
-final String id = id_example; // String |
-final UpdateStoreRequest updateStoreRequest = ; // UpdateStoreRequest |
-final String xCorrelationId = req_01HV9X8D9N9HQ; // String |
+final String id = id_example; // String | 
+final UpdateStoreRequest updateStoreRequest = ; // UpdateStoreRequest | 
+final String xCorrelationId = req_01HV9X8D9N9HQ; // String | 
 
 try {
     final response = api.updateStore(id, updateStoreRequest, xCorrelationId);
@@ -242,9 +242,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **String**|  |
- **updateStoreRequest** | [**UpdateStoreRequest**](UpdateStoreRequest.md)|  |
- **xCorrelationId** | **String**|  | [optional]
+ **id** | **String**|  | 
+ **updateStoreRequest** | [**UpdateStoreRequest**](UpdateStoreRequest.md)|  | 
+ **xCorrelationId** | **String**|  | [optional] 
 
 ### Return type
 
@@ -260,3 +260,4 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+

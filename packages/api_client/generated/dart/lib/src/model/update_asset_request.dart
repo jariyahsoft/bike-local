@@ -11,10 +11,10 @@ part 'update_asset_request.g.dart';
 /// UpdateAssetRequest
 ///
 /// Properties:
-/// * [status]
-/// * [basePrice]
-/// * [depositAmount]
-/// * [version]
+/// * [status] 
+/// * [basePrice] 
+/// * [depositAmount] 
+/// * [version] 
 @BuiltValue()
 abstract class UpdateAssetRequest implements Built<UpdateAssetRequest, UpdateAssetRequestBuilder> {
   @BuiltValueField(wireName: r'status')
@@ -157,3 +157,4 @@ class _$UpdateAssetRequestSerializer implements PrimitiveSerializer<UpdateAssetR
     return result.build();
   }
 }
+

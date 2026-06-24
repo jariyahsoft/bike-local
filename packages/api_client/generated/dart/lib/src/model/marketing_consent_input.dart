@@ -11,9 +11,9 @@ part 'marketing_consent_input.g.dart';
 /// MarketingConsentInput
 ///
 /// Properties:
-/// * [version]
-/// * [granted]
-/// * [purpose]
+/// * [version] 
+/// * [granted] 
+/// * [purpose] 
 @BuiltValue()
 abstract class MarketingConsentInput implements Built<MarketingConsentInput, MarketingConsentInputBuilder> {
   @BuiltValueField(wireName: r'version')
@@ -135,3 +135,4 @@ class _$MarketingConsentInputSerializer implements PrimitiveSerializer<Marketing
     return result.build();
   }
 }
+

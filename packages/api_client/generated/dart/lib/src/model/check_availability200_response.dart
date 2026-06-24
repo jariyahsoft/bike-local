@@ -14,8 +14,8 @@ part 'check_availability200_response.g.dart';
 /// CheckAvailability200Response
 ///
 /// Properties:
-/// * [data]
-/// * [meta]
+/// * [data] 
+/// * [meta] 
 @BuiltValue()
 abstract class CheckAvailability200Response implements SuccessEnvelope, Built<CheckAvailability200Response, CheckAvailability200ResponseBuilder> {
   CheckAvailability200Response._();
@@ -117,3 +117,4 @@ class _$CheckAvailability200ResponseSerializer implements PrimitiveSerializer<Ch
     return result.build();
   }
 }
+

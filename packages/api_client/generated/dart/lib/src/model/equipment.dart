@@ -13,23 +13,23 @@ part 'equipment.g.dart';
 /// Equipment
 ///
 /// Properties:
-/// * [id]
-/// * [schemaVersion]
-/// * [tenantId]
-/// * [createdAt]
-/// * [createdBy]
-/// * [updatedAt]
-/// * [updatedBy]
-/// * [deletedAt]
-/// * [version]
-/// * [storeId]
-/// * [branchId]
-/// * [name]
-/// * [rentalMode]
-/// * [status]
-/// * [priceAmount]
-/// * [depositAmount]
-/// * [currency]
+/// * [id] 
+/// * [schemaVersion] 
+/// * [tenantId] 
+/// * [createdAt] 
+/// * [createdBy] 
+/// * [updatedAt] 
+/// * [updatedBy] 
+/// * [deletedAt] 
+/// * [version] 
+/// * [storeId] 
+/// * [branchId] 
+/// * [name] 
+/// * [rentalMode] 
+/// * [status] 
+/// * [priceAmount] 
+/// * [depositAmount] 
+/// * [currency] 
 @BuiltValue()
 abstract class Equipment implements EntityBase, Built<Equipment, EquipmentBuilder> {
   @BuiltValueField(wireName: r'deposit_amount')
@@ -390,3 +390,4 @@ class EquipmentStatusEnum extends EnumClass {
   static BuiltSet<EquipmentStatusEnum> get values => _$equipmentStatusEnumValues;
   static EquipmentStatusEnum valueOf(String name) => _$equipmentStatusEnumValueOf(name);
 }
+

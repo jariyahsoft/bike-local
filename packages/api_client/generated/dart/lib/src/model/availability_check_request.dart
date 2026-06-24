@@ -12,9 +12,9 @@ part 'availability_check_request.g.dart';
 /// AvailabilityCheckRequest
 ///
 /// Properties:
-/// * [assetIds]
-/// * [startAt]
-/// * [endAt]
+/// * [assetIds] 
+/// * [startAt] 
+/// * [endAt] 
 /// * [reserve] - When true, create transaction-safe booking hold blocks if available.
 /// * [referenceId] - Booking or hold reference used on availability blocks.
 @BuiltValue()
@@ -174,3 +174,4 @@ class _$AvailabilityCheckRequestSerializer implements PrimitiveSerializer<Availa
     return result.build();
   }
 }
+

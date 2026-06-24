@@ -14,8 +14,8 @@ part 'create_pricing_rule201_response.g.dart';
 /// CreatePricingRule201Response
 ///
 /// Properties:
-/// * [data]
-/// * [meta]
+/// * [data] 
+/// * [meta] 
 @BuiltValue()
 abstract class CreatePricingRule201Response implements SuccessEnvelope, Built<CreatePricingRule201Response, CreatePricingRule201ResponseBuilder> {
   CreatePricingRule201Response._();
@@ -117,3 +117,4 @@ class _$CreatePricingRule201ResponseSerializer implements PrimitiveSerializer<Cr
     return result.build();
   }
 }
+

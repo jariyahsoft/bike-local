@@ -15,10 +15,10 @@ import 'package:bike_local_generated_api_client/src/date_serializer.dart';
 import 'package:bike_local_generated_api_client/src/model/date.dart';
 
 import 'package:bike_local_generated_api_client/src/model/account_deletion_request.dart';
-import 'package:bike_local_generated_api_client/src/model/approve_content_submission200_response.dart';
 import 'package:bike_local_generated_api_client/src/model/asset.dart';
 import 'package:bike_local_generated_api_client/src/model/asset_category.dart';
 import 'package:bike_local_generated_api_client/src/model/asset_status_transition.dart';
+import 'package:bike_local_generated_api_client/src/model/assign_sos_case_request.dart';
 import 'package:bike_local_generated_api_client/src/model/audit_log.dart';
 import 'package:bike_local_generated_api_client/src/model/auth_identity.dart';
 import 'package:bike_local_generated_api_client/src/model/availability_check_request.dart';
@@ -32,30 +32,34 @@ import 'package:bike_local_generated_api_client/src/model/branch.dart';
 import 'package:bike_local_generated_api_client/src/model/cancel_booking_request.dart';
 import 'package:bike_local_generated_api_client/src/model/cash_confirmation_request.dart';
 import 'package:bike_local_generated_api_client/src/model/check_availability200_response.dart';
+import 'package:bike_local_generated_api_client/src/model/close_sos_case_request.dart';
 import 'package:bike_local_generated_api_client/src/model/consent_status.dart';
 import 'package:bike_local_generated_api_client/src/model/consent_summary.dart';
 import 'package:bike_local_generated_api_client/src/model/consent_type.dart';
 import 'package:bike_local_generated_api_client/src/model/content_approval_status.dart';
+import 'package:bike_local_generated_api_client/src/model/content_report.dart';
 import 'package:bike_local_generated_api_client/src/model/content_submission.dart';
 import 'package:bike_local_generated_api_client/src/model/create_asset_category201_response.dart';
 import 'package:bike_local_generated_api_client/src/model/create_asset_category_request.dart';
 import 'package:bike_local_generated_api_client/src/model/create_asset_request.dart';
 import 'package:bike_local_generated_api_client/src/model/create_booking_request.dart';
 import 'package:bike_local_generated_api_client/src/model/create_branch_request.dart';
+import 'package:bike_local_generated_api_client/src/model/create_content_report_request.dart';
 import 'package:bike_local_generated_api_client/src/model/create_equipment_item201_response.dart';
 import 'package:bike_local_generated_api_client/src/model/create_equipment_item_request.dart';
 import 'package:bike_local_generated_api_client/src/model/create_inventory_unit201_response.dart';
 import 'package:bike_local_generated_api_client/src/model/create_inventory_unit_request.dart';
 import 'package:bike_local_generated_api_client/src/model/create_payment_request.dart';
-import 'package:bike_local_generated_api_client/src/model/create_place201_response.dart';
+import 'package:bike_local_generated_api_client/src/model/create_place_request.dart';
 import 'package:bike_local_generated_api_client/src/model/create_pricing_quote200_response.dart';
 import 'package:bike_local_generated_api_client/src/model/create_pricing_rule201_response.dart';
 import 'package:bike_local_generated_api_client/src/model/create_pricing_rule_request.dart';
 import 'package:bike_local_generated_api_client/src/model/create_rental_point201_response.dart';
 import 'package:bike_local_generated_api_client/src/model/create_rental_point_request.dart';
 import 'package:bike_local_generated_api_client/src/model/create_return_request.dart';
+import 'package:bike_local_generated_api_client/src/model/create_review_request.dart';
 import 'package:bike_local_generated_api_client/src/model/create_ride_session_request.dart';
-import 'package:bike_local_generated_api_client/src/model/create_route201_response.dart';
+import 'package:bike_local_generated_api_client/src/model/create_route_request.dart';
 import 'package:bike_local_generated_api_client/src/model/create_sos_case_request.dart';
 import 'package:bike_local_generated_api_client/src/model/create_staff_invitation202_response.dart';
 import 'package:bike_local_generated_api_client/src/model/create_staff_invitation_request.dart';
@@ -74,8 +78,16 @@ import 'package:bike_local_generated_api_client/src/model/gps_consent_scope.dart
 import 'package:bike_local_generated_api_client/src/model/gps_gap.dart';
 import 'package:bike_local_generated_api_client/src/model/gps_point.dart';
 import 'package:bike_local_generated_api_client/src/model/handover_request.dart';
+import 'package:bike_local_generated_api_client/src/model/hide_review_request.dart';
 import 'package:bike_local_generated_api_client/src/model/inline_object.dart';
 import 'package:bike_local_generated_api_client/src/model/inline_object1.dart';
+import 'package:bike_local_generated_api_client/src/model/inline_object10.dart';
+import 'package:bike_local_generated_api_client/src/model/inline_object11.dart';
+import 'package:bike_local_generated_api_client/src/model/inline_object12.dart';
+import 'package:bike_local_generated_api_client/src/model/inline_object13.dart';
+import 'package:bike_local_generated_api_client/src/model/inline_object14.dart';
+import 'package:bike_local_generated_api_client/src/model/inline_object15.dart';
+import 'package:bike_local_generated_api_client/src/model/inline_object16.dart';
 import 'package:bike_local_generated_api_client/src/model/inline_object2.dart';
 import 'package:bike_local_generated_api_client/src/model/inline_object3.dart';
 import 'package:bike_local_generated_api_client/src/model/inline_object4.dart';
@@ -83,14 +95,22 @@ import 'package:bike_local_generated_api_client/src/model/inline_object5.dart';
 import 'package:bike_local_generated_api_client/src/model/inline_object6.dart';
 import 'package:bike_local_generated_api_client/src/model/inline_object7.dart';
 import 'package:bike_local_generated_api_client/src/model/inline_object8.dart';
+import 'package:bike_local_generated_api_client/src/model/inline_object9.dart';
 import 'package:bike_local_generated_api_client/src/model/inventory_unit.dart';
 import 'package:bike_local_generated_api_client/src/model/list_assets200_response.dart';
 import 'package:bike_local_generated_api_client/src/model/list_audit_logs200_response.dart';
 import 'package:bike_local_generated_api_client/src/model/list_stores200_response.dart';
 import 'package:bike_local_generated_api_client/src/model/location.dart';
 import 'package:bike_local_generated_api_client/src/model/marketing_consent_input.dart';
+import 'package:bike_local_generated_api_client/src/model/moderate_content_submission_request.dart';
 import 'package:bike_local_generated_api_client/src/model/money.dart';
 import 'package:bike_local_generated_api_client/src/model/notification.dart';
+import 'package:bike_local_generated_api_client/src/model/notification_channel.dart';
+import 'package:bike_local_generated_api_client/src/model/notification_delivery_status.dart';
+import 'package:bike_local_generated_api_client/src/model/notification_device.dart';
+import 'package:bike_local_generated_api_client/src/model/notification_device_platform.dart';
+import 'package:bike_local_generated_api_client/src/model/notification_device_status.dart';
+import 'package:bike_local_generated_api_client/src/model/notification_event_type.dart';
 import 'package:bike_local_generated_api_client/src/model/onboarding_selectable_role.dart';
 import 'package:bike_local_generated_api_client/src/model/pagination_meta.dart';
 import 'package:bike_local_generated_api_client/src/model/payment.dart';
@@ -101,16 +121,21 @@ import 'package:bike_local_generated_api_client/src/model/pricing_quote.dart';
 import 'package:bike_local_generated_api_client/src/model/pricing_quote_request.dart';
 import 'package:bike_local_generated_api_client/src/model/pricing_rule.dart';
 import 'package:bike_local_generated_api_client/src/model/process_payment_webhook202_response.dart';
+import 'package:bike_local_generated_api_client/src/model/register_notification_device_request.dart';
 import 'package:bike_local_generated_api_client/src/model/rental_point.dart';
 import 'package:bike_local_generated_api_client/src/model/required_consent_input.dart';
+import 'package:bike_local_generated_api_client/src/model/resolve_sos_case_request.dart';
 import 'package:bike_local_generated_api_client/src/model/response_meta.dart';
 import 'package:bike_local_generated_api_client/src/model/return_inspection.dart';
 import 'package:bike_local_generated_api_client/src/model/return_request.dart';
+import 'package:bike_local_generated_api_client/src/model/review.dart';
 import 'package:bike_local_generated_api_client/src/model/ride_session.dart';
 import 'package:bike_local_generated_api_client/src/model/ride_track_chunk.dart';
 import 'package:bike_local_generated_api_client/src/model/role.dart';
 import 'package:bike_local_generated_api_client/src/model/route.dart';
 import 'package:bike_local_generated_api_client/src/model/sos_case.dart';
+import 'package:bike_local_generated_api_client/src/model/sos_case_note_request.dart';
+import 'package:bike_local_generated_api_client/src/model/sos_timeline_event.dart';
 import 'package:bike_local_generated_api_client/src/model/staff_invitation.dart';
 import 'package:bike_local_generated_api_client/src/model/store.dart';
 import 'package:bike_local_generated_api_client/src/model/store_approval_decision_request.dart';
@@ -138,10 +163,10 @@ part 'serializers.g.dart';
 
 @SerializersFor([
   AccountDeletionRequest,
-  ApproveContentSubmission200Response,
   Asset,
   AssetCategory,
   AssetStatusTransition,
+  AssignSosCaseRequest,
   AuditLog,
   AuthIdentity,
   AvailabilityCheckRequest,
@@ -155,30 +180,34 @@ part 'serializers.g.dart';
   CancelBookingRequest,
   CashConfirmationRequest,
   CheckAvailability200Response,
+  CloseSosCaseRequest,
   ConsentStatus,
   ConsentSummary,
   ConsentType,
   ContentApprovalStatus,
+  ContentReport,
   ContentSubmission,
   CreateAssetCategory201Response,
   CreateAssetCategoryRequest,
   CreateAssetRequest,
   CreateBookingRequest,
   CreateBranchRequest,
+  CreateContentReportRequest,
   CreateEquipmentItem201Response,
   CreateEquipmentItemRequest,
   CreateInventoryUnit201Response,
   CreateInventoryUnitRequest,
   CreatePaymentRequest,
-  CreatePlace201Response,
+  CreatePlaceRequest,
   CreatePricingQuote200Response,
   CreatePricingRule201Response,
   CreatePricingRuleRequest,
   CreateRentalPoint201Response,
   CreateRentalPointRequest,
   CreateReturnRequest,
+  CreateReviewRequest,
   CreateRideSessionRequest,
-  CreateRoute201Response,
+  CreateRouteRequest,
   CreateSosCaseRequest,
   CreateStaffInvitation202Response,
   CreateStaffInvitationRequest,
@@ -197,8 +226,16 @@ part 'serializers.g.dart';
   GpsGap,
   GpsPoint,
   HandoverRequest,
+  HideReviewRequest,
   InlineObject,
   InlineObject1,
+  InlineObject10,
+  InlineObject11,
+  InlineObject12,
+  InlineObject13,
+  InlineObject14,
+  InlineObject15,
+  InlineObject16,
   InlineObject2,
   InlineObject3,
   InlineObject4,
@@ -206,14 +243,22 @@ part 'serializers.g.dart';
   InlineObject6,
   InlineObject7,
   InlineObject8,
+  InlineObject9,
   InventoryUnit,
   ListAssets200Response,
   ListAuditLogs200Response,
   ListStores200Response,
   Location,
   MarketingConsentInput,
+  ModerateContentSubmissionRequest,
   Money,
   Notification,
+  NotificationChannel,
+  NotificationDeliveryStatus,
+  NotificationDevice,
+  NotificationDevicePlatform,
+  NotificationDeviceStatus,
+  NotificationEventType,
   OnboardingSelectableRole,
   PaginationMeta,
   Payment,
@@ -224,16 +269,21 @@ part 'serializers.g.dart';
   PricingQuoteRequest,
   PricingRule,
   ProcessPaymentWebhook202Response,
+  RegisterNotificationDeviceRequest,
   RentalPoint,
   RequiredConsentInput,
+  ResolveSosCaseRequest,
   ResponseMeta,
   ReturnInspection,
   ReturnRequest,
+  Review,
   RideSession,
   RideTrackChunk,
   Role,
   Route,
   SosCase,
+  SosCaseNoteRequest,
+  SosTimelineEvent,
   StaffInvitation,
   Store,
   StoreApprovalDecisionRequest,

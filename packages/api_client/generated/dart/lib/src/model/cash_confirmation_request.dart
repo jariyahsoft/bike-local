@@ -11,14 +11,14 @@ part 'cash_confirmation_request.g.dart';
 /// CashConfirmationRequest
 ///
 /// Properties:
-/// * [amount]
-/// * [currency]
-/// * [receiverUserId]
-/// * [branchId]
-/// * [notes]
-/// * [evidenceImageRef]
-/// * [correctionReason]
-/// * [cancelReason]
+/// * [amount] 
+/// * [currency] 
+/// * [receiverUserId] 
+/// * [branchId] 
+/// * [notes] 
+/// * [evidenceImageRef] 
+/// * [correctionReason] 
+/// * [cancelReason] 
 @BuiltValue()
 abstract class CashConfirmationRequest implements Built<CashConfirmationRequest, CashConfirmationRequestBuilder> {
   @BuiltValueField(wireName: r'amount')
@@ -223,3 +223,4 @@ class _$CashConfirmationRequestSerializer implements PrimitiveSerializer<CashCon
     return result.build();
   }
 }
+

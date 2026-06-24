@@ -11,12 +11,12 @@ part 'gps_point.g.dart';
 /// GpsPoint
 ///
 /// Properties:
-/// * [capturedAt]
-/// * [latitude]
-/// * [longitude]
-/// * [accuracyMeters]
-/// * [speedMps]
-/// * [altitudeMeters]
+/// * [capturedAt] 
+/// * [latitude] 
+/// * [longitude] 
+/// * [accuracyMeters] 
+/// * [speedMps] 
+/// * [altitudeMeters] 
 @BuiltValue()
 abstract class GpsPoint implements Built<GpsPoint, GpsPointBuilder> {
   @BuiltValueField(wireName: r'captured_at')
@@ -187,3 +187,4 @@ class _$GpsPointSerializer implements PrimitiveSerializer<GpsPoint> {
     return result.build();
   }
 }
+

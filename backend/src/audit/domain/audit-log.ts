@@ -37,6 +37,11 @@ export interface AuditLogEntry {
     | "store.approval.decided"
     | "branch.temporarily_closed"
     | "content.approved"
+    | "content.rejected"
+    | "content.reported"
+    | "review.hidden"
+    | "sos.case.updated"
+    | "notification.delivery.updated"
     | "admin.action";
   readonly resourceType: string;
   readonly resourceId: string;

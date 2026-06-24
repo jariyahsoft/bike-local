@@ -11,8 +11,8 @@ part 'end_ride_session_request.g.dart';
 /// EndRideSessionRequest
 ///
 /// Properties:
-/// * [endedAt]
-/// * [version]
+/// * [endedAt] 
+/// * [version] 
 @BuiltValue()
 abstract class EndRideSessionRequest implements Built<EndRideSessionRequest, EndRideSessionRequestBuilder> {
   @BuiltValueField(wireName: r'ended_at')
@@ -119,3 +119,4 @@ class _$EndRideSessionRequestSerializer implements PrimitiveSerializer<EndRideSe
     return result.build();
   }
 }
+

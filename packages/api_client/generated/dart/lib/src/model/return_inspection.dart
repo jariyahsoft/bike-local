@@ -12,13 +12,13 @@ part 'return_inspection.g.dart';
 /// ReturnInspection
 ///
 /// Properties:
-/// * [condition]
-/// * [imageRefs]
-/// * [equipmentComplete]
-/// * [damageNotes]
-/// * [damageChargeAmount]
-/// * [currency]
-/// * [decision]
+/// * [condition] 
+/// * [imageRefs] 
+/// * [equipmentComplete] 
+/// * [damageNotes] 
+/// * [damageChargeAmount] 
+/// * [currency] 
+/// * [decision] 
 @BuiltValue()
 abstract class ReturnInspection implements Built<ReturnInspection, ReturnInspectionBuilder> {
   @BuiltValueField(wireName: r'condition')
@@ -226,3 +226,4 @@ class ReturnInspectionDecisionEnum extends EnumClass {
   static BuiltSet<ReturnInspectionDecisionEnum> get values => _$returnInspectionDecisionEnumValues;
   static ReturnInspectionDecisionEnum valueOf(String name) => _$returnInspectionDecisionEnumValueOf(name);
 }
+

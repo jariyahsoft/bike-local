@@ -14,22 +14,38 @@ part 'content_submission.g.dart';
 /// ContentSubmission
 ///
 /// Properties:
-/// * [id]
-/// * [schemaVersion]
-/// * [tenantId]
-/// * [createdAt]
-/// * [createdBy]
-/// * [updatedAt]
-/// * [updatedBy]
-/// * [deletedAt]
-/// * [version]
-/// * [contentType]
-/// * [contentId]
-/// * [status]
+/// * [id] 
+/// * [schemaVersion] 
+/// * [tenantId] 
+/// * [createdAt] 
+/// * [createdBy] 
+/// * [updatedAt] 
+/// * [updatedBy] 
+/// * [deletedAt] 
+/// * [version] 
+/// * [contentType] 
+/// * [contentId] 
+/// * [submittedByUserId] 
+/// * [status] 
+/// * [moderationReason] 
+/// * [moderatedByUserId] 
+/// * [moderatedAt] 
 @BuiltValue()
 abstract class ContentSubmission implements EntityBase, Built<ContentSubmission, ContentSubmissionBuilder> {
+  @BuiltValueField(wireName: r'submitted_by_user_id')
+  String get submittedByUserId;
+
+  @BuiltValueField(wireName: r'moderation_reason')
+  String? get moderationReason;
+
   @BuiltValueField(wireName: r'content_id')
   String get contentId;
+
+  @BuiltValueField(wireName: r'moderated_by_user_id')
+  String? get moderatedByUserId;
+
+  @BuiltValueField(wireName: r'moderated_at')
+  DateTime? get moderatedAt;
 
   @BuiltValueField(wireName: r'content_type')
   ContentSubmissionContentTypeEnum get contentType;
@@ -62,16 +78,11 @@ class _$ContentSubmissionSerializer implements PrimitiveSerializer<ContentSubmis
     ContentSubmission object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
-    yield r'created_at';
-    yield serializers.serialize(
-      object.createdAt,
-      specifiedType: const FullType(DateTime),
-    );
-    if (object.deletedAt != null) {
-      yield r'deleted_at';
+    if (object.moderationReason != null) {
+      yield r'moderation_reason';
       yield serializers.serialize(
-        object.deletedAt,
-        specifiedType: const FullType(DateTime),
+        object.moderationReason,
+        specifiedType: const FullType(String),
       );
     }
     yield r'schema_version';
@@ -86,6 +97,40 @@ class _$ContentSubmissionSerializer implements PrimitiveSerializer<ContentSubmis
         specifiedType: const FullType(String),
       );
     }
+    yield r'content_id';
+    yield serializers.serialize(
+      object.contentId,
+      specifiedType: const FullType(String),
+    );
+    if (object.moderatedByUserId != null) {
+      yield r'moderated_by_user_id';
+      yield serializers.serialize(
+        object.moderatedByUserId,
+        specifiedType: const FullType(String),
+      );
+    }
+    yield r'version';
+    yield serializers.serialize(
+      object.version,
+      specifiedType: const FullType(int),
+    );
+    yield r'submitted_by_user_id';
+    yield serializers.serialize(
+      object.submittedByUserId,
+      specifiedType: const FullType(String),
+    );
+    yield r'created_at';
+    yield serializers.serialize(
+      object.createdAt,
+      specifiedType: const FullType(DateTime),
+    );
+    if (object.deletedAt != null) {
+      yield r'deleted_at';
+      yield serializers.serialize(
+        object.deletedAt,
+        specifiedType: const FullType(DateTime),
+      );
+    }
     if (object.createdBy != null) {
       yield r'created_by';
       yield serializers.serialize(
@@ -93,11 +138,6 @@ class _$ContentSubmissionSerializer implements PrimitiveSerializer<ContentSubmis
         specifiedType: const FullType(String),
       );
     }
-    yield r'content_id';
-    yield serializers.serialize(
-      object.contentId,
-      specifiedType: const FullType(String),
-    );
     if (object.tenantId != null) {
       yield r'tenant_id';
       yield serializers.serialize(
@@ -110,15 +150,17 @@ class _$ContentSubmissionSerializer implements PrimitiveSerializer<ContentSubmis
       object.id,
       specifiedType: const FullType(String),
     );
+    if (object.moderatedAt != null) {
+      yield r'moderated_at';
+      yield serializers.serialize(
+        object.moderatedAt,
+        specifiedType: const FullType(DateTime),
+      );
+    }
     yield r'content_type';
     yield serializers.serialize(
       object.contentType,
       specifiedType: const FullType(ContentSubmissionContentTypeEnum),
-    );
-    yield r'version';
-    yield serializers.serialize(
-      object.version,
-      specifiedType: const FullType(int),
     );
     yield r'status';
     yield serializers.serialize(
@@ -153,19 +195,12 @@ class _$ContentSubmissionSerializer implements PrimitiveSerializer<ContentSubmis
       final key = serializedList[i] as String;
       final value = serializedList[i + 1];
       switch (key) {
-        case r'created_at':
+        case r'moderation_reason':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(DateTime),
-          ) as DateTime;
-          result.createdAt = valueDes;
-          break;
-        case r'deleted_at':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(DateTime),
-          ) as DateTime;
-          result.deletedAt = valueDes;
+            specifiedType: const FullType(String),
+          ) as String;
+          result.moderationReason = valueDes;
           break;
         case r'schema_version':
           final valueDes = serializers.deserialize(
@@ -181,19 +216,54 @@ class _$ContentSubmissionSerializer implements PrimitiveSerializer<ContentSubmis
           ) as String;
           result.updatedBy = valueDes;
           break;
-        case r'created_by':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.createdBy = valueDes;
-          break;
         case r'content_id':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(String),
           ) as String;
           result.contentId = valueDes;
+          break;
+        case r'moderated_by_user_id':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.moderatedByUserId = valueDes;
+          break;
+        case r'version':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          ) as int;
+          result.version = valueDes;
+          break;
+        case r'submitted_by_user_id':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.submittedByUserId = valueDes;
+          break;
+        case r'created_at':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(DateTime),
+          ) as DateTime;
+          result.createdAt = valueDes;
+          break;
+        case r'deleted_at':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(DateTime),
+          ) as DateTime;
+          result.deletedAt = valueDes;
+          break;
+        case r'created_by':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.createdBy = valueDes;
           break;
         case r'tenant_id':
           final valueDes = serializers.deserialize(
@@ -209,19 +279,19 @@ class _$ContentSubmissionSerializer implements PrimitiveSerializer<ContentSubmis
           ) as String;
           result.id = valueDes;
           break;
+        case r'moderated_at':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(DateTime),
+          ) as DateTime;
+          result.moderatedAt = valueDes;
+          break;
         case r'content_type':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(ContentSubmissionContentTypeEnum),
           ) as ContentSubmissionContentTypeEnum;
           result.contentType = valueDes;
-          break;
-        case r'version':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          ) as int;
-          result.version = valueDes;
           break;
         case r'status':
           final valueDes = serializers.deserialize(
@@ -282,3 +352,4 @@ class ContentSubmissionContentTypeEnum extends EnumClass {
   static BuiltSet<ContentSubmissionContentTypeEnum> get values => _$contentSubmissionContentTypeEnumValues;
   static ContentSubmissionContentTypeEnum valueOf(String name) => _$contentSubmissionContentTypeEnumValueOf(name);
 }
+

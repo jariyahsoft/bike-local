@@ -11,7 +11,7 @@ part 'required_consent_input.g.dart';
 /// RequiredConsentInput
 ///
 /// Properties:
-/// * [version]
+/// * [version] 
 @BuiltValue()
 abstract class RequiredConsentInput implements Built<RequiredConsentInput, RequiredConsentInputBuilder> {
   @BuiltValueField(wireName: r'version')
@@ -103,3 +103,4 @@ class _$RequiredConsentInputSerializer implements PrimitiveSerializer<RequiredCo
     return result.build();
   }
 }
+

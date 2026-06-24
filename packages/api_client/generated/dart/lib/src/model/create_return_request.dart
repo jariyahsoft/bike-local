@@ -13,12 +13,12 @@ part 'create_return_request.g.dart';
 /// CreateReturnRequest
 ///
 /// Properties:
-/// * [bookingId]
-/// * [returnType]
-/// * [returnPointId]
-/// * [evidenceImageRefs]
-/// * [location]
-/// * [notes]
+/// * [bookingId] 
+/// * [returnType] 
+/// * [returnPointId] 
+/// * [evidenceImageRefs] 
+/// * [location] 
+/// * [notes] 
 @BuiltValue()
 abstract class CreateReturnRequest implements Built<CreateReturnRequest, CreateReturnRequestBuilder> {
   @BuiltValueField(wireName: r'booking_id')
@@ -207,3 +207,4 @@ class CreateReturnRequestReturnTypeEnum extends EnumClass {
   static BuiltSet<CreateReturnRequestReturnTypeEnum> get values => _$createReturnRequestReturnTypeEnumValues;
   static CreateReturnRequestReturnTypeEnum valueOf(String name) => _$createReturnRequestReturnTypeEnumValueOf(name);
 }
+

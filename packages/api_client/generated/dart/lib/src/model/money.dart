@@ -12,7 +12,7 @@ part 'money.g.dart';
 ///
 /// Properties:
 /// * [amount] - Integer minor units only.
-/// * [currency]
+/// * [currency] 
 @BuiltValue()
 abstract class Money implements Built<Money, MoneyBuilder> {
   /// Integer minor units only.
@@ -120,3 +120,4 @@ class _$MoneySerializer implements PrimitiveSerializer<Money> {
     return result.build();
   }
 }
+

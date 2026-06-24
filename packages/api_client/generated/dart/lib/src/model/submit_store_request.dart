@@ -11,7 +11,7 @@ part 'submit_store_request.g.dart';
 /// SubmitStoreRequest
 ///
 /// Properties:
-/// * [version]
+/// * [version] 
 @BuiltValue()
 abstract class SubmitStoreRequest implements Built<SubmitStoreRequest, SubmitStoreRequestBuilder> {
   @BuiltValueField(wireName: r'version')
@@ -103,3 +103,4 @@ class _$SubmitStoreRequestSerializer implements PrimitiveSerializer<SubmitStoreR
     return result.build();
   }
 }
+

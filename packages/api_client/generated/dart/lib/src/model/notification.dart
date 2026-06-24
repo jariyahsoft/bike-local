@@ -4,8 +4,11 @@
 
 // ignore_for_file: unused_element
 import 'package:bike_local_generated_api_client/src/model/entity_base.dart';
+import 'package:bike_local_generated_api_client/src/model/notification_event_type.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:bike_local_generated_api_client/src/model/notification_delivery_status.dart';
 import 'package:built_value/json_object.dart';
+import 'package:bike_local_generated_api_client/src/model/notification_channel.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -14,32 +17,46 @@ part 'notification.g.dart';
 /// Notification
 ///
 /// Properties:
-/// * [id]
-/// * [schemaVersion]
-/// * [tenantId]
-/// * [createdAt]
-/// * [createdBy]
-/// * [updatedAt]
-/// * [updatedBy]
-/// * [deletedAt]
-/// * [version]
-/// * [recipientUserId]
-/// * [type]
-/// * [deliveryStatus]
-/// * [payload]
+/// * [id] 
+/// * [schemaVersion] 
+/// * [tenantId] 
+/// * [createdAt] 
+/// * [createdBy] 
+/// * [updatedAt] 
+/// * [updatedBy] 
+/// * [deletedAt] 
+/// * [version] 
+/// * [recipientUserId] 
+/// * [type] 
+/// * [channel] 
+/// * [deliveryStatus] 
+/// * [payload] 
+/// * [readAt] 
+/// * [lastDeliveryAttemptAt] 
 @BuiltValue()
 abstract class Notification implements EntityBase, Built<Notification, NotificationBuilder> {
   @BuiltValueField(wireName: r'recipient_user_id')
   String get recipientUserId;
 
+  @BuiltValueField(wireName: r'last_delivery_attempt_at')
+  DateTime? get lastDeliveryAttemptAt;
+
   @BuiltValueField(wireName: r'payload')
-  BuiltMap<String, JsonObject?>? get payload;
+  BuiltMap<String, JsonObject?> get payload;
+
+  @BuiltValueField(wireName: r'channel')
+  NotificationChannel get channel;
+  // enum channelEnum {  PUSH,  INBOX,  };
 
   @BuiltValueField(wireName: r'type')
-  String get type;
+  NotificationEventType get type;
+  // enum typeEnum {  BOOKING_CREATED,  BOOKING_CONFIRMED,  PAYMENT_COMPLETED,  CASH_PAYMENT_SELECTED,  STAFF_TASK_ASSIGNED,  RENTAL_STARTED,  RENTAL_NEAR_EXPIRY,  RENTAL_OVERDUE,  RETURN_REQUESTED,  RETURN_ACCEPTED,  SOS_OPENED,  SOS_ASSIGNED,  REFUND_COMPLETED,  };
+
+  @BuiltValueField(wireName: r'read_at')
+  DateTime? get readAt;
 
   @BuiltValueField(wireName: r'delivery_status')
-  NotificationDeliveryStatusEnum get deliveryStatus;
+  NotificationDeliveryStatus get deliveryStatus;
   // enum deliveryStatusEnum {  QUEUED,  SENT,  DELIVERED,  FAILED,  READ,  };
 
   Notification._();
@@ -77,11 +94,23 @@ class _$NotificationSerializer implements PrimitiveSerializer<Notification> {
         specifiedType: const FullType(String),
       );
     }
+    yield r'channel';
+    yield serializers.serialize(
+      object.channel,
+      specifiedType: const FullType(NotificationChannel),
+    );
     yield r'type';
     yield serializers.serialize(
       object.type,
-      specifiedType: const FullType(String),
+      specifiedType: const FullType(NotificationEventType),
     );
+    if (object.readAt != null) {
+      yield r'read_at';
+      yield serializers.serialize(
+        object.readAt,
+        specifiedType: const FullType(DateTime),
+      );
+    }
     yield r'version';
     yield serializers.serialize(
       object.version,
@@ -97,6 +126,13 @@ class _$NotificationSerializer implements PrimitiveSerializer<Notification> {
       object.createdAt,
       specifiedType: const FullType(DateTime),
     );
+    if (object.lastDeliveryAttemptAt != null) {
+      yield r'last_delivery_attempt_at';
+      yield serializers.serialize(
+        object.lastDeliveryAttemptAt,
+        specifiedType: const FullType(DateTime),
+      );
+    }
     if (object.deletedAt != null) {
       yield r'deleted_at';
       yield serializers.serialize(
@@ -104,13 +140,11 @@ class _$NotificationSerializer implements PrimitiveSerializer<Notification> {
         specifiedType: const FullType(DateTime),
       );
     }
-    if (object.payload != null) {
-      yield r'payload';
-      yield serializers.serialize(
-        object.payload,
-        specifiedType: const FullType(BuiltMap, [FullType(String), FullType.nullable(JsonObject)]),
-      );
-    }
+    yield r'payload';
+    yield serializers.serialize(
+      object.payload,
+      specifiedType: const FullType(BuiltMap, [FullType(String), FullType.nullable(JsonObject)]),
+    );
     if (object.createdBy != null) {
       yield r'created_by';
       yield serializers.serialize(
@@ -133,7 +167,7 @@ class _$NotificationSerializer implements PrimitiveSerializer<Notification> {
     yield r'delivery_status';
     yield serializers.serialize(
       object.deliveryStatus,
-      specifiedType: const FullType(NotificationDeliveryStatusEnum),
+      specifiedType: const FullType(NotificationDeliveryStatus),
     );
     yield r'updated_at';
     yield serializers.serialize(
@@ -177,12 +211,26 @@ class _$NotificationSerializer implements PrimitiveSerializer<Notification> {
           ) as String;
           result.updatedBy = valueDes;
           break;
+        case r'channel':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(NotificationChannel),
+          ) as NotificationChannel;
+          result.channel = valueDes;
+          break;
         case r'type':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(String),
-          ) as String;
+            specifiedType: const FullType(NotificationEventType),
+          ) as NotificationEventType;
           result.type = valueDes;
+          break;
+        case r'read_at':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(DateTime),
+          ) as DateTime;
+          result.readAt = valueDes;
           break;
         case r'version':
           final valueDes = serializers.deserialize(
@@ -204,6 +252,13 @@ class _$NotificationSerializer implements PrimitiveSerializer<Notification> {
             specifiedType: const FullType(DateTime),
           ) as DateTime;
           result.createdAt = valueDes;
+          break;
+        case r'last_delivery_attempt_at':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(DateTime),
+          ) as DateTime;
+          result.lastDeliveryAttemptAt = valueDes;
           break;
         case r'deleted_at':
           final valueDes = serializers.deserialize(
@@ -243,8 +298,8 @@ class _$NotificationSerializer implements PrimitiveSerializer<Notification> {
         case r'delivery_status':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(NotificationDeliveryStatusEnum),
-          ) as NotificationDeliveryStatusEnum;
+            specifiedType: const FullType(NotificationDeliveryStatus),
+          ) as NotificationDeliveryStatus;
           result.deliveryStatus = valueDes;
           break;
         case r'updated_at':
@@ -283,23 +338,3 @@ class _$NotificationSerializer implements PrimitiveSerializer<Notification> {
   }
 }
 
-class NotificationDeliveryStatusEnum extends EnumClass {
-
-  @BuiltValueEnumConst(wireName: r'QUEUED')
-  static const NotificationDeliveryStatusEnum QUEUED = _$notificationDeliveryStatusEnum_QUEUED;
-  @BuiltValueEnumConst(wireName: r'SENT')
-  static const NotificationDeliveryStatusEnum SENT = _$notificationDeliveryStatusEnum_SENT;
-  @BuiltValueEnumConst(wireName: r'DELIVERED')
-  static const NotificationDeliveryStatusEnum DELIVERED = _$notificationDeliveryStatusEnum_DELIVERED;
-  @BuiltValueEnumConst(wireName: r'FAILED')
-  static const NotificationDeliveryStatusEnum FAILED = _$notificationDeliveryStatusEnum_FAILED;
-  @BuiltValueEnumConst(wireName: r'READ')
-  static const NotificationDeliveryStatusEnum READ = _$notificationDeliveryStatusEnum_READ;
-
-  static Serializer<NotificationDeliveryStatusEnum> get serializer => _$notificationDeliveryStatusEnumSerializer;
-
-  const NotificationDeliveryStatusEnum._(String name): super(name);
-
-  static BuiltSet<NotificationDeliveryStatusEnum> get values => _$notificationDeliveryStatusEnumValues;
-  static NotificationDeliveryStatusEnum valueOf(String name) => _$notificationDeliveryStatusEnumValueOf(name);
-}

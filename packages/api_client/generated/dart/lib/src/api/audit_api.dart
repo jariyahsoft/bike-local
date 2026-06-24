@@ -21,15 +21,15 @@ class AuditApi {
   const AuditApi(this._dio, this._serializers);
 
   /// Search audit logs.
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [resourceType]
-  /// * [resourceId]
-  /// * [actorUserId]
-  /// * [limit]
-  /// * [cursor]
-  /// * [xCorrelationId]
+  /// * [resourceType] 
+  /// * [resourceId] 
+  /// * [actorUserId] 
+  /// * [limit] 
+  /// * [cursor] 
+  /// * [xCorrelationId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -39,7 +39,7 @@ class AuditApi {
   ///
   /// Returns a [Future] containing a [Response] with a [ListAuditLogs200Response] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ListAuditLogs200Response>> listAuditLogs({
+  Future<Response<ListAuditLogs200Response>> listAuditLogs({ 
     String? resourceType,
     String? resourceId,
     String? actorUserId,

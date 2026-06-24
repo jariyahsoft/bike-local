@@ -14,8 +14,8 @@ part 'upload_ride_track_chunk202_response.g.dart';
 /// UploadRideTrackChunk202Response
 ///
 /// Properties:
-/// * [data]
-/// * [meta]
+/// * [data] 
+/// * [meta] 
 @BuiltValue()
 abstract class UploadRideTrackChunk202Response implements SuccessEnvelope, Built<UploadRideTrackChunk202Response, UploadRideTrackChunk202ResponseBuilder> {
   UploadRideTrackChunk202Response._();
@@ -117,3 +117,4 @@ class _$UploadRideTrackChunk202ResponseSerializer implements PrimitiveSerializer
     return result.build();
   }
 }
+

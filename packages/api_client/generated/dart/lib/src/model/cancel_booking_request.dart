@@ -11,8 +11,8 @@ part 'cancel_booking_request.g.dart';
 /// CancelBookingRequest
 ///
 /// Properties:
-/// * [reason]
-/// * [version]
+/// * [reason] 
+/// * [version] 
 @BuiltValue()
 abstract class CancelBookingRequest implements Built<CancelBookingRequest, CancelBookingRequestBuilder> {
   @BuiltValueField(wireName: r'reason')
@@ -119,3 +119,4 @@ class _$CancelBookingRequestSerializer implements PrimitiveSerializer<CancelBook
     return result.build();
   }
 }
+

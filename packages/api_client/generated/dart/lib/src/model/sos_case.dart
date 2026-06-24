@@ -6,6 +6,7 @@
 import 'package:bike_local_generated_api_client/src/model/entity_base.dart';
 import 'package:bike_local_generated_api_client/src/model/location.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:bike_local_generated_api_client/src/model/sos_timeline_event.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -14,26 +15,52 @@ part 'sos_case.g.dart';
 /// SosCase
 ///
 /// Properties:
-/// * [id]
-/// * [schemaVersion]
-/// * [tenantId]
-/// * [createdAt]
-/// * [createdBy]
-/// * [updatedAt]
-/// * [updatedBy]
-/// * [deletedAt]
-/// * [version]
-/// * [userId]
-/// * [bookingId]
-/// * [rentalId]
-/// * [assetId]
-/// * [phone]
-/// * [location]
-/// * [issueType]
-/// * [status]
-/// * [assignedStaffUserId]
+/// * [id] 
+/// * [schemaVersion] 
+/// * [tenantId] 
+/// * [createdAt] 
+/// * [createdBy] 
+/// * [updatedAt] 
+/// * [updatedBy] 
+/// * [deletedAt] 
+/// * [version] 
+/// * [userId] 
+/// * [bookingId] 
+/// * [rideSessionId] 
+/// * [assetId] 
+/// * [storeId] 
+/// * [branchId] 
+/// * [phone] 
+/// * [latestLocation] 
+/// * [issueType] 
+/// * [status] 
+/// * [disclaimerText] 
+/// * [escalationLevel] 
+/// * [assignedStaffUserId] 
+/// * [timeline] 
 @BuiltValue()
 abstract class SosCase implements EntityBase, Built<SosCase, SosCaseBuilder> {
+  @BuiltValueField(wireName: r'branch_id')
+  String get branchId;
+
+  @BuiltValueField(wireName: r'latest_location')
+  Location get latestLocation;
+
+  @BuiltValueField(wireName: r'ride_session_id')
+  String get rideSessionId;
+
+  @BuiltValueField(wireName: r'store_id')
+  String get storeId;
+
+  @BuiltValueField(wireName: r'user_id')
+  String get userId;
+
+  @BuiltValueField(wireName: r'escalation_level')
+  int get escalationLevel;
+
+  @BuiltValueField(wireName: r'booking_id')
+  String get bookingId;
+
   @BuiltValueField(wireName: r'issue_type')
   SosCaseIssueTypeEnum get issueType;
   // enum issueTypeEnum {  BIKE_BROKEN,  FLAT_TIRE,  ACCIDENT,  LOST,  HEALTH,  UNSAFE,  OTHER,  };
@@ -44,20 +71,14 @@ abstract class SosCase implements EntityBase, Built<SosCase, SosCaseBuilder> {
   @BuiltValueField(wireName: r'asset_id')
   String get assetId;
 
-  @BuiltValueField(wireName: r'location')
-  Location get location;
+  @BuiltValueField(wireName: r'timeline')
+  BuiltList<SosTimelineEvent> get timeline;
+
+  @BuiltValueField(wireName: r'disclaimer_text')
+  String get disclaimerText;
 
   @BuiltValueField(wireName: r'assigned_staff_user_id')
   String? get assignedStaffUserId;
-
-  @BuiltValueField(wireName: r'user_id')
-  String get userId;
-
-  @BuiltValueField(wireName: r'booking_id')
-  String get bookingId;
-
-  @BuiltValueField(wireName: r'rental_id')
-  String get rentalId;
 
   @BuiltValueField(wireName: r'status')
   SosCaseStatusEnum get status;
@@ -86,6 +107,11 @@ class _$SosCaseSerializer implements PrimitiveSerializer<SosCase> {
     SosCase object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
+    yield r'branch_id';
+    yield serializers.serialize(
+      object.branchId,
+      specifiedType: const FullType(String),
+    );
     yield r'schema_version';
     yield serializers.serialize(
       object.schemaVersion,
@@ -98,10 +124,30 @@ class _$SosCaseSerializer implements PrimitiveSerializer<SosCase> {
         specifiedType: const FullType(String),
       );
     }
+    yield r'latest_location';
+    yield serializers.serialize(
+      object.latestLocation,
+      specifiedType: const FullType(Location),
+    );
+    yield r'ride_session_id';
+    yield serializers.serialize(
+      object.rideSessionId,
+      specifiedType: const FullType(String),
+    );
+    yield r'store_id';
+    yield serializers.serialize(
+      object.storeId,
+      specifiedType: const FullType(String),
+    );
     yield r'user_id';
     yield serializers.serialize(
       object.userId,
       specifiedType: const FullType(String),
+    );
+    yield r'escalation_level';
+    yield serializers.serialize(
+      object.escalationLevel,
+      specifiedType: const FullType(int),
     );
     yield r'version';
     yield serializers.serialize(
@@ -154,10 +200,15 @@ class _$SosCaseSerializer implements PrimitiveSerializer<SosCase> {
         specifiedType: const FullType(String),
       );
     }
-    yield r'location';
+    yield r'timeline';
     yield serializers.serialize(
-      object.location,
-      specifiedType: const FullType(Location),
+      object.timeline,
+      specifiedType: const FullType(BuiltList, [FullType(SosTimelineEvent)]),
+    );
+    yield r'disclaimer_text';
+    yield serializers.serialize(
+      object.disclaimerText,
+      specifiedType: const FullType(String),
     );
     if (object.assignedStaffUserId != null) {
       yield r'assigned_staff_user_id';
@@ -169,11 +220,6 @@ class _$SosCaseSerializer implements PrimitiveSerializer<SosCase> {
     yield r'id';
     yield serializers.serialize(
       object.id,
-      specifiedType: const FullType(String),
-    );
-    yield r'rental_id';
-    yield serializers.serialize(
-      object.rentalId,
       specifiedType: const FullType(String),
     );
     yield r'status';
@@ -209,6 +255,13 @@ class _$SosCaseSerializer implements PrimitiveSerializer<SosCase> {
       final key = serializedList[i] as String;
       final value = serializedList[i + 1];
       switch (key) {
+        case r'branch_id':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.branchId = valueDes;
+          break;
         case r'schema_version':
           final valueDes = serializers.deserialize(
             value,
@@ -223,12 +276,40 @@ class _$SosCaseSerializer implements PrimitiveSerializer<SosCase> {
           ) as String;
           result.updatedBy = valueDes;
           break;
+        case r'latest_location':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(Location),
+          ) as Location;
+          result.latestLocation.replace(valueDes);
+          break;
+        case r'ride_session_id':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.rideSessionId = valueDes;
+          break;
+        case r'store_id':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.storeId = valueDes;
+          break;
         case r'user_id':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(String),
           ) as String;
           result.userId = valueDes;
+          break;
+        case r'escalation_level':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          ) as int;
+          result.escalationLevel = valueDes;
           break;
         case r'version':
           final valueDes = serializers.deserialize(
@@ -293,12 +374,19 @@ class _$SosCaseSerializer implements PrimitiveSerializer<SosCase> {
           ) as String;
           result.tenantId = valueDes;
           break;
-        case r'location':
+        case r'timeline':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(Location),
-          ) as Location;
-          result.location.replace(valueDes);
+            specifiedType: const FullType(BuiltList, [FullType(SosTimelineEvent)]),
+          ) as BuiltList<SosTimelineEvent>;
+          result.timeline.replace(valueDes);
+          break;
+        case r'disclaimer_text':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.disclaimerText = valueDes;
           break;
         case r'assigned_staff_user_id':
           final valueDes = serializers.deserialize(
@@ -313,13 +401,6 @@ class _$SosCaseSerializer implements PrimitiveSerializer<SosCase> {
             specifiedType: const FullType(String),
           ) as String;
           result.id = valueDes;
-          break;
-        case r'rental_id':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.rentalId = valueDes;
           break;
         case r'status':
           final valueDes = serializers.deserialize(
@@ -411,3 +492,4 @@ class SosCaseStatusEnum extends EnumClass {
   static BuiltSet<SosCaseStatusEnum> get values => _$sosCaseStatusEnumValues;
   static SosCaseStatusEnum valueOf(String name) => _$sosCaseStatusEnumValueOf(name);
 }
+

@@ -12,7 +12,7 @@ part 'error_envelope.g.dart';
 /// ErrorEnvelope
 ///
 /// Properties:
-/// * [error]
+/// * [error] 
 @BuiltValue()
 abstract class ErrorEnvelope implements Built<ErrorEnvelope, ErrorEnvelopeBuilder> {
   @BuiltValueField(wireName: r'error')
@@ -104,3 +104,4 @@ class _$ErrorEnvelopeSerializer implements PrimitiveSerializer<ErrorEnvelope> {
     return result.build();
   }
 }
+

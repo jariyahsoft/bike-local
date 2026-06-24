@@ -12,11 +12,11 @@ part 'asset_status_transition.g.dart';
 /// AssetStatusTransition
 ///
 /// Properties:
-/// * [fromStatus]
-/// * [toStatus]
-/// * [changedAt]
-/// * [changedByUserId]
-/// * [reason]
+/// * [fromStatus] 
+/// * [toStatus] 
+/// * [changedAt] 
+/// * [changedByUserId] 
+/// * [reason] 
 @BuiltValue()
 abstract class AssetStatusTransition implements Built<AssetStatusTransition, AssetStatusTransitionBuilder> {
   @BuiltValueField(wireName: r'from_status')
@@ -236,3 +236,4 @@ class AssetStatusTransitionToStatusEnum extends EnumClass {
   static BuiltSet<AssetStatusTransitionToStatusEnum> get values => _$assetStatusTransitionToStatusEnumValues;
   static AssetStatusTransitionToStatusEnum valueOf(String name) => _$assetStatusTransitionToStatusEnumValueOf(name);
 }
+

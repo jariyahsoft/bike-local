@@ -8,12 +8,14 @@ import 'package:bike_local_generated_api_client/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**staffUserId** | **String** |  |
-**qrBookingToken** | **String** |  |
-**checklistImageRefs** | **BuiltList&lt;String&gt;** |  |
-**conditionNotes** | **String** |  |
-**equipmentConfirmed** | **bool** |  |
-**existingDamageNotes** | **String** |  | [optional]
-**version** | **int** |  |
+**staffUserId** | **String** |  | 
+**qrBookingToken** | **String** |  | 
+**checklistImageRefs** | **BuiltList&lt;String&gt;** |  | 
+**conditionNotes** | **String** |  | 
+**equipmentConfirmed** | **bool** |  | 
+**existingDamageNotes** | **String** |  | [optional] 
+**version** | **int** |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

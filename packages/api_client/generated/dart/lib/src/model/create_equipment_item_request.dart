@@ -12,13 +12,13 @@ part 'create_equipment_item_request.g.dart';
 /// CreateEquipmentItemRequest
 ///
 /// Properties:
-/// * [storeId]
-/// * [branchId]
-/// * [name]
-/// * [rentalMode]
+/// * [storeId] 
+/// * [branchId] 
+/// * [name] 
+/// * [rentalMode] 
 /// * [priceAmount] - Integer minor units only.
 /// * [depositAmount] - Integer minor units only.
-/// * [currency]
+/// * [currency] 
 @BuiltValue()
 abstract class CreateEquipmentItemRequest implements Built<CreateEquipmentItemRequest, CreateEquipmentItemRequestBuilder> {
   @BuiltValueField(wireName: r'store_id')
@@ -230,3 +230,4 @@ class CreateEquipmentItemRequestRentalModeEnum extends EnumClass {
   static BuiltSet<CreateEquipmentItemRequestRentalModeEnum> get values => _$createEquipmentItemRequestRentalModeEnumValues;
   static CreateEquipmentItemRequestRentalModeEnum valueOf(String name) => _$createEquipmentItemRequestRentalModeEnumValueOf(name);
 }
+

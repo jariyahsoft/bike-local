@@ -11,12 +11,12 @@ part 'create_rental_point_request.g.dart';
 /// CreateRentalPointRequest
 ///
 /// Properties:
-/// * [storeId]
-/// * [branchId]
-/// * [name]
-/// * [latitude]
-/// * [longitude]
-/// * [geohash]
+/// * [storeId] 
+/// * [branchId] 
+/// * [name] 
+/// * [latitude] 
+/// * [longitude] 
+/// * [geohash] 
 @BuiltValue()
 abstract class CreateRentalPointRequest implements Built<CreateRentalPointRequest, CreateRentalPointRequestBuilder> {
   @BuiltValueField(wireName: r'store_id')
@@ -185,3 +185,4 @@ class _$CreateRentalPointRequestSerializer implements PrimitiveSerializer<Create
     return result.build();
   }
 }
+

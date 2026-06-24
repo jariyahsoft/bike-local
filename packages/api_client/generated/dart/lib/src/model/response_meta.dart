@@ -12,9 +12,9 @@ part 'response_meta.g.dart';
 /// ResponseMeta
 ///
 /// Properties:
-/// * [requestId]
-/// * [correlationId]
-/// * [pagination]
+/// * [requestId] 
+/// * [correlationId] 
+/// * [pagination] 
 @BuiltValue()
 abstract class ResponseMeta implements Built<ResponseMeta, ResponseMetaBuilder> {
   @BuiltValueField(wireName: r'request_id')
@@ -140,3 +140,4 @@ class _$ResponseMetaSerializer implements PrimitiveSerializer<ResponseMeta> {
     return result.build();
   }
 }
+

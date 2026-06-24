@@ -12,11 +12,11 @@ part 'booking_status_transition.g.dart';
 /// BookingStatusTransition
 ///
 /// Properties:
-/// * [fromStatus]
-/// * [toStatus]
-/// * [changedAt]
-/// * [changedByUserId]
-/// * [reason]
+/// * [fromStatus] 
+/// * [toStatus] 
+/// * [changedAt] 
+/// * [changedByUserId] 
+/// * [reason] 
 @BuiltValue()
 abstract class BookingStatusTransition implements Built<BookingStatusTransition, BookingStatusTransitionBuilder> {
   @BuiltValueField(wireName: r'from_status')
@@ -174,3 +174,4 @@ class _$BookingStatusTransitionSerializer implements PrimitiveSerializer<Booking
     return result.build();
   }
 }
+

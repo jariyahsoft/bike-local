@@ -13,23 +13,23 @@ part 'asset_category.g.dart';
 /// AssetCategory
 ///
 /// Properties:
-/// * [id]
-/// * [schemaVersion]
-/// * [tenantId]
-/// * [createdAt]
-/// * [createdBy]
-/// * [updatedAt]
-/// * [updatedBy]
-/// * [deletedAt]
-/// * [version]
-/// * [storeId]
-/// * [name]
-/// * [type]
-/// * [description]
+/// * [id] 
+/// * [schemaVersion] 
+/// * [tenantId] 
+/// * [createdAt] 
+/// * [createdBy] 
+/// * [updatedAt] 
+/// * [updatedBy] 
+/// * [deletedAt] 
+/// * [version] 
+/// * [storeId] 
+/// * [name] 
+/// * [type] 
+/// * [description] 
 /// * [defaultBasePrice] - Integer minor units only.
 /// * [defaultDepositAmount] - Integer minor units only.
-/// * [currency]
-/// * [active]
+/// * [currency] 
+/// * [active] 
 @BuiltValue()
 abstract class AssetCategory implements EntityBase, Built<AssetCategory, AssetCategoryBuilder> {
   @BuiltValueField(wireName: r'name')
@@ -366,3 +366,4 @@ class AssetCategoryTypeEnum extends EnumClass {
   static BuiltSet<AssetCategoryTypeEnum> get values => _$assetCategoryTypeEnumValues;
   static AssetCategoryTypeEnum valueOf(String name) => _$assetCategoryTypeEnumValueOf(name);
 }
+

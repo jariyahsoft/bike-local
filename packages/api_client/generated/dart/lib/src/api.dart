@@ -16,6 +16,7 @@ import 'package:bike_local_generated_api_client/src/api/branches_api.dart';
 import 'package:bike_local_generated_api_client/src/api/content_api.dart';
 import 'package:bike_local_generated_api_client/src/api/handover_api.dart';
 import 'package:bike_local_generated_api_client/src/api/identity_api.dart';
+import 'package:bike_local_generated_api_client/src/api/notifications_api.dart';
 import 'package:bike_local_generated_api_client/src/api/payment_api.dart';
 import 'package:bike_local_generated_api_client/src/api/pricing_api.dart';
 import 'package:bike_local_generated_api_client/src/api/reports_api.dart';
@@ -160,6 +161,12 @@ class BikeLocalGeneratedApiClient {
   /// by doing that all interceptors will not be executed
   IdentityApi getIdentityApi() {
     return IdentityApi(dio, serializers);
+  }
+
+  /// Get NotificationsApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  NotificationsApi getNotificationsApi() {
+    return NotificationsApi(dio, serializers);
   }
 
   /// Get PaymentApi instance, base route and serializer can be overridden by a given but be careful,

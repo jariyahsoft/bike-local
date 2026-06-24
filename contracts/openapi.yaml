@@ -1058,9 +1058,148 @@ paths:
         - $ref: "#/components/parameters/SosCaseIdPath"
         - $ref: "#/components/parameters/IdempotencyKey"
         - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SosCaseNoteRequest"
       responses:
         "200":
           $ref: "#/components/responses/SosCaseSuccess"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+  /sos-cases/{id}/assign:
+    post:
+      tags: [SOS]
+      operationId: assignSosCase
+      summary: Assign SOS case to a store staff responder.
+      parameters:
+        - $ref: "#/components/parameters/SosCaseIdPath"
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AssignSosCaseRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/SosCaseSuccess"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "409":
+          $ref: "#/components/responses/VersionConflict"
+  /sos-cases/{id}/start:
+    post:
+      tags: [SOS]
+      operationId: startSosCase
+      summary: Mark an assigned SOS case as being actively handled.
+      parameters:
+        - $ref: "#/components/parameters/SosCaseIdPath"
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SosCaseNoteRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/SosCaseSuccess"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "409":
+          $ref: "#/components/responses/VersionConflict"
+  /sos-cases/{id}/resolve:
+    post:
+      tags: [SOS]
+      operationId: resolveSosCase
+      summary: Resolve SOS case with closure notes.
+      parameters:
+        - $ref: "#/components/parameters/SosCaseIdPath"
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResolveSosCaseRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/SosCaseSuccess"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "409":
+          $ref: "#/components/responses/VersionConflict"
+  /sos-cases/{id}/close:
+    post:
+      tags: [SOS]
+      operationId: closeSosCase
+      summary: Close SOS case after follow-up is complete.
+      parameters:
+        - $ref: "#/components/parameters/SosCaseIdPath"
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CloseSosCaseRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/SosCaseSuccess"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "409":
+          $ref: "#/components/responses/VersionConflict"
+  /notification-devices:
+    post:
+      tags: [Notifications]
+      operationId: registerNotificationDevice
+      summary: Register or refresh an FCM device token reference for the signed-in user.
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterNotificationDeviceRequest"
+      responses:
+        "201":
+          $ref: "#/components/responses/NotificationDeviceSuccess"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /notifications:
+    get:
+      tags: [Notifications]
+      operationId: listNotifications
+      summary: List inbox notifications for the signed-in user.
+      parameters:
+        - $ref: "#/components/parameters/CorrelationId"
+      responses:
+        "200":
+          $ref: "#/components/responses/NotificationListSuccess"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /notifications/{id}/read:
+    post:
+      tags: [Notifications]
+      operationId: markNotificationRead
+      summary: Mark a notification as read by its recipient.
+      parameters:
+        - $ref: "#/components/parameters/NotificationIdPath"
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      responses:
+        "200":
+          $ref: "#/components/responses/NotificationSuccess"
         "403":
           $ref: "#/components/responses/Forbidden"
   /routes:
@@ -1076,20 +1215,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Route"
+              $ref: "#/components/schemas/CreateRouteRequest"
       responses:
         "201":
-          description: Route submitted.
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/SuccessEnvelope"
-                  - type: object
-                    required: [data]
-                    properties:
-                      data:
-                        $ref: "#/components/schemas/Route"
+          $ref: "#/components/responses/RouteSuccess"
         "422":
           $ref: "#/components/responses/ValidationError"
   /places:
@@ -1105,20 +1234,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Place"
+              $ref: "#/components/schemas/CreatePlaceRequest"
       responses:
         "201":
-          description: Place submitted.
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/SuccessEnvelope"
-                  - type: object
-                    required: [data]
-                    properties:
-                      data:
-                        $ref: "#/components/schemas/Place"
+          $ref: "#/components/responses/PlaceSuccess"
         "422":
           $ref: "#/components/responses/ValidationError"
   /content-submissions/{id}/approve:
@@ -1130,19 +1249,93 @@ paths:
         - $ref: "#/components/parameters/ContentSubmissionIdPath"
         - $ref: "#/components/parameters/IdempotencyKey"
         - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ModerateContentSubmissionRequest"
       responses:
         "200":
-          description: Content approved.
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/SuccessEnvelope"
-                  - type: object
-                    required: [data]
-                    properties:
-                      data:
-                        $ref: "#/components/schemas/ContentSubmission"
+          $ref: "#/components/responses/ContentSubmissionSuccess"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+  /content-submissions/{id}/reject:
+    post:
+      tags: [Content]
+      operationId: rejectContentSubmission
+      summary: Reject route/place/review content.
+      parameters:
+        - $ref: "#/components/parameters/ContentSubmissionIdPath"
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ModerateContentSubmissionRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/ContentSubmissionSuccess"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+  /reviews:
+    post:
+      tags: [Content]
+      operationId: createReview
+      summary: Create a review from the renter's completed booking.
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateReviewRequest"
+      responses:
+        "201":
+          $ref: "#/components/responses/ReviewSuccess"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /content-reports:
+    post:
+      tags: [Content]
+      operationId: reportContent
+      summary: Report unsafe, wrong, outdated, or abusive public content.
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateContentReportRequest"
+      responses:
+        "201":
+          $ref: "#/components/responses/ContentReportSuccess"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /reviews/{id}/hide:
+    post:
+      tags: [Content]
+      operationId: hideReview
+      summary: Hide a review with a moderation reason.
+      parameters:
+        - $ref: "#/components/parameters/ReviewIdPath"
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HideReviewRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/ReviewSuccess"
         "403":
           $ref: "#/components/responses/Forbidden"
   /reports/store:
@@ -1360,7 +1553,19 @@ components:
       required: true
       schema:
         type: string
+    NotificationIdPath:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
     ContentSubmissionIdPath:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    ReviewIdPath:
       name: id
       in: path
       required: true
@@ -1522,6 +1727,104 @@ components:
                 properties:
                   data:
                     $ref: "#/components/schemas/SosCase"
+    NotificationDeviceSuccess:
+      description: Notification device response.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/SuccessEnvelope"
+              - type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/NotificationDevice"
+    NotificationSuccess:
+      description: Notification response.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/SuccessEnvelope"
+              - type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Notification"
+    NotificationListSuccess:
+      description: Notification inbox response.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/SuccessEnvelope"
+              - type: object
+                required: [data]
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Notification"
+    RouteSuccess:
+      description: Route response.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/SuccessEnvelope"
+              - type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Route"
+    PlaceSuccess:
+      description: Place response.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/SuccessEnvelope"
+              - type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Place"
+    ContentSubmissionSuccess:
+      description: Content submission response.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/SuccessEnvelope"
+              - type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/ContentSubmission"
+    ReviewSuccess:
+      description: Review response.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/SuccessEnvelope"
+              - type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Review"
+    ContentReportSuccess:
+      description: Content report response.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/SuccessEnvelope"
+              - type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/ContentReport"
     Unauthorized:
       description: Authentication required or invalid.
       content:
@@ -2511,19 +2814,38 @@ components:
       allOf:
         - $ref: "#/components/schemas/EntityBase"
         - type: object
-          required: [user_id, booking_id, rental_id, asset_id, phone, location, issue_type, status]
+          required:
+            [
+              user_id,
+              booking_id,
+              ride_session_id,
+              asset_id,
+              store_id,
+              branch_id,
+              phone,
+              latest_location,
+              issue_type,
+              status,
+              disclaimer_text,
+              escalation_level,
+              timeline,
+            ]
           properties:
             user_id:
               type: string
             booking_id:
               type: string
-            rental_id:
+            ride_session_id:
               type: string
             asset_id:
               type: string
+            store_id:
+              type: string
+            branch_id:
+              type: string
             phone:
               type: string
-            location:
+            latest_location:
               $ref: "#/components/schemas/Location"
             issue_type:
               type: string
@@ -2531,24 +2853,123 @@ components:
             status:
               type: string
               enum: [OPEN, ACKNOWLEDGED, ASSIGNED, IN_PROGRESS, RESOLVED, CLOSED]
+            disclaimer_text:
+              type: string
+            escalation_level:
+              type: integer
+              minimum: 0
             assigned_staff_user_id:
               type: string
+            timeline:
+              type: array
+              items:
+                $ref: "#/components/schemas/SosTimelineEvent"
+    SosTimelineEvent:
+      type: object
+      required: [event_type, occurred_at]
+      properties:
+        event_type:
+          type: string
+          enum: [OPENED, ACKNOWLEDGED, ESCALATED, ASSIGNED, STARTED, RESOLVED, CLOSED]
+        occurred_at:
+          $ref: "#/components/schemas/IsoDateTime"
+        actor_user_id:
+          type: string
+        notes:
+          type: string
+        escalation_level:
+          type: integer
+          minimum: 0
+    NotificationEventType:
+      type: string
+      enum:
+        [
+          BOOKING_CREATED,
+          BOOKING_CONFIRMED,
+          PAYMENT_COMPLETED,
+          CASH_PAYMENT_SELECTED,
+          STAFF_TASK_ASSIGNED,
+          RENTAL_STARTED,
+          RENTAL_NEAR_EXPIRY,
+          RENTAL_OVERDUE,
+          RETURN_REQUESTED,
+          RETURN_ACCEPTED,
+          SOS_OPENED,
+          SOS_ASSIGNED,
+          REFUND_COMPLETED,
+        ]
+    NotificationDeliveryStatus:
+      type: string
+      enum: [QUEUED, SENT, DELIVERED, FAILED, READ]
+    NotificationChannel:
+      type: string
+      enum: [PUSH, INBOX]
+    NotificationDevicePlatform:
+      type: string
+      enum: [IOS, ANDROID, WEB]
+    NotificationDeviceStatus:
+      type: string
+      enum: [ACTIVE, REVOKED]
+    NotificationDevice:
+      allOf:
+        - $ref: "#/components/schemas/EntityBase"
+        - type: object
+          required:
+            [
+              tenant_id,
+              user_id,
+              platform,
+              device_id,
+              token_fingerprint,
+              status,
+              last_seen_at,
+            ]
+          properties:
+            tenant_id:
+              type: string
+            user_id:
+              type: string
+            platform:
+              $ref: "#/components/schemas/NotificationDevicePlatform"
+            device_id:
+              type: string
+            token_fingerprint:
+              type: string
+            status:
+              $ref: "#/components/schemas/NotificationDeviceStatus"
+            last_seen_at:
+              $ref: "#/components/schemas/IsoDateTime"
     Notification:
       allOf:
         - $ref: "#/components/schemas/EntityBase"
         - type: object
-          required: [recipient_user_id, type, delivery_status]
+          required:
+            [
+              tenant_id,
+              recipient_user_id,
+              type,
+              channel,
+              delivery_status,
+              payload,
+            ]
           properties:
+            tenant_id:
+              type: string
             recipient_user_id:
               type: string
             type:
-              type: string
+              $ref: "#/components/schemas/NotificationEventType"
+            channel:
+              $ref: "#/components/schemas/NotificationChannel"
             delivery_status:
-              type: string
-              enum: [QUEUED, SENT, DELIVERED, FAILED, READ]
+              $ref: "#/components/schemas/NotificationDeliveryStatus"
             payload:
               type: object
               additionalProperties: true
+            read_at:
+              $ref: "#/components/schemas/IsoDateTime"
+            last_delivery_attempt_at:
+              $ref: "#/components/schemas/IsoDateTime"
     AuditLog:
       type: object
       required: [id, actor_user_id, action, resource_type, resource_id, timestamp, request_id]
@@ -2589,8 +3010,28 @@ components:
       allOf:
         - $ref: "#/components/schemas/EntityBase"
         - type: object
-          required: [name, description, start_location, end_location, distance_meters, difficulty, status]
+          required:
+            [
+              tenant_id,
+              submitted_by_user_id,
+              name,
+              description,
+              start_location,
+              end_location,
+              distance_meters,
+              difficulty,
+              suitable_bike_types,
+              status,
+            ]
           properties:
+            tenant_id:
+              type: string
+            submitted_by_user_id:
+              type: string
+            store_id:
+              type: string
+            branch_id:
+              type: string
             name:
               type: string
             description:
@@ -2617,8 +3058,24 @@ components:
       allOf:
         - $ref: "#/components/schemas/EntityBase"
         - type: object
-          required: [name, place_type, location, status]
+          required:
+            [
+              tenant_id,
+              submitted_by_user_id,
+              name,
+              place_type,
+              location,
+              status,
+            ]
           properties:
+            tenant_id:
+              type: string
+            submitted_by_user_id:
+              type: string
+            store_id:
+              type: string
+            branch_id:
+              type: string
             name:
               type: string
             place_type:
@@ -2632,15 +3089,82 @@ components:
       allOf:
         - $ref: "#/components/schemas/EntityBase"
         - type: object
-          required: [content_type, content_id, status]
+          required: [tenant_id, content_type, content_id, submitted_by_user_id, status]
           properties:
+            tenant_id:
+              type: string
             content_type:
               type: string
               enum: [ROUTE, PLACE, REVIEW]
             content_id:
               type: string
+            submitted_by_user_id:
+              type: string
             status:
               $ref: "#/components/schemas/ContentApprovalStatus"
+            moderation_reason:
+              type: string
+            moderated_by_user_id:
+              type: string
+            moderated_at:
+              $ref: "#/components/schemas/IsoDateTime"
+    Review:
+      allOf:
+        - $ref: "#/components/schemas/EntityBase"
+        - type: object
+          required:
+            [
+              tenant_id,
+              booking_id,
+              user_id,
+              store_id,
+              branch_id,
+              rating,
+              body,
+              status,
+            ]
+          properties:
+            tenant_id:
+              type: string
+            booking_id:
+              type: string
+            user_id:
+              type: string
+            store_id:
+              type: string
+            branch_id:
+              type: string
+            rating:
+              type: integer
+              minimum: 1
+              maximum: 5
+            body:
+              type: string
+            status:
+              $ref: "#/components/schemas/ContentApprovalStatus"
+            hidden_reason:
+              type: string
+    ContentReport:
+      allOf:
+        - $ref: "#/components/schemas/EntityBase"
+        - type: object
+          required:
+            [tenant_id, content_type, content_id, reported_by_user_id, reason]
+          properties:
+            tenant_id:
+              type: string
+            content_type:
+              type: string
+              enum: [ROUTE, PLACE, REVIEW]
+            content_id:
+              type: string
+            reported_by_user_id:
+              type: string
+            reason:
+              type: string
+              enum: [UNSAFE, WRONG, OUTDATED, ABUSE, OTHER]
+            notes:
+              type: string
     ContentApprovalStatus:
       type: string
       enum: [DRAFT, SUBMITTED, UNDER_REVIEW, REVISION_REQUIRED, APPROVED, REJECTED, SUSPENDED, OUTDATED]
@@ -3278,21 +3802,136 @@ components:
           type: string
     CreateSosCaseRequest:
       type: object
-      required: [booking_id, rental_id, asset_id, phone, location, issue_type]
+      required: [booking_id, phone, latest_location, issue_type]
       properties:
         booking_id:
           type: string
-        rental_id:
-          type: string
-        asset_id:
+        ride_session_id:
           type: string
         phone:
           type: string
-        location:
+        latest_location:
           $ref: "#/components/schemas/Location"
         issue_type:
           type: string
           enum: [BIKE_BROKEN, FLAT_TIRE, ACCIDENT, LOST, HEALTH, UNSAFE, OTHER]
+    SosCaseNoteRequest:
+      type: object
+      properties:
+        notes:
+          type: string
+    AssignSosCaseRequest:
+      type: object
+      required: [assigned_staff_user_id]
+      properties:
+        assigned_staff_user_id:
+          type: string
+        notes:
+          type: string
+    ResolveSosCaseRequest:
+      type: object
+      required: [notes]
+      properties:
+        notes:
+          type: string
+    CloseSosCaseRequest:
+      type: object
+      required: [notes]
+      properties:
+        notes:
+          type: string
+    RegisterNotificationDeviceRequest:
+      type: object
+      required: [platform, device_id, fcm_token]
+      properties:
+        platform:
+          $ref: "#/components/schemas/NotificationDevicePlatform"
+        device_id:
+          type: string
+        fcm_token:
+          type: string
+    CreateRouteRequest:
+      type: object
+      required:
+        [store_id, name, description, start_location, end_location, distance_meters, difficulty]
+      properties:
+        store_id:
+          type: string
+        branch_id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        start_location:
+          $ref: "#/components/schemas/Location"
+        end_location:
+          $ref: "#/components/schemas/Location"
+        distance_meters:
+          type: integer
+        difficulty:
+          type: string
+        surface:
+          type: string
+        warning:
+          type: string
+        suitable_bike_types:
+          type: array
+          items:
+            type: string
+    CreatePlaceRequest:
+      type: object
+      required: [store_id, name, place_type, location]
+      properties:
+        store_id:
+          type: string
+        branch_id:
+          type: string
+        name:
+          type: string
+        place_type:
+          type: string
+          enum: [CHECK_IN, VIEWPOINT, CAFE, RESTAURANT, REPAIR_POINT, WATER_POINT, TOILET, HAZARD, TOURIST_ATTRACTION]
+        location:
+          $ref: "#/components/schemas/Location"
+    ModerateContentSubmissionRequest:
+      type: object
+      required: [reason]
+      properties:
+        reason:
+          type: string
+    CreateReviewRequest:
+      type: object
+      required: [booking_id, rating, body]
+      properties:
+        booking_id:
+          type: string
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+        body:
+          type: string
+    CreateContentReportRequest:
+      type: object
+      required: [content_type, content_id, reason]
+      properties:
+        content_type:
+          type: string
+          enum: [ROUTE, PLACE, REVIEW]
+        content_id:
+          type: string
+        reason:
+          type: string
+          enum: [UNSAFE, WRONG, OUTDATED, ABUSE, OTHER]
+        notes:
+          type: string
+    HideReviewRequest:
+      type: object
+      required: [reason]
+      properties:
+        reason:
+          type: string
   examples:
     UserSuccess:
       value:

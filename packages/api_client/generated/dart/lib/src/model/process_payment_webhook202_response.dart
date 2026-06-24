@@ -14,8 +14,8 @@ part 'process_payment_webhook202_response.g.dart';
 /// ProcessPaymentWebhook202Response
 ///
 /// Properties:
-/// * [data]
-/// * [meta]
+/// * [data] 
+/// * [meta] 
 @BuiltValue()
 abstract class ProcessPaymentWebhook202Response implements SuccessEnvelope, Built<ProcessPaymentWebhook202Response, ProcessPaymentWebhook202ResponseBuilder> {
   ProcessPaymentWebhook202Response._();
@@ -117,3 +117,4 @@ class _$ProcessPaymentWebhook202ResponseSerializer implements PrimitiveSerialize
     return result.build();
   }
 }
+

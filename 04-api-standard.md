@@ -184,6 +184,8 @@ Event types ขั้นต่ำ:
 - SOS Assigned
 - Refund Completed
 
+Notification delivery must keep provider attempt logs and allow retry without exposing raw FCM/APNs tokens in API responses, logs, or audit snapshots.
+
 ## Endpoint Catalog
 
 | Module | Example endpoints |
@@ -201,8 +203,9 @@ Event types ขั้นต่ำ:
 | Handover | `POST /api/v1/bookings/{id}/handover` |
 | Ride | `POST /api/v1/ride-sessions`, `POST /api/v1/ride-sessions/{id}/chunks`, `POST /api/v1/ride-sessions/{id}/end` |
 | Return | `POST /api/v1/return-requests`, `POST /api/v1/return-requests/{id}/accept` |
-| SOS | `POST /api/v1/sos-cases`, `POST /api/v1/sos-cases/{id}/acknowledge` |
-| Content | `POST /api/v1/routes`, `POST /api/v1/places`, `POST /api/v1/content-submissions/{id}/approve` |
+| SOS | `POST /api/v1/sos-cases`, `POST /api/v1/sos-cases/{id}/acknowledge`, `POST /api/v1/sos-cases/{id}/assign`, `POST /api/v1/sos-cases/{id}/start`, `POST /api/v1/sos-cases/{id}/resolve`, `POST /api/v1/sos-cases/{id}/close` |
+| Notifications | `POST /api/v1/notification-devices`, `GET /api/v1/notifications`, `POST /api/v1/notifications/{id}/read` |
+| Content | `POST /api/v1/routes`, `POST /api/v1/places`, `POST /api/v1/content-submissions/{id}/approve`, `POST /api/v1/content-submissions/{id}/reject`, `POST /api/v1/reviews`, `POST /api/v1/content-reports`, `POST /api/v1/reviews/{id}/hide` |
 | Reports | `GET /api/v1/reports/store`, `GET /api/v1/reports/platform` |
 | Audit | `GET /api/v1/audit-logs` |
 
@@ -213,6 +216,14 @@ Task 11 ride lifecycle rules:
 - Ending a ride session does not close the rental; only return inspection can close booking/asset/deposit state.
 - Return request supports `STORE`, `DEFINED_POINT`, and `STAFF_PICKUP`; Smart Dock remains Phase 2.
 - Return acceptance requires scoped `return.accept` and records inspection evidence before deposit release or damage deduction.
+
+Task 12 safety and moderation rules:
+
+- SOS create requires the renter's active ride context plus latest location accuracy, and every case response includes the Bike Local non-emergency disclaimer.
+- SOS staff actions stay store/branch scoped through `sos.location.read`; escalation notifies branch staff first, then managers, then owner.
+- Notification device registration returns only token fingerprint metadata; delivery attempts and retries stay in provider-facing delivery logs.
+- Route/place submissions from store members stay unpublished until moderation approval, while platform admins/moderators can auto-approve.
+- Reviews require the actor's completed booking, and moderators can suspend reviews only with an explicit reason and audit log.
 
 ## API Security Checklist
 

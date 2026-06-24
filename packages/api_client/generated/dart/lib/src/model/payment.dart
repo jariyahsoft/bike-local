@@ -13,31 +13,31 @@ part 'payment.g.dart';
 /// Payment
 ///
 /// Properties:
-/// * [id]
-/// * [schemaVersion]
-/// * [tenantId]
-/// * [createdAt]
-/// * [createdBy]
-/// * [updatedAt]
-/// * [updatedBy]
-/// * [deletedAt]
-/// * [version]
-/// * [bookingId]
-/// * [userId]
-/// * [storeId]
-/// * [branchId]
-/// * [provider]
-/// * [providerReference]
-/// * [method]
-/// * [status]
-/// * [amount]
-/// * [currency]
-/// * [idempotencyKey]
-/// * [paidAt]
-/// * [confirmedBy]
-/// * [cashReceivedAt]
-/// * [cashNotes]
-/// * [cashEvidenceImageRef]
+/// * [id] 
+/// * [schemaVersion] 
+/// * [tenantId] 
+/// * [createdAt] 
+/// * [createdBy] 
+/// * [updatedAt] 
+/// * [updatedBy] 
+/// * [deletedAt] 
+/// * [version] 
+/// * [bookingId] 
+/// * [userId] 
+/// * [storeId] 
+/// * [branchId] 
+/// * [provider] 
+/// * [providerReference] 
+/// * [method] 
+/// * [status] 
+/// * [amount] 
+/// * [currency] 
+/// * [idempotencyKey] 
+/// * [paidAt] 
+/// * [confirmedBy] 
+/// * [cashReceivedAt] 
+/// * [cashNotes] 
+/// * [cashEvidenceImageRef] 
 @BuiltValue()
 abstract class Payment implements EntityBase, Built<Payment, PaymentBuilder> {
   @BuiltValueField(wireName: r'branch_id')
@@ -528,3 +528,4 @@ class PaymentStatusEnum extends EnumClass {
   static BuiltSet<PaymentStatusEnum> get values => _$paymentStatusEnumValues;
   static PaymentStatusEnum valueOf(String name) => _$paymentStatusEnumValueOf(name);
 }
+

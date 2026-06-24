@@ -54,7 +54,10 @@ places
 routes
 content_submissions
 reviews
+content_reports
+notification_devices
 notifications
+notification_delivery_logs
 settlements
 audit_logs
 outbox_events
@@ -79,6 +82,11 @@ erDiagram
   RIDE_SESSIONS ||--o{ RIDE_TRACK_CHUNKS : chunks
   BOOKINGS ||--o{ RETURN_REQUESTS : returns
   BOOKINGS ||--o{ SOS_CASES : may_open
+  BOOKINGS ||--o{ REVIEWS : may_receive
+  USERS ||--o{ NOTIFICATION_DEVICES : registers
+  USERS ||--o{ NOTIFICATIONS : receives
+  NOTIFICATIONS ||--o{ NOTIFICATION_DELIVERY_LOGS : records
+  USERS ||--o{ CONTENT_REPORTS : files
   BOOKINGS ||--o{ AUDIT_LOGS : audited
 ```
 
@@ -333,6 +341,12 @@ Handover ตรวจ QR booking token แบบ one-time/time-limited ผ่า
 
 Return request เก็บ `return_type`, evidence photos, return location, notes, และ notify store/staff ผ่าน outbox. Smart Dock ยังเป็น Phase 2 placeholder และไม่รับใน MVP. Staff inspection เป็นจุดเดียวที่ close rental ได้: booking ไป `INSPECTION_PENDING` แล้ว `COMPLETED` หรือ `DISPUTED`, asset ไป `AVAILABLE` หรือ `MAINTENANCE`, และ deposit release/deduction เกิดหลัง inspection เท่านั้น.
 
+### Notifications and Content Moderation
+
+Notification device registration stores only protected token material: an opaque provider reference plus token fingerprint for dedupe. Inbox notifications keep delivery state on the message, while `notification_delivery_logs` append provider attempts, failures, and retries per notification.
+
+Route, place, and review entities are public-content records; `content_submissions` track approval state and moderator reason separately from the published entity, and `content_reports` capture renter/staff reports for unsafe, wrong, outdated, or abusive content. Reviews remain limited to completed bookings and can later be suspended with an explicit hidden reason.
+
 ### Audit Log
 
 | Field | Type | Notes |
@@ -385,6 +399,12 @@ Return request เก็บ `return_type`, evidence photos, return location, not
 - `staff_invitations`: query by `store_id`, `status`, `expires_at`
 - Availability checks must prevent overlapping confirmed bookings for same asset/time range
 - `ride_track_chunks`: unique `(ride_session_id, sequence)`
+- `reviews`: unique `(booking_id, user_id)`
+- `content_submissions`: unique `(content_type, content_id)` and query by `tenant_id`, `status`
+- `content_reports`: query by `content_type`, `content_id`, `reported_by_user_id`
+- `notification_devices`: unique `(user_id, token_fingerprint)` and query active devices by `user_id`
+- `notifications`: query by `tenant_id`, `recipient_user_id`, `delivery_status`
+- `notification_delivery_logs`: query by `notification_id`, `recipient_user_id`, `attempt`
 - `payments`: unique idempotency key per command context
 - `payment_events`: unique `(provider, provider_event_id)` for webhook replay protection
 - `deposits`: query by `booking_id`, `store_id`, `status`
