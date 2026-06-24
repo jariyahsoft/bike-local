@@ -17,6 +17,8 @@ import 'package:bike_local_generated_api_client/src/model/date.dart';
 import 'package:bike_local_generated_api_client/src/model/account_deletion_request.dart';
 import 'package:bike_local_generated_api_client/src/model/asset.dart';
 import 'package:bike_local_generated_api_client/src/model/asset_category.dart';
+import 'package:bike_local_generated_api_client/src/model/asset_report.dart';
+import 'package:bike_local_generated_api_client/src/model/asset_report_item.dart';
 import 'package:bike_local_generated_api_client/src/model/asset_status_transition.dart';
 import 'package:bike_local_generated_api_client/src/model/assign_sos_case_request.dart';
 import 'package:bike_local_generated_api_client/src/model/audit_log.dart';
@@ -56,6 +58,7 @@ import 'package:bike_local_generated_api_client/src/model/create_pricing_rule201
 import 'package:bike_local_generated_api_client/src/model/create_pricing_rule_request.dart';
 import 'package:bike_local_generated_api_client/src/model/create_rental_point201_response.dart';
 import 'package:bike_local_generated_api_client/src/model/create_rental_point_request.dart';
+import 'package:bike_local_generated_api_client/src/model/create_report_export_request.dart';
 import 'package:bike_local_generated_api_client/src/model/create_return_request.dart';
 import 'package:bike_local_generated_api_client/src/model/create_review_request.dart';
 import 'package:bike_local_generated_api_client/src/model/create_ride_session_request.dart';
@@ -71,8 +74,6 @@ import 'package:bike_local_generated_api_client/src/model/entity_base.dart';
 import 'package:bike_local_generated_api_client/src/model/equipment.dart';
 import 'package:bike_local_generated_api_client/src/model/error.dart';
 import 'package:bike_local_generated_api_client/src/model/error_envelope.dart';
-import 'package:bike_local_generated_api_client/src/model/get_platform_report200_response.dart';
-import 'package:bike_local_generated_api_client/src/model/get_store_report200_response.dart';
 import 'package:bike_local_generated_api_client/src/model/gps_consent_input.dart';
 import 'package:bike_local_generated_api_client/src/model/gps_consent_scope.dart';
 import 'package:bike_local_generated_api_client/src/model/gps_gap.dart';
@@ -88,7 +89,14 @@ import 'package:bike_local_generated_api_client/src/model/inline_object13.dart';
 import 'package:bike_local_generated_api_client/src/model/inline_object14.dart';
 import 'package:bike_local_generated_api_client/src/model/inline_object15.dart';
 import 'package:bike_local_generated_api_client/src/model/inline_object16.dart';
+import 'package:bike_local_generated_api_client/src/model/inline_object17.dart';
+import 'package:bike_local_generated_api_client/src/model/inline_object18.dart';
+import 'package:bike_local_generated_api_client/src/model/inline_object19.dart';
 import 'package:bike_local_generated_api_client/src/model/inline_object2.dart';
+import 'package:bike_local_generated_api_client/src/model/inline_object20.dart';
+import 'package:bike_local_generated_api_client/src/model/inline_object21.dart';
+import 'package:bike_local_generated_api_client/src/model/inline_object22.dart';
+import 'package:bike_local_generated_api_client/src/model/inline_object23.dart';
 import 'package:bike_local_generated_api_client/src/model/inline_object3.dart';
 import 'package:bike_local_generated_api_client/src/model/inline_object4.dart';
 import 'package:bike_local_generated_api_client/src/model/inline_object5.dart';
@@ -123,6 +131,9 @@ import 'package:bike_local_generated_api_client/src/model/pricing_rule.dart';
 import 'package:bike_local_generated_api_client/src/model/process_payment_webhook202_response.dart';
 import 'package:bike_local_generated_api_client/src/model/register_notification_device_request.dart';
 import 'package:bike_local_generated_api_client/src/model/rental_point.dart';
+import 'package:bike_local_generated_api_client/src/model/report_export.dart';
+import 'package:bike_local_generated_api_client/src/model/report_export_format.dart';
+import 'package:bike_local_generated_api_client/src/model/report_export_type.dart';
 import 'package:bike_local_generated_api_client/src/model/required_consent_input.dart';
 import 'package:bike_local_generated_api_client/src/model/resolve_sos_case_request.dart';
 import 'package:bike_local_generated_api_client/src/model/response_meta.dart';
@@ -133,10 +144,13 @@ import 'package:bike_local_generated_api_client/src/model/ride_session.dart';
 import 'package:bike_local_generated_api_client/src/model/ride_track_chunk.dart';
 import 'package:bike_local_generated_api_client/src/model/role.dart';
 import 'package:bike_local_generated_api_client/src/model/route.dart';
+import 'package:bike_local_generated_api_client/src/model/settlement.dart';
 import 'package:bike_local_generated_api_client/src/model/sos_case.dart';
 import 'package:bike_local_generated_api_client/src/model/sos_case_note_request.dart';
 import 'package:bike_local_generated_api_client/src/model/sos_timeline_event.dart';
 import 'package:bike_local_generated_api_client/src/model/staff_invitation.dart';
+import 'package:bike_local_generated_api_client/src/model/staff_report.dart';
+import 'package:bike_local_generated_api_client/src/model/staff_report_item.dart';
 import 'package:bike_local_generated_api_client/src/model/store.dart';
 import 'package:bike_local_generated_api_client/src/model/store_approval_decision_request.dart';
 import 'package:bike_local_generated_api_client/src/model/store_approval_status.dart';
@@ -144,7 +158,8 @@ import 'package:bike_local_generated_api_client/src/model/store_document_metadat
 import 'package:bike_local_generated_api_client/src/model/store_document_metadata_input.dart';
 import 'package:bike_local_generated_api_client/src/model/store_member.dart';
 import 'package:bike_local_generated_api_client/src/model/store_operational_status.dart';
-import 'package:bike_local_generated_api_client/src/model/store_report.dart';
+import 'package:bike_local_generated_api_client/src/model/store_rental_report.dart';
+import 'package:bike_local_generated_api_client/src/model/store_revenue_report.dart';
 import 'package:bike_local_generated_api_client/src/model/submit_store_request.dart';
 import 'package:bike_local_generated_api_client/src/model/success_envelope.dart';
 import 'package:bike_local_generated_api_client/src/model/temporary_closure.dart';
@@ -165,6 +180,8 @@ part 'serializers.g.dart';
   AccountDeletionRequest,
   Asset,
   AssetCategory,
+  AssetReport,
+  AssetReportItem,
   AssetStatusTransition,
   AssignSosCaseRequest,
   AuditLog,
@@ -204,6 +221,7 @@ part 'serializers.g.dart';
   CreatePricingRuleRequest,
   CreateRentalPoint201Response,
   CreateRentalPointRequest,
+  CreateReportExportRequest,
   CreateReturnRequest,
   CreateReviewRequest,
   CreateRideSessionRequest,
@@ -219,8 +237,6 @@ part 'serializers.g.dart';
   Equipment,
   Error,
   ErrorEnvelope,
-  GetPlatformReport200Response,
-  GetStoreReport200Response,
   GpsConsentInput,
   GpsConsentScope,
   GpsGap,
@@ -236,7 +252,14 @@ part 'serializers.g.dart';
   InlineObject14,
   InlineObject15,
   InlineObject16,
+  InlineObject17,
+  InlineObject18,
+  InlineObject19,
   InlineObject2,
+  InlineObject20,
+  InlineObject21,
+  InlineObject22,
+  InlineObject23,
   InlineObject3,
   InlineObject4,
   InlineObject5,
@@ -271,6 +294,9 @@ part 'serializers.g.dart';
   ProcessPaymentWebhook202Response,
   RegisterNotificationDeviceRequest,
   RentalPoint,
+  ReportExport,
+  ReportExportFormat,
+  ReportExportType,
   RequiredConsentInput,
   ResolveSosCaseRequest,
   ResponseMeta,
@@ -281,10 +307,13 @@ part 'serializers.g.dart';
   RideTrackChunk,
   Role,
   Route,
+  Settlement,
   SosCase,
   SosCaseNoteRequest,
   SosTimelineEvent,
   StaffInvitation,
+  StaffReport,
+  StaffReportItem,
   Store,
   StoreApprovalDecisionRequest,
   StoreApprovalStatus,
@@ -292,7 +321,8 @@ part 'serializers.g.dart';
   StoreDocumentMetadataInput,
   StoreMember,
   StoreOperationalStatus,
-  StoreReport,
+  StoreRentalReport,
+  StoreRevenueReport,
   SubmitStoreRequest,
   SuccessEnvelope,$SuccessEnvelope,
   TemporaryClosure,

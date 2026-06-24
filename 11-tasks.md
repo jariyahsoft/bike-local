@@ -130,13 +130,13 @@ Foundation / Sprint 0
 
 ### Reports and Settlement
 
-- [ ] Store rental report
-- [ ] Store revenue report
-- [ ] Asset report
-- [ ] Staff report
-- [ ] Platform overview report
-- [ ] Settlement calculation
-- [ ] CSV/Excel export
+- [x] Store rental report
+- [x] Store revenue report
+- [x] Asset report
+- [x] Staff report
+- [x] Platform overview report
+- [x] Settlement calculation
+- [x] CSV/Excel export
 
 ## Dependencies
 
@@ -172,7 +172,7 @@ Foundation / Sprint 0
 - [x] Return request and inspection close rental
 - [x] Deposit is not released before inspection
 - [x] SOS opens with latest location and escalates
-- [ ] Reports load
+- [x] Reports load
 - [x] Admin approval works with audit logging
 - [ ] Audit search works
 - [x] Contract tests pass

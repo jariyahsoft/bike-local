@@ -11,16 +11,26 @@ part 'platform_report.g.dart';
 /// PlatformReport
 ///
 /// Properties:
+/// * [from] 
+/// * [to] 
 /// * [usersCount] 
 /// * [storesCount] 
 /// * [branchesCount] 
 /// * [assetsCount] 
 /// * [bookingsCount] 
+/// * [completedBookingsCount] 
+/// * [activeBookingsCount] 
 /// * [gmvAmount] 
 /// * [platformRevenueAmount] 
 /// * [currency] 
 @BuiltValue()
 abstract class PlatformReport implements Built<PlatformReport, PlatformReportBuilder> {
+  @BuiltValueField(wireName: r'from')
+  DateTime get from;
+
+  @BuiltValueField(wireName: r'to')
+  DateTime get to;
+
   @BuiltValueField(wireName: r'users_count')
   int get usersCount;
 
@@ -28,13 +38,19 @@ abstract class PlatformReport implements Built<PlatformReport, PlatformReportBui
   int get storesCount;
 
   @BuiltValueField(wireName: r'branches_count')
-  int? get branchesCount;
+  int get branchesCount;
 
   @BuiltValueField(wireName: r'assets_count')
-  int? get assetsCount;
+  int get assetsCount;
 
   @BuiltValueField(wireName: r'bookings_count')
   int get bookingsCount;
+
+  @BuiltValueField(wireName: r'completed_bookings_count')
+  int get completedBookingsCount;
+
+  @BuiltValueField(wireName: r'active_bookings_count')
+  int get activeBookingsCount;
 
   @BuiltValueField(wireName: r'gmv_amount')
   int get gmvAmount;
@@ -68,6 +84,16 @@ class _$PlatformReportSerializer implements PrimitiveSerializer<PlatformReport> 
     PlatformReport object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
+    yield r'from';
+    yield serializers.serialize(
+      object.from,
+      specifiedType: const FullType(DateTime),
+    );
+    yield r'to';
+    yield serializers.serialize(
+      object.to,
+      specifiedType: const FullType(DateTime),
+    );
     yield r'users_count';
     yield serializers.serialize(
       object.usersCount,
@@ -78,23 +104,29 @@ class _$PlatformReportSerializer implements PrimitiveSerializer<PlatformReport> 
       object.storesCount,
       specifiedType: const FullType(int),
     );
-    if (object.branchesCount != null) {
-      yield r'branches_count';
-      yield serializers.serialize(
-        object.branchesCount,
-        specifiedType: const FullType(int),
-      );
-    }
-    if (object.assetsCount != null) {
-      yield r'assets_count';
-      yield serializers.serialize(
-        object.assetsCount,
-        specifiedType: const FullType(int),
-      );
-    }
+    yield r'branches_count';
+    yield serializers.serialize(
+      object.branchesCount,
+      specifiedType: const FullType(int),
+    );
+    yield r'assets_count';
+    yield serializers.serialize(
+      object.assetsCount,
+      specifiedType: const FullType(int),
+    );
     yield r'bookings_count';
     yield serializers.serialize(
       object.bookingsCount,
+      specifiedType: const FullType(int),
+    );
+    yield r'completed_bookings_count';
+    yield serializers.serialize(
+      object.completedBookingsCount,
+      specifiedType: const FullType(int),
+    );
+    yield r'active_bookings_count';
+    yield serializers.serialize(
+      object.activeBookingsCount,
       specifiedType: const FullType(int),
     );
     yield r'gmv_amount';
@@ -135,6 +167,20 @@ class _$PlatformReportSerializer implements PrimitiveSerializer<PlatformReport> 
       final key = serializedList[i] as String;
       final value = serializedList[i + 1];
       switch (key) {
+        case r'from':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(DateTime),
+          ) as DateTime;
+          result.from = valueDes;
+          break;
+        case r'to':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(DateTime),
+          ) as DateTime;
+          result.to = valueDes;
+          break;
         case r'users_count':
           final valueDes = serializers.deserialize(
             value,
@@ -169,6 +215,20 @@ class _$PlatformReportSerializer implements PrimitiveSerializer<PlatformReport> 
             specifiedType: const FullType(int),
           ) as int;
           result.bookingsCount = valueDes;
+          break;
+        case r'completed_bookings_count':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          ) as int;
+          result.completedBookingsCount = valueDes;
+          break;
+        case r'active_bookings_count':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          ) as int;
+          result.activeBookingsCount = valueDes;
           break;
         case r'gmv_amount':
           final valueDes = serializers.deserialize(

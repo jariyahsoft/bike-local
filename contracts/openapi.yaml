@@ -1338,13 +1338,15 @@ paths:
           $ref: "#/components/responses/ReviewSuccess"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /reports/store:
+  /reports/store/rental:
     get:
       tags: [Reports]
-      operationId: getStoreReport
-      summary: Get merchant rental and revenue report.
+      operationId: getStoreRentalReport
+      summary: Get merchant rental report.
       parameters:
+        - $ref: "#/components/parameters/TenantIdQuery"
         - $ref: "#/components/parameters/StoreIdQuery"
+        - $ref: "#/components/parameters/BranchIdQuery"
         - name: from
           in: query
           required: true
@@ -1358,17 +1360,82 @@ paths:
         - $ref: "#/components/parameters/CorrelationId"
       responses:
         "200":
-          description: Store report.
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/SuccessEnvelope"
-                  - type: object
-                    required: [data]
-                    properties:
-                      data:
-                        $ref: "#/components/schemas/StoreReport"
+          $ref: "#/components/responses/StoreRentalReportSuccess"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+  /reports/store/revenue:
+    get:
+      tags: [Reports]
+      operationId: getStoreRevenueReport
+      summary: Get merchant revenue report.
+      parameters:
+        - $ref: "#/components/parameters/TenantIdQuery"
+        - $ref: "#/components/parameters/StoreIdQuery"
+        - $ref: "#/components/parameters/BranchIdQuery"
+        - name: from
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/IsoDateTime"
+        - name: to
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/IsoDateTime"
+        - $ref: "#/components/parameters/CorrelationId"
+      responses:
+        "200":
+          $ref: "#/components/responses/StoreRevenueReportSuccess"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+  /reports/store/assets:
+    get:
+      tags: [Reports]
+      operationId: getAssetReport
+      summary: Get merchant asset performance report.
+      parameters:
+        - $ref: "#/components/parameters/TenantIdQuery"
+        - $ref: "#/components/parameters/StoreIdQuery"
+        - $ref: "#/components/parameters/BranchIdQuery"
+        - name: from
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/IsoDateTime"
+        - name: to
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/IsoDateTime"
+        - $ref: "#/components/parameters/CorrelationId"
+      responses:
+        "200":
+          $ref: "#/components/responses/AssetReportSuccess"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+  /reports/store/staff:
+    get:
+      tags: [Reports]
+      operationId: getStaffReport
+      summary: Get merchant staff operations report.
+      parameters:
+        - $ref: "#/components/parameters/TenantIdQuery"
+        - $ref: "#/components/parameters/StoreIdQuery"
+        - $ref: "#/components/parameters/BranchIdQuery"
+        - name: from
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/IsoDateTime"
+        - name: to
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/IsoDateTime"
+        - $ref: "#/components/parameters/CorrelationId"
+      responses:
+        "200":
+          $ref: "#/components/responses/StaffReportSuccess"
         "403":
           $ref: "#/components/responses/Forbidden"
   /reports/platform:
@@ -1377,6 +1444,7 @@ paths:
       operationId: getPlatformReport
       summary: Get platform overview report.
       parameters:
+        - $ref: "#/components/parameters/TenantIdQuery"
         - name: from
           in: query
           required: true
@@ -1390,17 +1458,113 @@ paths:
         - $ref: "#/components/parameters/CorrelationId"
       responses:
         "200":
-          description: Platform report.
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/SuccessEnvelope"
-                  - type: object
-                    required: [data]
-                    properties:
-                      data:
-                        $ref: "#/components/schemas/PlatformReport"
+          $ref: "#/components/responses/PlatformReportSuccess"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+  /settlements:
+    post:
+      tags: [Reports]
+      operationId: createSettlement
+      summary: Calculate and create a draft store settlement.
+      parameters:
+        - $ref: "#/components/parameters/TenantIdQuery"
+        - $ref: "#/components/parameters/StoreIdQuery"
+        - $ref: "#/components/parameters/BranchIdQuery"
+        - name: from
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/IsoDateTime"
+        - name: to
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/IsoDateTime"
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      responses:
+        "201":
+          $ref: "#/components/responses/SettlementSuccess"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /settlements/{id}/approve:
+    post:
+      tags: [Reports]
+      operationId: approveSettlement
+      summary: Approve a draft settlement.
+      parameters:
+        - $ref: "#/components/parameters/SettlementIdPath"
+        - $ref: "#/components/parameters/TenantIdQuery"
+        - $ref: "#/components/parameters/StoreIdQuery"
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      responses:
+        "200":
+          $ref: "#/components/responses/SettlementSuccess"
+        "409":
+          $ref: "#/components/responses/VersionConflict"
+  /settlements/{id}/payment-request:
+    post:
+      tags: [Reports]
+      operationId: requestSettlementPayment
+      summary: Mark an approved settlement as payment requested.
+      parameters:
+        - $ref: "#/components/parameters/SettlementIdPath"
+        - $ref: "#/components/parameters/TenantIdQuery"
+        - $ref: "#/components/parameters/StoreIdQuery"
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      responses:
+        "200":
+          $ref: "#/components/responses/SettlementSuccess"
+        "409":
+          $ref: "#/components/responses/VersionConflict"
+  /settlements/{id}/paid:
+    post:
+      tags: [Reports]
+      operationId: markSettlementPaid
+      summary: Mark a requested settlement payment as paid.
+      parameters:
+        - $ref: "#/components/parameters/SettlementIdPath"
+        - $ref: "#/components/parameters/TenantIdQuery"
+        - $ref: "#/components/parameters/StoreIdQuery"
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      responses:
+        "200":
+          $ref: "#/components/responses/SettlementSuccess"
+        "409":
+          $ref: "#/components/responses/VersionConflict"
+  /report-exports:
+    post:
+      tags: [Reports]
+      operationId: createReportExport
+      summary: Create a filtered report export.
+      parameters:
+        - $ref: "#/components/parameters/TenantIdQuery"
+        - $ref: "#/components/parameters/StoreIdQuery"
+        - $ref: "#/components/parameters/BranchIdQuery"
+        - name: from
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/IsoDateTime"
+        - name: to
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/IsoDateTime"
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateReportExportRequest"
+      responses:
+        "201":
+          $ref: "#/components/responses/ReportExportSuccess"
         "403":
           $ref: "#/components/responses/Forbidden"
   /audit-logs:
@@ -1565,6 +1729,12 @@ components:
       required: true
       schema:
         type: string
+    SettlementIdPath:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
     ReviewIdPath:
       name: id
       in: path
@@ -1579,6 +1749,11 @@ components:
         type: string
     StoreIdQuery:
       name: store_id
+      in: query
+      schema:
+        type: string
+    TenantIdQuery:
+      name: tenant_id
       in: query
       schema:
         type: string
@@ -1825,6 +2000,90 @@ components:
                 properties:
                   data:
                     $ref: "#/components/schemas/ContentReport"
+    StoreRentalReportSuccess:
+      description: Store rental report response.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/SuccessEnvelope"
+              - type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/StoreRentalReport"
+    StoreRevenueReportSuccess:
+      description: Store revenue report response.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/SuccessEnvelope"
+              - type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/StoreRevenueReport"
+    AssetReportSuccess:
+      description: Asset report response.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/SuccessEnvelope"
+              - type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/AssetReport"
+    StaffReportSuccess:
+      description: Staff report response.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/SuccessEnvelope"
+              - type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/StaffReport"
+    PlatformReportSuccess:
+      description: Platform report response.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/SuccessEnvelope"
+              - type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/PlatformReport"
+    SettlementSuccess:
+      description: Settlement response.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/SuccessEnvelope"
+              - type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Settlement"
+    ReportExportSuccess:
+      description: Report export response.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/SuccessEnvelope"
+              - type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: "#/components/schemas/ReportExport"
     Unauthorized:
       description: Authentication required or invalid.
       content:
@@ -3168,12 +3427,29 @@ components:
     ContentApprovalStatus:
       type: string
       enum: [DRAFT, SUBMITTED, UNDER_REVIEW, REVISION_REQUIRED, APPROVED, REJECTED, SUSPENDED, OUTDATED]
-    StoreReport:
+    StoreRentalReport:
       type: object
-      required: [store_id, gross_revenue_amount, net_revenue_amount, currency]
+      required:
+        [
+          store_id,
+          from,
+          to,
+          bookings_count,
+          completed_count,
+          cancelled_count,
+          no_show_count,
+          overdue_count,
+          average_duration_minutes,
+        ]
       properties:
         store_id:
           type: string
+        branch_id:
+          type: string
+        from:
+          $ref: "#/components/schemas/IsoDateTime"
+        to:
+          $ref: "#/components/schemas/IsoDateTime"
         bookings_count:
           type: integer
         completed_count:
@@ -3182,6 +3458,39 @@ components:
           type: integer
         no_show_count:
           type: integer
+        overdue_count:
+          type: integer
+        average_duration_minutes:
+          type: integer
+    StoreReport:
+      $ref: "#/components/schemas/StoreRevenueReport"
+    StoreRevenueReport:
+      type: object
+      required:
+        [
+          store_id,
+          from,
+          to,
+          gross_revenue_amount,
+          net_revenue_amount,
+          cash_amount,
+          online_amount,
+          deposit_amount,
+          refund_amount,
+          penalty_amount,
+          platform_fee_amount,
+          payment_fee_amount,
+          currency,
+        ]
+      properties:
+        store_id:
+          type: string
+        branch_id:
+          type: string
+        from:
+          $ref: "#/components/schemas/IsoDateTime"
+        to:
+          $ref: "#/components/schemas/IsoDateTime"
         gross_revenue_amount:
           type: integer
         net_revenue_amount:
@@ -3198,12 +3507,101 @@ components:
           type: integer
         platform_fee_amount:
           type: integer
+        payment_fee_amount:
+          type: integer
         currency:
           type: string
+    AssetReport:
+      type: object
+      required: [store_id, from, to, currency, items]
+      properties:
+        store_id:
+          type: string
+        branch_id:
+          type: string
+        from:
+          $ref: "#/components/schemas/IsoDateTime"
+        to:
+          $ref: "#/components/schemas/IsoDateTime"
+        currency:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/AssetReportItem"
+    AssetReportItem:
+      type: object
+      required:
+        [asset_id, code, branch_id, status, bookings_count, completed_count, revenue_amount]
+      properties:
+        asset_id:
+          type: string
+        code:
+          type: string
+        branch_id:
+          type: string
+        status:
+          type: string
+        bookings_count:
+          type: integer
+        completed_count:
+          type: integer
+        revenue_amount:
+          type: integer
+    StaffReport:
+      type: object
+      required: [store_id, from, to, items]
+      properties:
+        store_id:
+          type: string
+        branch_id:
+          type: string
+        from:
+          $ref: "#/components/schemas/IsoDateTime"
+        to:
+          $ref: "#/components/schemas/IsoDateTime"
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/StaffReportItem"
+    StaffReportItem:
+      type: object
+      required: [user_id, role, branch_ids, bookings_touched_count, cash_confirmed_count]
+      properties:
+        user_id:
+          type: string
+        role:
+          type: string
+        branch_ids:
+          type: array
+          items:
+            type: string
+        bookings_touched_count:
+          type: integer
+        cash_confirmed_count:
+          type: integer
     PlatformReport:
       type: object
-      required: [users_count, stores_count, bookings_count, gmv_amount, platform_revenue_amount, currency]
+      required:
+        [
+          from,
+          to,
+          users_count,
+          stores_count,
+          branches_count,
+          assets_count,
+          bookings_count,
+          completed_bookings_count,
+          active_bookings_count,
+          gmv_amount,
+          platform_revenue_amount,
+          currency,
+        ]
       properties:
+        from:
+          $ref: "#/components/schemas/IsoDateTime"
+        to:
+          $ref: "#/components/schemas/IsoDateTime"
         users_count:
           type: integer
         stores_count:
@@ -3214,12 +3612,125 @@ components:
           type: integer
         bookings_count:
           type: integer
+        completed_bookings_count:
+          type: integer
+        active_bookings_count:
+          type: integer
         gmv_amount:
           type: integer
         platform_revenue_amount:
           type: integer
         currency:
           type: string
+    Settlement:
+      allOf:
+        - $ref: "#/components/schemas/EntityBase"
+        - type: object
+          required:
+            [
+              tenant_id,
+              store_id,
+              period_from,
+              period_to,
+              currency,
+              gross_amount,
+              online_amount,
+              cash_amount,
+              refund_amount,
+              penalty_amount,
+              platform_fee_amount,
+              payment_fee_amount,
+              transfer_payable_amount,
+              status,
+            ]
+          properties:
+            tenant_id:
+              type: string
+            store_id:
+              type: string
+            branch_id:
+              type: string
+            period_from:
+              $ref: "#/components/schemas/IsoDateTime"
+            period_to:
+              $ref: "#/components/schemas/IsoDateTime"
+            currency:
+              type: string
+            gross_amount:
+              type: integer
+            online_amount:
+              type: integer
+            cash_amount:
+              type: integer
+            refund_amount:
+              type: integer
+            penalty_amount:
+              type: integer
+            platform_fee_amount:
+              type: integer
+            payment_fee_amount:
+              type: integer
+            transfer_payable_amount:
+              type: integer
+            status:
+              type: string
+              enum: [DRAFT, APPROVED, PAYMENT_REQUESTED, PAID]
+            approved_by_user_id:
+              type: string
+            approved_at:
+              $ref: "#/components/schemas/IsoDateTime"
+            paid_by_user_id:
+              type: string
+            paid_at:
+              $ref: "#/components/schemas/IsoDateTime"
+    ReportExport:
+      allOf:
+        - $ref: "#/components/schemas/EntityBase"
+        - type: object
+          required:
+            [
+              tenant_id,
+              requested_by_user_id,
+              type,
+              format,
+              from,
+              to,
+              file_name,
+              mime_type,
+              content,
+              row_count,
+            ]
+          properties:
+            tenant_id:
+              type: string
+            requested_by_user_id:
+              type: string
+            type:
+              $ref: "#/components/schemas/ReportExportType"
+            format:
+              $ref: "#/components/schemas/ReportExportFormat"
+            store_id:
+              type: string
+            branch_id:
+              type: string
+            from:
+              $ref: "#/components/schemas/IsoDateTime"
+            to:
+              $ref: "#/components/schemas/IsoDateTime"
+            file_name:
+              type: string
+            mime_type:
+              type: string
+            content:
+              type: string
+            row_count:
+              type: integer
+    ReportExportType:
+      type: string
+      enum: [STORE_RENTAL, STORE_REVENUE, ASSET, STAFF, PLATFORM_OVERVIEW, SETTLEMENT]
+    ReportExportFormat:
+      type: string
+      enum: [CSV, XLSX]
     RequiredConsentInput:
       type: object
       required: [version]
@@ -3932,6 +4443,14 @@ components:
       properties:
         reason:
           type: string
+    CreateReportExportRequest:
+      type: object
+      required: [type, format]
+      properties:
+        type:
+          $ref: "#/components/schemas/ReportExportType"
+        format:
+          $ref: "#/components/schemas/ReportExportFormat"
   examples:
     UserSuccess:
       value:

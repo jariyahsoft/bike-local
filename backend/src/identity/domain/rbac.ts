@@ -332,6 +332,7 @@ export const ROLE_PERMISSION_MATRIX: Record<
   PLATFORM_SUPPORT: [
     { permission: "store.read", scope: "platform" },
     { permission: "booking.read", scope: "platform" },
+    { permission: "report.financial.read", scope: "platform" },
     { permission: "sos.location.read", scope: "platform" },
     { permission: "audit.read", scope: "platform" },
     { permission: "dispute.manage", scope: "platform" },

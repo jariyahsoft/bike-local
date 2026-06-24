@@ -42,6 +42,8 @@ export interface AuditLogEntry {
     | "review.hidden"
     | "sos.case.updated"
     | "notification.delivery.updated"
+    | "settlement.state.changed"
+    | "report.export.created"
     | "admin.action";
   readonly resourceType: string;
   readonly resourceId: string;

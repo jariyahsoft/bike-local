@@ -213,6 +213,7 @@ Audit types and sanitization helpers are scaffolded in `backend/src/audit/domain
 - Require a reason and audit record for all sensitive manual overrides.
 - Store notification tokens only as protected provider references plus fingerprints; never return or log raw device tokens.
 - Restrict SOS incident visibility to the scoped store/branch responders needed for the case, and classify SOS timeline/location data as `SENSITIVE_LOCATION`.
+- Require `report.financial.read` for store/platform reports, settlements, and exports; export content must preserve the caller's store/branch filters and omit renter PII/location fields.
 
 ## Security Tests
 
@@ -241,6 +242,7 @@ Current coverage from runnable tests:
 - Booking create idempotency, availability reservation conflict rejection, booking state-machine invalid transition rejection, payment webhook proof/replay handling, cash confirmation permission/audit logging, and deposit release-before-inspection rejection
 - Handover QR token invalid/expired/used rejection, branch-scoped staff handover, rental start audit/outbox, ride GPS consent enforcement, chunk sequence/checksum dedupe, return request notification, staff-only inspection close, and post-inspection deposit release
 - SOS active-ride enforcement, missing-location rejection, scoped staff acknowledgement/assignment lifecycle, escalation notification routing, protected notification token registration, delivery retry behavior, content approval/rejection/report flows, completed-booking review eligibility, and review-hide audit logging
+- Report date range and branch filters, store-scope financial access denial, platform support overview access, CSV/XLSX export redaction, settlement policy requirement, integer minor-unit settlement calculation, and settlement/export audit logging
 - Firestore rules default-deny with public config exception
 - Firestore user-owned notification read exception
 - Storage public-read and owner-upload exceptions

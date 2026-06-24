@@ -8,11 +8,15 @@ import 'package:bike_local_generated_api_client/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**from** | [**DateTime**](DateTime.md) |  | 
+**to** | [**DateTime**](DateTime.md) |  | 
 **usersCount** | **int** |  | 
 **storesCount** | **int** |  | 
-**branchesCount** | **int** |  | [optional] 
-**assetsCount** | **int** |  | [optional] 
+**branchesCount** | **int** |  | 
+**assetsCount** | **int** |  | 
 **bookingsCount** | **int** |  | 
+**completedBookingsCount** | **int** |  | 
+**activeBookingsCount** | **int** |  | 
 **gmvAmount** | **int** |  | 
 **platformRevenueAmount** | **int** |  | 
 **currency** | **String** |  | 

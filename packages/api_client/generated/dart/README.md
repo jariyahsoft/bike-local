@@ -102,8 +102,16 @@ Class | Method | HTTP request | Description
 [*PaymentApi*](doc/PaymentApi.md) | [**processPaymentWebhook**](doc/PaymentApi.md#processpaymentwebhook) | **POST** /payment-webhooks/{provider} | Process provider webhook with server-side verification.
 [*PricingApi*](doc/PricingApi.md) | [**createPricingQuote**](doc/PricingApi.md#createpricingquote) | **POST** /pricing/quote | Calculate price and deposit quote before booking.
 [*PricingApi*](doc/PricingApi.md) | [**createPricingRule**](doc/PricingApi.md#createpricingrule) | **POST** /pricing/rules | Create a store, branch, or category pricing rule.
+[*ReportsApi*](doc/ReportsApi.md) | [**approveSettlement**](doc/ReportsApi.md#approvesettlement) | **POST** /settlements/{id}/approve | Approve a draft settlement.
+[*ReportsApi*](doc/ReportsApi.md) | [**createReportExport**](doc/ReportsApi.md#createreportexport) | **POST** /report-exports | Create a filtered report export.
+[*ReportsApi*](doc/ReportsApi.md) | [**createSettlement**](doc/ReportsApi.md#createsettlement) | **POST** /settlements | Calculate and create a draft store settlement.
+[*ReportsApi*](doc/ReportsApi.md) | [**getAssetReport**](doc/ReportsApi.md#getassetreport) | **GET** /reports/store/assets | Get merchant asset performance report.
 [*ReportsApi*](doc/ReportsApi.md) | [**getPlatformReport**](doc/ReportsApi.md#getplatformreport) | **GET** /reports/platform | Get platform overview report.
-[*ReportsApi*](doc/ReportsApi.md) | [**getStoreReport**](doc/ReportsApi.md#getstorereport) | **GET** /reports/store | Get merchant rental and revenue report.
+[*ReportsApi*](doc/ReportsApi.md) | [**getStaffReport**](doc/ReportsApi.md#getstaffreport) | **GET** /reports/store/staff | Get merchant staff operations report.
+[*ReportsApi*](doc/ReportsApi.md) | [**getStoreRentalReport**](doc/ReportsApi.md#getstorerentalreport) | **GET** /reports/store/rental | Get merchant rental report.
+[*ReportsApi*](doc/ReportsApi.md) | [**getStoreRevenueReport**](doc/ReportsApi.md#getstorerevenuereport) | **GET** /reports/store/revenue | Get merchant revenue report.
+[*ReportsApi*](doc/ReportsApi.md) | [**markSettlementPaid**](doc/ReportsApi.md#marksettlementpaid) | **POST** /settlements/{id}/paid | Mark a requested settlement payment as paid.
+[*ReportsApi*](doc/ReportsApi.md) | [**requestSettlementPayment**](doc/ReportsApi.md#requestsettlementpayment) | **POST** /settlements/{id}/payment-request | Mark an approved settlement as payment requested.
 [*ReturnApi*](doc/ReturnApi.md) | [**acceptReturnRequest**](doc/ReturnApi.md#acceptreturnrequest) | **POST** /return-requests/{id}/accept | Accept return and record inspection.
 [*ReturnApi*](doc/ReturnApi.md) | [**createReturnRequest**](doc/ReturnApi.md#createreturnrequest) | **POST** /return-requests | Request bike return with evidence.
 [*RideApi*](doc/RideApi.md) | [**createRideSession**](doc/RideApi.md#createridesession) | **POST** /ride-sessions | Start ride session for an in-progress rental.
@@ -131,6 +139,8 @@ Class | Method | HTTP request | Description
  - [AccountDeletionRequest](doc/AccountDeletionRequest.md)
  - [Asset](doc/Asset.md)
  - [AssetCategory](doc/AssetCategory.md)
+ - [AssetReport](doc/AssetReport.md)
+ - [AssetReportItem](doc/AssetReportItem.md)
  - [AssetStatusTransition](doc/AssetStatusTransition.md)
  - [AssignSosCaseRequest](doc/AssignSosCaseRequest.md)
  - [AuditLog](doc/AuditLog.md)
@@ -170,6 +180,7 @@ Class | Method | HTTP request | Description
  - [CreatePricingRuleRequest](doc/CreatePricingRuleRequest.md)
  - [CreateRentalPoint201Response](doc/CreateRentalPoint201Response.md)
  - [CreateRentalPointRequest](doc/CreateRentalPointRequest.md)
+ - [CreateReportExportRequest](doc/CreateReportExportRequest.md)
  - [CreateReturnRequest](doc/CreateReturnRequest.md)
  - [CreateReviewRequest](doc/CreateReviewRequest.md)
  - [CreateRideSessionRequest](doc/CreateRideSessionRequest.md)
@@ -185,8 +196,6 @@ Class | Method | HTTP request | Description
  - [Equipment](doc/Equipment.md)
  - [Error](doc/Error.md)
  - [ErrorEnvelope](doc/ErrorEnvelope.md)
- - [GetPlatformReport200Response](doc/GetPlatformReport200Response.md)
- - [GetStoreReport200Response](doc/GetStoreReport200Response.md)
  - [GpsConsentInput](doc/GpsConsentInput.md)
  - [GpsConsentScope](doc/GpsConsentScope.md)
  - [GpsGap](doc/GpsGap.md)
@@ -202,7 +211,14 @@ Class | Method | HTTP request | Description
  - [InlineObject14](doc/InlineObject14.md)
  - [InlineObject15](doc/InlineObject15.md)
  - [InlineObject16](doc/InlineObject16.md)
+ - [InlineObject17](doc/InlineObject17.md)
+ - [InlineObject18](doc/InlineObject18.md)
+ - [InlineObject19](doc/InlineObject19.md)
  - [InlineObject2](doc/InlineObject2.md)
+ - [InlineObject20](doc/InlineObject20.md)
+ - [InlineObject21](doc/InlineObject21.md)
+ - [InlineObject22](doc/InlineObject22.md)
+ - [InlineObject23](doc/InlineObject23.md)
  - [InlineObject3](doc/InlineObject3.md)
  - [InlineObject4](doc/InlineObject4.md)
  - [InlineObject5](doc/InlineObject5.md)
@@ -237,6 +253,9 @@ Class | Method | HTTP request | Description
  - [ProcessPaymentWebhook202Response](doc/ProcessPaymentWebhook202Response.md)
  - [RegisterNotificationDeviceRequest](doc/RegisterNotificationDeviceRequest.md)
  - [RentalPoint](doc/RentalPoint.md)
+ - [ReportExport](doc/ReportExport.md)
+ - [ReportExportFormat](doc/ReportExportFormat.md)
+ - [ReportExportType](doc/ReportExportType.md)
  - [RequiredConsentInput](doc/RequiredConsentInput.md)
  - [ResolveSosCaseRequest](doc/ResolveSosCaseRequest.md)
  - [ResponseMeta](doc/ResponseMeta.md)
@@ -247,10 +266,13 @@ Class | Method | HTTP request | Description
  - [RideTrackChunk](doc/RideTrackChunk.md)
  - [Role](doc/Role.md)
  - [Route](doc/Route.md)
+ - [Settlement](doc/Settlement.md)
  - [SosCase](doc/SosCase.md)
  - [SosCaseNoteRequest](doc/SosCaseNoteRequest.md)
  - [SosTimelineEvent](doc/SosTimelineEvent.md)
  - [StaffInvitation](doc/StaffInvitation.md)
+ - [StaffReport](doc/StaffReport.md)
+ - [StaffReportItem](doc/StaffReportItem.md)
  - [Store](doc/Store.md)
  - [StoreApprovalDecisionRequest](doc/StoreApprovalDecisionRequest.md)
  - [StoreApprovalStatus](doc/StoreApprovalStatus.md)
@@ -258,7 +280,8 @@ Class | Method | HTTP request | Description
  - [StoreDocumentMetadataInput](doc/StoreDocumentMetadataInput.md)
  - [StoreMember](doc/StoreMember.md)
  - [StoreOperationalStatus](doc/StoreOperationalStatus.md)
- - [StoreReport](doc/StoreReport.md)
+ - [StoreRentalReport](doc/StoreRentalReport.md)
+ - [StoreRevenueReport](doc/StoreRevenueReport.md)
  - [SubmitStoreRequest](doc/SubmitStoreRequest.md)
  - [SuccessEnvelope](doc/SuccessEnvelope.md)
  - [TemporaryClosure](doc/TemporaryClosure.md)

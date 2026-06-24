@@ -122,6 +122,14 @@ export interface PaymentEventRepository extends Repository<
 
 export interface DepositRepository extends Repository<Deposit, DepositId> {
   findByBookingId(bookingId: BookingId): Promise<Deposit | null>;
+  search(
+    filter: {
+      readonly tenantId: TenantId;
+      readonly storeId?: StoreId | undefined;
+      readonly status?: DepositStatus | undefined;
+    },
+    page: PageRequest,
+  ): Promise<Page<Deposit>>;
   save(deposit: Deposit, options?: SaveOptions): Promise<Deposit>;
 }
 

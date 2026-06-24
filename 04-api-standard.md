@@ -188,26 +188,26 @@ Notification delivery must keep provider attempt logs and allow retry without ex
 
 ## Endpoint Catalog
 
-| Module | Example endpoints |
-|---|---|
-| Identity/Users | `POST /api/v1/users`, `GET /api/v1/me`, `PATCH /api/v1/me`, `POST /api/v1/me/deletion-request` |
-| Stores | `POST /api/v1/stores`, `GET /api/v1/stores`, `PATCH /api/v1/stores/{id}`, `POST /api/v1/stores/{id}/submit`, `POST /api/v1/stores/{id}/approval-decisions` |
-| Branches | `POST /api/v1/stores/{storeId}/branches`, `GET /api/v1/branches/{id}`, `PATCH /api/v1/branches/{id}` |
-| Staff | `POST /api/v1/stores/{storeId}/staff-invitations`, `PATCH /api/v1/store-members/{id}` |
-| Assets/Inventory | `POST /api/v1/asset-categories`, `POST /api/v1/assets`, `GET /api/v1/assets`, `PATCH /api/v1/assets/{id}`, `POST /api/v1/equipment-items`, `POST /api/v1/inventory-units`, `POST /api/v1/rental-points`, `POST /api/v1/availability/check` |
-| Search | `GET /api/v1/search/stores`, `GET /api/v1/search/assets` |
-| Pricing | `POST /api/v1/pricing/rules`, `POST /api/v1/pricing/quote` |
-| Booking | `POST /api/v1/bookings`, `GET /api/v1/bookings/{id}`, `POST /api/v1/bookings/{id}/cancel` |
-| Payment | `POST /api/v1/payments`, `POST /api/v1/payment-webhooks/{provider}` |
-| Cash | `POST /api/v1/bookings/{id}/cash-confirmations` |
-| Handover | `POST /api/v1/bookings/{id}/handover` |
-| Ride | `POST /api/v1/ride-sessions`, `POST /api/v1/ride-sessions/{id}/chunks`, `POST /api/v1/ride-sessions/{id}/end` |
-| Return | `POST /api/v1/return-requests`, `POST /api/v1/return-requests/{id}/accept` |
-| SOS | `POST /api/v1/sos-cases`, `POST /api/v1/sos-cases/{id}/acknowledge`, `POST /api/v1/sos-cases/{id}/assign`, `POST /api/v1/sos-cases/{id}/start`, `POST /api/v1/sos-cases/{id}/resolve`, `POST /api/v1/sos-cases/{id}/close` |
-| Notifications | `POST /api/v1/notification-devices`, `GET /api/v1/notifications`, `POST /api/v1/notifications/{id}/read` |
-| Content | `POST /api/v1/routes`, `POST /api/v1/places`, `POST /api/v1/content-submissions/{id}/approve`, `POST /api/v1/content-submissions/{id}/reject`, `POST /api/v1/reviews`, `POST /api/v1/content-reports`, `POST /api/v1/reviews/{id}/hide` |
-| Reports | `GET /api/v1/reports/store`, `GET /api/v1/reports/platform` |
-| Audit | `GET /api/v1/audit-logs` |
+| Module           | Example endpoints                                                                                                                                                                                                                                                                                                                                                         |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Identity/Users   | `POST /api/v1/users`, `GET /api/v1/me`, `PATCH /api/v1/me`, `POST /api/v1/me/deletion-request`                                                                                                                                                                                                                                                                            |
+| Stores           | `POST /api/v1/stores`, `GET /api/v1/stores`, `PATCH /api/v1/stores/{id}`, `POST /api/v1/stores/{id}/submit`, `POST /api/v1/stores/{id}/approval-decisions`                                                                                                                                                                                                                |
+| Branches         | `POST /api/v1/stores/{storeId}/branches`, `GET /api/v1/branches/{id}`, `PATCH /api/v1/branches/{id}`                                                                                                                                                                                                                                                                      |
+| Staff            | `POST /api/v1/stores/{storeId}/staff-invitations`, `PATCH /api/v1/store-members/{id}`                                                                                                                                                                                                                                                                                     |
+| Assets/Inventory | `POST /api/v1/asset-categories`, `POST /api/v1/assets`, `GET /api/v1/assets`, `PATCH /api/v1/assets/{id}`, `POST /api/v1/equipment-items`, `POST /api/v1/inventory-units`, `POST /api/v1/rental-points`, `POST /api/v1/availability/check`                                                                                                                                |
+| Search           | `GET /api/v1/search/stores`, `GET /api/v1/search/assets`                                                                                                                                                                                                                                                                                                                  |
+| Pricing          | `POST /api/v1/pricing/rules`, `POST /api/v1/pricing/quote`                                                                                                                                                                                                                                                                                                                |
+| Booking          | `POST /api/v1/bookings`, `GET /api/v1/bookings/{id}`, `POST /api/v1/bookings/{id}/cancel`                                                                                                                                                                                                                                                                                 |
+| Payment          | `POST /api/v1/payments`, `POST /api/v1/payment-webhooks/{provider}`                                                                                                                                                                                                                                                                                                       |
+| Cash             | `POST /api/v1/bookings/{id}/cash-confirmations`                                                                                                                                                                                                                                                                                                                           |
+| Handover         | `POST /api/v1/bookings/{id}/handover`                                                                                                                                                                                                                                                                                                                                     |
+| Ride             | `POST /api/v1/ride-sessions`, `POST /api/v1/ride-sessions/{id}/chunks`, `POST /api/v1/ride-sessions/{id}/end`                                                                                                                                                                                                                                                             |
+| Return           | `POST /api/v1/return-requests`, `POST /api/v1/return-requests/{id}/accept`                                                                                                                                                                                                                                                                                                |
+| SOS              | `POST /api/v1/sos-cases`, `POST /api/v1/sos-cases/{id}/acknowledge`, `POST /api/v1/sos-cases/{id}/assign`, `POST /api/v1/sos-cases/{id}/start`, `POST /api/v1/sos-cases/{id}/resolve`, `POST /api/v1/sos-cases/{id}/close`                                                                                                                                                |
+| Notifications    | `POST /api/v1/notification-devices`, `GET /api/v1/notifications`, `POST /api/v1/notifications/{id}/read`                                                                                                                                                                                                                                                                  |
+| Content          | `POST /api/v1/routes`, `POST /api/v1/places`, `POST /api/v1/content-submissions/{id}/approve`, `POST /api/v1/content-submissions/{id}/reject`, `POST /api/v1/reviews`, `POST /api/v1/content-reports`, `POST /api/v1/reviews/{id}/hide`                                                                                                                                   |
+| Reports          | `GET /api/v1/reports/store/rental`, `GET /api/v1/reports/store/revenue`, `GET /api/v1/reports/store/assets`, `GET /api/v1/reports/store/staff`, `GET /api/v1/reports/platform`, `POST /api/v1/settlements`, `POST /api/v1/settlements/{id}/approve`, `POST /api/v1/settlements/{id}/payment-request`, `POST /api/v1/settlements/{id}/paid`, `POST /api/v1/report-exports` |
+| Audit            | `GET /api/v1/audit-logs`                                                                                                                                                                                                                                                                                                                                                  |
 
 Task 11 ride lifecycle rules:
 
@@ -224,6 +224,14 @@ Task 12 safety and moderation rules:
 - Notification device registration returns only token fingerprint metadata; delivery attempts and retries stay in provider-facing delivery logs.
 - Route/place submissions from store members stay unpublished until moderation approval, while platform admins/moderators can auto-approve.
 - Reviews require the actor's completed booking, and moderators can suspend reviews only with an explicit reason and audit log.
+
+Task 13 reports and settlement rules:
+
+- Store reports require `report.financial.read` and keep date range plus branch filters in every aggregate.
+- Platform overview is permission-scoped and reports marketplace indicators without renter PII or location detail.
+- Settlement calculation requires explicit commission/payment-fee policy inputs; cash is visible in reports but excluded from transfer payable unless policy opts in.
+- Settlement approval/payment transitions and report exports write financial audit logs.
+- CSV and Excel-compatible exports reuse the same filters and omit sensitive personal/location fields.
 
 ## API Security Checklist
 

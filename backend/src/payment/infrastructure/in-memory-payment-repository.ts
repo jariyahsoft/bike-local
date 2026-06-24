@@ -12,6 +12,7 @@ import type {
 } from "../../shared/domain/index.js";
 import type {
   Deposit,
+  DepositStatus,
   DepositRepository,
   OutboxEvent,
   OutboxEventRepository,
@@ -131,6 +132,29 @@ export class InMemoryDepositRepository implements DepositRepository {
         (deposit) => deposit.bookingId === bookingId,
       ) ?? null
     );
+  }
+
+  async search(
+    filter: {
+      readonly tenantId: Deposit["tenantId"];
+      readonly storeId?: Deposit["storeId"] | undefined;
+      readonly status?: DepositStatus | undefined;
+    },
+    page: PageRequest,
+  ): Promise<Page<Deposit>> {
+    const items = [...this.deposits.values()]
+      .filter((deposit) => deposit.tenantId === filter.tenantId)
+      .filter(
+        (deposit) =>
+          filter.storeId === undefined || deposit.storeId === filter.storeId,
+      )
+      .filter(
+        (deposit) =>
+          filter.status === undefined || deposit.status === filter.status,
+      )
+      .slice(0, page.limit);
+
+    return { items };
   }
 
   async save(deposit: Deposit, options?: SaveOptions): Promise<Deposit> {

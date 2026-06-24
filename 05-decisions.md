@@ -38,6 +38,8 @@ These items are intentionally not accepted yet. They organize the product questi
 | Cloud Functions vs Cloud Run per workload | Engineering + DevOps | Affects deployment topology, cold starts, webhook handling, long-running jobs, and local emulator setup | ADR-008 remains `Proposed`; SRS allows both                                   | Keep backend domain/application modules runtime-neutral; decide per workload once API, webhook, background event, and reporting requirements are concrete                          |
 | Outbox and Dead Letter implementation     | Engineering + DevOps | Affects payment webhook reliability, notification retries, SOS escalation, and settlement events        | ADR-011 remains `Proposed`; architecture requires outbox/dead-letter behavior | Start with repository ports and event records independent of Firebase; choose Cloud Tasks, Pub/Sub, Firestore polling, or Cloud Run worker strategy in a later implementation task |
 
+Task 13 implementation note: reports, CSV/XLSX-compatible exports, settlement state transitions, and settlement calculator ports now exist. ADR-014 is still `Proposed`; accepted commission rates, payment-fee treatment, and payout cycle remain policy inputs rather than hard-coded commercial terms.
+
 ## Accepted Decisions
 
 ## ADR-001: Cross-Platform Frontend

@@ -147,6 +147,7 @@ Seed data should include:
 - Ride sessions with GPS gaps, buffered chunk uploads, and duplicate sequence/checksum examples
 - Return requests, inspection decisions, deposit release/deduction examples, and SOS cases
 - Notifications with device registration, delivery failure/retry, and moderation cases for route/place/review content
+- Reports with date/branch filters, exports, settlement policy scenarios, and platform overview aggregates
 
 ## CI Test Commands
 
@@ -188,6 +189,6 @@ npm run test:frontend
 - [x] Return request notifies store
 - [x] Inspection closes rental and handles deposit
 - [x] SOS sends latest location and escalates
-- [ ] Basic reports load
+- [x] Basic reports load
 - [x] Admin can approve content/store
 - [x] Audit logs exist for sensitive actions

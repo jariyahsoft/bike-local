@@ -858,15 +858,66 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/reports/store": {
+    "/reports/store/rental": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Get merchant rental and revenue report. */
-        get: operations["getStoreReport"];
+        /** Get merchant rental report. */
+        get: operations["getStoreRentalReport"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/reports/store/revenue": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get merchant revenue report. */
+        get: operations["getStoreRevenueReport"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/reports/store/assets": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get merchant asset performance report. */
+        get: operations["getAssetReport"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/reports/store/staff": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get merchant staff operations report. */
+        get: operations["getStaffReport"];
         put?: never;
         post?: never;
         delete?: never;
@@ -886,6 +937,91 @@ export interface paths {
         get: operations["getPlatformReport"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/settlements": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Calculate and create a draft store settlement. */
+        post: operations["createSettlement"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/settlements/{id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve a draft settlement. */
+        post: operations["approveSettlement"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/settlements/{id}/payment-request": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Mark an approved settlement as payment requested. */
+        post: operations["requestSettlementPayment"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/settlements/{id}/paid": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Mark a requested settlement payment as paid. */
+        post: operations["markSettlementPaid"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/report-exports": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create a filtered report export. */
+        post: operations["createReportExport"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1482,32 +1618,120 @@ export interface components {
         };
         /** @enum {string} */
         ContentApprovalStatus: "DRAFT" | "SUBMITTED" | "UNDER_REVIEW" | "REVISION_REQUIRED" | "APPROVED" | "REJECTED" | "SUSPENDED" | "OUTDATED";
-        StoreReport: {
+        StoreRentalReport: {
             store_id: string;
-            bookings_count?: number;
-            completed_count?: number;
-            cancelled_count?: number;
-            no_show_count?: number;
+            branch_id?: string;
+            from: components["schemas"]["IsoDateTime"];
+            to: components["schemas"]["IsoDateTime"];
+            bookings_count: number;
+            completed_count: number;
+            cancelled_count: number;
+            no_show_count: number;
+            overdue_count: number;
+            average_duration_minutes: number;
+        };
+        StoreReport: components["schemas"]["StoreRevenueReport"];
+        StoreRevenueReport: {
+            store_id: string;
+            branch_id?: string;
+            from: components["schemas"]["IsoDateTime"];
+            to: components["schemas"]["IsoDateTime"];
             gross_revenue_amount: number;
             net_revenue_amount: number;
-            cash_amount?: number;
-            online_amount?: number;
-            deposit_amount?: number;
-            refund_amount?: number;
-            penalty_amount?: number;
-            platform_fee_amount?: number;
+            cash_amount: number;
+            online_amount: number;
+            deposit_amount: number;
+            refund_amount: number;
+            penalty_amount: number;
+            platform_fee_amount: number;
+            payment_fee_amount: number;
             currency: string;
         };
+        AssetReport: {
+            store_id: string;
+            branch_id?: string;
+            from: components["schemas"]["IsoDateTime"];
+            to: components["schemas"]["IsoDateTime"];
+            currency: string;
+            items: components["schemas"]["AssetReportItem"][];
+        };
+        AssetReportItem: {
+            asset_id: string;
+            code: string;
+            branch_id: string;
+            status: string;
+            bookings_count: number;
+            completed_count: number;
+            revenue_amount: number;
+        };
+        StaffReport: {
+            store_id: string;
+            branch_id?: string;
+            from: components["schemas"]["IsoDateTime"];
+            to: components["schemas"]["IsoDateTime"];
+            items: components["schemas"]["StaffReportItem"][];
+        };
+        StaffReportItem: {
+            user_id: string;
+            role: string;
+            branch_ids: string[];
+            bookings_touched_count: number;
+            cash_confirmed_count: number;
+        };
         PlatformReport: {
+            from: components["schemas"]["IsoDateTime"];
+            to: components["schemas"]["IsoDateTime"];
             users_count: number;
             stores_count: number;
-            branches_count?: number;
-            assets_count?: number;
+            branches_count: number;
+            assets_count: number;
             bookings_count: number;
+            completed_bookings_count: number;
+            active_bookings_count: number;
             gmv_amount: number;
             platform_revenue_amount: number;
             currency: string;
         };
+        Settlement: components["schemas"]["EntityBase"] & {
+            tenant_id: string;
+            store_id: string;
+            branch_id?: string;
+            period_from: components["schemas"]["IsoDateTime"];
+            period_to: components["schemas"]["IsoDateTime"];
+            currency: string;
+            gross_amount: number;
+            online_amount: number;
+            cash_amount: number;
+            refund_amount: number;
+            penalty_amount: number;
+            platform_fee_amount: number;
+            payment_fee_amount: number;
+            transfer_payable_amount: number;
+            /** @enum {string} */
+            status: "DRAFT" | "APPROVED" | "PAYMENT_REQUESTED" | "PAID";
+            approved_by_user_id?: string;
+            approved_at?: components["schemas"]["IsoDateTime"];
+            paid_by_user_id?: string;
+            paid_at?: components["schemas"]["IsoDateTime"];
+        };
+        ReportExport: components["schemas"]["EntityBase"] & {
+            tenant_id: string;
+            requested_by_user_id: string;
+            type: components["schemas"]["ReportExportType"];
+            format: components["schemas"]["ReportExportFormat"];
+            store_id?: string;
+            branch_id?: string;
+            from: components["schemas"]["IsoDateTime"];
+            to: components["schemas"]["IsoDateTime"];
+            file_name: string;
+            mime_type: string;
+            content: string;
+            row_count: number;
+        };
+        /** @enum {string} */
+        ReportExportType: "STORE_RENTAL" | "STORE_REVENUE" | "ASSET" | "STAFF" | "PLATFORM_OVERVIEW" | "SETTLEMENT";
+        /** @enum {string} */
+        ReportExportFormat: "CSV" | "XLSX";
         RequiredConsentInput: {
             version: string;
         };
@@ -1857,6 +2081,10 @@ export interface components {
         HideReviewRequest: {
             reason: string;
         };
+        CreateReportExportRequest: {
+            type: components["schemas"]["ReportExportType"];
+            format: components["schemas"]["ReportExportFormat"];
+        };
     };
     responses: {
         /** @description User response. */
@@ -2046,6 +2274,83 @@ export interface components {
                 };
             };
         };
+        /** @description Store rental report response. */
+        StoreRentalReportSuccess: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["SuccessEnvelope"] & {
+                    data: components["schemas"]["StoreRentalReport"];
+                };
+            };
+        };
+        /** @description Store revenue report response. */
+        StoreRevenueReportSuccess: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["SuccessEnvelope"] & {
+                    data: components["schemas"]["StoreRevenueReport"];
+                };
+            };
+        };
+        /** @description Asset report response. */
+        AssetReportSuccess: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["SuccessEnvelope"] & {
+                    data: components["schemas"]["AssetReport"];
+                };
+            };
+        };
+        /** @description Staff report response. */
+        StaffReportSuccess: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["SuccessEnvelope"] & {
+                    data: components["schemas"]["StaffReport"];
+                };
+            };
+        };
+        /** @description Platform report response. */
+        PlatformReportSuccess: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["SuccessEnvelope"] & {
+                    data: components["schemas"]["PlatformReport"];
+                };
+            };
+        };
+        /** @description Settlement response. */
+        SettlementSuccess: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["SuccessEnvelope"] & {
+                    data: components["schemas"]["Settlement"];
+                };
+            };
+        };
+        /** @description Report export response. */
+        ReportExportSuccess: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["SuccessEnvelope"] & {
+                    data: components["schemas"]["ReportExport"];
+                };
+            };
+        };
         /** @description Authentication required or invalid. */
         Unauthorized: {
             headers: {
@@ -2123,9 +2428,11 @@ export interface components {
         SosCaseIdPath: string;
         NotificationIdPath: string;
         ContentSubmissionIdPath: string;
+        SettlementIdPath: string;
         ReviewIdPath: string;
         StoreMemberIdPath: string;
         StoreIdQuery: string;
+        TenantIdQuery: string;
         BranchIdQuery: string;
     };
     requestBodies: {
@@ -3544,10 +3851,12 @@ export interface operations {
             403: components["responses"]["Forbidden"];
         };
     };
-    getStoreReport: {
+    getStoreRentalReport: {
         parameters: {
             query: {
+                tenant_id?: components["parameters"]["TenantIdQuery"];
                 store_id?: components["parameters"]["StoreIdQuery"];
+                branch_id?: components["parameters"]["BranchIdQuery"];
                 from: components["schemas"]["IsoDateTime"];
                 to: components["schemas"]["IsoDateTime"];
             };
@@ -3560,23 +3869,80 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Store report. */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SuccessEnvelope"] & {
-                        data: components["schemas"]["StoreReport"];
-                    };
-                };
+            200: components["responses"]["StoreRentalReportSuccess"];
+            403: components["responses"]["Forbidden"];
+        };
+    };
+    getStoreRevenueReport: {
+        parameters: {
+            query: {
+                tenant_id?: components["parameters"]["TenantIdQuery"];
+                store_id?: components["parameters"]["StoreIdQuery"];
+                branch_id?: components["parameters"]["BranchIdQuery"];
+                from: components["schemas"]["IsoDateTime"];
+                to: components["schemas"]["IsoDateTime"];
             };
+            header?: {
+                /** @example req_01HV9X8D9N9HQ */
+                "X-Correlation-Id"?: components["parameters"]["CorrelationId"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["StoreRevenueReportSuccess"];
+            403: components["responses"]["Forbidden"];
+        };
+    };
+    getAssetReport: {
+        parameters: {
+            query: {
+                tenant_id?: components["parameters"]["TenantIdQuery"];
+                store_id?: components["parameters"]["StoreIdQuery"];
+                branch_id?: components["parameters"]["BranchIdQuery"];
+                from: components["schemas"]["IsoDateTime"];
+                to: components["schemas"]["IsoDateTime"];
+            };
+            header?: {
+                /** @example req_01HV9X8D9N9HQ */
+                "X-Correlation-Id"?: components["parameters"]["CorrelationId"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["AssetReportSuccess"];
+            403: components["responses"]["Forbidden"];
+        };
+    };
+    getStaffReport: {
+        parameters: {
+            query: {
+                tenant_id?: components["parameters"]["TenantIdQuery"];
+                store_id?: components["parameters"]["StoreIdQuery"];
+                branch_id?: components["parameters"]["BranchIdQuery"];
+                from: components["schemas"]["IsoDateTime"];
+                to: components["schemas"]["IsoDateTime"];
+            };
+            header?: {
+                /** @example req_01HV9X8D9N9HQ */
+                "X-Correlation-Id"?: components["parameters"]["CorrelationId"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["StaffReportSuccess"];
             403: components["responses"]["Forbidden"];
         };
     };
     getPlatformReport: {
         parameters: {
             query: {
+                tenant_id?: components["parameters"]["TenantIdQuery"];
                 from: components["schemas"]["IsoDateTime"];
                 to: components["schemas"]["IsoDateTime"];
             };
@@ -3589,17 +3955,128 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Platform report. */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SuccessEnvelope"] & {
-                        data: components["schemas"]["PlatformReport"];
-                    };
-                };
+            200: components["responses"]["PlatformReportSuccess"];
+            403: components["responses"]["Forbidden"];
+        };
+    };
+    createSettlement: {
+        parameters: {
+            query: {
+                tenant_id?: components["parameters"]["TenantIdQuery"];
+                store_id?: components["parameters"]["StoreIdQuery"];
+                branch_id?: components["parameters"]["BranchIdQuery"];
+                from: components["schemas"]["IsoDateTime"];
+                to: components["schemas"]["IsoDateTime"];
             };
+            header: {
+                /** @example idem_01HV9X8D9N9HQ */
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+                /** @example req_01HV9X8D9N9HQ */
+                "X-Correlation-Id"?: components["parameters"]["CorrelationId"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            201: components["responses"]["SettlementSuccess"];
+            422: components["responses"]["ValidationError"];
+        };
+    };
+    approveSettlement: {
+        parameters: {
+            query?: {
+                tenant_id?: components["parameters"]["TenantIdQuery"];
+                store_id?: components["parameters"]["StoreIdQuery"];
+            };
+            header: {
+                /** @example idem_01HV9X8D9N9HQ */
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+                /** @example req_01HV9X8D9N9HQ */
+                "X-Correlation-Id"?: components["parameters"]["CorrelationId"];
+            };
+            path: {
+                id: components["parameters"]["SettlementIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["SettlementSuccess"];
+            409: components["responses"]["VersionConflict"];
+        };
+    };
+    requestSettlementPayment: {
+        parameters: {
+            query?: {
+                tenant_id?: components["parameters"]["TenantIdQuery"];
+                store_id?: components["parameters"]["StoreIdQuery"];
+            };
+            header: {
+                /** @example idem_01HV9X8D9N9HQ */
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+                /** @example req_01HV9X8D9N9HQ */
+                "X-Correlation-Id"?: components["parameters"]["CorrelationId"];
+            };
+            path: {
+                id: components["parameters"]["SettlementIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["SettlementSuccess"];
+            409: components["responses"]["VersionConflict"];
+        };
+    };
+    markSettlementPaid: {
+        parameters: {
+            query?: {
+                tenant_id?: components["parameters"]["TenantIdQuery"];
+                store_id?: components["parameters"]["StoreIdQuery"];
+            };
+            header: {
+                /** @example idem_01HV9X8D9N9HQ */
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+                /** @example req_01HV9X8D9N9HQ */
+                "X-Correlation-Id"?: components["parameters"]["CorrelationId"];
+            };
+            path: {
+                id: components["parameters"]["SettlementIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["SettlementSuccess"];
+            409: components["responses"]["VersionConflict"];
+        };
+    };
+    createReportExport: {
+        parameters: {
+            query: {
+                tenant_id?: components["parameters"]["TenantIdQuery"];
+                store_id?: components["parameters"]["StoreIdQuery"];
+                branch_id?: components["parameters"]["BranchIdQuery"];
+                from: components["schemas"]["IsoDateTime"];
+                to: components["schemas"]["IsoDateTime"];
+            };
+            header: {
+                /** @example idem_01HV9X8D9N9HQ */
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+                /** @example req_01HV9X8D9N9HQ */
+                "X-Correlation-Id"?: components["parameters"]["CorrelationId"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateReportExportRequest"];
+            };
+        };
+        responses: {
+            201: components["responses"]["ReportExportSuccess"];
             403: components["responses"]["Forbidden"];
         };
     };
