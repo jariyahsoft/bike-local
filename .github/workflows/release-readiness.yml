@@ -1,0 +1,60 @@
+name: Release Readiness
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Firebase environment to verify
+        required: true
+        default: staging
+        type: choice
+        options:
+          - staging
+          - prod
+      deploy:
+        description: Run Firebase deploy after checks
+        required: true
+        default: false
+        type: boolean
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment == 'prod' && 'production' || 'staging' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - run: npm ci
+      - run: npm run check:secrets
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run build
+      - run: npm test
+      - run: npm run test:contract
+      - run: npm run test:security-rules
+      - run: npm run smoke:staging
+        env:
+          STAGING_API_BASE_URL: ${{ secrets.STAGING_API_BASE_URL }}
+          STAGING_HEALTH_PATH: ${{ vars.STAGING_HEALTH_PATH }}
+
+      - name: Deploy staging
+        if: ${{ inputs.deploy && inputs.environment == 'staging' }}
+        run: npm run deploy:staging -- --token "$FIREBASE_TOKEN"
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
+      - name: Deploy production
+        if: ${{ inputs.deploy && inputs.environment == 'prod' }}
+        run: npm run deploy:prod -- --token "$FIREBASE_TOKEN"
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

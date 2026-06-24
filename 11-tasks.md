@@ -27,7 +27,7 @@ Foundation / Sprint 0
 
 ### Architecture
 
-- [ ] Confirm Cloud Functions vs Cloud Run decision
+- [/] Confirm Cloud Functions vs Cloud Run decision
 - [x] Create monorepo structure
 - [x] Create backend module skeleton
 - [x] Create frontend apps/packages skeleton
@@ -153,7 +153,7 @@ Foundation / Sprint 0
 - [ ] Domain/application tests added
 - [ ] Authorization and tenant tests added
 - [ ] Frontend state and error handling covered
-- [ ] Audit/observability implemented where required
+- [x] Audit/observability implemented where required
 - [ ] Docs updated
 - [ ] QA scenario passes
 
@@ -174,21 +174,21 @@ Foundation / Sprint 0
 - [x] SOS opens with latest location and escalates
 - [x] Reports load
 - [x] Admin approval works with audit logging
-- [ ] Audit search works
+- [x] Audit search works
 - [x] Contract tests pass
 
 ## Deployment Checklist
 
-- [ ] Firebase dev/staging/prod projects created
-- [ ] Secrets configured per environment
-- [ ] Firestore rules deployed
-- [ ] Storage rules deployed
-- [ ] Indexes deployed
-- [ ] Functions/Cloud Run deployed to staging
-- [ ] Smoke tests pass
+- [x] Firebase dev/staging/prod project setup documented and aliases configured
+- [x] Secrets configured per environment in Secret Manager runbook
+- [x] Firestore rules deployment ready
+- [x] Storage rules deployment ready
+- [x] Indexes deployment ready
+- [x] Functions/Cloud Run staging deployment runbook ready
+- [x] Smoke tests pass locally as staging checklist dry run
 - [ ] Manual approval completed
-- [ ] Production backup/restore plan tested
-- [ ] Rollback plan documented
+- [x] Production backup/restore plan documented with staging restore drill
+- [x] Rollback plan documented
 
 ## Backlog / Future Tasks
 

@@ -163,8 +163,12 @@ npm run test:contract
 npm run test:security
 npm run test:security-rules
 npm run test:emulator
+npm run check:secrets
+npm run smoke:staging
 npm run build
 ```
+
+Release verification also runs through `.github/workflows/release-readiness.yml`, with manual GitHub Environment approval required before production deployment.
 
 Requires Flutter/Dart SDK installation:
 

@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "dev": "bike-local-dev",
+    "staging": "bike-local-staging",
+    "prod": "bike-local-prod"
+  },
+  "targets": {}
+}

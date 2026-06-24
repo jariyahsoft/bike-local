@@ -40,6 +40,8 @@ These items are intentionally not accepted yet. They organize the product questi
 
 Task 13 implementation note: reports, CSV/XLSX-compatible exports, settlement state transitions, and settlement calculator ports now exist. ADR-014 is still `Proposed`; accepted commission rates, payment-fee treatment, and payout cycle remain policy inputs rather than hard-coded commercial terms.
 
+Task 14 deployment note: ADR-008 remains `Proposed`; release readiness uses Firebase Cloud Functions as the staging deployment fallback while backend domain/application code stays runtime-neutral for a later Cloud Run decision.
+
 ## Accepted Decisions
 
 ## ADR-001: Cross-Platform Frontend

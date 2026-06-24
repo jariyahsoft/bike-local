@@ -225,6 +225,7 @@ npm test
 npm run test:security
 npm run test:security-rules
 npm run test:emulator
+npm run check:secrets
 ```
 
 Current coverage from runnable tests:

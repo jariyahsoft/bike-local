@@ -41,20 +41,7 @@ Repo นี้เริ่มจากเอกสาร requirement และ i
 
 ## Environment Variables
 
-ยังไม่มีค่า env จริง ห้าม commit secret ลง repo
-
-ตัวอย่างชื่อ env ที่ต้องกำหนดภายหลัง:
-
-```text
-FIREBASE_PROJECT_ID=
-FIREBASE_STORAGE_BUCKET=
-FIREBASE_MESSAGING_SENDER_ID=
-PAYMENT_GATEWAY_API_KEY=
-MAP_PROVIDER_API_KEY=
-SMS_PROVIDER_API_KEY=
-EMAIL_PROVIDER_API_KEY=
-APP_CHECK_SECRET=
-```
+ห้าม commit secret ลง repo ใช้ `.env.example` เป็นรายการชื่อ config เท่านั้น และเก็บค่าจริงแยกตาม environment ผ่าน Secret Manager หรือ Firebase Functions secrets ตาม `12-release-readiness.md`
 
 ## Scripts
 
@@ -71,6 +58,8 @@ npm run test:contract
 npm run test:security
 npm run test:security-rules
 npm run test:emulator
+npm run check:secrets
+npm run smoke:staging
 npm run build
 ```
 
@@ -161,6 +150,8 @@ bike-local-prod
 ```
 
 Pipeline ควรมี format, static analysis, tests, build, security scan, staging deploy, smoke test, manual approval และ production deploy
+
+Release readiness, Firebase aliases, staging commands, backup/restore, rollback, and production manual gate are documented in `12-release-readiness.md`.
 
 ## License
 

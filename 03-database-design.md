@@ -286,6 +286,8 @@ Booking creation reserves availability blocks in the same command flow and retur
 
 Expected composite indexes for Task 09 marketplace queries:
 
+Deploy-ready Firebase index config lives in `firebase/firestore.indexes.json`.
+
 | Collection          | Fields                                                      | Query                                                                 |
 | ------------------- | ----------------------------------------------------------- | --------------------------------------------------------------------- |
 | assets              | store_id, code                                              | Unique store asset-code lookup enforced by backend transaction/check. |
